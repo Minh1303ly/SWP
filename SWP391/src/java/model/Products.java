@@ -6,16 +6,13 @@ package model;
 
 /**
  *
+<<<<<<< HEAD
  * @author Admin
+=======
+ * @author Nhat Anh
+>>>>>>> 1708c424619177764666decff9efa0c903b672e1
  */
 public class Products {
     private int id;
-
-    public Products(int id) {
-        this.id = id;
-    }
     
-    public int show(){
-        return 1;
-    }
 }

@@ -15,7 +15,7 @@ package model;
 public class Products {
     private int id;
     
-    public void show(){
-        
+    public int show(){
+        return 1;
     }
 }

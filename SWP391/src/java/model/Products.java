@@ -9,5 +9,13 @@ package model;
  * @author Admin
  */
 public class Products {
+    private int id;
+
+    public Products(int id) {
+        this.id = id;
+    }
     
+    public int show(){
+        return 1;
+    }
 }

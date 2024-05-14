@@ -91,4 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Initial focus on first OTP input field
     otpInputs[0].focus();
     emailOtpInputs[0].focus();
+
+    
 });

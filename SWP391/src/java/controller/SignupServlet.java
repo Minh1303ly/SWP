@@ -5,12 +5,17 @@
 
 package controller;
 
+import dal.User_addressDAO;
+import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.User_address;
+import model.Users;
 
 /**
  *
@@ -66,7 +71,41 @@ public class SignupServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String[] codes = request.getParameterValues("code");
+        String verifyCode = "";
+        for (String c : codes) {
+            verifyCode += c;
+        }
+        UsersDAO udb = new UsersDAO();
+        User_addressDAO uadb = new User_addressDAO();
+        
+        HttpSession session = request.getSession();
+        Object obj = session.getAttribute("code");
+        String code = (String)obj;
+        
+        Object obj2 = session.getAttribute("signUpAccount");
+        Users u = new Users();
+        if (obj2 != null) {
+            u = (Users)obj2;
+        }
+        
+        Object obj3 = session.getAttribute("signUpAddress");
+        User_address ua = new User_address();
+        if(obj3 != null){
+            ua = (User_address)obj3;
+        }
+        
+        if (code.equals(verifyCode)) {
+            udb.insertUser(u);
+//            Users u2 = udb.getUserByEmail(u.getEmail());
+//            User_address ua2 = new User_address(u2.getId(), ua.getAddress_line(), ua.getCity(), ua.getCountry());
+//            uadb.insertUserAddress(ua);
+            
+            response.sendRedirect("home");
+        }else{
+            request.setAttribute("verify", "Verify Fail!");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+        }
     }
 
     /** 

@@ -26,6 +26,19 @@ public class Users {
     public Users() {
     }
 
+    public Users(String email, String password, int role_id, int status_id, String first_name, String last_name, int gender, String telephone, Date created_at, Date modified_at) {
+        this.email = email;
+        this.password = password;
+        this.role_id = role_id;
+        this.status_id = status_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+        this.telephone = telephone;
+        this.created_at = created_at;
+        this.modified_at = modified_at;
+    }
+
     public Users(int id, String email, String password, int role_id, int status_id, String first_name, String last_name, int gender, String telephone, Date created_at, Date modified_at) {
         this.id = id;
         this.email = email;

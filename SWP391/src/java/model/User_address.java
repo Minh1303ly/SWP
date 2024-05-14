@@ -18,6 +18,19 @@ public class User_address {
     public User_address() {
     }
 
+    public User_address(int user_id, String address_line, String city, String country) {
+        this.user_id = user_id;
+        this.address_line = address_line;
+        this.city = city;
+        this.country = country;
+    }
+
+    public User_address(String address_line, String city, String country) {
+        this.address_line = address_line;
+        this.city = city;
+        this.country = country;
+    }
+
     public User_address(int id, int user_id, String address_line, String city, String country) {
         this.id = id;
         this.user_id = user_id;

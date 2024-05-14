@@ -43,23 +43,24 @@
     <body>
         <div class="col-xl-6 col-lg-6 col-md-8">
             <div class="box_account">
-                <<form action="signup" method="post">
+                <form action="otp" method="post">
                     <h3 class="new_client">New Client</h3> <small class="float-right pt-2">* Required Fields</small>
                     <div class="form_container">
                         <div class="form-group">
                             <input type="email" class="form-control" name="email" id="email_2" placeholder="Email*">
+                            <div id="email_err" style="display: none; color: red">Input type err</div>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password_in_2" id="password_in_2" value="" placeholder="Password*">
+                            <input type="password" class="form-control" name="password" id="password_in_2" value="" placeholder="Password*">
                         </div>
                         <hr>
                         <div class="form-group">
                             <label class="container_radio" style="display: inline-block; margin-right: 15px;">Male
-                                <input type="radio" name="gender" checked value="private">
+                                <input type="radio" name="gender" checked value="0">
                                 <span class="checkmark"></span>
                             </label>
                             <label class="container_radio" style="display: inline-block;">FeMale
-                                <input type="radio" name="gender" value="company">
+                                <input type="radio" name="gender" value="1">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -67,17 +68,17 @@
                             <div class="row no-gutters">
                                 <div class="col-6 pr-1">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Name*">
+                                        <input type="text" name="first_name" class="form-control" placeholder="First Name*">
                                     </div>
                                 </div>
                                 <div class="col-6 pl-1">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Last Name*">
+                                        <input type="text" name="last_name" class="form-control" placeholder="Last Name*">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Address Line*">
+                                        <input type="text" name="address_line" class="form-control" placeholder="Address Line*">
                                     </div>
                                 </div>
                             </div>
@@ -85,38 +86,27 @@
                             <div class="row no-gutters">
                                 <div class="col-6 pr-1">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="City*">
+                                        <input type="text" name="city" class="form-control" placeholder="City*">
                                     </div>
                                 </div>
                                 <div class="col-6 pl-1">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Country**">
+                                        <input type="text" name="country" class="form-control" placeholder="Country**">
                                     </div>
                                 </div>
                             </div>
                             <!-- /row -->
 
                             <div class="row no-gutters">
-                                <!--                            <div class="col-6 pr-1">
-                                                                <div class="form-group">
-                                                                    <div class="custom-select-form">
-                                                                        <select class="wide add_bottom_10" name="country" id="country">
-                                                                            <option value="" selected>Country*</option>
-                                                                            <option value="Europe">Europe</option>
-                                                                            <option value="United states">United states</option>
-                                                                            <option value="Asia">Asia</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>-->
                                 <div class="col-6 pl-1">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Telephone *">
+                                        <input type="text" name="telephone" class="form-control" placeholder="Telephone *">
                                     </div>
                                 </div>
                             </div>
                             <!-- /row -->
                             <div class="text-center"><input type="submit" value="Register" class="btn_1 full-width"></div>
+                            <h5 class="text-center" style="color: red">${requestScope.error}</h5>
                         </div>
                     </div>
                 </form>
@@ -127,6 +117,7 @@
         <!-- COMMON SCRIPTS -->
         <script src="js/common_scripts.min.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/tu.js"></script>
 
         <script>
             // Client type Panel

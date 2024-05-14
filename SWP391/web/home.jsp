@@ -1,6 +1,6 @@
 <%-- 
     Document   : home
-    Created on : May 14, 2024, 9:51:39 AM
+    Created on : May 14, 2024, 9:49:36 PM
     Author     : Admin
 --%>
 
@@ -281,25 +281,9 @@
                                     </li>
                                     <li>
                                         <div class="dropdown dropdown-access">
-                                            <a href="account.html" class="access_link"><span>Account</span></a>
+                                            <a href="#" class="access_link"><span>Account</span></a>
                                             <div class="dropdown-menu">
-
-
                                                 <a href="#sign-in-dialog" id="sign-in" class="btn_1">Sign In</a>
-                                                <ul>
-                                                    <li>
-                                                        <a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="account.html"><i class="ti-package"></i>My Orders</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="account.html"><i class="ti-user"></i>My Profile</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="help.html"><i class="ti-help-alt"></i>Help and Faq</a>
-                                                    </li>
-                                                </ul>
                                             </div>
                                         </div>
                                         <!-- /dropdown-access-->
@@ -1001,6 +985,7 @@
 
         <div id="toTop"></div><!-- Back to top button -->
 
+
         <!-- Sign In Modal -->
         <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
             <div class="modal_header">
@@ -1030,12 +1015,10 @@
                         </div>
                         <div class="float-end mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
                     </div>
-
                     <div class="text-center">
                         <input type="submit" value="Log In" class="btn_1 full-width">
-                        Don’t have an account? <a onclick="openSecondPopup()" style="color: blue" >Sign up</a>
+                        Don’t have an account? <a onclick="openSecondPopup()" style="color: blue">Sign up</a>
                     </div>
-
                     <div id="forgot_pw">
                         <div class="form-group">
                             <label>Please confirm login email below</label>
@@ -1045,7 +1028,6 @@
                         <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
                         <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
                     </div>
-
                 </div>
             </form>
             <!--form -->
@@ -1059,19 +1041,18 @@
         <!-- SPECIFIC SCRIPTS -->
         <script src="js/carousel-home.js"></script>
         <script src="js/jquery.cookiebar.js"></script>
-        <script src="js/tu.js"></script>
         <script>
-            $(document).ready(function () {
-                'use strict';
-                $.cookieBar({
-                    fixed: true
-                });
-            });
+                            $(document).ready(function () {
+                                'use strict';
+                                $.cookieBar({
+                                    fixed: true
+                                });
+                            });
         </script>
 
         <script type="text/javascript">
             function openSecondPopup() {
-                window.open("signup", "secondPopup", "width=700px,height=1100px");
+                window.open("signup", "secondPopup", "width=700,height=1100");
             }
         </script>
 

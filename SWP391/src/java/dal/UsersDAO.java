@@ -48,10 +48,50 @@ public class UsersDAO extends DBContext {
             java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
             st.setDate(9, modified_at);
             st.setInt(10, u.getGender());
-            
+
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public Users getUserByEmail(String email) {
+        String sql = "SELECT [id]\n"//1
+                + "      ,[email]\n"//2
+                + "      ,[password]\n"//3
+                + "      ,[role_id]\n"//4
+                + "      ,[status_id]\n"//5
+                + "      ,[first_name]\n"//6
+                + "      ,[last_name]\n"//7
+                + "      ,[telephone]\n"//8
+                + "      ,[created_at]\n"//9
+                + "      ,[modified_at]\n"//10
+                + "      ,[gender]\n"
+                + "  FROM [dbo].[users]\n"
+                + "  WHERE email = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Users u = new Users();
+                
+                u.setId(rs.getInt(1));
+                u.setPassword(rs.getString(2));
+                u.setRole_id(rs.getInt(3));
+                u.setStatus_id(rs.getInt(4));
+                u.setFirst_name(rs.getString(5));
+                u.setLast_name(rs.getString(6));
+                u.setTelephone(rs.getString(7));
+                u.setCreated_at(rs.getDate(8));
+                u.setModified_at(rs.getDate(9));
+                u.setGender(rs.getInt(10));
+                
+                return u;
+            }
+        } catch (SQLException e) {
+
+        }
+        return null;
     }
 }

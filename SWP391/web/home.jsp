@@ -284,6 +284,10 @@
                                             <a href="#" class="access_link"><span>Account</span></a>
                                             <div class="dropdown-menu">
                                                 <a href="#sign-in-dialog" id="sign-in" class="btn_1">Sign In</a>
+                                                <ul>
+                                                    <li></li>
+                                                </ul>
+                                                <a onclick="openSecondPopup()" id="sign-up" class="btn_1">Sign Up</a>
                                             </div>
                                         </div>
                                         <!-- /dropdown-access-->
@@ -991,7 +995,7 @@
             <div class="modal_header">
                 <h3>Sign In</h3>
             </div>
-            <form>
+            <form action="login" method="post">
                 <div class="sign-in-wrapper">
                     <!--                    <a href="#0" class="social_bt facebook">Login with Facebook</a>
                                         <a href="#0" class="social_bt google">Login with Google</a>

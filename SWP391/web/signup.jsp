@@ -52,16 +52,16 @@
                         <input type="password" class="form-control" name="password_in_2" id="password_in_2" value="" placeholder="Password*">
                     </div>
                     <hr>
-<!--                    <div class="form-group">
-                        <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private
-                            <input type="radio" name="client_type" checked value="private">
+                    <div class="form-group">
+                        <label class="container_radio" style="display: inline-block; margin-right: 15px;">Male
+                            <input type="radio" name="gender" checked value="private">
                             <span class="checkmark"></span>
                         </label>
-                        <label class="container_radio" style="display: inline-block;">Company
-                            <input type="radio" name="client_type" value="company">
+                        <label class="container_radio" style="display: inline-block;">FeMale
+                            <input type="radio" name="gender" value="company">
                             <span class="checkmark"></span>
                         </label>
-                    </div>-->
+                    </div>
                     <div class="private box">
                         <div class="row no-gutters">
                             <div class="col-6 pr-1">
@@ -115,19 +115,24 @@
                             </div>
                         </div>
                         <!-- /row -->
-
+                        <div class="text-center"><input type="submit" value="Register" class="btn_1 full-width"></div>
                     </div>
                     <!-- /private -->
                     <div class="company box" style="display: none;">
                         <div class="row no-gutters">
-                            <div class="col-12">
+                            <div class="col-6 pr-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Company Name*">
+                                    <input type="text" class="form-control" placeholder="Name*">
+                                </div>
+                            </div>
+                            <div class="col-6 pl-1">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Last Name*">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Full Address">
+                                    <input type="text" class="form-control" placeholder="Address Line*">
                                 </div>
                             </div>
                         </div>
@@ -140,12 +145,11 @@
                             </div>
                             <div class="col-6 pl-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Postal Code*">
+                                    <input type="text" class="form-control" placeholder="Country**">
                                 </div>
                             </div>
-                        </div>
                         <!-- /row -->
-                        <div class="row no-gutters">
+<!--                        <div class="row no-gutters">
                             <div class="col-6 pr-1">
                                 <div class="form-group">
                                     <div class="custom-select-form">
@@ -163,7 +167,7 @@
                                     <input type="text" class="form-control" placeholder="Telephone *">
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <!-- /row -->
                     </div>
                     <!-- /company -->

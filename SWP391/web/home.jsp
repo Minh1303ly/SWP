@@ -1071,7 +1071,7 @@
 
         <script type="text/javascript">
             function openSecondPopup() {
-                window.open("signup", "secondPopup", "width=700,height=1100");
+                window.open("signup", "secondPopup", "width=700px,height=1100px");
             }
         </script>
 

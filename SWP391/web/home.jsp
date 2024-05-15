@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,18 +44,17 @@
     <body>
 
         <div id="page">
-
             <header class="version_1">
                 <div class="layer"></div><!-- Mobile menu overlay mask -->
                 <div class="main_header">
                     <div class="container">
                         <div class="row small-gutters">
-                            <div class="col-xl-3 col-lg-3 d-lg-flex align-items-center">
+                            <div class="col-xl-4 col-lg-3 d-lg-flex align-items-center">
                                 <div id="logo">
-                                    <a href="index.html"><img src="img/logo.svg" alt="" width="100" height="35"></a>
+                                    <a href="index.html"><img src="img/logo3.png" alt="" width="100" height="35"></a>
                                 </div>
                             </div>
-                            <nav class="col-xl-6 col-lg-7">
+                            <nav class="col-xl-4 col-lg-7">
                                 <a class="open_close" href="javascript:void(0);">
                                     <div class="hamburger hamburger--spin">
                                         <div class="hamburger-box">
@@ -73,14 +73,31 @@
                                             <a href="javascript:void(0);" class="show-submenu">Home</a>
                                             <ul>
                                                 <li><a href="index.html">Slider</a></li>
-                                                <li><a href="index-2.html">Video Background</a></li>
-                                                <li><a href="index-3.html">Vertical Slider</a></li>
-                                                <li><a href="index-4.html">GDPR Cookie Bar</a></li>
+                                                <li><a href="index-2.html">Top Selling</a></li>
+                                                <li><a href="index-3.html">Feature</a></li>
+                                                <li><a href="index-4.html">Post</a></li>
                                             </ul>
                                         </li>
+                                        <li class="submenu">
+                                            <!-- <a href="javascript:void(0);" class="show-submenu">Extra Pages</a>
+                                            <ul>
+                                                <li><a href="header-2.html">Header Style 2</a></li>
+                                                <li><a href="header-3.html">Header Style 3</a></li>
+                                                <li><a href="header-4.html">Header Style 4</a></li>
+                                                <li><a href="header-5.html">Header Style 5</a></li>
+                                                <li><a href="404.html">404 Page</a></li>
+                                                <li><a href="sign-in-modal.html">Sign In Modal</a></li>
+                                                <li><a href="contacts.html">Contact Us</a></li>
+                                                <li><a href="about.html">About 1</a></li>
+                                                <li><a href="about-2.html">About 2</a></li>
+                                                <li><a href="modal-advertise.html">Modal Advertise</a></li>
+                                                <li><a href="modal-newsletter.html">Modal Newsletter</a></li>
+                                            </ul> -->
+                                        </li>
+
                                         <li class="megamenu submenu">
-                                            <a href="javascript:void(0);" class="show-submenu-mega">Pages</a>
-                                            <div class="menu-wrapper">
+                                            <a href="javascript:void(0);" class="show-submenu-mega">Shop</a>
+                                            <!-- <div class="menu-wrapper">
                                                 <div class="row small-gutters">
                                                     <div class="col-lg-3">
                                                         <h3>Listing grid</h3>
@@ -127,37 +144,25 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- /row -->
-                                            </div>
+                                                
+                                            </div> -->
                                             <!-- /menu-wrapper -->
                                         </li>
-                                        <li class="submenu">
-                                            <a href="javascript:void(0);" class="show-submenu">Extra Pages</a>
-                                            <ul>
-                                                <li><a href="header-2.html">Header Style 2</a></li>
-                                                <li><a href="header-3.html">Header Style 3</a></li>
-                                                <li><a href="header-4.html">Header Style 4</a></li>
-                                                <li><a href="header-5.html">Header Style 5</a></li>
-                                                <li><a href="404.html">404 Page</a></li>
-                                                <li><a href="sign-in-modal.html">Sign In Modal</a></li>
-                                                <li><a href="contacts.html">Contact Us</a></li>
-                                                <li><a href="about.html">About 1</a></li>
-                                                <li><a href="about-2.html">About 2</a></li>
-                                                <li><a href="modal-advertise.html">Modal Advertise</a></li>
-                                                <li><a href="modal-newsletter.html">Modal Newsletter</a></li>
-                                            </ul>
+                                        <li>
+                                            <!-- <a href="#0">Buy Template</a> -->
                                         </li>
+
                                         <li>
                                             <a href="blog.html">Blog</a>
                                         </li>
                                         <li>
-                                            <a href="#0">Buy Template</a>
+                                            <a href="#0">About Us </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <!--/main-menu -->
                             </nav>
-                            <div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
+                            <div class="col-xl-4 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
                                 <a class="phone_top" href="tel://9438843343"><strong><span>Need Help?</span>+94 423-23-221</strong></a>
                             </div>
                         </div>
@@ -240,6 +245,8 @@
                                     </ul>
                                 </nav>
                             </div>
+
+                            <!--Search blog-->
                             <div class="col-xl-6 col-lg-7 col-md-6 d-none d-md-block">
                                 <div class="custom-search-input">
                                     <input type="text" placeholder="Search over 10.000 products">
@@ -276,21 +283,103 @@
                                         </div>
                                         <!-- /dropdown-cart-->
                                     </li>
-                                    <li>
-                                        <a href="#0" class="wishlist"><span>Wishlist</span></a>
-                                    </li>
+
                                     <li>
                                         <div class="dropdown dropdown-access">
                                             <a href="#" class="access_link"><span>Account</span></a>
-                                            <div class="dropdown-menu">
-                                                <a href="#sign-in-dialog" id="sign-in" class="btn_1">Sign In</a>
-                                                <ul>
-                                                    <li></li>
-                                                </ul>
-                                                <a onclick="openSecondPopup()" id="sign-up" class="btn_1">Sign Up</a>
-                                            </div>
+
+                                            <!--still not login-->
+                                            <c:if test="${sessionScope.account==null}">
+                                                <div class="dropdown-menu">
+                                                    <a href="#sign-in-dialog" id="sign-in" class="btn_1">Sign In</a>
+                                                    <ul>
+                                                        <li></li>
+                                                    </ul>
+                                                    <a onclick="openSecondPopup()" id="sign-up" class="btn_1">Sign Up</a>
+                                                </div>
+                                            </c:if>
+                                            <!--end still not login-->
+                                            <!--user-->
+                                            <c:if test="${sessionScope.account.getRole_id() == 1}">
+                                                <div class="dropdown-menu">
+                                                    <a href="changepassword" class="btn_1">Change Password</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#"><i class="ti-package"></i>My Orders</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="logout"><i class="ti-help-alt"></i>Log Out</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </c:if>
+                                            <!--end user-->
+                                            <!--marketing-->
+                                            <c:if test="${sessionScope.account.getRole_id() == 2}">
+                                                <div class="dropdown-menu">
+                                                    <a href="changepassword" class="btn_1">Change Password</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#"><i class="ti-package"></i>MKT Dashboard</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="logout"><i class="ti-help-alt"></i>Log Out</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </c:if>
+                                            <!--end marketing-->
+                                            <!--Sale-->
+                                            <c:if test="${sessionScope.account.getRole_id() == 3}">
+                                                <div class="dropdown-menu">
+                                                    <a href="changepassword" class="btn_1">Change Password</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#"><i class="ti-package"></i>Sale Dashboard</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="logout"><i class="ti-help-alt"></i>Log Out</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </c:if>
+                                            <!--end sale-->
+                                            <!--Sale manager-->
+                                            <c:if test="${sessionScope.account.getRole_id() == 4}">
+                                                <div class="dropdown-menu">
+                                                    <a href="changepassword" class="btn_1">Change Password</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#"><i class="ti-package"></i>Sale Manager Dashboard</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="logout"><i class="ti-help-alt"></i>Log Out</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </c:if>
+                                            <!--end sale manager-->
+                                            <!--Admin-->
+                                            <c:if test="${sessionScope.account.getRole_id() == 5}">
+                                                <div class="dropdown-menu">
+                                                    <a href="changepassword" class="btn_1">Change Password</a>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#"><i class="ti-package"></i>Admin Dashboard</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="logout"><i class="ti-help-alt"></i>Log Out</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </c:if>
+                                            <!--end admin-->
+
                                         </div>
                                         <!-- /dropdown-access-->
+                                    </li>
+                                    <li>
+                                        <!-- <a href="#0" class="wishlist"><span>Wishlist</span></a> -->
                                     </li>
                                     <li>
                                         <a href="javascript:void(0);" class="btn_search_mob"><span>Search</span></a>
@@ -318,6 +407,8 @@
                 </div>
                 <!-- /main_nav -->
             </header>
+
+
             <!-- /header -->
 
             <main>
@@ -1021,6 +1112,7 @@
                     </div>
                     <div class="text-center">
                         <input type="submit" value="Log In" class="btn_1 full-width">
+                        <h5 class="text-center" style="color: red">${requestScope.error}</h5>
                         Don’t have an account? <a onclick="openSecondPopup()" style="color: blue">Sign up</a>
                     </div>
                     <div id="forgot_pw">

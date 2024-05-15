@@ -68,6 +68,11 @@ public class ActiveServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Object obj = session.getAttribute("code");
         String code = (String) obj;
+        
+        if(obj == null){
+            request.setAttribute("error", "Verify Fail!");
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+        }
 
         Object obj2 = session.getAttribute("signUpAccount");
         Users u = new Users();
@@ -90,6 +95,7 @@ public class ActiveServlet extends HttpServlet {
 
             u2.setStatus_id(1);
             udb.updateUser(u2);
+            session.setAttribute("account", u2);
 
             User_address ua2 = new User_address(u2.getId(), ua.getAddress_line(), ua.getCity(), ua.getCountry());
             uadb.insertUserAddress(ua2);

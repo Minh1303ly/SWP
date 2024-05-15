@@ -148,7 +148,7 @@ public class OtpServlet extends HttpServlet {
         UsersDAO udb = new UsersDAO();
 //        User_addressDAO uadb = new User_addressDAO();
 
-        Users u = new Users(email, password, 1, 1, first_name, last_name, gender, telephone, new Date(), new Date());
+        Users u = new Users(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date());
         User_address ua = new User_address(address_line, city, country);
 
         if (email == null || email.equals("")
@@ -173,11 +173,20 @@ public class OtpServlet extends HttpServlet {
             request.getRequestDispatcher("signup.jsp").forward(request, response);
         } else {
             String code = Email.getRandomNumber();
-            Email.sendEmail(email, "Enter This Code To Verify Your Email", code);
+            String context = request.getScheme()
+                    + "://"
+                    + request.getServerName()
+                    + ":"
+                    + request.getServerPort()
+                    + "/SWP391/active";
+            Email.sendEmail(email, "Verify Your Email Address", context, code);
             HttpSession session = request.getSession();
             session.setAttribute("signUpAccount", u);
             session.setAttribute("signUpAddress", ua);
             session.setAttribute("code", code);
+            
+            udb.insertUser(u);
+            
             request.getRequestDispatcher("otp.jsp").forward(request, response);
         }
     }

@@ -22,6 +22,25 @@ public class Users {
     private String telephone;
     private Date created_at;
     private Date modified_at;
+    
+    private Roles role;
+    private User_status usersStatus;
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
+    }
+
+    public User_status getUsersStatus() {
+        return usersStatus;
+    }
+
+    public void setUsersStatus(User_status usersStatus) {
+        this.usersStatus = usersStatus;
+    }
 
     public Users() {
     }

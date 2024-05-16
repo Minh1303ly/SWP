@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dal.User_addressDAO;
 import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,21 +12,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import model.User_address;
 import model.Users;
-import util.Email;
 import util.Encrypt;
 
 /**
  *
  * @author Admin
  */
-public class OtpServlet extends HttpServlet {
+public class ChangePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,26 +40,15 @@ public class OtpServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OtpServlet</title>");
+            out.println("<title>Servlet ChangePasswordServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OtpServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePasswordServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
-
-    public static boolean isValidEmailAddress(String email) {
-        boolean result = true;
-        try {
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            result = false;
-        }
-        return result;
-    }
-
+    
     public static boolean isValidPassword(String password) {
         /*
         It contains at least one digit (1).
@@ -113,7 +96,7 @@ public class OtpServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("otp.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -127,68 +110,44 @@ public class OtpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password_raw = request.getParameter("password");
-        String password = Encrypt.toSHA1(password_raw);
-        String gender_raw = request.getParameter("gender");
-        String first_name = request.getParameter("first_name");
-        String last_name = request.getParameter("last_name");
-        String address_line = request.getParameter("address_line");
-        String city = request.getParameter("city");
-        String country = request.getParameter("country");
-        String telephone = request.getParameter("telephone");
-        int gender = 0;
+        String currentPassword = request.getParameter("currentPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirmNewPassword = request.getParameter("confirmNewPassword");
 
-        try {
-            gender = Integer.parseInt(gender_raw);
-        } catch (NumberFormatException e) {
-
-        }
-
+        HttpSession session = request.getSession();
         UsersDAO udb = new UsersDAO();
-//        User_addressDAO uadb = new User_addressDAO();
-
-        Users u = new Users(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date());
-        User_address ua = new User_address(address_line, city, country);
-
-        if (email == null || email.equals("")
-                || password_raw == null || password.equals("")
-                || gender_raw == null || gender_raw.equals("")
-                || first_name == null || first_name.equals("")
-                || last_name == null || last_name.equals("")
-                || address_line == null || address_line.equals("")
-                || city == null || city.equals("")
-                || country == null || country.equals("")
-                || telephone == null || telephone.equals("")) {
+        
+        Object obj2 = session.getAttribute("account");
+        Users u = new Users();
+        if (obj2 != null) {
+            u = (Users) obj2;
+        }
+        if(obj2 == null){
+            request.setAttribute("error", "Login Before Change Password");
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
+        
+        if(currentPassword == null || currentPassword.equals("")
+                || newPassword == null || newPassword.equals("")
+                || confirmNewPassword == null || confirmNewPassword.equals("")){
             request.setAttribute("error", "Not Empty");
             request.getRequestDispatcher("home.jsp").forward(request, response);
-        } else if (!isValidEmailAddress(email)) {
-            request.setAttribute("error", "Wrong Email Format");
+        }else if(!(newPassword.equals(confirmNewPassword))){
+            request.setAttribute("error", "New Password and Comfirm Password don't match");
             request.getRequestDispatcher("home.jsp").forward(request, response);
-        } else if (!isValidPassword(password_raw)) {
+        }else if(!isValidPassword(newPassword) || !isValidPassword(confirmNewPassword)){
             request.setAttribute("error", "Wrong Password Format");
             request.getRequestDispatcher("home.jsp").forward(request, response);
-        } else if (udb.getUserByEmail(email) != null) {
-            request.setAttribute("error", "Email Existed");
+        }else if(!(u.getPassword().equals(Encrypt.toSHA1(currentPassword)))){
+            request.setAttribute("error", "Wrong Current Password");
             request.getRequestDispatcher("home.jsp").forward(request, response);
-        } else {
-            String code = Email.getRandomNumber();
-            String context = request.getScheme()
-                    + "://"
-                    + request.getServerName()
-                    + ":"
-                    + request.getServerPort()
-                    + "/SWP391/active";
-            Email.sendEmail(email, "Verify Your Email Address", context, code);
-            HttpSession session = request.getSession();
-            session.setAttribute("signUpAccount", u);
-            session.setAttribute("signUpAddress", ua);
-            session.setAttribute("code", code);
+        }else{
+            u.setPassword(Encrypt.toSHA1(newPassword));
             
-            udb.insertUser(u);
-            
-            request.getRequestDispatcher("otp.jsp").forward(request, response);
+            udb.updateUser(u);
+            response.sendRedirect("logout");
         }
+        
     }
 
     /**
@@ -199,5 +158,6 @@ public class OtpServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold> 
+    }// </editor-fold>
+
 }

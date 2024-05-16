@@ -12,7 +12,8 @@
         <title>JSP Page</title>
 
         <link href="css/tu.css" rel="stylesheet">
-        <style>
+        <link href="css/custom.css" rel="stylesheet">
+<!--        <style>
             .button-link {
                 display: inline-block;
                 padding: 10px 20px;
@@ -27,7 +28,7 @@
             .button-link:hover {
                 background-color: #0056b3;
             }
-        </style>
+        </style>-->
     </head>
     <body>
         <div class="otp-form">

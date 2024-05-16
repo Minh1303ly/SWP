@@ -39,6 +39,16 @@
         <!-- YOUR CUSTOM CSS -->
         <link href="css/custom.css" rel="stylesheet">
 
+
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     </head>
 
     <body>
@@ -295,14 +305,19 @@
                                                     <ul>
                                                         <li></li>
                                                     </ul>
-                                                    <a onclick="openSecondPopup()" id="sign-up" class="btn_1">Sign Up</a>
+                                                    <!--<a onclick="openSecondPopup()" id="sign-up" class="btn_1">Sign Up</a>-->
+                                                    <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#signUp" >
+                                                        Sign Up
+                                                    </button>
                                                 </div>
                                             </c:if>
                                             <!--end still not login-->
                                             <!--user-->
                                             <c:if test="${sessionScope.account.getRole_id() == 1}">
                                                 <div class="dropdown-menu">
-                                                    <a href="changepassword" class="btn_1">Change Password</a>
+                                                    <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#changePassword" >
+                                                        Change Password
+                                                    </button>
                                                     <ul>
                                                         <li>
                                                             <a href="#"><i class="ti-package"></i>My Orders</a>
@@ -1113,7 +1128,10 @@
                     <div class="text-center">
                         <input type="submit" value="Log In" class="btn_1 full-width">
                         <h5 class="text-center" style="color: red">${requestScope.error}</h5>
-                        Don’t have an account? <a onclick="openSecondPopup()" style="color: blue">Sign up</a>
+                        Don’t have an account?
+                        <a style="width: 150px; color: blue" data-toggle="modal" data-target="#signUp" >
+                            Sign Up
+                        </a>
                     </div>
                     <div id="forgot_pw">
                         <div class="form-group">
@@ -1130,6 +1148,109 @@
         </div>
         <!-- /Sign In Modal -->
 
+        <!-- Sign Up Modal -->
+        <div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="signUpModalLabel" aria-hidden="true">
+            <div style="margin-top: 100px" class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="signUpModalLabel">Sign Up</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="otp" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" name="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" name="password" id="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Gender</label><br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="0" required>
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="1">
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" class="form-control" name="first_name" id="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" class="form-control" name="last_name" id="lastName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addressLine">Address Line</label>
+                                <input type="text" class="form-control" name="address_line" id="addressLine" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" name="city" id="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <input type="text" class="form-control" name="country" id="country" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="telephone">Telephone</label>
+                                <input type="tel" class="form-control" name="telephone" id="telephone" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="Sign Up" class="btn_1 full-width">
+                        </div>
+                        <h5 class="text-center" style="color: red">${requestScope.error}</h5>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--/Sign Up Modal -->
+
+        <!-- Change Password Modal -->
+
+        <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="changepassword" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" class="form-control" name="currentPassword" id="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" class="form-control" name="newPassword" id="newPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmNewPassword">Confirm New Password</label>
+                                <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPassword" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="Change Password" class="btn_1 full-width">
+                        </div>
+                        <h5 class="text-center" style="color: red">${requestScope.error}</h5>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- /Change Password Modal -->
+
         <!-- COMMON SCRIPTS -->
         <script src="js/common_scripts.min.js"></script>
         <script src="js/main.js"></script>
@@ -1137,6 +1258,7 @@
         <!-- SPECIFIC SCRIPTS -->
         <script src="js/carousel-home.js"></script>
         <script src="js/jquery.cookiebar.js"></script>
+        <script src="js/tu.js"></script>
         <script>
                             $(document).ready(function () {
                                 'use strict';
@@ -1144,12 +1266,6 @@
                                     fixed: true
                                 });
                             });
-        </script>
-
-        <script type="text/javascript">
-            function openSecondPopup() {
-                window.open("signup", "secondPopup", "width=760px,height=1100px");
-            }
         </script>
 
     </body>

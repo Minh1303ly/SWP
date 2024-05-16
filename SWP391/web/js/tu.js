@@ -92,5 +92,28 @@ document.addEventListener("DOMContentLoaded", function () {
     otpInputs[0].focus();
     emailOtpInputs[0].focus();
 
-    
+    function submitChangePassword() {
+    var form = document.getElementById('changepassword');
+    if (form.checkValidity()) {
+        var currentPassword = document.getElementById('currentPassword').value;
+        var newPassword = document.getElementById('newPassword').value;
+        var confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+        if (newPassword !== confirmNewPassword) {
+            alert('New passwords do not match.');
+            return;
+        }
+
+        // Add your password change logic here
+        // Example: AJAX request to the server
+
+        alert('Password changed successfully.');
+        $('#changePasswordModal').modal('hide');
+    } else {
+        form.reportValidity();
+    }
+}
+
 });
+
+

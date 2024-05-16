@@ -71,7 +71,7 @@ public class ActiveServlet extends HttpServlet {
         
         if(obj == null){
             request.setAttribute("error", "Verify Fail!");
-            request.getRequestDispatcher("signup.jsp").forward(request, response);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
         }
 
         Object obj2 = session.getAttribute("signUpAccount");
@@ -103,7 +103,7 @@ public class ActiveServlet extends HttpServlet {
             response.sendRedirect("home");
         } else {
             request.setAttribute("error", "Verify Fail!");
-            request.getRequestDispatcher("signup.jsp").forward(request, response);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
         }
     }
 

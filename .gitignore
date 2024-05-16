@@ -1,14 +1,2 @@
-SWP391/SWP391/nbproject/build-impl.xml
-SWP391/SWP391/nbproject/genfiles.properties
-SWP391/SWP391/nbproject/project.properties
-SWP391/SWP391/nbproject/project.xml
-*.xml
-*.iml
-*.xml
-*.xml
-*.properties
-*.xml
-SWP391/SWP391/nbproject/build-impl.xml
-SWP391/SWP391/nbproject/genfiles.properties
-SWP391/SWP391/nbproject/project.properties
-SWP391/SWP391/nbproject/project.xml
+/SWP391/build/
+

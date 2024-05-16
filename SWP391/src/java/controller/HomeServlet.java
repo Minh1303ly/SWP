@@ -5,6 +5,7 @@
 package controller;
 
 import dao.BlogDAO;
+import dao.DAOCategories;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Blog;
+import model.Categories;
 
 /**
  *
@@ -41,26 +43,41 @@ public class HomeServlet extends HttpServlet {
                 case "viewHome":
                     viewHome(request, response);
                     break;
+                case "setHeader":
+                    setHeader(request, response);
+                    break;
             }
         }
     }
     
     public void viewHome(HttpServletRequest request, HttpServletResponse response){
         try {
-            BlogDAO bDao = new BlogDAO();
+            BlogDAO bDao = new BlogDAO();        
             request.setAttribute("title", "Home");
-            request.setAttribute("blog", bDao.getHotBlog());
-            
+            request.setAttribute("blog", bDao.getHotBlog());                     
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
-            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HomeServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
     
+    public void setHeader(HttpServletRequest request, HttpServletResponse response){
+        try {
+            DAOCategories cDAO = new DAOCategories();
+            request.setAttribute("categories", cDAO.getAll());
+            RequestDispatcher dispatch = request.getRequestDispatcher("header.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(HomeServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
     public static void main(String[] args) {
-        BlogDAO bDao = new BlogDAO();
-        List<Blog> ls = bDao.getHotBlog();
+        BlogDAO bDao = new BlogDAO();     
+        DAOCategories cDAO = new DAOCategories();
+        List<Categories> ls = cDAO.getAll();
         System.out.println(ls.get(0).toString());
     }
 

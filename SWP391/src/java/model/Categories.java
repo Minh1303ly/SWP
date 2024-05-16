@@ -47,5 +47,10 @@ public class Categories {
     public void setModifiedAt(Date modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
+
+    @Override
+    public String toString() {
+        return "Categories{" + "id=" + id + ", status_id=" + status_id + ", name=" + name + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + '}';
+    }
     
 }

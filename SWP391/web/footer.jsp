@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <footer class="revealed">
     <div class="container">
         <div class="row">
@@ -102,3 +103,4 @@
         </div>
     </div>
 </footer>
+

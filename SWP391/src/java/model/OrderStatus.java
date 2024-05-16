@@ -1,3 +1,4 @@
+package model;
 public class OrderStatus {
     private int id;
     private String name;

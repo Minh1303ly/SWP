@@ -1,3 +1,4 @@
+package model;
 public class BrandStatus{
     private int id;
     private String name;

@@ -1,3 +1,4 @@
+package model;
 public class CategotyStatus {
     private int id;
     private String name;

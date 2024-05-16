@@ -1,3 +1,4 @@
+package model;
 import java.util.Date;
 
 public class Products {
@@ -16,6 +17,24 @@ public class Products {
     private String img2;
     private Date created_at;
     private Date modified_at;
+
+    public Products(int id, int category_id, int discount_id, int status_id, int brand_id, String name, int quantity, float price, String size, String color, String description, String img1, String img2, Date created_at, Date modified_at) {
+        this.id = id;
+        this.category_id = category_id;
+        this.discount_id = discount_id;
+        this.status_id = status_id;
+        this.brand_id = brand_id;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.size = size;
+        this.color = color;
+        this.description = description;
+        this.img1 = img1;
+        this.img2 = img2;
+        this.created_at = created_at;
+        this.modified_at = modified_at;
+    }
 
     
 
@@ -132,6 +151,11 @@ public class Products {
 
     public String getImg1() {
         return img1;
+    }
+
+    @Override
+    public String toString() {
+        return "Products{" + "id=" + id + ", discount_id=" + discount_id + ", brand_id=" + brand_id + ", name=" + name + ", quantity=" + quantity + ", price=" + price + ", size=" + size + ", color=" + color + '}';
     }
 
     public void setImg1(String img1) {

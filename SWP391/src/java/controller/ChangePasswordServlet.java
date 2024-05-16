@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import model.Users;
+import model.User;
 import util.Encrypt;
 
 /**
@@ -118,9 +118,9 @@ public class ChangePasswordServlet extends HttpServlet {
         UsersDAO udb = new UsersDAO();
         
         Object obj2 = session.getAttribute("account");
-        Users u = new Users();
+        User u = new User();
         if (obj2 != null) {
-            u = (Users) obj2;
+            u = (User) obj2;
         }
         if(obj2 == null){
             request.setAttribute("error", "Login Before Change Password");

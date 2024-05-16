@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Roles;
-import model.User_status;
+import model.UserStatus;
 
 /**
  *
@@ -20,8 +20,8 @@ import model.User_status;
 public class User_statusDAO extends DBContext {
 
     // lay tat ca cac user status
-    public List<User_status> getAllUserStatus() {
-        List<User_status> list = new ArrayList<>();
+    public List<UserStatus> getAllUserStatus() {
+        List<UserStatus> list = new ArrayList<>();
         String sql = "SELECT [id]\n"//1
                 + "      ,[name]\n"//2
                 + "  FROM [dbo].[user_status]";
@@ -29,7 +29,7 @@ public class User_statusDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                User_status us = new User_status();
+                UserStatus us = new UserStatus();
 
                 us.setId(rs.getInt(1));
                 us.setName(rs.getString(2));

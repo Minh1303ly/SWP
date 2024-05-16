@@ -18,8 +18,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import model.User_address;
-import model.Users;
+import model.UserAddress;
+import model.User;
 import util.Email;
 import util.Encrypt;
 
@@ -137,10 +137,10 @@ public class OtpServlet extends HttpServlet {
         String city = request.getParameter("city");
         String country = request.getParameter("country");
         String telephone = request.getParameter("telephone");
-        int gender = 0;
+        boolean gender = false;
 
         try {
-            gender = Integer.parseInt(gender_raw);
+            gender = Boolean.parseBoolean(gender_raw);
         } catch (NumberFormatException e) {
 
         }
@@ -148,8 +148,8 @@ public class OtpServlet extends HttpServlet {
         UsersDAO udb = new UsersDAO();
 //        User_addressDAO uadb = new User_addressDAO();
 
-        Users u = new Users(email, password, 1, 0, first_name, last_name, gender, telephone, new Date(), new Date());
-        User_address ua = new User_address(address_line, city, country);
+        User u = new User(email, password, 1, 0, first_name, last_name, gender, telephone, new Date(), new Date());
+        UserAddress ua = new UserAddress(address_line, city, country);
 
         if (email == null || email.equals("")
                 || password_raw == null || password.equals("")
@@ -169,8 +169,8 @@ public class OtpServlet extends HttpServlet {
             request.setAttribute("error", "Wrong Password Format");
             request.getRequestDispatcher("home.jsp").forward(request, response);
         } else if (udb.getUserByEmail(email) != null) {
-            Users u2 = udb.getUserByEmail(email);
-            if (u2.getStatus_id() != 0) {
+            User u2 = udb.getUserByEmail(email);
+            if (u2.getStatusId() != 0) {
                 request.setAttribute("error", "Email Existed");
                 request.getRequestDispatcher("home.jsp").forward(request, response);
             } else {

@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Users;
+import model.User;
 import util.Encrypt;
 
 /**
@@ -79,7 +79,7 @@ public class LoginServlet extends HttpServlet {
         String email_forgot = request.getParameter("email_forgot");
 
         UsersDAO udb = new UsersDAO();
-        Users u = udb.getUserByEmail(email);
+        User u = udb.getUserByEmail(email);
         HttpSession session = request.getSession();
 
         if (email_forgot == null || email_forgot.equals("")) {

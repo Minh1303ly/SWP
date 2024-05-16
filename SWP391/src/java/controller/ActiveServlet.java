@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.User_address;
-import model.Users;
+import model.UserAddress;
+import model.User;
 
 /**
  *
@@ -75,29 +75,29 @@ public class ActiveServlet extends HttpServlet {
         }
 
         Object obj2 = session.getAttribute("signUpAccount");
-        Users u = new Users();
+        User u = new User();
         if (obj2 != null) {
-            u = (Users) obj2;
+            u = (User) obj2;
         }
 
         Object obj3 = session.getAttribute("signUpAddress");
-        User_address ua = new User_address();
+        UserAddress ua = new UserAddress();
         if (obj3 != null) {
-            ua = (User_address) obj3;
+            ua = (UserAddress) obj3;
         }
 
         if (code.equals(verifyCode)) {
             Object obj4 = udb.getUserByEmail(u.getEmail());
-            Users u2 = new Users();
+            User u2 = new User();
             if (obj4 != null) {
-                u2 = (Users) obj4;
+                u2 = (User) obj4;
             }
 
-            u2.setStatus_id(1);
+            u2.setStatusId(1);
             udb.updateUser(u2);
             session.setAttribute("account", u2);
 
-            User_address ua2 = new User_address(u2.getId(), ua.getAddress_line(), ua.getCity(), ua.getCountry());
+            UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddressLine(), ua.getCity(), ua.getCountry());
             uadb.insertUserAddress(ua2);
 
             response.sendRedirect("home");

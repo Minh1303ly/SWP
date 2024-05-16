@@ -31,6 +31,35 @@ public class User {
     public User() {
     }
 
+    public User(int id, String email, String password, int roleId, int statusId, String firstName, String lastName, String telephone, Date createdAt, Date modifiedAt, boolean gender) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.statusId = statusId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.gender = gender;
+    }
+
+    public User(String email, String password, int roleId, int statusId, String firstName, String lastName, boolean gender, String telephone, Date createdAt, Date modifiedAt) {
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.statusId = statusId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephone = telephone;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.gender = gender;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

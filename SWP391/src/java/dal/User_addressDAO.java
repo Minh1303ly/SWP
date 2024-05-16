@@ -7,7 +7,7 @@ package dal;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import model.User_address;
+import model.UserAddress;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.User_address;
 public class User_addressDAO extends DBContext {
 
     // Them user address
-    public void insertUserAddress(User_address ua) {
+    public void insertUserAddress(UserAddress ua) {
         String sql = "INSERT INTO [dbo].[user_address]\n"
                 + "           ([user_id]\n"//1
                 + "           ,[address_line]\n"//2
@@ -26,8 +26,8 @@ public class User_addressDAO extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
 
-            st.setInt(1, ua.getUser_id());
-            st.setString(2, ua.getAddress_line());
+            st.setInt(1, ua.getUserId());
+            st.setString(2, ua.getAddressLine());
             st.setString(3, ua.getCity());
             st.setString(4, ua.getCountry());
 

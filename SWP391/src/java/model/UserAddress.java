@@ -19,6 +19,20 @@ public class UserAddress {
     public UserAddress() {
     }
 
+    public UserAddress(String addressLine, String city, String country) {
+        this.addressLine = addressLine;
+        this.city = city;
+        this.country = country;
+    }
+
+    public UserAddress(int userId, String addressLine, String city, String country) {
+        this.userId = userId;
+        this.addressLine = addressLine;
+        this.city = city;
+        this.country = country;
+    }
+    
+
     public UserAddress(int id, int userId, String addressLine, String city, String country) {
         this.id = id;
         this.userId = userId;

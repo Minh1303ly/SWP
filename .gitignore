@@ -1,2 +1,12 @@
 /SWP391/build/
 
+*.properties
+SWP391/nbproject/ant-deploy.xml
+SWP391/nbproject/build-impl.xml
+SWP391/nbproject/genfiles.properties
+SWP391/nbproject/project.properties
+SWP391/nbproject/project.xml
+SWP391/web/META-INF/context.xml
+SWP391/nbproject/build-impl.xml
+/SWP391/nbproject
+/SWP391/nbproject

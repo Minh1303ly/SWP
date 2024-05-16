@@ -111,8 +111,7 @@
                             </li>
                             <li>
                                 <!-- <a href="#0">Buy Template</a> -->
-                            </li>
-                            
+                            </li>                           
                             <li>
                                 <a href="blog.html">Blog</a>
                             </li>
@@ -150,7 +149,7 @@
                                 </span>
                                 <div id="menu">
                                     <ul>
-                                        <li><span><a href="#0">Collections</a></span>
+<!--                                        <li><span><a href="#0">Collections</a></span>
                                             <ul>
                                                 <li><a href="listing-grid-1-full.html">Trending</a></li>
                                                 <li><a href="listing-grid-2-full.html">Life style</a></li>
@@ -158,7 +157,7 @@
                                                 <li><a href="listing-grid-4-sidebar-left.html">Training</a></li>
                                                 <li><a href="listing-grid-5-sidebar-right.html">View all Collections</a></li>
                                             </ul>
-                                        </li>
+                                        </li>-->
                                         <li><span><a href="#">Men</a></span>
                                             <ul>
                                                 <li><a href="listing-grid-6-sidebar-left.html">Offers</a></li>
@@ -260,9 +259,9 @@
                                         <li>
                                             <a href="account.html"><i class="ti-user"></i>My Profile</a>
                                         </li>
-                                        <li>
+<!--                                        <li>
                                             <a href="help.html"><i class="ti-help-alt"></i>Help and Faq</a>
-                                        </li>
+                                        </li>-->
                                     </ul>
                                 </div>
                             </div>

@@ -8,14 +8,14 @@ package model;
  *
  * @author Admin
  */
-public class User_status {
+public class ProductStatus {
     private int id;
     private String name;
 
-    public User_status() {
+    public ProductStatus() {
     }
 
-    public User_status(int id, String name) {
+    public ProductStatus(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -35,6 +35,5 @@ public class User_status {
     public void setName(String name) {
         this.name = name;
     }
-    
     
 }

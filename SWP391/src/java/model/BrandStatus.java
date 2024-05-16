@@ -8,15 +8,15 @@ package model;
  *
  * @author Admin
  */
-public class Roles {
+public class BrandStatus {
+
     private int id;
     private String name;
 
-    public Roles() {
+    public BrandStatus() {
     }
 
-    public Roles(int id, String name) {
-        this.id = id;
+    public BrandStatus(String name) {
         this.name = name;
     }
 
@@ -36,9 +36,4 @@ public class Roles {
         this.name = name;
     }
 
-     @Override
-    public String toString() {
-        return "Roles{" + "id=" + id + ", name=" + name + '}';
-    }
-    
 }

@@ -60,7 +60,7 @@
                             <div class="widget search_blog d-block d-sm-block d-md-block d-lg-none">
                                 <div class="form-group">
                                     <form action="blogs">
-                                        <input type="text" name="search" id="search" class="form-control" placeholder="Search..">
+                                        <input type="text" name="search" id="search" value="${search}" class="form-control" placeholder="Search..">
                                         <button type="submit"><i class="ti-search"></i></button>
                                     </form>
                                 </div>

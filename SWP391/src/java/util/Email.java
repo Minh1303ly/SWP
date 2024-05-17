@@ -110,7 +110,7 @@ public class Email {
                     + "                                <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n"
                     + "                                    <tr>\n"
                     + "                                        <td style=\"padding: 30px; text-align: center;\">\n"
-                    + "                                            <a href=\"" + noiDung + "?code="+ code + "\" target=\"_blank\" style=\"font-size: 16px; background-color: #22a8ff; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 5px; border: 1px solid #1a87d6; display: inline-block;\">\n"
+                    + "                                            <a href=\"" + noiDung + "?email=" + to + "&code="+ code + "\" target=\"_blank\" style=\"font-size: 16px; background-color: #22a8ff; color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 5px; border: 1px solid #1a87d6; display: inline-block;\">\n"
                     + "                                                Verify Email\n"
                     + "                                            </a>\n"
                     + "                                        </td>\n"

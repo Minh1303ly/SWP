@@ -4,12 +4,17 @@
  */
 package model;
 
-import lombok.*;
+import lombok.Data;
+
+import java.sql.Date;
 
 @Data
-public class ProductStatus {
-
+public class ShopingSession {
     private int id;
-    private String name;
+    private int userId;
+    private int total;
+    private Date createAt;
+    private Date modifiedAt;
 
+    private User user;
 }

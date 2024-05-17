@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class OrderStatus {
 
@@ -41,4 +41,5 @@ public class OrderStatus {
     public String toString() {
         return "OrderStatus{" + "id=" + id + ", name=" + name + '}';
     }
+
 }

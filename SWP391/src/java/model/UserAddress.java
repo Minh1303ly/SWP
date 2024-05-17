@@ -9,34 +9,32 @@ package model;
  * @author Admin
  */
 public class UserAddress {
-
     private int id;
-    private int userId;
-    private String addressLine;
+    private int user_id;
+    private String address_line;
     private String city;
     private String country;
 
     public UserAddress() {
     }
 
-    public UserAddress(String addressLine, String city, String country) {
-        this.addressLine = addressLine;
+    public UserAddress(int user_id, String address_line, String city, String country) {
+        this.user_id = user_id;
+        this.address_line = address_line;
         this.city = city;
         this.country = country;
     }
 
-    public UserAddress(int userId, String addressLine, String city, String country) {
-        this.userId = userId;
-        this.addressLine = addressLine;
+    public UserAddress(String address_line, String city, String country) {
+        this.address_line = address_line;
         this.city = city;
         this.country = country;
     }
-    
 
-    public UserAddress(int id, int userId, String addressLine, String city, String country) {
+    public UserAddress(int id, int user_id, String address_line, String city, String country) {
         this.id = id;
-        this.userId = userId;
-        this.addressLine = addressLine;
+        this.user_id = user_id;
+        this.address_line = address_line;
         this.city = city;
         this.country = country;
     }
@@ -49,20 +47,20 @@ public class UserAddress {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public String getAddressLine() {
-        return addressLine;
+    public String getAddress_line() {
+        return address_line;
     }
 
-    public void setAddressLine(String addressLine) {
-        this.addressLine = addressLine;
+    public void setAddress_line(String address_line) {
+        this.address_line = address_line;
     }
 
     public String getCity() {
@@ -80,9 +78,6 @@ public class UserAddress {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    @Override
-    public String toString() {
-        return "UserAddress{" + "id=" + id + ", userId=" + userId + ", addressLine=" + addressLine + ", city=" + city + ", country=" + country + '}';
-    }
+    
+    
 }

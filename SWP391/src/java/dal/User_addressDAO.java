@@ -26,8 +26,8 @@ public class User_addressDAO extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
 
-            st.setInt(1, ua.getUserId());
-            st.setString(2, ua.getAddressLine());
+            st.setInt(1, ua.getUser_id());
+            st.setString(2, ua.getAddress_line());
             st.setString(3, ua.getCity());
             st.setString(4, ua.getCountry());
 

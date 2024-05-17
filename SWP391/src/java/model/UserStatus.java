@@ -9,18 +9,14 @@ package model;
  * @author Admin
  */
 public class UserStatus {
-
     private int id;
     private String name;
 
     public UserStatus() {
     }
 
-    public void setId(int id) {
+    public UserStatus(int id, String name) {
         this.id = id;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 
@@ -28,12 +24,17 @@ public class UserStatus {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return "UserStatus{" + "id=" + id + ", name=" + name + '}';
+    public void setName(String name) {
+        this.name = name;
     }
+    
+    
 }

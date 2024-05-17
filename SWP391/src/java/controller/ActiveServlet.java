@@ -61,18 +61,21 @@ public class ActiveServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String verifyCode = request.getParameter("code");
-
+        String email = request.getParameter("email");
+        
         UsersDAO udb = new UsersDAO();
         User_addressDAO uadb = new User_addressDAO();
+        
+        String code = udb.getUserByEmail(email).getToken();
 
         HttpSession session = request.getSession();
-        Object obj = session.getAttribute("code");
-        String code = (String) obj;
-        
-        if(obj == null){
-            request.setAttribute("error", "Verify Fail!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
-        }
+//        Object obj = session.getAttribute("code");
+//        String code = (String) obj;
+//        
+//        if(obj == null){
+//            request.setAttribute("error", "Verify Fail!");
+//            request.getRequestDispatcher("home.jsp").forward(request, response);
+//        }
 
         Object obj2 = session.getAttribute("signUpAccount");
         User u = new User();
@@ -93,11 +96,11 @@ public class ActiveServlet extends HttpServlet {
                 u2 = (User) obj4;
             }
 
-            u2.setStatusId(1);
-            udb.updateUser(u2);
+            u2.setStatus_id(1);
+            udb.updateUserActive(u2);
             session.setAttribute("account", u2);
 
-            UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddressLine(), ua.getCity(), ua.getCountry());
+            UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddress_line(), ua.getCity(), ua.getCountry());
             uadb.insertUserAddress(ua2);
 
             response.sendRedirect("home");

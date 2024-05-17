@@ -36,9 +36,6 @@ public class Roles {
         this.name = name;
     }
 
-     @Override
-    public String toString() {
-        return "Roles{" + "id=" + id + ", name=" + name + '}';
-    }
+    
     
 }

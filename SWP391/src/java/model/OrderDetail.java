@@ -4,11 +4,12 @@
  */
 package model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class OrderDetail {
 
@@ -79,8 +80,13 @@ public class OrderDetail {
         this.modifiedAt = modifiedAt;
     }
 
+    public void setModifiedAt(Timestamp modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
     @Override
     public String toString() {
         return "OrderDetail{" + "id=" + id + ", productId=" + productId + ", shopOrderId=" + shopOrderId + ", quantity=" + quantity + ", price=" + price + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + '}';
     }
+
 }

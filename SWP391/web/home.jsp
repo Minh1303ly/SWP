@@ -1171,11 +1171,11 @@
                             <div class="form-group">
                                 <label>Gender</label><br>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="male" value="0" required>
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="true" required>
                                     <label class="form-check-label" for="male">Male</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="female" value="1">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="false">
                                     <label class="form-check-label" for="female">Female</label>
                                 </div>
                             </div>

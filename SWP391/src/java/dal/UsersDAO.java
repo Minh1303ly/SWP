@@ -8,7 +8,9 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import model.User;
 
@@ -29,25 +31,30 @@ public class UsersDAO extends DBContext {
                 + "           ,[telephone]\n"//7
                 + "           ,[created_at]\n"//8
                 + "           ,[modified_at]\n"//9
-                + "           ,[gender])\n"//10
-                + "     VALUES (?,?,?,?,?,?,?,?,?,?)";
+                + "           ,[gender]\n"//10
+                + "           ,[token])\n"//11
+                + "     VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
 
             st.setString(1, u.getEmail());
             st.setString(2, u.getPassword());
-            st.setInt(3, u.getRoleId());
-            st.setInt(4, u.getStatusId());
-            st.setString(5, u.getFirstName());
-            st.setString(6, u.getLastName());
+            st.setInt(3, u.getRole_id());
+            st.setInt(4, u.getStatus_id());
+            st.setString(5, u.getFirst_name());
+            st.setString(6, u.getLast_name());
             st.setString(7, u.getTelephone());
-            java.util.Date utilDate = u.getCreatedAt();
+
+            java.util.Date utilDate = u.getCreated_at();
             java.sql.Date created_at = new java.sql.Date(utilDate.getTime());
             st.setDate(8, created_at);
-            utilDate = u.getModifiedAt();
+
+            utilDate = u.getModified_at();
             java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
             st.setDate(9, modified_at);
+
             st.setBoolean(10, u.isGender());
+            st.setString(11, u.getToken());
 
             st.executeUpdate();
         } catch (SQLException e) {
@@ -67,6 +74,7 @@ public class UsersDAO extends DBContext {
                 + "      ,[created_at]\n"//9
                 + "      ,[modified_at]\n"//10
                 + "      ,[gender]\n"//11
+                + "      ,[token]\n"//12
                 + "  FROM [dbo].[users]\n"
                 + "  WHERE email = ?";
         try {
@@ -79,14 +87,15 @@ public class UsersDAO extends DBContext {
                 u.setId(rs.getInt(1));
                 u.setEmail(rs.getString(2));
                 u.setPassword(rs.getString(3));
-                u.setRoleId(rs.getInt(4));
-                u.setStatusId(rs.getInt(5));
-                u.setFirstName(rs.getString(6));
-                u.setLastName(rs.getString(7));
+                u.setRole_id(rs.getInt(4));
+                u.setStatus_id(rs.getInt(5));
+                u.setFirst_name(rs.getString(6));
+                u.setLast_name(rs.getString(7));
                 u.setTelephone(rs.getString(8));
-                u.setCreatedAt(rs.getDate(9));
-                u.setModifiedAt(rs.getDate(10));
+                u.setCreated_at(rs.getDate(9));
+                u.setModified_at(rs.getDate(10));
                 u.setGender(rs.getBoolean(11));
+                u.setToken(rs.getString(12));
 
                 return u;
             }
@@ -111,31 +120,59 @@ public class UsersDAO extends DBContext {
                 + " WHERE id = ?";//11
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            
+
             st.setString(1, u.getEmail());
             st.setString(2, u.getPassword());
-            st.setInt(3, u.getRoleId());
-            st.setInt(4, u.getStatusId());
-            st.setString(5, u.getFirstName());
-            st.setString(6, u.getLastName());
+            st.setInt(3, u.getRole_id());
+            st.setInt(4, u.getStatus_id());
+            st.setString(5, u.getFirst_name());
+            st.setString(6, u.getLast_name());
             st.setString(7, u.getTelephone());
-            java.util.Date utilDate = u.getCreatedAt();
+
+            java.util.Date utilDate = new Date();
             java.sql.Date created_at = new java.sql.Date(utilDate.getTime());
             st.setDate(8, created_at);
-            utilDate = u.getModifiedAt();
+
+            utilDate = new Date();
             java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
             st.setDate(9, modified_at);
+
             st.setBoolean(10, u.isGender());
             st.setInt(11, u.getId());
-            
+
             st.executeUpdate();
         } catch (SQLException e) {
 
         }
     }
-    
+
+    public void updateUserActive(User u) {
+        String sql = "UPDATE [dbo].[users]\n"
+                + "   SET [status_id] = ?\n"//1
+                + "      ,[modified_at] = ?\n"//2
+                + " WHERE id = ?";//3
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setInt(1, u.getStatus_id());
+            
+            java.util.Date utilDate = new Date();
+            java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
+            st.setDate(2, modified_at);
+
+            st.setInt(3, u.getId());
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+
+        }
+    }
+
     public static void main(String[] args) {
         UsersDAO udb = new UsersDAO();
-        System.out.println(udb.getUserByEmail("TuBAHE171912@fpt.edu.vn"));
+//        User u = new User("aaa", "bbb", 1, 1, "tu", "bui", true,"0123456789", new Date(), new Date(), "123456");
+//        udb.insertUser(u);
+        User u = udb.getUserByEmail("Tubahe171912@fpt.edu.vn");
+        System.out.println(u.getCreated_at().toString());
     }
 }

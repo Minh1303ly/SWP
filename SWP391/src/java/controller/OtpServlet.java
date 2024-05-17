@@ -137,10 +137,12 @@ public class OtpServlet extends HttpServlet {
         String city = request.getParameter("city");
         String country = request.getParameter("country");
         String telephone = request.getParameter("telephone");
-        boolean gender = false;
+        boolean gender = true;
 
         try {
-            gender = Boolean.parseBoolean(gender_raw);
+            if(gender_raw.equals("false")){
+                gender = false;
+            }
         } catch (NumberFormatException e) {
 
         }
@@ -148,7 +150,7 @@ public class OtpServlet extends HttpServlet {
         UsersDAO udb = new UsersDAO();
 //        User_addressDAO uadb = new User_addressDAO();
 
-        User u = new User(email, password, 1, 0, first_name, last_name, gender, telephone, new Date(), new Date());
+        //Users u = new User(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date());
         UserAddress ua = new UserAddress(address_line, city, country);
 
         if (email == null || email.equals("")
@@ -169,26 +171,8 @@ public class OtpServlet extends HttpServlet {
             request.setAttribute("error", "Wrong Password Format");
             request.getRequestDispatcher("home.jsp").forward(request, response);
         } else if (udb.getUserByEmail(email) != null) {
-            User u2 = udb.getUserByEmail(email);
-            if (u2.getStatusId() != 0) {
-                request.setAttribute("error", "Email Existed");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
-            } else {
-                String code = Email.getRandomNumber();
-                String context = request.getScheme()
-                        + "://"
-                        + request.getServerName()
-                        + ":"
-                        + request.getServerPort()
-                        + "/SWP391/active";
-                Email.sendEmail(email, "Verify Your Email Address", context, code);
-                HttpSession session = request.getSession();
-                session.setAttribute("signUpAccount", u);
-                session.setAttribute("signUpAddress", ua);
-                session.setAttribute("code", code);
-
-                request.getRequestDispatcher("otp.jsp").forward(request, response);
-            }
+            request.setAttribute("error", "Email Existed");
+            request.getRequestDispatcher("home.jsp").forward(request, response);
         } else {
             String code = Email.getRandomNumber();
             String context = request.getScheme()
@@ -197,14 +181,17 @@ public class OtpServlet extends HttpServlet {
                     + ":"
                     + request.getServerPort()
                     + "/SWP391/active";
+            
+            User u = new User(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date(), code);
+            
             Email.sendEmail(email, "Verify Your Email Address", context, code);
             HttpSession session = request.getSession();
             session.setAttribute("signUpAccount", u);
             session.setAttribute("signUpAddress", ua);
             session.setAttribute("code", code);
-
+            
             udb.insertUser(u);
-
+            
             request.getRequestDispatcher("otp.jsp").forward(request, response);
         }
     }

@@ -11,65 +11,104 @@ import java.util.Date;
  * @author Admin
  */
 public class User {
-
     private int id;
     private String email;
     private String password;
-    private int roleId;
-    private int statusId;
-    private String firstName;
-    private String lastName;
-    private String telephone;
-    private Date createdAt;
-    private Date modifiedAt;
+    private int role_id;
+    private int status_id;
+    private String first_name;
+    private String last_name;
     private boolean gender;
-
-    private UserStatus userStatus;
+    private String telephone;
+    private Date created_at;
+    private Date modified_at;
+    private String token;
+    
     private Roles role;
+    private UserStatus usersStatus;
     private UserAddress userAddress;
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
+    }
+
+    public UserStatus getUsersStatus() {
+        return usersStatus;
+    }
+
+    public void setUsersStatus(UserStatus usersStatus) {
+        this.usersStatus = usersStatus;
+    }
 
     public User() {
     }
 
-    public User(int id, String email, String password, int roleId, int statusId, String firstName, String lastName, String telephone, Date createdAt, Date modifiedAt, boolean gender) {
+    public User(String email, String password, int role_id, int status_id, String first_name, String last_name, boolean gender, String telephone, Date created_at, Date modified_at) {
+        this.email = email;
+        this.password = password;
+        this.role_id = role_id;
+        this.status_id = status_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+        this.telephone = telephone;
+        this.created_at = created_at;
+        this.modified_at = modified_at;
+    }
+
+    public User(String email, String password, int role_id, int status_id, String first_name, String last_name, boolean gender, String telephone, Date created_at, Date modified_at, String token) {
+        this.email = email;
+        this.password = password;
+        this.role_id = role_id;
+        this.status_id = status_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+        this.telephone = telephone;
+        this.created_at = created_at;
+        this.modified_at = modified_at;
+        this.token = token;
+    }
+
+    public User(int id, String email, String password, int role_id, int status_id, String first_name, String last_name, boolean gender, String telephone, Date created_at, Date modified_at, String token) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.roleId = roleId;
-        this.statusId = statusId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.telephone = telephone;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+        this.role_id = role_id;
+        this.status_id = status_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.gender = gender;
+        this.telephone = telephone;
+        this.created_at = created_at;
+        this.modified_at = modified_at;
+        this.token = token;
     }
 
-    public User(String email, String password, int roleId, int statusId, String firstName, String lastName, boolean gender, String telephone, Date createdAt, Date modifiedAt) {
+    public User(int id, String email, String password, int role_id, int status_id, String first_name, String last_name, boolean gender, String telephone, Date created_at, Date modified_at, String token, Roles role, UserStatus usersStatus, UserAddress userAddress) {
+        this.id = id;
         this.email = email;
         this.password = password;
-        this.roleId = roleId;
-        this.statusId = statusId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.telephone = telephone;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+        this.role_id = role_id;
+        this.status_id = status_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.gender = gender;
+        this.telephone = telephone;
+        this.created_at = created_at;
+        this.modified_at = modified_at;
+        this.token = token;
+        this.role = role;
+        this.usersStatus = usersStatus;
+        this.userAddress = userAddress;
     }
-    
-    
 
     public int getId() {
         return id;
-    }
-
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
     }
 
     public void setId(int id) {
@@ -92,36 +131,61 @@ public class User {
         this.password = password;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public int getRole_id() {
+        return role_id;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public int getStatus_id() {
+        return status_id;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus_id(int status_id) {
+        this.status_id = status_id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+
+    public UserAddress getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(UserAddress userAddress) {
+        this.userAddress = userAddress;
     }
 
     public String getTelephone() {
@@ -132,48 +196,21 @@ public class User {
         this.telephone = telephone;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 
-    public Date getModifiedAt() {
-        return modifiedAt;
+    public Date getModified_at() {
+        return modified_at;
     }
 
-    public void setModifiedAt(Date modifiedAt) {
-        this.modifiedAt = modifiedAt;
+    public void setModified_at(Date modified_at) {
+        this.modified_at = modified_at;
     }
-
-    public UserStatus getUserStatus() {
-        return userStatus;
-    }
-
-    public void setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
-    }
-
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
-    }
-
-    public UserAddress getUserAddress() {
-        return userAddress;
-    }
-
-    public void setUserAddress(UserAddress userAddress) {
-        this.userAddress = userAddress;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", email=" + email + ", password=" + password + ", roleId=" + roleId + ", statusId=" + statusId + ", firstName=" + firstName + ", lastName=" + lastName + ", telephone=" + telephone + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + ", userStatus=" + userStatus + ", role=" + role + '}';
-    }
+    
+    
 }

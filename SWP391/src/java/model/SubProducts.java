@@ -18,13 +18,14 @@ public class SubProducts {
     private String img2;
     private int rating;
     private int discount;
-    private String discount_status;
+    private int discount_status;
     private String status;
-    public String getDiscount_status() {
+    
+    public int getDiscount_status() {
         return discount_status;
     }
 
-    public void setDiscount_status(String discount_status) {
+    public void setDiscount_status(int discount_status) {
         this.discount_status = discount_status;
     }
     
@@ -34,7 +35,7 @@ public class SubProducts {
 
     public SubProducts(String name, int price, int[] size, String[] color, 
             String description, String img1, String img2, 
-            int rating, int discount,String discount_status, String status) {
+            int rating, int discount,int discount_status, String status) {
         this.name = name;
         this.price = price;
         this.size = size;

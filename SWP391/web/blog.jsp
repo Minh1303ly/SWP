@@ -71,7 +71,7 @@
                                     <div class="col-md-6">
                                         <article class="blog">
                                             <figure>
-                                                <a href="blogDetail?id=${blog.id}"><img src="img/${blog.main_img}" alt="">
+                                                <a href="blogDetail?id=${blog.id}"><img src="${blog.main_img}" alt="">
                                                     <div class="preview"><span>Read more</span></div>
                                                 </a>
                                             </figure>

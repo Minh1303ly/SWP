@@ -47,7 +47,7 @@ public class BlogController extends HttpServlet {
         }
 
         // start pagging
-        int limitPage = 1;
+        int limitPage = 4;
         if (request.getParameter("cp") == null) {
             Pagination Page = new Pagination(list, limitPage, 1);
             Pagination<Blog> pagination = new Pagination<>(list, limitPage, 1);

@@ -1,0 +1,99 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dto;
+
+import context.DBContext;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import model.SubProducts;
+
+/**
+ *
+ * @author Nhat Anh
+ */
+public class DTOProducts extends DBContext{
+    
+    public List<SubProducts> getAll(){
+        List<SubProducts> list = new LinkedList<>();
+        String sql =
+                """
+                    select products.name, products.price, products.size, products.color, products.description,
+                    products.img1, products.img2, discounts.discount_percent, discounts.active, product_status.name
+                    from products
+                    FULL OUTER JOIN product_status on products.status_id = product_status.id
+                    FULL OUTER JOIN discounts on products.discount_id = discounts.id
+                    FULL OUTER JOIN rating on products.id = rating.product_id""";             
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();  
+            list = getProduct(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(DTOProducts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+ 
+    
+    public List<SubProducts> getProduct(ResultSet rs){
+        List<SubProducts> list = new LinkedList<>();
+        // Convert incomingDataList to a Map to aggregate sizes and colors
+        Map<SubProducts, ProductAggregation> productMap = new HashMap<>();
+        try {
+            while(rs.next()){
+                SubProducts key = new SubProducts(
+                        rs.getString(1), rs.getInt(2), 
+                        null, null, rs.getString(5), 
+                        rs.getString(6), rs.getString(7), rs.getInt(8), 
+                        rs.getInt(9), rs.getString(10),
+                        rs.getString(11));
+                ProductAggregation aggregation = 
+                        productMap.computeIfAbsent(key, k -> new ProductAggregation());
+                aggregation.sizes.add(rs.getInt(3));
+                aggregation.colors.add(rs.getString(4));
+            }
+            list = productMap.entrySet().stream()
+                    .map(entry -> {
+                        SubProducts key = entry.getKey();
+                        ProductAggregation aggregation = entry.getValue();
+                        int[] sizes = aggregation.sizes.stream().mapToInt(i -> i).toArray();
+                        String[] colors = aggregation.colors.toArray(new String[0]);
+                        return new SubProducts(key.getName(), 
+                                key.getPrice(), sizes, colors, 
+                                key.getDiscount_status(), 
+                                key.getImg1(), key.getImg2(),
+                                key.getRating(), key.getDiscount(), 
+                                key.getDiscount_status(), key.getStatus());
+                    })
+                    .collect(Collectors.toList());
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DTOProducts.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        
+        return list;
+    }
+    
+    public static void main(String[] args) {
+        DTOProducts call = new DTOProducts();
+        List<SubProducts> ls = call.getAll();
+        ls.forEach(a -> System.out.println(a.toString()));
+    }
+    
+}
+class ProductAggregation {
+    Set<Integer> sizes = new HashSet<>();
+    Set<String> colors = new HashSet<>();
+}

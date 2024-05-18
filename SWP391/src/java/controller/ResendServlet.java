@@ -13,13 +13,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.User;
-import util.Encrypt;
+import util.Email;
 
 /**
  *
  * @author Admin
  */
-public class LoginServlet extends HttpServlet {
+public class ResendServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ResendServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ResendServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +59,36 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("home").forward(request, response);
+        HttpSession session = request.getSession(true); // create a session if one doesn't exist
+        UsersDAO udb = new UsersDAO();
+        
+        Object obj = session.getAttribute("email_forgot");
+        String email_forgot = "";
+        if (obj != null) {
+            email_forgot = (String) obj;
+        }
+        
+        long currentTimeMillis = System.currentTimeMillis();
+        long expirationTimeMillis = currentTimeMillis + (60 * 1000);
+
+        String code = Email.getRandomNumber();
+        String context = request.getScheme()
+                + "://"
+                + request.getServerName()
+                + ":"
+                + request.getServerPort()
+                + "/SWP391/linkvalidator";
+
+        User u = udb.getUserByEmail(email_forgot);
+        u.setToken(code);
+
+        Email.sendEmail2(email_forgot, "Reset Your Password", context, code, expirationTimeMillis);
+        session.setAttribute("code", code);
+
+        udb.updateUserToken(u);
+
+        request.getRequestDispatcher("resend.jsp").forward(request, response);
+
     }
 
     /**
@@ -73,37 +102,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password_raw = request.getParameter("password");
-        String password = Encrypt.toSHA1(password_raw);
-        String email_forgot = request.getParameter("email_forgot");
-
-        UsersDAO udb = new UsersDAO();
-        User u = udb.getUserByEmail(email);
-        HttpSession session = request.getSession();
-        
-
-        if (email_forgot == null || email_forgot.equals("")) {
-            if (email == null || email.equals("")
-                    || password == null || password.equals("")) {
-                request.setAttribute("error", "Username or Password Don't Allow Blank!");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
-            } else if (u.getPassword().equals(password)) {
-                if (u.getStatus_id() == 1) {
-                    session.setAttribute("account", u);
-                    response.sendRedirect("home");
-                } else {
-                    request.setAttribute("error", "Account is InActive!");
-                    request.getRequestDispatcher("home.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("error", "Username or Password Invalid!");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
-            }
-        } else {
-            session.setAttribute("email_forgot", email_forgot);
-            response.sendRedirect("resend");
-        }
+        processRequest(request, response);
     }
 
     /**

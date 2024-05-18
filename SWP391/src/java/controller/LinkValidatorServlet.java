@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.User_addressDAO;
 import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,14 +13,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.User;
-import util.Encrypt;
 
 /**
  *
  * @author Admin
  */
-public class LoginServlet extends HttpServlet {
+public class LinkValidatorServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet LinkValidatorServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LinkValidatorServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +58,44 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("home").forward(request, response);
+        String email = request.getParameter("email");
+        String verifyCode = request.getParameter("code");
+        String expires = request.getParameter("expirationTimeMillis");
+
+        if (email == null || verifyCode == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
+            return;
+        }
+
+        long expirationTimeMillis;
+        try {
+            expirationTimeMillis = Long.parseLong(expires);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid expiration time");
+            return;
+        }
+
+
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis > expirationTimeMillis) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Link has expired");
+            return;
+        }
+
+        UsersDAO udb = new UsersDAO();
+        
+        String code = udb.getUserByEmail(email).getToken();
+
+        if (!code.equals(verifyCode)) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid signature");
+            return;
+        }
+
+        // Link is valid
+        HttpSession session = request.getSession(true);
+        session.setAttribute("email", email);
+        session.setAttribute("code", code);
+        response.sendRedirect("resetpassword");
     }
 
     /**
@@ -73,37 +109,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password_raw = request.getParameter("password");
-        String password = Encrypt.toSHA1(password_raw);
-        String email_forgot = request.getParameter("email_forgot");
-
-        UsersDAO udb = new UsersDAO();
-        User u = udb.getUserByEmail(email);
-        HttpSession session = request.getSession();
-        
-
-        if (email_forgot == null || email_forgot.equals("")) {
-            if (email == null || email.equals("")
-                    || password == null || password.equals("")) {
-                request.setAttribute("error", "Username or Password Don't Allow Blank!");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
-            } else if (u.getPassword().equals(password)) {
-                if (u.getStatus_id() == 1) {
-                    session.setAttribute("account", u);
-                    response.sendRedirect("home");
-                } else {
-                    request.setAttribute("error", "Account is InActive!");
-                    request.getRequestDispatcher("home.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("error", "Username or Password Invalid!");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
-            }
-        } else {
-            session.setAttribute("email_forgot", email_forgot);
-            response.sendRedirect("resend");
-        }
+        processRequest(request, response);
     }
 
     /**

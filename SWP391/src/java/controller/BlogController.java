@@ -4,7 +4,7 @@
  */
 package controller;
 
-//import controller.dashboard.*;
+import controller.dashboard.*;
 import dao.BlogCategoriesDAO;
 import dao.BlogDAO;
 import java.io.IOException;
@@ -20,7 +20,10 @@ import model.Blog;
 import model.BlogCategories;
 import model.Pagination;
 
-
+/**
+ *
+ * @author tungl
+ */
 @WebServlet(name = "BlogController", urlPatterns = {"/blogs"})
 public class BlogController extends HttpServlet {
 
@@ -40,12 +43,13 @@ public class BlogController extends HttpServlet {
         session.setAttribute("listCate", blogCDAO.getAll());
         session.setAttribute("listLastBlog", bDAO.getAllBlog(3));
         if (search != null) {
-            request.setAttribute("listBlog", bDAO.filterBlog(search, null, null));
+            request.setAttribute("paramSearch", search);
+            list = bDAO.filterBlog(search, null, null);
         }
         if (cate != null) {
-            request.setAttribute("listBlog", bDAO.filterBlog(search, null, Integer.parseInt(cate)));
+            request.setAttribute("paramCate", cate);
+            list = bDAO.filterBlog(search, null, Integer.parseInt(cate));
         }
-
         // start pagging
         int limitPage = 4;
         if (request.getParameter("cp") == null) {

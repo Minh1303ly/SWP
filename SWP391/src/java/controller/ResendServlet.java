@@ -61,13 +61,23 @@ public class ResendServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(true); // create a session if one doesn't exist
         UsersDAO udb = new UsersDAO();
-        
+
         Object obj = session.getAttribute("email_forgot");
         String email_forgot = "";
         if (obj != null) {
             email_forgot = (String) obj;
         }
+
+        if (email_forgot.equals("")) {
+            request.setAttribute("error", "Reset Password Failed!");
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
         
+        if(udb.getUserByEmail(email_forgot) == null){
+            request.setAttribute("error", "Account Not Existed!");
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
+
         long currentTimeMillis = System.currentTimeMillis();
         long expirationTimeMillis = currentTimeMillis + (60 * 1000);
 

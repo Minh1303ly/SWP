@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Ansonika">
-        <title>Allaia | Bootstrap eCommerce Template - ThemeForest</title>
+        <title>Detail</title>
 
         <!-- Favicons-->
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -73,25 +73,18 @@
                         <div class="col-lg-9 bg_gray">
                             <div class="container margin_30">
                                 <div class="page_header">
-                                    <!-- <div class="breadcrumbs">
-                                            <ul>
-                                                    <li><a href="#">Home</a></li>
-                                                    <li><a href="#">Category</a></li>
-                                                    <li>Page active</li>
-                                            </ul>
-                                    </div> -->
-                                    <h1>Armor Air X Fear</h1>
+                                    <h1>${product.name}</h1>
                                 </div>
                                 <!-- /page_header -->
                                 <div class="row justify-content-center">
                                     <div class="col-lg-8">
                                         <div class="owl-carousel owl-theme prod_pics magnific-gallery">
                                             <div class="item">
-                                                <a href="img/products/shoes/product_detail_1.jpg" title="Photo title" data-effect="mfp-zoom-in"><img src="img/products/shoes/product_detail_1.jpg" alt=""></a>
+                                                <a href="img/products/shoes/product_detail_1.jpg" title="Photo title" data-effect="mfp-zoom-in"><img src="${product.img1}" alt=""></a>
                                             </div>
                                             <!-- /item -->
                                             <div class="item">
-                                                <a href="img/products/shoes/product_detail_2.jpg" title="Photo title" data-effect="mfp-zoom-in"><img src="img/products/product_placeholder_detail_2.jpg" data-src="img/products/shoes/product_detail_2.jpg" alt="" class="owl-lazy"></a>
+                                                <a href="img/products/shoes/product_detail_2.jpg" title="Photo title" data-effect="mfp-zoom-in"><img src="${product.img2}" data-src="${product.img2}" alt="" class="owl-lazy"></a>
                                             </div>
                                             <!-- /item -->
                                         </div>
@@ -107,8 +100,22 @@
                                     <div class="row justify-content-between">
                                         <div class="col-lg-6">
                                             <div class="prod_info version_2">
-                                                <span class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i><em>4 reviews</em></span>
-                                                <p><small>SKU: MTKRY-001</small><br>Lorem ipsum dolor sit amet, his no adipisci pericula conclusionemque. Qui labore salutandi ex, vivendum argumentum mediocritatem vis eu, viris tritani per id. At iudicabit maluisset vis, dicant diceret pri cu. Cum at rebum vulputate forensibus, eruditi principes ad vel, pro denique recusabo at. Ubique nominavi delicata sit cu, quo no reque insolens suscipiantur.</p>
+                                                <span class="rating">
+                                                    <c:forEach begin="1" end="${product.rating}" step="1">
+                                                        <i class="icon-star voted"></i>
+                                                    </c:forEach>
+                                                    <c:forEach begin="${product.rating+1}" end="5" step="1">
+                                                        <i class="icon-star"></i>
+                                                    </c:forEach>
+                                                </span>
+                                                <p>
+                                                    <small>Categories: 
+                                                        <c:forEach var="element" items="${product.categories}">
+                                                            ${element} 
+                                                        </c:forEach>
+                                                    </small>
+                                                    
+                                                    <br>Lorem ipsum dolor sit amet, his no adipisci pericula conclusionemque. Qui labore salutandi ex, vivendum argumentum mediocritatem vis eu, viris tritani per id. At iudicabit maluisset vis, dicant diceret pri cu. Cum at rebum vulputate forensibus, eruditi principes ad vel, pro denique recusabo at. Ubique nominavi delicata sit cu, quo no reque insolens suscipiantur.</p>
                                                 <p>Et phaedrum temporibus per. Antiopam posidonium et est. Eu ius quas modus suavitate, ex sea feugiat laoreet voluptatum. Quo at veritus ancillae complectitur, duo no assum omnes.</p>
                                             </div>
                                         </div>

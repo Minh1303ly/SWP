@@ -20,6 +20,8 @@ public class SubProducts {
     private int discount;
     private int discount_status;
     private String status;
+    private String brand_name;
+    private String[] categories;
     
     public int getDiscount_status() {
         return discount_status;
@@ -33,9 +35,7 @@ public class SubProducts {
     public SubProducts() {
     }
 
-    public SubProducts(String name, int price, int[] size, String[] color, 
-            String description, String img1, String img2, 
-            int rating, int discount,int discount_status, String status) {
+    public SubProducts(String name, int price, int[] size, String[] color, String description, String img1, String img2, int rating, int discount, int discount_status, String status, String brand_name, String[] categories) {
         this.name = name;
         this.price = price;
         this.size = size;
@@ -45,8 +45,29 @@ public class SubProducts {
         this.img2 = img2;
         this.rating = rating;
         this.discount = discount;
+        this.discount_status = discount_status;
         this.status = status;
+        this.brand_name = brand_name;
+        this.categories = categories;
     }
+
+    public String getBrand_name() {
+        return brand_name;
+    }
+
+    public void setBrand_name(String brand_name) {
+        this.brand_name = brand_name;
+    }
+
+    public String[] getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String[] categories) {
+        this.categories = categories;
+    }
+
+    
 
     public String getName() {
         return name;
@@ -104,10 +125,6 @@ public class SubProducts {
         this.img2 = img2;
     }
 
-    @Override
-    public String toString() {
-        return "SubProducts{" + "name=" + name + ", price=" + price + ", size=" + size + ", color=" + color + ", description=" + description + ", img1=" + img1 + ", img2=" + img2 + ", rating=" + rating + ", discount=" + discount + ", discount_status=" + discount_status + ", status=" + status + '}';
-    }
 
     public int getRating() {
         return rating;
@@ -131,6 +148,16 @@ public class SubProducts {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "SubProducts{" + "name=" + name + ", price=" + price + ", size=" 
+                + size + ", color=" + color + ", description=" + description 
+                + ", img1=" + img1 + ", img2=" + img2 + ", rating=" + rating 
+                + ", discount=" + discount + ", discount_status=" + discount_status 
+                + ", status=" + status + ", brand_name=" + brand_name 
+                + ", categories=" + categories + '}';
     }
     
     

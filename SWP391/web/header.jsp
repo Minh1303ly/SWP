@@ -32,10 +32,10 @@
                         </div>
                         <ul>
                             <li>
-                                <a href="#0">Home</a> 
+                                <a href="product?service=view">Home</a> 
                             </li>
                             <li>
-                                <a href="#0">Shop</a> 
+                                <a href="product?service=view">Shop</a> 
                             </li>                           
                             <li>
                                 <a href="#0">Blog</a>
@@ -59,7 +59,6 @@
     <div class="main_nav Sticky">
         <div class="container">
             <div class="row small-gutters">
-                
                 <!-- categories -->
                 <div class="col-xl-3 col-lg-3 col-md-3">
                     <nav class="categories">
@@ -88,7 +87,7 @@
                                         </li>
                                         <c:forEach var="element" items="${categories}">
                                             <li><span><a href="#">${element.name}</a></span>
-                                        </li>
+                                            </li>
                                         </c:forEach>
                                     </ul>
                                 </div>
@@ -99,22 +98,18 @@
 
                 <!--Search blog-->
                 <div class="col-xl-6 col-lg-7 col-md-6 d-none d-md-block">
-                    <form action="home" method="post"> 
+                    <form action="product" method="post"> 
                         <div class="custom-search-input">
-                            <input type="text" name="text" placeholder="Search over 10.000 products">
-                            <input type="hidden" name="service" value="search">
+                            <input type="text" name="name" placeholder="Search over 10.000 products">
+                            <input type="hidden" name="service" value="searchName">
                             <button type="submit"><i class="header-icon_search_custom"></i></button>
                         </div>
                     </form>
                 </div>
-                
-                
                 <div class="col-xl-3 col-lg-2 col-md-3">
                     <ul class="top_tools">
-                        
-                        <!-- Cart detail -->
-                        <li>                          
-                            <div class="dropdown dropdown-cart">
+                        <li>
+                            <div class="dropdown dropdown-cart"href="cart.html" >
                                 <a href="cart.html" class="cart_bt"><strong>2</strong></a>
                                 <div class="dropdown-menu">
                                     <ul>
@@ -142,7 +137,6 @@
                             <!-- /dropdown-cart-->
                         </li>
 
-                        <!-- Account -->
                         <li>
                             <div class="dropdown dropdown-access">
                                 <a href="#" class="access_link"><span>Account</span></a>
@@ -154,14 +148,19 @@
                                         <ul>
                                             <li></li>
                                         </ul>
-                                        <a onclick="openSecondPopup()" id="sign-up" class="btn_1">Sign Up</a>
+                                        <!--<a onclick="openSecondPopup()" id="sign-up" class="btn_1">Sign Up</a>-->
+                                        <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#signUp" >
+                                            Sign Up
+                                        </button>
                                     </div>
                                 </c:if>
                                 <!--end still not login-->
                                 <!--user-->
                                 <c:if test="${sessionScope.account.getRole_id() == 1}">
                                     <div class="dropdown-menu">
-                                        <a href="changepassword" class="btn_1">Change Password</a>
+                                        <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#changePassword" >
+                                            Change Password
+                                        </button>
                                         <ul>
                                             <li>
                                                 <a href="#"><i class="ti-package"></i>My Orders</a>
@@ -237,7 +236,6 @@
                             </div>
                             <!-- /dropdown-access-->
                         </li>
-
                         <li>
                             <!-- <a href="#0" class="wishlist"><span>Wishlist</span></a> -->
                         </li>
@@ -259,18 +257,12 @@
             </div>
             <!-- /row -->
         </div>
-         
-                                    <!<!-- Search model -->
-        <form action="home" method="post">                                
-            <div class="search_mob_wp">
-                <input type="text" name="text" class="form-control" placeholder="Search over 10.000 products">
-                <input type="hidden" name="service" value="search">
-                <input type="submit" class="btn_1 full-width" value="Search">
-            </div>                        
-        </form>
-        <!-- /search_mobile --> 
+        <div class="search_mob_wp">
+            <input type="text" class="form-control" placeholder="Search over 10.000 products">
+            <input type="submit" class="btn_1 full-width" value="Search">
+        </div>
+        <!-- /search_mobile -->
     </div>
     <!-- /main_nav -->
 </header>
-<!-- /header -->
 

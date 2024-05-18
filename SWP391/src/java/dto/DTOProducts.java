@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.SubProducts;
+import utils.Support;
 
 /**
  *
@@ -25,11 +26,14 @@ public class DTOProducts extends DBContext {
 
     private final String SQL = """
                     select products.name, products.price, products.size, products.color, products.description,
-                    products.img1, products.img2, rating.rating, discounts.discount_percent, discounts.active, product_status.name
+                    products.img1, products.img2, rating.rating, discounts.discount_percent, discounts.active, 
+                    product_status.name, brands.name, categories.name
                     from products
                     FULL OUTER JOIN product_status on products.status_id = product_status.id
                     FULL OUTER JOIN discounts on products.discount_id = discounts.id
-                    FULL OUTER JOIN rating on products.id = rating.product_id""";
+                    FULL OUTER JOIN rating on products.id = rating.product_id
+                    FULL OUTER JOIN categories on products.category_id = categories.id
+                    FULL OUTER JOIN brands on products.brand_id = brands.id""";
 
     public List<SubProducts> getAll() {
         List<SubProducts> list = new LinkedList<>();
@@ -56,11 +60,12 @@ public class DTOProducts extends DBContext {
                         null, null, rs.getString(5),
                         rs.getString(6), rs.getString(7), rs.getInt(8),
                         rs.getInt(9), rs.getInt(10),
-                        rs.getString(11));
+                        rs.getString(11), rs.getString(12),null);
                 ProductAggregation aggregation = 
                         productMap.computeIfAbsent(key, k -> new ProductAggregation());
                 aggregation.sizes.add(rs.getInt(3));
                 aggregation.colors.add(rs.getString(4));
+                aggregation.categories.add(rs.getString(13));
             }
             list = productMap.entrySet().stream()
                     .map(entry -> {
@@ -68,12 +73,14 @@ public class DTOProducts extends DBContext {
                         ProductAggregation aggregation = entry.getValue();
                         int[] sizes = aggregation.sizes.stream().mapToInt(i -> i).toArray();
                         String[] colors = aggregation.colors.toArray(new String[0]);
+                        String[] categories = aggregation.categories.toArray(new String[0]);
                         return new SubProducts(key.getName(),
                                 key.getPrice(), sizes, colors,
                                 key.getDescription(),
                                 key.getImg1(), key.getImg2(),
                                 key.getRating(), key.getDiscount(),
-                                key.getDiscount_status(), key.getStatus());
+                                key.getDiscount_status(), key.getStatus(),
+                                key.getBrand_name(),categories);
                     })
                     .collect(Collectors.toList());
 
@@ -115,6 +122,50 @@ public class DTOProducts extends DBContext {
             ResultSet rs = pre.executeQuery();
             list = getProduct(rs);
         } catch (SQLException ex) {
+            Logger.getLogger(DTOProducts.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return list.subList(0, list.size()>sizeOfList?sizeOfList:list.size());
+    }
+    
+    public List<SubProducts> searchName(String name) {
+        List<SubProducts> list = new LinkedList<>();
+        StringBuilder query = new StringBuilder(SQL);
+        query.append(" where products.name like ?");
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    query.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setString(1,"%"+name+"%");
+            ResultSet rs = pre.executeQuery();
+            list = getProduct(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(DTOProducts.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public List<SubProducts> filter() {
+        List<SubProducts> list = new LinkedList<>();
+        StringBuilder query = new StringBuilder(SQL);
+        return list;
+    } 
+    
+    public List<SubProducts> getRalateProduct(String[] category, String brand, 
+            int sizeOfList) {
+        List<SubProducts> list = new LinkedList<>();
+        StringBuilder query = new StringBuilder(SQL);
+        query.append(" where categories.name in (?) or brands.name like ? ");
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    query.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setString(1,Support.printArray(category));
+            pre.setString(2,"%"+brand+"%");
+            ResultSet rs = pre.executeQuery();
+            list = getProduct(rs);
+        } catch (SQLException ex) {
             Logger.getLogger(DTOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list.subList(0, list.size()>sizeOfList?sizeOfList:list.size());
@@ -124,8 +175,13 @@ public class DTOProducts extends DBContext {
         DTOProducts call = new DTOProducts();
 //        List<SubProducts> ls = call.getProductByStatus("Hot", 12);
 //        List<SubProducts> ls = call.getAll();
-        List<SubProducts> ls = call.getProductByRating(2, 4);
+        String[] m = {"men","women"};
+        List<SubProducts> ls = call.getRalateProduct(m, "nike",20);
         ls.forEach(a -> System.out.println(a.toString()));
+//        String[] m = {"a"};
+//        System.out.println(m.toString());
+//        String k = "123456";
+//        System.out.println(Support.printArray(m));
     }
 
 }
@@ -134,4 +190,5 @@ class ProductAggregation {
 
     Set<Integer> sizes = new HashSet<>();
     Set<String> colors = new HashSet<>();
+    Set<String> categories = new HashSet<>();
 }

@@ -6,6 +6,7 @@ package controller;
 
 import dao.BlogDAO;
 import dao.DAOCategories;
+import dao.DAOSliders;
 import dto.*;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -41,18 +42,18 @@ public class HomeServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             switch(request.getParameter("service")){
-                case "viewHome":
-                    viewHome(request, response);
-                    break;
-                case "setHeader":
-                    setHeader(request, response);
-                    break;
+                case "view" -> view(request, response);
+                case "setHeader" -> setHeader(request, response);
+//                case "search" -> searchName(request, response);
+                default -> view(request, response);
             }
         }
     }
     
-    public void viewHome(HttpServletRequest request, HttpServletResponse response){
+    public void view(HttpServletRequest request, HttpServletResponse response){
+        
         try {
+            DAOSliders daoSlider = new DAOSliders();
             BlogDAO bDao = new BlogDAO();  
             DTOProducts dTOProducts = new DTOProducts();
             request.setAttribute("title", "Home");
@@ -61,7 +62,7 @@ public class HomeServlet extends HttpServlet {
                     dTOProducts.getProductByStatus("hot", 12));
             request.setAttribute("featured", 
                     dTOProducts.getProductByRating(3, 7));
-            
+            request.setAttribute("slider", daoSlider.getAll());
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -81,6 +82,7 @@ public class HomeServlet extends HttpServlet {
                     .log(Level.SEVERE, null, ex);
         }
     }
+    
     public static void main(String[] args) {
         BlogDAO bDao = new BlogDAO();     
         DAOCategories cDAO = new DAOCategories();

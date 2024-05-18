@@ -4,12 +4,15 @@
  */
 package controller;
 
+import dto.DTOProducts;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,7 +32,69 @@ public class SubProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        switch (request.getParameter("service")) {
+            case "detail" :
+                detail(request, response);
+                break;
+            case "view" :
+                view(request, response);
+                break;
+            case "addCart" :
+                
+                break;
+            case "searchName":
+                searchName(request, response);
+                break;
+            default:
+                detail(request, response);
+        }
         
+    }
+    
+    public void view(HttpServletRequest request, HttpServletResponse response){
+        try {
+            
+            RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(SubProductServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void detail(HttpServletRequest request, HttpServletResponse response){
+        try {
+            DTOProducts dtoProducts = new DTOProducts();
+            request.setAttribute("product",
+                    dtoProducts.searchName(
+                            request.getParameter("name")).get(0) );
+            request.setAttribute("newProduct", 
+                    dtoProducts.getProductByStatus("new", 2));
+            request.setAttribute("relateProduct", 
+                    dtoProducts.getRalateProduct(
+                            request.getParameter("category").split(","), 
+                            request.getParameter("brand"), 6));
+            
+            
+            RequestDispatcher dispatch = request.getRequestDispatcher("product_detail.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(SubProductServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    
+    public void searchName(HttpServletRequest request, HttpServletResponse response){
+        try {
+            DTOProducts dtoProducts = new DTOProducts();
+            RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(SubProductServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
     }
     
 

@@ -4,17 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Documents/SWP/Project/SWP391/web/index.html</file>
-            <file>file:/D:/Documents/SWP/Project/SWP391/web/product_list.jsp</file>
-            <file>file:/D:/Documents/SWP/Project/SWP391/web/footer.jsp</file>
+            <file>file:/D:/Documents/SWP/Project/SWP391/src/java/controller/SubProductServlet.java</file>
             <file>file:/D:/Documents/SWP/Project/SWP391/src/java/dto/DTOProducts.java</file>
-            <file>file:/D:/Documents/SWP/Project/SWP391/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Documents/SWP/Project/SWP391/src/java/dao/BlogDAO.java</file>
             <file>file:/D:/Documents/SWP/Project/SWP391/src/java/controller/HomeServlet.java</file>
-            <file>file:/D:/Documents/SWP/Project/SWP391/web/cart_detail.jsp</file>
-            <file>file:/D:/Documents/SWP/Project/SWP391/web/home.jsp</file>
-            <file>file:/D:/Documents/SWP/Project/SWP391/web/sider.jsp</file>
+            <file>file:/D:/Documents/SWP/Project/SWP391/src/java/model/SubProducts.java</file>
             <file>file:/D:/Documents/SWP/Project/SWP391/web/product_detail.jsp</file>
-            <file>file:/D:/Documents/SWP/Project/SWP391/web/header.jsp</file>
-            <file>file:/D:/Documents/SWP/Project/SWP391/web/cart_contact.jsp</file>
         </group>
     </open-files>
 </project-private>

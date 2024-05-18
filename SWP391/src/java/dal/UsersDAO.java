@@ -155,7 +155,7 @@ public class UsersDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
 
             st.setInt(1, u.getStatus_id());
-            
+
             java.util.Date utilDate = new Date();
             java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
             st.setDate(2, modified_at);
@@ -168,11 +168,35 @@ public class UsersDAO extends DBContext {
         }
     }
 
+    public void updateUserToken(User u) {
+        String sql = "UPDATE [dbo].[users]\n"
+                + "   SET [password] = ?\n"//1
+                + "	  ,[modified_at] = ?\n"//2
+                + "      ,[token] = ?\n"//3
+                + " WHERE id = ?";//4
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setString(1, u.getPassword());
+            
+            java.util.Date utilDate = new Date();
+            java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
+            st.setDate(2, modified_at);
+
+            st.setString(3, u.getToken());
+
+            st.setInt(4, u.getId());
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+
+        }
+    }
+
     public static void main(String[] args) {
         UsersDAO udb = new UsersDAO();
-//        User u = new User("aaa", "bbb", 1, 1, "tu", "bui", true,"0123456789", new Date(), new Date(), "123456");
-//        udb.insertUser(u);
-        User u = udb.getUserByEmail("Tubahe171912@fpt.edu.vn");
-        System.out.println(u.getCreated_at().toString());
+        User u = new User("aaa", "bbb", 1, 1, "tu", "bui", true,"0123456789", new Date(), new Date(), "222222");
+        udb.updateUserToken(u);
+        
     }
 }

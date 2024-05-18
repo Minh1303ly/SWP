@@ -93,26 +93,52 @@ document.addEventListener("DOMContentLoaded", function () {
     emailOtpInputs[0].focus();
 
     function submitChangePassword() {
-    var form = document.getElementById('changepassword');
-    if (form.checkValidity()) {
-        var currentPassword = document.getElementById('currentPassword').value;
-        var newPassword = document.getElementById('newPassword').value;
-        var confirmNewPassword = document.getElementById('confirmNewPassword').value;
+        var form = document.getElementById('changepassword');
+        if (form.checkValidity()) {
+            var currentPassword = document.getElementById('currentPassword').value;
+            var newPassword = document.getElementById('newPassword').value;
+            var confirmNewPassword = document.getElementById('confirmNewPassword').value;
 
-        if (newPassword !== confirmNewPassword) {
-            alert('New passwords do not match.');
-            return;
+            if (newPassword !== confirmNewPassword) {
+                alert('New passwords do not match.');
+                return;
+            }
+
+            // Add your password change logic here
+            // Example: AJAX request to the server
+
+            alert('Password changed successfully.');
+            $('#changePasswordModal').modal('hide');
+        } else {
+            form.reportValidity();
         }
-
-        // Add your password change logic here
-        // Example: AJAX request to the server
-
-        alert('Password changed successfully.');
-        $('#changePasswordModal').modal('hide');
-    } else {
-        form.reportValidity();
     }
-}
+
+    function checkEmail(element) {
+        const pattern = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        // Get the value of the input field
+        var value = element.value;
+        // Get the message
+        var msg = document.querySelector('#email_err');
+        console.log(msg);
+        console.log(element);
+        // Test if the value matches the regex pattern
+        if (value.match(pattern)) {
+            msg.style.display = 'none';
+            element.style.borderBottomColor = '#059862';
+            console.log("Input matches the regex pattern");
+            flag = true;
+            return true;
+        } else {
+            msg.innerHTML = 'The email is not incorrect format!';
+            msg.style.display = 'block';
+            element.style.borderBottomColor = 'red';
+            console.log(pattern);
+            console.log("Input does not match the regex pattern");
+            flag = false;
+            return false;
+        }
+    }
 
 });
 

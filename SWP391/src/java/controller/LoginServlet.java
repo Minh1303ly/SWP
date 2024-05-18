@@ -81,6 +81,7 @@ public class LoginServlet extends HttpServlet {
         UsersDAO udb = new UsersDAO();
         User u = udb.getUserByEmail(email);
         HttpSession session = request.getSession();
+        
 
         if (email_forgot == null || email_forgot.equals("")) {
             if (email == null || email.equals("")
@@ -88,9 +89,14 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("error", "Username or Password Don't Allow Blank!");
                 request.getRequestDispatcher("home.jsp").forward(request, response);
             } else if (u.getPassword().equals(password)) {
-                session.setAttribute("account", u);
-                response.sendRedirect("home");
-            }else{
+                if (u.getStatus_id() == 1) {
+                    session.setAttribute("account", u);
+                    response.sendRedirect("home");
+                } else {
+                    request.setAttribute("error", "Account is InActive!");
+                    request.getRequestDispatcher("home.jsp").forward(request, response);
+                }
+            } else {
                 request.setAttribute("error", "Username or Password Invalid!");
                 request.getRequestDispatcher("home.jsp").forward(request, response);
             }

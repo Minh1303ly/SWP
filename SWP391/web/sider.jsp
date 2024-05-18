@@ -5,9 +5,21 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<aside class="col-lg-3" id="sidebar_fixed">
+<aside>
     <div class="filter_col">
         <div class="inner_bt"><a href="#" class="open_filters"><i class="ti-close"></i></a></div>
+        <div class="filter_type version_2">
+            <div class="d-none d-md-block">
+                <div class="custom-search-input row">
+                    <div class="col-10"> 
+                        <input type="search" class="form-control p-3 col-10" placeholder="keywords"
+                               aria-describedby="search-icon-1">
+                    </div>
+                    <button class="col-2" type="submit" ><i class="header-icon_search_custom"></i></button>
+                </div>
+            </div>						
+        </div>
+        <!-- /filter_type -->
         <div class="filter_type version_2">
             <h4><a href="#filter_1" data-bs-toggle="collapse" class="opened">Categories</a></h4>
             <div class="collapse show" id="filter_1">
@@ -141,4 +153,70 @@
             <a href="#0" class="btn_1">Filter</a> <a href="#0" class="btn_1 gray">Reset</a>
         </div>
     </div>
+    <div class="col-lg-12">
+        <h4 class="mb-3">New products</h4>
+        <div class="d-flex align-items-center justify-content-start">
+            <div class="rounded me-4" style="width: 100px; height: 100px;">
+                <img src="brands/logo_1.png" class="img-fluid rounded" alt="">
+            </div>
+            <div>
+                <h6 class="mb-2">Big Banana</h6>
+                <div class="rating">
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star"></i>
+                </div>
+                <div class="price_box">
+                    <span class="new_price">$75.00</span>
+                    <span class="old_price">$155.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-start">
+            <div class="rounded me-4" style="width: 100px; height: 100px;">
+                <img src="brands/logo_1.png" class="img-fluid rounded" alt="">
+            </div>
+            <div>
+                <h6 class="mb-2">Big Banana</h6>
+                <div class="rating">
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star"></i>
+                </div>
+                <div class="price_box">
+                    <span class="new_price">$75.00</span>
+                    <span class="old_price">$155.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-start">
+            <div class="rounded me-4" style="width: 100px; height: 100px;">
+                <img src="brands/logo_1.png" class="img-fluid rounded" alt="">
+            </div>
+            <div>
+                <h6 class="mb-2">Big Banana</h6>
+                <div class="rating">
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star voted"></i>
+                    <i class="icon-star"></i>
+                </div>
+                <div class="price_box">
+                    <span class="new_price">$75.00</span>
+                    <span class="old_price">$155.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center my-4">
+            <a href="#"
+               class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew
+                More</a>
+        </div>
+    </div>
 </aside>
+<!-- /col -->

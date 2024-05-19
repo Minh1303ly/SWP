@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.SubProducts;
-import utils.Support;
 
 /**
  *
@@ -152,17 +151,17 @@ public class DTOProducts extends DBContext {
         return list;
     } 
     
-    public List<SubProducts> getRalateProduct(String[] category, String brand, 
+    public List<SubProducts> getRalateProduct(String brand, 
             int sizeOfList) {
         List<SubProducts> list = new LinkedList<>();
         StringBuilder query = new StringBuilder(SQL);
-        query.append(" where categories.name in (?) or brands.name like ? ");
+        query.append(" where brands.name like ? ");
         try {
             PreparedStatement pre = connection.prepareStatement(
                     query.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            pre.setString(1,Support.printArray(category));
-            pre.setString(2,"%"+brand+"%");
+//            pre.setString(1,Support.printArray(category));
+            pre.setString(1,"%"+brand+"%");
             ResultSet rs = pre.executeQuery();
             list = getProduct(rs);
         } catch (SQLException ex) {
@@ -174,17 +173,20 @@ public class DTOProducts extends DBContext {
     public static void main(String[] args) {
         DTOProducts call = new DTOProducts();
 //        List<SubProducts> ls = call.getProductByStatus("Hot", 12);
-//        List<SubProducts> ls = call.getAll();
+        List<SubProducts> ls = call.getAll();
         String[] m = {"men","women"};
-        List<SubProducts> ls = call.getRalateProduct(m, "nike",20);
-        ls.forEach(a -> System.out.println(a.toString()));
+//        List<SubProducts> ls = call.getRalateProduct("nike",20);
+       ls.forEach(a -> System.out.println(a.toString()));
+//        for(String k : m){
+//            System.out.println(k);
+        }
 //        String[] m = {"a"};
 //        System.out.println(m.toString());
 //        String k = "123456";
 //        System.out.println(Support.printArray(m));
     }
 
-}
+
 
 class ProductAggregation {
 

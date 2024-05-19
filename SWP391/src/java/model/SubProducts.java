@@ -4,6 +4,8 @@
  */
 package model;
 
+import utils.Support;
+
 /**
  *
  * @author Nhat Anh
@@ -150,6 +152,9 @@ public class SubProducts {
         this.status = status;
     }
 
+    public String printCategories(){
+        return Support.printArray(categories);
+    }
     @Override
     public String toString() {
         return "SubProducts{" + "name=" + name + ", price=" + price + ", size=" 

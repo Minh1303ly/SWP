@@ -70,10 +70,9 @@ public class SubProductServlet extends HttpServlet {
                             request.getParameter("name")).get(0) );
             request.setAttribute("newProduct", 
                     dtoProducts.getProductByStatus("new", 2));
-            request.setAttribute("relateProduct", 
-                    dtoProducts.getRalateProduct(
-                            request.getParameter("category").split(","), 
-                            request.getParameter("brand"), 6));
+            request.setAttribute("relateProduct",  
+                            dtoProducts.getRalateProduct(
+                                    request.getParameter("brand"), 6));
             
             
             RequestDispatcher dispatch = request.getRequestDispatcher("product_detail.jsp");

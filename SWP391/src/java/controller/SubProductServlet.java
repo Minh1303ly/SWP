@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.*;
 import dto.DTOProducts;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -40,20 +41,35 @@ public class SubProductServlet extends HttpServlet {
                 view(request, response);
                 break;
             case "addCart" :
-                
+                addcart(request, response);
                 break;
             case "searchName":
                 searchName(request, response);
                 break;
             default:
-                detail(request, response);
+                view(request, response);
         }
         
     }
     
+    public void addcart(HttpServletRequest request, HttpServletResponse response){
+        try {
+            DTOProducts dtoProducts = new DTOProducts();
+            request.setAttribute("message", "Hello");
+            request.setAttribute("newProduct", 
+                    dtoProducts.getProductByStatus("new", 2));
+            RequestDispatcher dispatch = request.getRequestDispatcher("test.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(SubProductServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void view(HttpServletRequest request, HttpServletResponse response){
         try {
-            
+            DTOProducts dtoProducts = new DTOProducts();
+            dataForSider(request, response);
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -65,6 +81,7 @@ public class SubProductServlet extends HttpServlet {
     public void detail(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
+            dataForSider(request, response);
             request.setAttribute("product",
                     dtoProducts.searchName(
                             request.getParameter("name")).get(0) );
@@ -83,11 +100,28 @@ public class SubProductServlet extends HttpServlet {
         }
     }
     
-    
+    public void dataForSider(HttpServletRequest request, HttpServletResponse response){
+            DTOProducts dtoProducts = new DTOProducts();
+            DAOProducts dAOProducts = new DAOProducts();
+            DAOBrands dAOBrands = new DAOBrands();
+            DAOCategories dAOCategories =new DAOCategories();
+            request.setAttribute("colorSider",dAOProducts.getAllColor().toArray() );
+            request.setAttribute("brandSider", dAOBrands.getAll());
+            request.setAttribute("categorySider", dAOCategories.getAll());
+            request.setAttribute("newProductSider", 
+                    dtoProducts.getProductByStatus("new", 3));
+            
+    }
     
     public void searchName(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
+            DAOProducts dAOProducts = new DAOProducts();
+            DAOBrands dAOBrands = new DAOBrands();
+            DAOCategories dAOCategories =new DAOCategories();
+            request.setAttribute("colors",dAOProducts.getAllColor().toArray() );
+            request.setAttribute("brands", dAOBrands.getAll());
+            request.setAttribute("categories", dAOCategories.getAll());
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {

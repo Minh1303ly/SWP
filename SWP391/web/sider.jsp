@@ -4,6 +4,7 @@
     Author     : Nhat Anh
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <aside>
     <div class="filter_col">
@@ -24,30 +25,14 @@
             <h4><a href="#filter_1" data-bs-toggle="collapse" class="opened">Categories</a></h4>
             <div class="collapse show" id="filter_1">
                 <ul>
-                    <li>
-                        <label class="container_check">Men <small>12</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Women <small>24</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Running <small>23</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Training <small>11</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
+                    <c:forEach var="element" items="${categorySider}">
+                        <li>
+                            <label class="container_check">${element.name}
+                                <input type="checkbox" name="category" value="${element.name}">
+                                <span class="checkmark"></span>
+                            </label>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
             <!-- /filter_type -->
@@ -57,62 +42,30 @@
             <h4><a href="#filter_2" data-bs-toggle="collapse" class="opened">Color</a></h4>
             <div class="collapse show" id="filter_2">
                 <ul>
-                    <li>
-                        <label class="container_check">Blue <small>06</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Red <small>12</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Orange <small>17</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Black <small>43</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
+                    <c:forEach var="element" items="${colorSider}">
+                        <li>
+                            <label class="container_check">${element}
+                                <input type="checkbox" name="color" value="${element}">
+                                <span class="checkmark"></span>
+                            </label>
+                        </li>
+                    </c:forEach>                                   
                 </ul>
             </div>
         </div>
         <!-- /filter_type -->
         <div class="filter_type version_2">
-            <h4><a href="#filter_3" data-bs-toggle="collapse" class="closed">Brands</a></h4>
+            <h4><a href="#filter_3" data-bs-toggle="collapse" class="opened">Brands</a></h4>
             <div class="collapse" id="filter_3">
                 <ul>
-                    <li>
-                        <label class="container_check">Adidas <small>11</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Nike <small>08</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Vans <small>05</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="container_check">Puma <small>18</small>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </li>
+                    <c:forEach var="element" items="${brandSider}">
+                        <li>
+                            <label class="container_check">${element.name}
+                                <input type="checkbox" name="brand" value="${element.name}">
+                                <span class="checkmark"></span>
+                            </label>
+                        </li> 
+                    </c:forEach>                                   
                 </ul>
             </div>
         </div>
@@ -121,6 +74,9 @@
             <h4><a href="#filter_4" data-bs-toggle="collapse" class="closed">Price</a></h4>
             <div class="collapse" id="filter_4">
                 <ul>
+                    <c:forEach var="element" items="${category}">
+
+                    </c:forEach>
                     <li>
                         <label class="container_check">$0 — $50<small>11</small>
                             <input type="checkbox">
@@ -155,63 +111,34 @@
     </div>
     <div class="col-lg-12">
         <h4 class="mb-3">New products</h4>
-        <div class="d-flex align-items-center justify-content-start">
-            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                <img src="brands/logo_1.png" class="img-fluid rounded" alt="">
-            </div>
-            <div>
-                <h6 class="mb-2">Big Banana</h6>
-                <div class="rating">
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star"></i>
+        <c:forEach var="element" items="${newProductSider}"> 
+            
+            <div class="d-flex align-items-center justify-content-start">
+                <div class="rounded me-4" style="width: 100px; height: 100px;">
+                    <img src="${element.img1}" class="img-fluid rounded" alt="">
                 </div>
-                <div class="price_box">
-                    <span class="new_price">$75.00</span>
-                    <span class="old_price">$155.00</span>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex align-items-center justify-content-start">
-            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                <img src="brands/logo_1.png" class="img-fluid rounded" alt="">
-            </div>
-            <div>
-                <h6 class="mb-2">Big Banana</h6>
-                <div class="rating">
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star"></i>
-                </div>
-                <div class="price_box">
-                    <span class="new_price">$75.00</span>
-                    <span class="old_price">$155.00</span>
+                <div>
+                    <h6 class="mb-2">${element.name}</h6>
+                    <div class="rating">
+                        <c:forEach begin="1" end="${element.rating}" step="1">
+                            <i class="icon-star voted"></i>
+                        </c:forEach>
+                        <c:forEach begin="${element.rating+1}" end="5" step="1">
+                            <i class="icon-star"></i>
+                        </c:forEach>
+                    </div>
+                    <div class="price_box">
+                        <c:if test="${element.discount_status == 1}">                                              
+                            <span class="new_price">$${element.price*(100-element.discount)/100}</span>
+                            <span class="old_price">$${element.price}</span>
+                        </c:if>
+                        <c:if test="${element.discount_status == 0}">                                              
+                            <span class="new_price">$${element.price}</span>                                                
+                        </c:if> 
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="d-flex align-items-center justify-content-start">
-            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                <img src="brands/logo_1.png" class="img-fluid rounded" alt="">
-            </div>
-            <div>
-                <h6 class="mb-2">Big Banana</h6>
-                <div class="rating">
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star voted"></i>
-                    <i class="icon-star"></i>
-                </div>
-                <div class="price_box">
-                    <span class="new_price">$75.00</span>
-                    <span class="old_price">$155.00</span>
-                </div>
-            </div>
-        </div>
+        </c:forEach>
         <div class="d-flex justify-content-center my-4">
             <a href="#"
                class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew

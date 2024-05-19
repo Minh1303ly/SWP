@@ -61,39 +61,7 @@
             <div class="row small-gutters">
                 <!-- categories -->
                 <div class="col-xl-3 col-lg-3 col-md-3">
-                    <nav class="categories">
-                        <ul class="clearfix">
-                            <li><span>
-                                    <a href="#">
-                                        <span class="hamburger hamburger--spin">
-                                            <span class="hamburger-box">
-                                                <span class="hamburger-inner"></span>
-                                            </span>
-                                        </span>
-                                        Categories
-                                    </a>
-                                </span>
-                                <div id="menu">
-                                    <ul>
-                                        <li><span><a href="#">Men</a></span>
-                                        </li>
-                                        <li><span><a href="#">Woman</a></span>
-                                        </li>
-                                        <li><span><a href="#">Boy</a></span>
-                                        </li>
-                                        <li><span><a href="#">Girl</a></span>
-                                        </li>
-                                        <li><span><a href="#">Unisex</a></span>
-                                        </li>
-                                        <c:forEach var="element" items="${categories}">
-                                            <li><span><a href="#">${element.name}</a></span>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
+                    
                 </div>
 
                 <!--Search blog-->

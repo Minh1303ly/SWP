@@ -128,16 +128,16 @@
                                                 </div>
                                                 <div class="row mt-3">
                                                     <div class="col-lg-7 col-md-6">
-                                                        <c:if test="${element.discount_status == 1}">
+                                                        <c:if test="${product.discount_status == 1}">
                                                             <div class="price_main">
-                                                                <span class="new_price">$${element.price*(100-element.discount)/100}</span>
-                                                                <span class="percentage">-${element.discount}%</span> 
-                                                                <span class="old_price">$${element.price}</span>
+                                                                <span class="new_price">$${product.price*(100-product.discount)/100}</span>
+                                                                <span class="percentage">-${product.discount}%</span> 
+                                                                <span class="old_price">$${product.price}</span>
                                                             </div>
-                                                        </c:if>
-                                                        <c:if test="${element.discount_status == 0}">
+                                                        </c:if>                                 
+                                                        <c:if test="${product.discount_status == 0}">
                                                             <div class="price_main">
-                                                                <span class="new_price">$${element.price}</span>>
+                                                                <span class="new_price">$${product.price}</span>>
                                                             </div>
                                                         </c:if>
                                                     </div>

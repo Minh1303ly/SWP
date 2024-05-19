@@ -5,35 +5,33 @@
 package dao;
 
 import context.DBContext;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.LinkedList;
+import java.util.List;
+import model.Brands;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Categories;
-
 /**
  *
  * @author Nhat Anh
  */
-public class DAOCategories extends DBContext{
-    
-    public List<Categories> getAll(){
-        List<Categories> list = new LinkedList<>();
+public class DAOBrands extends DBContext{
+    public List<Brands> getAll(){
+        List<Brands> list = new LinkedList<>();
         try {
             String sql = """
-                        select c.id, c.name from Categories as c
-                        join category_status as s on c.status_id = s.id
-                        where s.name = 'Active'""";
+                         select c.id, c.name from Brands as c
+                                     join brand_status as s on c.status_id = s.id
+                                     where s.name = 'Active'""";
+            
             PreparedStatement pre = connection.prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {                
-                list.add(new Categories(rs.getInt(1), rs.getString(2), null, null));
+                list.add(new Brands(rs.getInt(1), rs.getString(2), null, null));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCategories.class.getName())
@@ -42,9 +40,9 @@ public class DAOCategories extends DBContext{
         return list;
     }
     
-     public static void main(String[] args) {
-        DAOCategories aOBrands = new DAOCategories();
-        List<Categories> ls = new LinkedList<>();
+    public static void main(String[] args) {
+        DAOBrands aOBrands = new DAOBrands();
+        List<Brands> ls = new LinkedList<>();
         ls = aOBrands.getAll();
         ls.forEach(a -> {System.out.println(a.toString());});
         

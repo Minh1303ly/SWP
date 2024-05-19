@@ -173,7 +173,7 @@ public class DTOProducts extends DBContext {
     public static void main(String[] args) {
         DTOProducts call = new DTOProducts();
 //        List<SubProducts> ls = call.getProductByStatus("Hot", 12);
-        List<SubProducts> ls = call.getAll();
+        List<SubProducts> ls = call.getProductByStatus("new", 4);
         String[] m = {"men","women"};
 //        List<SubProducts> ls = call.getRalateProduct("nike",20);
        ls.forEach(a -> System.out.println(a.toString()));

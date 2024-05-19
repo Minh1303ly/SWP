@@ -52,31 +52,15 @@ public class DAOProducts extends DBContext{
         return list;
     }
     
-    public List<Products> topSelling() {
-        List<Products> list = new LinkedList<>();
-        String sql = "SELECT * FROM Products";
+    public List<String> getAllColor() {
+        List<String> list = new LinkedList<>();
+        String sql = "SELECT distinct color FROM Products";
 
         try (PreparedStatement pre = connection.prepareStatement(sql, 
                  ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
              ResultSet rs = pre.executeQuery()) {
             while (rs.next()) {
-                    list.add(new Products(
-                        rs.getInt(1), 
-                        rs.getInt(2), 
-                        rs.getInt(3),
-                        rs.getInt(4), 
-                        rs.getInt(5), 
-                        rs.getString(6), 
-                        rs.getInt(7), 
-                        rs.getInt(8), 
-                        rs.getString(9),
-                        rs.getString(10), 
-                        rs.getString(11),
-                        rs.getString(12), 
-                        rs.getString(13),
-                        rs.getDate(14), 
-                        rs.getDate(15)
-                    ));
+                    list.add(rs.getString(1));
                 }           
         } catch (SQLException ex) {
             Logger.getLogger(DAOProducts.class.getName())
@@ -89,9 +73,9 @@ public class DAOProducts extends DBContext{
     
     public static void main(String[] args){
         DAOProducts dao = new DAOProducts();
-        List<Products> ls = dao.getAll();
-        System.out.println(ls.get(0).getBrand_id());
+        List<String> ls = dao.getAllColor();
+//        System.out.println(ls.get(0).getBrand_id());
         
-        ls.forEach( a -> System.out.println(a.toString()));
+        ls.forEach( a -> System.out.println(a));
     }
 }

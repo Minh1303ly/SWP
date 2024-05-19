@@ -87,11 +87,16 @@
                                         <span class="dark:text-slate-400">${u.gender?"Male":"Female"}</span>
                                     </div><!--end col-->
                                     <div class="col-span-12 sm:col-span-12 md:col-span-5 text-end">
-                                        <span class="dark:text-slate-300">Address :</span>
+                                        <span class="dark:text-slate-300">CreateAt :</span>
                                     </div><!--end col-->
                                     <div class="col-span-12 sm:col-span-12 md:col-span-7">
-                                        <span class="dark:text-slate-400">1277 Rollins Road
-                                            Grand Island, NE 68801</span>
+                                        <span class="dark:text-slate-400">${u.createdAt}</span>
+                                    </div><!--end col-->
+                                    <div class="col-span-12 sm:col-span-12 md:col-span-5 text-end">
+                                        <span class="dark:text-slate-300">ModifiedAt :</span>
+                                    </div><!--end col-->
+                                    <div class="col-span-12 sm:col-span-12 md:col-span-7">
+                                        <span class="dark:text-slate-400">${u.modifiedAt}</span>
                                     </div><!--end col-->
                                 </div><!--end grid-->
                                 <div class="border-b border-dashed dark:border-slate-700/40 my-3 group-data-[sidebar=dark]:border-slate-700/40 group-data-[sidebar=brand]:border-slate-700/40"></div>

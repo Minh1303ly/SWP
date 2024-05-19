@@ -132,12 +132,12 @@
                                                                     <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         PhoneNumber
                                                                     </th>
-                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+<!--                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         CreateAt
                                                                     </th>
                                                                     <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         ModifiedAt
-                                                                    </th>
+                                                                    </th>-->
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Status
                                                                     </th>
@@ -154,7 +154,7 @@
                                                                             ${u.id}
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <a href="customerDetail?id=${u.id}">
+                                                                            <a>
                                                                                 <div class="flex items-center">
                                                                                     <img src="assets/images/users/avatar-2.png" alt="" class="me-2 h-8 inline-block">
                                                                                     <div class="self-center">                                                                        
@@ -168,17 +168,17 @@
                                                                             ${u.gender?"Male":"Female"}
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <a href="#">${u.email}</a>
+                                                                            <a>${u.email}</a>
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             ${u.telephone}
-                                                                        </td>
+<!--                                                                        </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             ${u.createdAt}
-                                                                        </td>
-                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                        </td>-->
+<!--                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             ${u.modifiedAt}
-                                                                        </td>
+                                                                        </td>-->
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             <c:if test="${u.getUserStatus().name ==  'Active'}">
                                                                                 <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Active</span>

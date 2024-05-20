@@ -1,1 +1,169 @@
-/SWP391/build/
+# NetBeans specific files
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+private/
+*.orig
+*.rej
+# NetBeans project specific files
+nbproject/private/
+build/
+build.xml~
+build.properties~
+# NetBeans cache files
+cache/
+
+# Ignore build output directories
+build/
+dist/
+nb-configuration.xml
+
+# Java build output directories
+*.class
+*.jar
+*.war
+*.ear
+
+# Ant build files
+build.xml~
+build.properties~
+*.log
+
+# Ignore Maven target directory
+target/
+
+# Logs
+*.log
+*.out
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# IDE specific files
+.vscode/
+.idea/
+*.iml
+
+# Ignore compiled dynamic libraries
+*.dll
+*.so
+*.dylib
+
+# Ignore compiled static libraries
+*.lib
+*.a
+
+# Ignore compiled objects
+*.o
+*.obj
+
+# Ignore compiled binaries
+*.exe
+*.out
+*.app
+
+# Ignore web files
+*.class
+*.swp
+
+# Other IDEs and editors
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.psess
+*.vsp
+*.pdb
+*.ipch
+*.iws
+
+# Java specific
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.har
+*.sar
+*.mar
+*.scala
+*.sbt
+*.zip
+
+# Local configuration files
+/.metadata
+/.recommenders
+
+# JetBrains IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse IDE
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.classpath
+.project
+
+# Android Studio
+.gradle/
+.idea/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+local.properties
+local.gradle
+*.jar
+*.apk
+*.ap_
+*.cxx
+*.manifest
+.cache
+*.log
+*.lock
+
+# SonarQube
+.sonarlint/
+.sonar/
+
+# Coverage and testing
+.coverage
+.coveragepyc
+.nox/
+.tox/
+.pytest_cache/
+.testreport/
+
+# Build directories
+build/
+build-output/
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Typescript v1 declaration files
+typings/
+
+# System Files
+Thumbs.db
+.DS_Store

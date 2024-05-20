@@ -4,6 +4,7 @@
  */
 package model;
 
+
 import java.util.Date;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Date;
  * @author Admin
  */
 public class Comment {
+
     private int id;
     private int userId;
     private int blogId;

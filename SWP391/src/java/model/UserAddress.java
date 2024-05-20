@@ -8,10 +8,11 @@ package model;
  *
  * @author Admin
  */
+
 public class UserAddress {
     private int id;
-    private int user_id;
-    private String address_line;
+    private int userId;
+    private String addressLine;
     private String city;
     private String country;
 
@@ -19,22 +20,22 @@ public class UserAddress {
     }
 
     public UserAddress(int user_id, String address_line, String city, String country) {
-        this.user_id = user_id;
-        this.address_line = address_line;
+        this.userId = user_id;
+        this.addressLine = address_line;
         this.city = city;
         this.country = country;
     }
 
     public UserAddress(String address_line, String city, String country) {
-        this.address_line = address_line;
+        this.addressLine = address_line;
         this.city = city;
         this.country = country;
     }
 
     public UserAddress(int id, int user_id, String address_line, String city, String country) {
         this.id = id;
-        this.user_id = user_id;
-        this.address_line = address_line;
+        this.userId = user_id;
+        this.addressLine = address_line;
         this.city = city;
         this.country = country;
     }
@@ -47,20 +48,20 @@ public class UserAddress {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getAddress_line() {
-        return address_line;
+    public String getAddressLine() {
+        return addressLine;
     }
 
-    public void setAddress_line(String address_line) {
-        this.address_line = address_line;
+    public void setAddressLine(String addressLine) {
+        this.addressLine = addressLine;
     }
 
     public String getCity() {

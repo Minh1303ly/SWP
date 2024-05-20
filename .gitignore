@@ -1,3 +1,4 @@
+
 # NetBeans specific files
 nbproject/private/
 nbbuild/
@@ -172,3 +173,5 @@ SWP391/nbproject/private/private.properties
 SWP391/nbproject/build-impl.xml~
 SWP391/nbproject/build-impl.xml
 SWP391/src/java/context/DBContext.java
+
+SWP391/src/conf/MANIFEST.MF

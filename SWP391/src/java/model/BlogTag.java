@@ -6,12 +6,14 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author 84355
  */
 public class BlogTag {
+    
     private int tagId;
     private int blogId;
     private Tag tag;
+
     public BlogTag() {
     }
 
@@ -19,8 +21,8 @@ public class BlogTag {
         this.tagId = tagId;
         this.blogId = blogId;
     }
-
-    public Tag getTag() {
+    
+    public Tag getTag(){
         return tag;
     }
 
@@ -43,9 +45,9 @@ public class BlogTag {
     public void setBlogId(int blogId) {
         this.blogId = blogId;
     }
-
+    
     @Override
     public String toString() {
         return "BlogTag{" + "tagId=" + tagId + ", blogId=" + blogId + '}';
-    }
+    }    
 }

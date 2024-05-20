@@ -100,7 +100,7 @@ public class ActiveServlet extends HttpServlet {
             udb.updateUserActive(u2);
             session.setAttribute("account", u2);
 
-            UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddress_line(), ua.getCity(), ua.getCountry());
+            UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddressLine(), ua.getCity(), ua.getCountry());
             uadb.insertUserAddress(ua2);
 
             response.sendRedirect("home");

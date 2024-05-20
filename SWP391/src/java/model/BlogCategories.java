@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author 84355
  */
 public class BlogCategories {
     private int id;
@@ -40,4 +40,6 @@ public class BlogCategories {
     public String toString() {
         return "BlogCategories{" + "id=" + id + ", name=" + name + '}';
     }
+
+    
 }

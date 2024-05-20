@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 
 public class UserAddress {

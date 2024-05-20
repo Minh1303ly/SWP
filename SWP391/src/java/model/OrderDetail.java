@@ -6,11 +6,16 @@ package model;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import lombok.Data;
+
 
 /**
  *
  * @author tungl
  */
+
+@Data
+
 public class OrderDetail {
 
     private int id;
@@ -89,4 +94,8 @@ public class OrderDetail {
         return "OrderDetail{" + "id=" + id + ", productId=" + productId + ", shopOrderId=" + shopOrderId + ", quantity=" + quantity + ", price=" + price + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + '}';
     }
 
+    
+    private Product product;
+    private User user;
 }
+

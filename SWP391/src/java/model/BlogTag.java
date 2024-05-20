@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author 84355
+ * @author tungl
  */
 public class BlogTag {
     
@@ -49,5 +49,5 @@ public class BlogTag {
     @Override
     public String toString() {
         return "BlogTag{" + "tagId=" + tagId + ", blogId=" + blogId + '}';
-    }    
+    }
 }

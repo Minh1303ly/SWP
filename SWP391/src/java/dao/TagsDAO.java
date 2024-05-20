@@ -17,7 +17,10 @@ import java.util.Map;
 import model.Blog;
 import model.BlogCategories;
 
-
+/**
+ *
+ * @author tungl
+ */
 public class TagsDAO extends DBContext {
 
     public List<Tag> getAll() {

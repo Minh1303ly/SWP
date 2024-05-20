@@ -70,7 +70,7 @@ public class Email {
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
 
             // Người gửi
-            msg.setFrom(from);
+            msg.setFrom(/*from*/);
 
             // Người nhận
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));

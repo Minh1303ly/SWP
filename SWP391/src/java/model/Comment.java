@@ -4,11 +4,11 @@
  */
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class Comment {
     private int id;
@@ -82,4 +82,6 @@ public class Comment {
     public String toString() {
         return "Comment{" + "id=" + id + ", userId=" + userId + ", blogId=" + blogId + ", context=" + context + ", createDate=" + createDate + ", modifyDate=" + modifyDate + '}';
     }
+    
+    
 }

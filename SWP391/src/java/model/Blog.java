@@ -8,9 +8,10 @@ import java.util.Date;
 
 /**
  *
- * @author Admin
+ * @author 84355
  */
 public class Blog {
+
     private int id;
     private int user_id;
     private int blog_cate_id;
@@ -160,4 +161,5 @@ public class Blog {
     public String toString() {
         return "Blog{" + "id=" + id + ", user_id=" + user_id + ", blog_cate_id=" + blog_cate_id + ", title=" + title + ", context=" + context + ", cover_img=" + cover_img + ", main_img=" + main_img + ", description=" + description + ", created_at=" + created_at + ", modified_at=" + modified_at + '}';
     }
+
 }

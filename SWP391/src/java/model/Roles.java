@@ -6,18 +6,13 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class Roles {
     private int id;
     private String name;
 
     public Roles() {
-    }
-
-    public Roles(int id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public int getId() {
@@ -36,9 +31,10 @@ public class Roles {
         this.name = name;
     }
 
-     @Override
+    @Override
     public String toString() {
         return "Roles{" + "id=" + id + ", name=" + name + '}';
     }
+    
     
 }

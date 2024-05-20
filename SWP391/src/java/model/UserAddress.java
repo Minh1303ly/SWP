@@ -6,10 +6,9 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class UserAddress {
-
     private int id;
     private int userId;
     private String addressLine;
@@ -18,20 +17,6 @@ public class UserAddress {
 
     public UserAddress() {
     }
-
-    public UserAddress(String addressLine, String city, String country) {
-        this.addressLine = addressLine;
-        this.city = city;
-        this.country = country;
-    }
-
-    public UserAddress(int userId, String addressLine, String city, String country) {
-        this.userId = userId;
-        this.addressLine = addressLine;
-        this.city = city;
-        this.country = country;
-    }
-    
 
     public UserAddress(int id, int userId, String addressLine, String city, String country) {
         this.id = id;
@@ -85,4 +70,6 @@ public class UserAddress {
     public String toString() {
         return "UserAddress{" + "id=" + id + ", userId=" + userId + ", addressLine=" + addressLine + ", city=" + city + ", country=" + country + '}';
     }
+    
+    
 }

@@ -6,10 +6,9 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class UserStatus {
-
     private int id;
     private String name;
 
@@ -36,4 +35,6 @@ public class UserStatus {
     public String toString() {
         return "UserStatus{" + "id=" + id + ", name=" + name + '}';
     }
+    
+    
 }

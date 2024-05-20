@@ -10,3 +10,5 @@ SWP391/web/META-INF/context.xml
 SWP391/nbproject/build-impl.xml
 /SWP391/nbproject
 /SWP391/nbproject
+SWP391/src/java/context/DBContext.java
+SWP391/src/java/util/Email.java

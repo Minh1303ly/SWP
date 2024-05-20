@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class BlogTag {
     private int tagId;
@@ -48,4 +48,6 @@ public class BlogTag {
     public String toString() {
         return "BlogTag{" + "tagId=" + tagId + ", blogId=" + blogId + '}';
     }
+    
+    
 }

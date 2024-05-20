@@ -6,10 +6,9 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class OrderStatus {
-
     private int id;
     private String name;
 
@@ -41,4 +40,6 @@ public class OrderStatus {
     public String toString() {
         return "OrderStatus{" + "id=" + id + ", name=" + name + '}';
     }
+    
+    
 }

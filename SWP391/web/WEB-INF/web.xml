@@ -28,6 +28,18 @@
         <servlet-name>ChangePasswordServlet</servlet-name>
         <servlet-class>controller.ChangePasswordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>controller.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResendServlet</servlet-name>
+        <servlet-class>controller.ResendServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LinkValidatorServlet</servlet-name>
+        <servlet-class>controller.LinkValidatorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -55,5 +67,17 @@
     <servlet-mapping>
         <servlet-name>ChangePasswordServlet</servlet-name>
         <url-pattern>/changepassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/resetpassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResendServlet</servlet-name>
+        <url-pattern>/resend</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LinkValidatorServlet</servlet-name>
+        <url-pattern>/linkvalidator</url-pattern>
     </servlet-mapping>
 </web-app>

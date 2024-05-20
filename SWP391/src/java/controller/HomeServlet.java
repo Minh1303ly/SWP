@@ -57,11 +57,15 @@ public class HomeServlet extends HttpServlet {
             BlogDAO bDao = new BlogDAO();  
             DTOProducts dTOProducts = new DTOProducts();
             request.setAttribute("title", "Home");
+            
             request.setAttribute("blog", bDao.getHotBlog());
-            request.setAttribute("topSelling", 
+            
+           request.setAttribute("topSelling", 
                     dTOProducts.getProductByStatus("hot", 12));
+           
             request.setAttribute("featured", 
-                    dTOProducts.getProductByRating(3, 7));
+                   dTOProducts.getProductByRating(3, 7));
+           
             request.setAttribute("slider", daoSlider.getAll());
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);

@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.util.Objects;
 import utils.Support;
 
 /**
@@ -15,13 +16,13 @@ public class SubProducts {
     private int price;
     private int[] size;
     private String[] color;
-    private String description;
+    private String[] description;
     private String img1;
     private String img2;
-    private int rating;
+    private int[] rating;
     private int discount;
     private int discount_status;
-    private String status;
+    private String[] status;
     private String brand_name;
     private String[] categories;
     
@@ -37,7 +38,10 @@ public class SubProducts {
     public SubProducts() {
     }
 
-    public SubProducts(String name, int price, int[] size, String[] color, String description, String img1, String img2, int rating, int discount, int discount_status, String status, String brand_name, String[] categories) {
+    public SubProducts(String name, int price, int[] size, String[] color, 
+            String[] description, String img1, String img2, int[] rating, 
+            int discount, int discount_status, String[] status, 
+            String brand_name, String[] categories) {
         this.name = name;
         this.price = price;
         this.size = size;
@@ -52,6 +56,8 @@ public class SubProducts {
         this.brand_name = brand_name;
         this.categories = categories;
     }
+    
+    
 
     public String getBrand_name() {
         return brand_name;
@@ -67,6 +73,30 @@ public class SubProducts {
 
     public void setCategories(String[] categories) {
         this.categories = categories;
+    }
+
+    public String[] getDescription() {
+        return description;
+    }
+
+    public void setDescription(String[] description) {
+        this.description = description;
+    }
+
+    public int[] getRating() {
+        return rating;
+    }
+
+    public void setRating(int[] rating) {
+        this.rating = rating;
+    }
+
+    public String[] getStatus() {
+        return status;
+    }
+
+    public void setStatus(String[] status) {
+        this.status = status;
     }
 
     
@@ -103,14 +133,6 @@ public class SubProducts {
         this.color = color;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImg1() {
         return img1;
     }
@@ -127,29 +149,12 @@ public class SubProducts {
         this.img2 = img2;
     }
 
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
     public int getDiscount() {
         return discount;
     }
 
     public void setDiscount(int discount) {
         this.discount = discount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String printCategories(){
@@ -163,6 +168,36 @@ public class SubProducts {
                 + ", discount=" + discount + ", discount_status=" + discount_status 
                 + ", status=" + status + ", brand_name=" + brand_name 
                 + ", categories=" + categories + '}';
+    }
+    
+    public String toString(String a) {
+        return "SubProducts{" + "name=" + name + ", price=" + price 
+                + ", img1=" + img1 + ", img2=" + img2 
+                + ", discount=" + discount + ", discount_status=" + discount_status 
+                + ", brand_name=" + brand_name 
+                + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SubProducts other = (SubProducts) obj;
+        return Objects.equals(this.name, other.name);
     }
     
     

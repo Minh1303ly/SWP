@@ -12,10 +12,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.SubProducts;
+import utils.Support;
 
 /**
  *
@@ -49,46 +51,53 @@ public class DTOProducts extends DBContext {
     }
 
     public List<SubProducts> getProduct(ResultSet rs) {
-        List<SubProducts> list = new LinkedList<>();
+        Set<SubProducts> list = new HashSet<>();
         // Convert incomingDataList to a Map to aggregate sizes and colors
         Map<SubProducts, ProductAggregation> productMap = new HashMap<>();
         try {
             while(rs.next()){
                 SubProducts key = new SubProducts(
                         rs.getString(1), rs.getInt(2),
-                        null, null, rs.getString(5),
-                        rs.getString(6), rs.getString(7), rs.getInt(8),
+                        null, null, null,
+                        rs.getString(6), rs.getString(7), null,
                         rs.getInt(9), rs.getInt(10),
-                        rs.getString(11), rs.getString(12),null);
+                        null, rs.getString(12),null);
                 ProductAggregation aggregation = 
                         productMap.computeIfAbsent(key, k -> new ProductAggregation());
                 aggregation.sizes.add(rs.getInt(3));
                 aggregation.colors.add(rs.getString(4));
+                aggregation.description.add(rs.getString(5));
                 aggregation.categories.add(rs.getString(13));
+                aggregation.rating.add(rs.getInt(8));
+                aggregation.status.add(rs.getString(11));
             }
             list = productMap.entrySet().stream()
-                    .map(entry -> {
+                    .map((Map.Entry<SubProducts, ProductAggregation> entry) -> {
                         SubProducts key = entry.getKey();
                         ProductAggregation aggregation = entry.getValue();
                         int[] sizes = aggregation.sizes.stream().mapToInt(i -> i).toArray();
-                        String[] colors = aggregation.colors.toArray(new String[0]);
-                        String[] categories = aggregation.categories.toArray(new String[0]);
-                        return new SubProducts(key.getName(),
+                        String[] colors = aggregation.colors.toArray(String[]::new);
+                        String[] description = aggregation.description.toArray(String[]::new);
+                        String[] categories = aggregation.categories.toArray(String[]::new);
+                        int[] rating = aggregation.rating.stream().mapToInt(i -> i).toArray();
+                        String[] status = aggregation.status.toArray(String[]::new);
+                        return new SubProducts( key.getName(),
                                 key.getPrice(), sizes, colors,
-                                key.getDescription(),
+                                description,
                                 key.getImg1(), key.getImg2(),
-                                key.getRating(), key.getDiscount(),
-                                key.getDiscount_status(), key.getStatus(),
+                                rating, key.getDiscount(),
+                                key.getDiscount_status(),
+                                status,
                                 key.getBrand_name(),categories);
-                    })
-                    .collect(Collectors.toList());
+            })
+                    .collect(Collectors.toSet());
 
         } catch (SQLException ex) {
             Logger.getLogger(DTOProducts.class.getName())
                     .log(Level.SEVERE, null, ex);
         }
 
-        return list;
+        return new LinkedList<>(list);
     }
 
     public List<SubProducts> getProductByStatus(String status, int sizeOfList) {
@@ -173,7 +182,7 @@ public class DTOProducts extends DBContext {
     public static void main(String[] args) {
         DTOProducts call = new DTOProducts();
 //        List<SubProducts> ls = call.getProductByStatus("Hot", 12);
-        List<SubProducts> ls = call.getProductByStatus("new", 4);
+        List<SubProducts> ls = call.getAll();
         String[] m = {"men","women"};
 //        List<SubProducts> ls = call.getRalateProduct("nike",20);
        ls.forEach(a -> System.out.println(a.toString()));
@@ -192,5 +201,8 @@ class ProductAggregation {
 
     Set<Integer> sizes = new HashSet<>();
     Set<String> colors = new HashSet<>();
+    Set<String> description = new HashSet<>(); 
+    List<Integer> rating = new LinkedList<>();
     Set<String> categories = new HashSet<>();
+    Set<String> status = new HashSet<>();
 }

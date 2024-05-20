@@ -55,7 +55,7 @@
         </div>
         <!-- /filter_type -->
         <div class="filter_type version_2">
-            <h4><a href="#filter_3" data-bs-toggle="collapse" class="opened">Brands</a></h4>
+            <h4><a href="#filter_3" data-bs-toggle="collapse" class="closed">Brands</a></h4>
             <div class="collapse" id="filter_3">
                 <ul>
                     <c:forEach var="element" items="${brandSider}">

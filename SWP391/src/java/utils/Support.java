@@ -4,6 +4,8 @@
  */
 package utils;
 
+import java.util.List;
+
 /**
  *
  * @author Nhat Anh
@@ -24,5 +26,23 @@ public class Support {
             result = result + element + ", ";
         }
         return result.substring(0, result.length()-2);
+    }
+    public static boolean exist(String name, String[] array){
+        for(String a : array){
+            if(name.equalsIgnoreCase(a)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static int average(Integer[] array){
+        int result =0;
+        int count = 0;
+        for(Integer a : array) {
+            result+=a;
+            count++;
+        }
+        return result/count;
     }
 }

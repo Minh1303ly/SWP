@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.*, model.*, dao.* " %>
+<%@page import="java.util.*, model.*, dao.*, util.*" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,25 +21,25 @@
                     <div class="owl-carousel owl-theme">
                         <c:forEach var="element" items="${slider.subList(1,4)}">
                             <div class="owl-slide cover" style="background-image: url(${element.image});">
-                            <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-                                <div class="container">
-                                    <div class="row justify-content-center justify-content-md-end">
-                                        <div class="col-lg-6 static">
-                                            <div class="slide-text text-end white">
-                                                <h2 class="owl-slide-animated owl-slide-title">${element.title}</h2>
-<!--                                                <p class="owl-slide-animated owl-slide-subtitle">
-                                                    Limited items available at this price
-                                                </p>-->
-                                                <div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="${element.backLink}" role="button">Shop Now</a></div>
+                                <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+                                    <div class="container">
+                                        <div class="row justify-content-center justify-content-md-end">
+                                            <div class="col-lg-6 static">
+                                                <div class="slide-text text-end white">
+                                                    <h2 class="owl-slide-animated owl-slide-title">${element.title}</h2>
+                                                    <!--                                                <p class="owl-slide-animated owl-slide-subtitle">
+                                                                                                        Limited items available at this price
+                                                                                                    </p>-->
+                                                    <div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="${element.backLink}" role="button">Shop Now</a></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         </c:forEach>
-                        
-                        
+
+
                     </div>
                     <!--End Slider of home-->
                     <div id="icon_drag_mobile"></div>
@@ -50,17 +50,17 @@
                 <ul id="banners_grid" class="clearfix">
                     <c:forEach var="element" items="${slider.subList(5,8)}">
                         <li>
-                             <a href="${element.backLink}" class="img_container">
-                                 <img src="${element.image}" data-src="${element.image}" alt="" class="lazy">
-                                 <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-                                     <h3>${element.title}</h3>
-                                     <div><span class="btn_1">Shop Now</span></div>
-                                 </div>
-                             </a>
-                         </li> 
+                            <a href="${element.backLink}" class="img_container">
+                                <img src="${element.image}" data-src="${element.image}" alt="" class="lazy">
+                                <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+                                    <h3>${element.title}</h3>
+                                    <div><span class="btn_1">Shop Now</span></div>
+                                </div>
+                            </a>
+                        </li> 
                     </c:forEach>
-                    
-             
+
+
                 </ul>
                 <!--End Collection of home-->
 
@@ -79,17 +79,27 @@
                                 <div class="col-6 col-md-4 col-xl-3">
                                     <div class="grid_item">
                                         <figure>
-                                            <c:if test="${element.status eq 'new'}">
-                                                <span class="ribbon new">${element.status}</span>
-                                            </c:if>
-                                            <c:if test="${element.status eq 'hot'}">
-                                                <span class="ribbon hot">${element.status}</span>
-                                            </c:if>
-                                            <c:if test="${element.status eq 'common'}">
-                                                <c:if test="${element.discount_status == 1}">
-                                                    <span class="ribbon off">-${element.discount}%</span>
-                                                </c:if> 
-                                            </c:if>          
+                                            <c:set var="found" value="false" />
+
+                                            <c:forEach var="status" items="${element.status}" >
+                                                <c:if test="${not found}">
+                                                    <c:if test="${status eq 'new'}">
+                                                        <span class="ribbon new">${status}</span>
+                                                        <c:set var="found" value="true" />
+                                                    </c:if>
+                                                    <c:if test="${status eq 'hot'}">
+                                                        <span class="ribbon hot">${status}</span>
+                                                        <c:set var="found" value="true" />
+                                                    </c:if>
+                                                    <c:if test="${status eq 'common'}">
+                                                        <c:if test="${element.discount_status == 1}">
+                                                            <span class="ribbon off">-${status}%</span>
+                                                            <c:set var="found" value="true" />
+                                                        </c:if> 
+                                                    </c:if>
+                                                </c:if>  
+                                            </c:forEach>
+
                                             <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
                                                 <img class="img-fluid lazy" src="${element.img1}" data-src="${element.img1}" alt="">
                                                 <img class="img-fluid lazy" src="${element.img2}" data-src="${element.img2}" alt="">
@@ -97,13 +107,15 @@
                                             <!--                                            <div data-countdown="2019/05/15" class="countdown"></div>-->
                                         </figure>
                                         <div class="rating">
-                                            <c:forEach begin="1" end="${element.rating}" step="1">
+                                            <c:set var="rate" value="${element.rating[0]}"/>
+
+                                            <c:forEach begin="1" end="${rate}" step="1">
                                                 <i class="icon-star voted"></i>
                                             </c:forEach>
-                                            <c:forEach begin="${element.rating+1}" end="5" step="1">
+                                            <c:forEach begin="${rate+1}" end="5" step="1">
                                                 <i class="icon-star"></i>
                                             </c:forEach>
-                                            
+
                                         </div>
                                         <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
                                             <h3>${element.name}</h3>
@@ -166,19 +178,19 @@
 
                 <!--/Top Selling -->
 
-                
+
                 <div class="featured lazy" data-bg="url(${slider.get(10).image}">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                         <div class="container margin_60">
                             <div class="row justify-content-center justify-content-md-start">
                                 <div class="col-lg-6 wow" data-wow-offset="150">
                                     <h3>${slider.get(10).title}</h3>
-                                    <p>${slider.get(10).note}</p>
+                                    <p>${slider.get(10).content}</p>
                                     <div class="feat_text_block">
-<!--                                        <div class="price_box">
-                                            <span class="new_price">$90.00</span>
-                                            <span class="old_price">$170.00</span>
-                                        </div>-->
+                                        <!--                                        <div class="price_box">
+                                                                                    <span class="new_price">$90.00</span>
+                                                                                    <span class="old_price">$170.00</span>
+                                                                                </div>-->
                                         <a class="btn_1" href="${slider.get(10).backLink}" role="button">Shop Now</a>
                                     </div>
                                 </div>
@@ -198,29 +210,40 @@
                         <c:forEach var="element" items="${featured}">
                             <div class="item">
                                 <div class="grid_item">
-                                    <c:if test="${element.status eq 'new'}">
-                                        <span class="ribbon new">${element.status}</span>
-                                    </c:if>
-                                    <c:if test="${element.status eq 'hot'}">
-                                        <span class="ribbon hot">${element.status}</span>
-                                    </c:if>
-                                    <c:if test="${element.status eq 'common'}">
-                                        <c:if test="${element.discount_status == 1}">
-                                            <span class="ribbon off">-${element.discount}%</span>
-                                        </c:if> 
-                                    </c:if>
+                                    <c:set var="found" value="false" />
+
+                                    <c:forEach var="status" items="${element.status}" >
+                                        <c:if test="${not found}">
+                                            <c:if test="${status eq 'new'}">
+                                                <span class="ribbon new">${status}</span>
+                                                <c:set var="found" value="true" />
+                                            </c:if>
+                                            <c:if test="${status eq 'hot'}">
+                                                <span class="ribbon hot">${status}</span>
+                                                <c:set var="found" value="true" />
+                                            </c:if>
+                                            <c:if test="${status eq 'common'}">
+                                                <c:if test="${element.discount_status == 1}">
+                                                    <span class="ribbon off">-${status}%</span>
+                                                    <c:set var="found" value="true" />
+                                                </c:if> 
+                                            </c:if>
+                                        </c:if>  
+                                    </c:forEach>
                                     <figure>
                                         <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
                                             <img class="owl-lazy" src="${element.img1}" data-src="${element.img1}" alt="">
                                         </a>
                                     </figure>
                                     <div class="rating">
-                                        <c:forEach begin="1" end="${element.rating}" step="1">
-                                                <i class="icon-star voted"></i>
-                                            </c:forEach>
-                                            <c:forEach begin="${element.rating+1}" end="5" step="1">
-                                                <i class="icon-star"></i>
-                                            </c:forEach>                  
+                                        <c:set var="rate" value="${element.rating[0]}"/>
+
+                                        <c:forEach begin="1" end="${rate}" step="1">
+                                            <i class="icon-star voted"></i>
+                                        </c:forEach>
+                                        <c:forEach begin="${rate+1}" end="5" step="1">
+                                            <i class="icon-star"></i>
+                                        </c:forEach>              
                                     </div>
                                     <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
                                         <h3>${element.name}</h3>
@@ -287,21 +310,21 @@
         <!-- page -->
 
         <div id="toTop"></div><!-- Back to top button -->
-        
+
         <jsp:include page="modal.jsp"/>
-         <!-- SPECIFIC SCRIPTS -->
+        <!-- SPECIFIC SCRIPTS -->
         <script src="js/carousel-home.js"></script>
         <script src="js/sticky_sidebar.min.js"></script>
         <script src="js/specific_listing.js"></script>
         <script src="js/jquery.cookiebar.js"></script>
         <script src="js/tu.js"></script>
         <script>
-                            $(document).ready(function () {
-                                'use strict';
-                                $.cookieBar({
-                                    fixed: true
-                                });
-                            });
+            $(document).ready(function () {
+                'use strict';
+                $.cookieBar({
+                    fixed: true
+                });
+            });
 
-    </body>
-</html>
+            </body>
+                    </html>

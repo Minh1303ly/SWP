@@ -10,19 +10,37 @@ package model;
  */
 public class Slider {
     private int id;
+    private int user_id;
     private String title;
+    private String content;
     private String image;
     private String backLink;
-    private int status;
-    private String note;
+    private String status;
 
-    public Slider(int id, String title, String image, String backLink, int status, String note) {
+    public Slider(int id, int user_id, String title, String content, String image, String backLink, String status) {
         this.id = id;
+        this.user_id = user_id;
         this.title = title;
+        this.content = content;
         this.image = image;
         this.backLink = backLink;
         this.status = status;
-        this.note = note;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Slider() {
@@ -60,25 +78,19 @@ public class Slider {
         this.backLink = backLink;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 
     @Override
     public String toString() {
-        return "Sliders{" + "id=" + id + ", title=" + title + ", image=" + image + ", backLink=" + backLink + ", status=" + status + ", note=" + note + '}';
+        return "Slider{" + "id=" + id + ", user_id=" + user_id + ", title=" + title + ", content=" + content + ", image=" + image + ", backLink=" + backLink + ", status=" + status + '}';
     }
+
+   
     
 }

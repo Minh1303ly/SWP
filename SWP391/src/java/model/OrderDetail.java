@@ -8,12 +8,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import lombok.Data;
 
-
 /**
  *
  * @author tungl
  */
-
 @Data
 
 public class OrderDetail {
@@ -26,76 +24,18 @@ public class OrderDetail {
     private Date createdAt;
     private Date modifiedAt;
 
-    public OrderDetail() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getShopOrderId() {
-        return shopOrderId;
-    }
-
-    public void setShopOrderId(int shopOrderId) {
-        this.shopOrderId = shopOrderId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public void setModifiedAt(Date modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
-
-    public void setModifiedAt(Timestamp modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderDetail{" + "id=" + id + ", productId=" + productId + ", shopOrderId=" + shopOrderId + ", quantity=" + quantity + ", price=" + price + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt + '}';
-    }
-
-    
     private Product product;
     private User user;
-}
 
+    public String getImgView() {
+        return product.getImg1();
+    }
+
+    public String getNameView() {
+        return product.getName();
+    }
+
+    public String getPriceName() {
+        return product.getPrice() + "$";
+    }
+}

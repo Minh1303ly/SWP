@@ -1,4 +1,4 @@
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -181,7 +181,7 @@
                         </div>
                         <!-- /col -->
 
-                        <aside class="col-lg-3">
+                        <aside class="col-lg-3 ml-30">
                             <div class="widget search_blog">
                                 <div class="form-group">
                                     <form action="blogs">

@@ -76,23 +76,6 @@
                                         </ul>
                                     </div>
                                     <div class="flex flex-wrap gap-4 mb-3">
-                                        <div class="mb-2 w-44">                                           
-                                            <select id="Category" class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700">
-                                                <option  class="dark:text-slate-700">All Category</option>
-                                                <option  class="dark:text-slate-700">Electronics</option>
-                                                <option  class="dark:text-slate-700">Furniture</option>
-                                                <option  class="dark:text-slate-700">Footwear</option>
-                                                <option  class="dark:text-slate-700">Clothes</option>
-                                            </select> 
-                                        </div>
-                                        <div class="mb-2 w-36">
-                                            <select id="Country" class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700">
-                                                <option  class="dark:text-slate-700">All Country</option>
-                                                <option  class="dark:text-slate-700">USA</option>
-                                                <option  class="dark:text-slate-700">India</option>
-                                                <option  class="dark:text-slate-700">Russia</option>
-                                            </select> 
-                                        </div>
                                         <a href="updateCustomer">
                                             <div class="mb-2 w-36">
                                                 <button class="px-2 py-1 bg-primary-500/10 border border-transparent collapse:bg-green-100 text-primary text-sm rounded hover:bg-blue-600 hover:text-white">Create Account</button>
@@ -158,7 +141,7 @@
                                                                                 <div class="flex items-center">
                                                                                     <img src="assets/images/users/avatar-2.png" alt="" class="me-2 h-8 inline-block">
                                                                                     <div class="self-center">                                                                        
-                                                                                        <a href="customerDetail?id=${u.id}" class="text-sm font-semibold text-slate-700 dark:text-gray-400"><u>${u.firstName} ${u.lastName}</u></a>
+                                                                                        <a href="customerDetail?id=${u.id}" class="text-sm font-semibold text-slate-700 dark:text-gray-400"><u>${u.first_name} ${u.last_name}</u></a>
                                                                                         <span class="block  font-medium text-slate-500">Việt Nam</span>
                                                                                     </div>
                                                                                 </div>
@@ -172,18 +155,12 @@
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             ${u.telephone}
-<!--                                                                        </td>
+                                                                        </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            ${u.createdAt}
-                                                                        </td>-->
-<!--                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            ${u.modifiedAt}
-                                                                        </td>-->
-                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <c:if test="${u.getUserStatus().name ==  'Active'}">
+                                                                            <c:if test="${u.getUsersStatus().name ==  'Active'}">
                                                                                 <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Active</span>
                                                                             </c:if>
-                                                                            <c:if test="${u.getUserStatus().name !=  'Active'}">
+                                                                            <c:if test="${u.getUsersStatus().name !=  'Active'}">
                                                                                 <span class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">InActive</span>
                                                                             </c:if>
                                                                         </td>                                                                    
@@ -196,7 +173,7 @@
 
                                                             </tbody>
                                                         </table>
-                                                    </div><!--end div-->
+                                                    </div><!--end div
                                                 </div><!--end div-->
                                             </div><!--end grid-->
                                             <div class="flex justify-between mt-4">

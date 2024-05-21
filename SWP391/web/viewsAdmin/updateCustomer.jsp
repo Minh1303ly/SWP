@@ -78,11 +78,11 @@
                                     <div class="flex-auto p-0 md:p-4">  
                                         <div class="mb-2">
                                             <label for="first_name" class="font-medium text-sm text-slate-600 dark:text-slate-400">First Name</label>
-                                            <input type="text" id="first_name" name="first_name" value="${user.firstName}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" placeholder="First Name" required>
+                                            <input type="text" id="first_name" name="first_name" value="${user.first_name}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" placeholder="First Name" required>
                                         </div>
                                         <div class="mb-2">
                                             <label for="last_name" class="font-medium text-sm text-slate-600 dark:text-slate-400">Last Name</label>
-                                            <input type="text" id="last_name" name="last_name" value="${user.lastName}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" placeholder="Last Name" required>
+                                            <input type="text" id="last_name" name="last_name" value="${user.last_name}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" placeholder="Last Name" required>
                                         </div>
                                         <div class="mb-2">
                                             <label for="email" class="font-medium text-sm text-slate-600 dark:text-slate-400">Email</label>
@@ -112,8 +112,10 @@
                                             <label class="font-medium text-sm text-slate-600 dark:text-slate-400">Role</label>
                                             <div class="flex items-center space-x-4">
                                                 <c:forEach var="role" items="${listRole}">
-                                                    <input type="radio" id="${role.name}" ${user.roleId == role.id ? "checked" : ""} name="role" value="${role.id}" class="form-radio text-primary-500 dark:text-primary-300 focus:ring-primary-500 dark:focus:ring-primary-300" required>
-                                                    <label for="${role.name}" class="text-sm text-slate-600 dark:text-slate-400">${role.name}</label>
+                                                    <c:if test="${role.name == 'Customer'}">
+                                                        <input type="radio" id="${role.name}" ${user.role_id == role.id ? "checked" : ""} name="role" value="${role.id}" class="form-radio text-primary-500 dark:text-primary-300 focus:ring-primary-500 dark:focus:ring-primary-300" required>
+                                                        <label for="${role.name}" class="text-sm text-slate-600 dark:text-slate-400">${role.name}</label>
+                                                    </c:if>
                                                 </c:forEach>
                                             </div>
                                         </div>
@@ -121,7 +123,7 @@
                                             <label class="font-medium text-sm text-slate-600 dark:text-slate-400">Status</label>
                                             <div class="flex items-center space-x-4">
                                                 <c:forEach var="s" items="${listStatus}">
-                                                    <input type="radio" id="${s.name}" ${user.statusId == s.id ? "checked" : ""} name="status" value="${s.id}" class="form-radio text-primary-500 dark:text-primary-300 focus:ring-primary-500 dark:focus:ring-primary-300" required>
+                                                    <input type="radio" id="${s.name}" ${user.status_id == s.id ? "checked" : ""} name="status" value="${s.id}" class="form-radio text-primary-500 dark:text-primary-300 focus:ring-primary-500 dark:focus:ring-primary-300" required>
                                                     <label for="${s.name}" class="text-sm text-slate-600 dark:text-slate-400">${s.name}</label>
                                                 </c:forEach>
                                             </div>

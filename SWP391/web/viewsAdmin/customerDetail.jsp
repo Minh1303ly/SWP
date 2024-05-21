@@ -63,7 +63,7 @@
                                 <div class="text-center">
                                     <img src="viewsAdmin/assets/images/users/avatar-1.png" alt="" class="rounded-full mx-auto inline-block">
                                     <div class="my-4">                                                                        
-                                        <h5 class="text-xxl font-semibold text-slate-700 dark:text-gray-400">${u.firstName} ${u.lastName}</h5>
+                                        <h5 class="text-xxl font-semibold text-slate-700 dark:text-gray-400">${u.first_name} ${u.last_name}</h5>
                                         <span class="block  font-medium text-slate-500">VN</span>
                                     </div>
                                 </div>
@@ -90,13 +90,13 @@
                                         <span class="dark:text-slate-300">CreateAt :</span>
                                     </div><!--end col-->
                                     <div class="col-span-12 sm:col-span-12 md:col-span-7">
-                                        <span class="dark:text-slate-400">${u.createdAt}</span>
+                                        <span class="dark:text-slate-400">${u.created_at}</span>
                                     </div><!--end col-->
                                     <div class="col-span-12 sm:col-span-12 md:col-span-5 text-end">
                                         <span class="dark:text-slate-300">ModifiedAt :</span>
                                     </div><!--end col-->
                                     <div class="col-span-12 sm:col-span-12 md:col-span-7">
-                                        <span class="dark:text-slate-400">${u.modifiedAt}</span>
+                                        <span class="dark:text-slate-400">${u.modified_at}</span>
                                     </div><!--end col-->
                                 </div><!--end grid-->
                                 <div class="border-b border-dashed dark:border-slate-700/40 my-3 group-data-[sidebar=dark]:border-slate-700/40 group-data-[sidebar=brand]:border-slate-700/40"></div>

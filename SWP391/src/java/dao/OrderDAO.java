@@ -278,9 +278,7 @@ public class OrderDAO extends DBContext {
     public static void main(String[] args) {
         OrderDAO oDAO = new OrderDAO();
         try {
-//            System.out.println(oDAO.getOrderDetailsByOrderId(3));
-            OrderDetail o = oDAO.getOrderDetailsByOrderId(3).get(0);
-            System.out.println(o.getProduct().getName());
+            System.out.println(oDAO.getOrderDetailsByOrderId(3).get(0).getProduct());
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -88,12 +88,12 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="thumb_cart me-3">
-                                                            <img src="${o.product.img1}" alt="Image">
+                                                            <img src="${o.getImgView()}" alt="Image">
                                                         </div>
-                                                        <span class="item_cart">${o.product.name}</span>
+                                                        <span class="item_cart">${o.getNameView()}</span>
                                                     </div>
                                                 </td>
-                                                <td><strong>${o.product.price}</strong></td>
+                                                <td><strong>${o.getPriceName()}</strong></td>
                                                 <td>${o.quantity}</td>
                                                 <td><strong>${o.price}</strong></td>
                                                 <td><strong>${o.modifiedAt}</strong></td>
@@ -134,7 +134,7 @@
                                 <tbody>
                                     <tr>
                                         <th scope="row" style="width: 200px;">Full Name</th>
-                                        <td>${order.getUser().firstName} ${order.getUser().lastName}</td>
+                                        <td>${order.getUser().first_name} ${order.getUser().last_name}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Gender</th>

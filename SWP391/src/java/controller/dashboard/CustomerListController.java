@@ -30,7 +30,7 @@ public class CustomerListController extends HttpServlet {
         List<User> list = uDAO.getAllUsers();
         HttpSession session = request.getSession();
         // start pagging
-        int limitPage = 10;
+        int limitPage = 1;
         if (request.getParameter("cp") == null) {
             Pagination Page = new Pagination(list, limitPage, 1);
             Pagination<User> pagination = new Pagination<>(list, limitPage, 1);

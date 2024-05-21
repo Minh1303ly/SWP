@@ -68,7 +68,7 @@
                         <c:forEach items="${orders}" var="order">
                             <tr>
                                 <td>${order.id}</td>
-                                <td>${order.getUser().firstName}</td>
+                                <td>${order.getUser().first_name} ${order.getUser().last_name}</td>
                                 <td>${order.email}</td>
                                 <td>${order.orderTotal}</td>
                                 <td>${order.modifiedAt}</td>

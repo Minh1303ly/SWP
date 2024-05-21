@@ -41,7 +41,7 @@ public class MyOrderController extends HttpServlet {
             throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("account");
             // Tam thoi chua co tai khoan login
             user = new User();
             user.setId(1);

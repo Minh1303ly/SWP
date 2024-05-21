@@ -4,9 +4,10 @@
  */
 package model;
 
+import java.util.Date;
 import lombok.Data;
 
-import java.sql.Date;
+
 
 @Data
 public class Product {
@@ -30,4 +31,6 @@ public class Product {
     private Discount discount;
     private ProductStatus productStatus;
     private Category categories;
+    
+   
 }

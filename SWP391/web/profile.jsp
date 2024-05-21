@@ -52,13 +52,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="firstName" class="form-label">First Name:</label>
-                                        <input type="text" id="firstName" name="firstName" class="form-control" value="${profile.firstName}" required>
+                                        <input type="text" id="firstName" name="firstName" class="form-control" value="${profile.first_name}" required>
                                     </div>
                                 </div>  
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="lastName" class="form-label">Last Name:</label>
-                                        <input type="text" id="lastName" name="lastName" class="form-control" value="${profile.lastName}" required>
+                                        <input type="text" id="lastName" name="lastName" class="form-control" value="${profile.last_name}" required>
                                     </div>
                                 </div>
                             </div>

@@ -300,131 +300,113 @@
                         <div class="main_title">
                             <h2>Related</h2>
                             <span>Products</span>
-                            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
                         </div>
                         <div class="owl-carousel owl-theme products_carousel">
+                            <c:forEach var="element" items="${relateProduct}">
                             <div class="item">
                                 <div class="grid_item">
-                                    <span class="ribbon new">New</span>
+                                    <c:set var="found" value="false" />
+
+                                    <c:forEach var="status" items="${element.status}" >
+                                        <c:if test="${not found}">
+                                            <c:if test="${status eq 'new'}">
+                                                <span class="ribbon new">${status}</span>
+                                                <c:set var="found" value="true" />
+                                            </c:if>
+                                            <c:if test="${status eq 'hot'}">
+                                                <span class="ribbon hot">${status}</span>
+                                                <c:set var="found" value="true" />
+                                            </c:if>
+                                            <c:if test="${status eq 'common'}">
+                                                <c:if test="${element.discount_status == 1}">
+                                                    <span class="ribbon off">-${status}%</span>
+                                                    <c:set var="found" value="true" />
+                                                </c:if> 
+                                            </c:if>
+                                        </c:if>  
+                                    </c:forEach>
                                     <figure>
-                                        <a href="product-detail-1.html">
-                                            <img class="owl-lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/4.jpg" alt="">
+                                        <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
+                                            <img class="owl-lazy" src="${element.img1}" data-src="${element.img1}" alt="">
                                         </a>
                                     </figure>
-                                    <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                                    <a href="product-detail-1.html">
-                                        <h3>ACG React Terra</h3>
+                                    <div class="rating">                                        
+                                        <%
+                                            // Access the 'element' object from the pageContext
+                                            Object elementObj = pageContext.findAttribute("element");
+                                            if (elementObj != null) {
+                                                // Cast it to the expected type
+                                                SubProducts element = (SubProducts) elementObj;
+
+                                                // Initialize variables for calculating the average rating
+                                                int[] ratings = element.getRating();
+                                                int sum = 0;
+                                                for (int rating : ratings) {
+                                                    sum += rating;
+                                                }
+
+                                                // Calculate the average rating
+                                                int rate = (ratings.length > 0) ? (sum / ratings.length) : 0;
+                                                request.setAttribute("rate", rate);
+                                            }
+                                        %>
+                                        <c:set var="rate" value="${requestScope.rate}" />
+                                        <c:forEach begin="1" end="${rate}" step="1">
+                                            <i class="icon-star voted"></i>
+                                        </c:forEach>
+                                        <c:forEach begin="${rate + 1}" end="5" step="1">
+                                            <i class="icon-star"></i>
+                                        </c:forEach>
+
+
+                                    </div>
+                                    <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
+                                        <h3>${element.name}</h3>
                                     </a>
                                     <div class="price_box">
-                                        <span class="new_price">$110.00</span>
+                                        <c:if test="${element.discount_status == 1}">                                              
+                                            <span class="new_price">$${element.price*(100-element.discount)/100}</span>
+                                            <span class="old_price">$${element.price}</span>
+                                        </c:if>
+                                        <c:if test="${element.discount_status == 0}">                                              
+                                            <span class="new_price">$${element.price}</span>                                                
+                                        </c:if>     
                                     </div>
                                     <ul>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                        <li>
+                                            <c:set var="colors" value="${element.color}" />
+                                            <c:set var="formattedColors" value="" />
+                                            <c:forEach items="${colors}" var="color" varStatus="loop">
+                                                <c:set var="formattedColor" value='"${color}"' />
+                                                <c:if test="${not loop.last}">
+                                                    <c:set var="formattedColor" value='${formattedColor}, ' />
+                                                </c:if>
+                                                <c:set var="formattedColors" value="${formattedColors}${formattedColor}" />
+                                            </c:forEach>
+
+                                            <c:set var="sizes" value="${element.size}" />
+                                            <c:set var="formattedSizes" value="" />
+                                            <c:forEach items="${sizes}" var="size" varStatus="loop">
+                                                <c:set var="formattedSize" value='"${size}"' />
+                                                <c:if test="${not loop.last}">
+                                                    <c:set var="formattedSize" value='${formattedSize}, ' />
+                                                </c:if>
+                                                <c:set var="formattedSizes" value="${formattedSizes}${formattedSize}" />
+                                            </c:forEach>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
+                                                    data-name="${element.name}" 
+                                                    data-colors='[${formattedColors}]' 
+                                                    data-sizes='[${formattedSizes}]' 
+                                                    >                  
+                                                <i class="ti-shopping-cart"></i>
+                                            </button>
+                                        </li>
                                     </ul>
                                 </div>
                                 <!-- /grid_item -->
                             </div>
                             <!-- /item -->
-                            <div class="item">
-                                <div class="grid_item">
-                                    <span class="ribbon new">New</span>
-                                    <figure>
-                                        <a href="product-detail-1.html">
-                                            <img class="owl-lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/5.jpg" alt="">
-                                        </a>
-                                    </figure>
-                                    <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                                    <a href="product-detail-1.html">
-                                        <h3>Air Zoom Alpha</h3>
-                                    </a>
-                                    <div class="price_box">
-                                        <span class="new_price">$140.00</span>
-                                    </div>
-                                    <ul>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                                    </ul>
-                                </div>
-                                <!-- /grid_item -->
-                            </div>
-                            <!-- /item -->
-                            <div class="item">
-                                <div class="grid_item">
-                                    <span class="ribbon hot">Hot</span>
-                                    <figure>
-                                        <a href="product-detail-1.html">
-                                            <img class="owl-lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/8.jpg" alt="">
-                                        </a>
-                                    </figure>
-                                    <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                                    <a href="product-detail-1.html">
-                                        <h3>Air Color 720</h3>
-                                    </a>
-                                    <div class="price_box">
-                                        <span class="new_price">$120.00</span>
-                                    </div>
-                                    <ul>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                                    </ul>
-                                </div>
-                                <!-- /grid_item -->
-                            </div>
-                            <!-- /item -->
-                            <div class="item">
-                                <div class="grid_item">
-                                    <span class="ribbon off">-30%</span>
-                                    <figure>
-                                        <a href="product-detail-1.html">
-                                            <img class="owl-lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/2.jpg" alt="">
-                                        </a>
-                                    </figure>
-                                    <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                                    <a href="product-detail-1.html">
-                                        <h3>Okwahn II</h3>
-                                    </a>
-                                    <div class="price_box">
-                                        <span class="new_price">$90.00</span>
-                                        <span class="old_price">$170.00</span>
-                                    </div>
-                                    <ul>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                                    </ul>
-                                </div>
-                                <!-- /grid_item -->
-                            </div>
-                            <!-- /item -->
-                            <div class="item">
-                                <div class="grid_item">
-                                    <span class="ribbon off">-50%</span>
-                                    <figure>
-                                        <a href="product-detail-1.html">
-                                            <img class="owl-lazy" src="img/products/product_placeholder_square_medium.jpg" data-src="img/products/shoes/3.jpg" alt="">
-                                        </a>
-                                    </figure>
-                                    <div class="rating"><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star voted"></i><i class="icon-star"></i></div>
-                                    <a href="product-detail-1.html">
-                                        <h3>Air Wildwood ACG</h3>
-                                    </a>
-                                    <div class="price_box">
-                                        <span class="new_price">$75.00</span>
-                                        <span class="old_price">$155.00</span>
-                                    </div>
-                                    <ul>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to favorites"><i class="ti-heart"></i><span>Add to favorites</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to compare"><i class="ti-control-shuffle"></i><span>Add to compare</span></a></li>
-                                        <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                                    </ul>
-                                </div>
-                                <!-- /grid_item -->
-                            </div>
-                            <!-- /item -->
+                        </c:forEach>
                         </div>
                         <!-- /products_carousel -->
                     </div>
@@ -513,90 +495,7 @@
         </div>
         <!-- /add_cart_panel -->
 
-        <!-- Size modal -->
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="size-modal" id="size-modal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Size guide</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Lorem ipsum dolor sit amet, et velit propriae invenire mea, ad nam alia intellegat. Aperiam mediocrem rationibus nec te. Tation persecuti accommodare pro te. Vis et augue legere, vel labitur habemus ocurreret ex.</p>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-sm sizes">
-                                <tbody><tr>
-                                        <th scope="row">US Sizes</th>
-                                        <td>6</td>
-                                        <td>6,5</td>
-                                        <td>7</td>
-                                        <td>7,5</td>
-                                        <td>8</td>
-                                        <td>8,5</td>
-                                        <td>9</td>
-                                        <td>9,5</td>
-                                        <td>10</td>
-                                        <td>10,5</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Euro Sizes</th>
-                                        <td>39</td>
-                                        <td>39</td>
-                                        <td>40</td>
-                                        <td>40-41</td>
-                                        <td>41</td>
-                                        <td>41-42</td>
-                                        <td>42</td>
-                                        <td>42-43</td>
-                                        <td>43</td>
-                                        <td>43-44</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">UK Sizes</th>
-                                        <td>5,5</td>
-                                        <td>6</td>
-                                        <td>6,5</td>
-                                        <td>7</td>
-                                        <td>7,5</td>
-                                        <td>8</td>
-                                        <td>8,5</td>
-                                        <td>9</td>
-                                        <td>9,5</td>
-                                        <td>10</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Inches</th>
-                                        <td>9.25"</td>
-                                        <td>9.5"</td>
-                                        <td>9.625"</td>
-                                        <td>9.75"</td>
-                                        <td>9.9375"</td>
-                                        <td>10.125"</td>
-                                        <td>10.25"</td>
-                                        <td>10.5"</td>
-                                        <td>10.625"</td>
-                                        <td>10.75"</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">CM</th>
-                                        <td>23,5</td>
-                                        <td>24,1</td>
-                                        <td>24,4</td>
-                                        <td>24,8</td>
-                                        <td>25,4</td>
-                                        <td>25,7</td>
-                                        <td>26</td>
-                                        <td>26,7</td>
-                                        <td>27</td>
-                                        <td>27,3</td>
-                                    </tr>
-                                </tbody></table>
-                        </div>
-                        <!-- /table -->
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <jsp:include page="modal.jsp"/>
 
         <!-- SPECIFIC SCRIPTS -->

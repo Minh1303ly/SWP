@@ -170,7 +170,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Lorem ipsum dolor sit amet, et velit propriae invenire mea, ad nam alia intellegat. Aperiam mediocrem rationibus nec te. Tation persecuti accommodare pro te. Vis et augue legere, vel labitur habemus ocurreret ex.</p>
                         <div class="table-responsive">
                             <table class="table table-striped table-sm sizes">
                                 <tbody><tr>
@@ -320,7 +319,7 @@
             var formData = $('#modalForm').serialize();
 
             $.ajax({
-                url: '/SWP391/product?service=addCart',
+                url: '/SWP391/product?service=addCartByAjax',
                 type: 'POST',
                 data: formData,
                 success: function(response) {

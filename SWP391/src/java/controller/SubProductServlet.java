@@ -43,8 +43,11 @@ public class SubProductServlet extends HttpServlet {
             case "view" :
                 view(request, response);
                 break;
+            case "addCartByAjax" :
+                addCartByAjax(request, response);
+                break;
             case "addCart" :
-                addcart(request, response);
+                addCart(request, response);
                 break;
             case "searchName":
                 searchName(request, response);
@@ -55,13 +58,38 @@ public class SubProductServlet extends HttpServlet {
         
     }
     
-    public void addcart(HttpServletRequest request, HttpServletResponse response){
+    public void addCart(HttpServletRequest request, HttpServletResponse response){
+        try {
+            DTOProducts dtoProducts = new DTOProducts();
+            DAOSliders daoSlider = new DAOSliders();
+            dataForSider(request, response);
+            request.setAttribute("product",
+                    dtoProducts.searchName(
+                            request.getParameter("name")).get(0) );
+            List<Slider> ls = daoSlider.getAll();
+            Slider slider = ls.get((int)(Math.random()*ls.size()+1));
+            request.setAttribute("slider", slider);
+            request.setAttribute("relateProduct",
+                    dtoProducts.getRalateProduct(
+                            request.getParameter("brand"), 6));
+            
+            
+            RequestDispatcher dispatch = request.getRequestDispatcher("product_detail.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(SubProductServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void addCartByAjax(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
             request.setAttribute("message", "Hello");
             request.setAttribute("newProduct", 
                     dtoProducts.getProductLatest("new", 2));
-
+            
+            
+            //Needs to reponse ajax
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("{\"status\":\"success\"}");
@@ -74,11 +102,14 @@ public class SubProductServlet extends HttpServlet {
     public void view(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
-             DAOSliders daoSlider = new DAOSliders();
+            DAOSliders daoSlider = new DAOSliders();
             dataForSider(request, response);
             List<Slider> ls = daoSlider.getAll();
             Slider slider = ls.get((int)(Math.random()*ls.size()+1));
             request.setAttribute("slider", slider);
+            request.setAttribute("relateProduct",  
+                            dtoProducts.getRalateProduct(
+                                    request.getParameter("brand"), 6)); 
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {

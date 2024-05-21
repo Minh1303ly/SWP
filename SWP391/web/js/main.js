@@ -350,6 +350,5 @@
             $(".popup_wrapper").fadeOut(300);
         })
     }, 1500);
-	
-
-})(window.jQuery); 
+    
+})(window.jQuery); 	

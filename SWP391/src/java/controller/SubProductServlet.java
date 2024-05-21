@@ -61,11 +61,13 @@ public class SubProductServlet extends HttpServlet {
             request.setAttribute("message", "Hello");
             request.setAttribute("newProduct", 
                     dtoProducts.getProductLatest("new", 2));
-            RequestDispatcher dispatch = request.getRequestDispatcher("test.jsp");
-            dispatch.forward(request, response);
-        } catch (ServletException | IOException ex) {
-            Logger.getLogger(SubProductServlet.class.getName())
-                    .log(Level.SEVERE, null, ex);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"status\":\"success\"}");
+        } catch (IOException ex) {
+            Logger.getLogger(SubProductServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
     

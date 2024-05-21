@@ -15,6 +15,7 @@
             <jsp:include page="header.jsp"/>
 
             <main>
+
                 <div id="carousel-home">
 
                     <!--Slider of home-->
@@ -110,6 +111,7 @@
                                             <%
                                                 // Access the 'element' object from the pageContext
                                                 Object elementObj = pageContext.findAttribute("element");
+                                                 
                                                 if (elementObj != null) {
                                                     // Cast it to the expected type
                                                     SubProducts element = (SubProducts) elementObj;
@@ -148,7 +150,36 @@
                                             </c:if>     
                                         </div>
                                         <ul>
-                                            <li><a href="#" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                            <li>
+
+                                                <c:set var="colors" value="${element.color}" />
+                                                <c:set var="formattedColors" value="" />
+                                                <c:forEach items="${colors}" var="color" varStatus="loop">
+                                                    <c:set var="formattedColor" value='"${color}"' />
+                                                    <c:if test="${not loop.last}">
+                                                        <c:set var="formattedColor" value='${formattedColor}, ' />
+                                                    </c:if>
+                                                    <c:set var="formattedColors" value="${formattedColors}${formattedColor}" />
+                                                </c:forEach>
+
+                                                <c:set var="sizes" value="${element.size}" />
+                                                <c:set var="formattedSizes" value="" />
+                                                <c:forEach items="${sizes}" var="size" varStatus="loop">
+                                                    <c:set var="formattedSize" value='"${size}"' />
+                                                    <c:if test="${not loop.last}">
+                                                        <c:set var="formattedSize" value='${formattedSize}, ' />
+                                                    </c:if>
+                                                    <c:set var="formattedSizes" value="${formattedSizes}${formattedSize}" />
+                                                </c:forEach>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
+                                                        data-name="${element.name}" 
+                                                        data-colors='[${formattedColors}]' 
+                                                        data-sizes='[${formattedSizes}]' 
+                                                        >                  
+                                                    <i class="ti-shopping-cart"></i>
+                                                </button>
+
+                                            </li>
                                         </ul>
                                     </div>
                                     <!-- /grid_item -->
@@ -196,7 +227,7 @@
 
                 <!--/Top Selling -->
 
-
+                <!-- sLider -->
                 <div class="featured lazy" data-bg="url(${slider.get(10).image}">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                         <div class="container margin_60">
@@ -216,8 +247,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- /featured -->
-
+                <!-- /Slider -->
+                
+                <!-- featured -->
                 <div class="container margin_60_35">
                     <div class="main_title">
                         <h2>Featured</h2>
@@ -254,90 +286,118 @@
                                         </a>
                                     </figure>
                                     <div class="rating">                                        
-                                            <%
-                                                // Access the 'element' object from the pageContext
-                                                Object elementObj = pageContext.findAttribute("element");
-                                                if (elementObj != null) {
-                                                    // Cast it to the expected type
-                                                    SubProducts element = (SubProducts) elementObj;
+                                        <%
+                                            // Access the 'element' object from the pageContext
+                                            Object elementObj = pageContext.findAttribute("element");
+                                            if (elementObj != null) {
+                                                // Cast it to the expected type
+                                                SubProducts element = (SubProducts) elementObj;
 
-                                                    // Initialize variables for calculating the average rating
-                                                    int[] ratings = element.getRating();
-                                                    int sum = 0;
-                                                    for (int rating : ratings) {
-                                                        sum += rating;
-                                                    }
-
-                                                    // Calculate the average rating
-                                                    int rate = (ratings.length > 0) ? (sum / ratings.length) : 0;
-                                                    request.setAttribute("rate", rate);
+                                                // Initialize variables for calculating the average rating
+                                                int[] ratings = element.getRating();
+                                                int sum = 0;
+                                                for (int rating : ratings) {
+                                                    sum += rating;
                                                 }
-                                            %>
-                                            <c:set var="rate" value="${requestScope.rate}" />
-                                            <c:forEach begin="1" end="${rate}" step="1">
-                                                <i class="icon-star voted"></i>
-                                            </c:forEach>
-                                            <c:forEach begin="${rate + 1}" end="5" step="1">
-                                                <i class="icon-star"></i>
-                                            </c:forEach>
+
+                                                // Calculate the average rating
+                                                int rate = (ratings.length > 0) ? (sum / ratings.length) : 0;
+                                                request.setAttribute("rate", rate);
+                                            }
+                                        %>
+                                        <c:set var="rate" value="${requestScope.rate}" />
+                                        <c:forEach begin="1" end="${rate}" step="1">
+                                            <i class="icon-star voted"></i>
+                                        </c:forEach>
+                                        <c:forEach begin="${rate + 1}" end="5" step="1">
+                                            <i class="icon-star"></i>
+                                        </c:forEach>
 
 
-                                        </div>
-                                        <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
-                                            <h3>${element.name}</h3>
-                                        </a>
-                                        <div class="price_box">
-                                            <c:if test="${element.discount_status == 1}">                                              
-                                                <span class="new_price">$${element.price*(100-element.discount)/100}</span>
-                                                <span class="old_price">$${element.price}</span>
-                                            </c:if>
-                                            <c:if test="${element.discount_status == 0}">                                              
-                                                <span class="new_price">$${element.price}</span>                                                
-                                            </c:if>     
-                                        </div>
-                                        <ul>
-                                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                                        </ul>
                                     </div>
-                                    <!-- /grid_item -->
+                                    <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
+                                        <h3>${element.name}</h3>
+                                    </a>
+                                    <div class="price_box">
+                                        <c:if test="${element.discount_status == 1}">                                              
+                                            <span class="new_price">$${element.price*(100-element.discount)/100}</span>
+                                            <span class="old_price">$${element.price}</span>
+                                        </c:if>
+                                        <c:if test="${element.discount_status == 0}">                                              
+                                            <span class="new_price">$${element.price}</span>                                                
+                                        </c:if>     
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <c:set var="colors" value="${element.color}" />
+                                            <c:set var="formattedColors" value="" />
+                                            <c:forEach items="${colors}" var="color" varStatus="loop">
+                                                <c:set var="formattedColor" value='"${color}"' />
+                                                <c:if test="${not loop.last}">
+                                                    <c:set var="formattedColor" value='${formattedColor}, ' />
+                                                </c:if>
+                                                <c:set var="formattedColors" value="${formattedColors}${formattedColor}" />
+                                            </c:forEach>
+
+                                            <c:set var="sizes" value="${element.size}" />
+                                            <c:set var="formattedSizes" value="" />
+                                            <c:forEach items="${sizes}" var="size" varStatus="loop">
+                                                <c:set var="formattedSize" value='"${size}"' />
+                                                <c:if test="${not loop.last}">
+                                                    <c:set var="formattedSize" value='${formattedSize}, ' />
+                                                </c:if>
+                                                <c:set var="formattedSizes" value="${formattedSizes}${formattedSize}" />
+                                            </c:forEach>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
+                                                    data-name="${element.name}" 
+                                                    data-colors='[${formattedColors}]' 
+                                                    data-sizes='[${formattedSizes}]' 
+                                                    >                  
+                                                <i class="ti-shopping-cart"></i>
+                                            </button>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <!-- /item -->
-                            </c:forEach>
+                                <!-- /grid_item -->
+                            </div>
+                            <!-- /item -->
+                        </c:forEach>
 
 
-                        </div>
-                        <!-- /products_carousel -->
                     </div>
-                    <!-- /container -->
+                    <!-- /products_carousel -->
+                </div>
+                 <!-- featured -->
+                <!-- /container -->
 
-                    <div class="bg_gray">
-                        <div class="container margin_30">
-                            <div id="brands" class="owl-carousel owl-theme">
-                                <div class="item">
-                                    <a href="#0"><img src="img/brands/adidas.png" data-src="img/brands/adidas.png" alt="" class="owl-lazy"></a>
-                                </div><!-- /item -->
-                                <div class="item">
-                                    <a href="#0"><img src="img/brands/crocs.png" data-src="img/brands/crocs.png" alt="" class="owl-lazy"></a>
-                                </div><!-- /item -->
-                                <div class="item">
-                                    <a href="#0"><img src="img/brands/dd.png" data-src="img/brands/dd.png" alt="" class="owl-lazy"></a>
-                                </div><!-- /item -->
-                                <div class="item">
-                                    <a href="#0"><img src="img/brands/jaxson.png" data-src="img/brands/jaxson.png" alt="" class="owl-lazy"></a>
-                                </div><!-- /item -->
-                                <div class="item">
-                                    <a href="#0"><img src="img/brands/jordan.png" data-src="img/brands/jordan.png" alt="" class="owl-lazy"></a>
-                                </div><!-- /item -->
-                                <div class="item">
-                                    <a href="#0"><img src="img/brands/nike.png" data-src="img/brands/nike.png" alt="" class="owl-lazy"></a>
-                                </div><!-- /item -->
-                                <div class="item">
-                                    <a href="#0"><img src="img/brands/puma.png" data-src="img/brands/puma.png" alt="" class="owl-lazy"></a>
-                                </div><!-- /item -->
-                            </div><!-- /carousel -->
-                        </div><!-- /container -->
-                    </div>
-                    <!-- /bg_gray -->
+                <div class="bg_gray">
+                    <div class="container margin_30">
+                        <div id="brands" class="owl-carousel owl-theme">
+                            <div class="item">
+                                <a href="#0"><img src="img/brands/adidas.png" data-src="img/brands/adidas.png" alt="" class="owl-lazy"></a>
+                            </div><!-- /item -->
+                            <div class="item">
+                                <a href="#0"><img src="img/brands/crocs.png" data-src="img/brands/crocs.png" alt="" class="owl-lazy"></a>
+                            </div><!-- /item -->
+                            <div class="item">
+                                <a href="#0"><img src="img/brands/dd.png" data-src="img/brands/dd.png" alt="" class="owl-lazy"></a>
+                            </div><!-- /item -->
+                            <div class="item">
+                                <a href="#0"><img src="img/brands/jaxson.png" data-src="img/brands/jaxson.png" alt="" class="owl-lazy"></a>
+                            </div><!-- /item -->
+                            <div class="item">
+                                <a href="#0"><img src="img/brands/jordan.png" data-src="img/brands/jordan.png" alt="" class="owl-lazy"></a>
+                            </div><!-- /item -->
+                            <div class="item">
+                                <a href="#0"><img src="img/brands/nike.png" data-src="img/brands/nike.png" alt="" class="owl-lazy"></a>
+                            </div><!-- /item -->
+                            <div class="item">
+                                <a href="#0"><img src="img/brands/puma.png" data-src="img/brands/puma.png" alt="" class="owl-lazy"></a>
+                            </div><!-- /item -->
+                        </div><!-- /carousel -->
+                    </div><!-- /container -->
+                </div>
+                <!-- /bg_gray -->
 
 
             </main>
@@ -350,12 +410,16 @@
         <div id="toTop"></div><!-- Back to top button -->
 
         <jsp:include page="modal.jsp"/>
+        
+        
+        
         <!-- SPECIFIC SCRIPTS -->
         <script src="js/carousel-home.js"></script>
         <script src="js/sticky_sidebar.min.js"></script>
         <script src="js/specific_listing.js"></script>
         <script src="js/jquery.cookiebar.js"></script>
         <script src="js/tu.js"></script>
+        
         <script>
             $(document).ready(function () {
                 'use strict';

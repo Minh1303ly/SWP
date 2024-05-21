@@ -584,3 +584,12 @@ a.box_news ul li:after {
   content: '-';
   margin: 0 0 0 10px;
 }
+
+#successMessage {
+            position: fixed; /* Fixed position */
+            top: 0;          /* Align to the top */
+            left: 0;         /* Align to the left */
+            background-color: lightblue; /* Background color for visibility */
+            padding: 10px;   /* Padding for some space inside the div */
+            z-index: 1000;   /* Ensure it stays on top of other elements */
+        }

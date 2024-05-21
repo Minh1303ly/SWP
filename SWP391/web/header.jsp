@@ -61,7 +61,12 @@
             <div class="row small-gutters">
                 <!-- categories -->
                 <div class="col-xl-3 col-lg-3 col-md-3">
-                    
+                    <div id="successMessage" class="alert alert-success" role="alert" style="display:none;">
+                        Your product add successfully!
+                    </div>
+                    <div id="failMessage" class="alert alert-danger" role="alert" style="display:none;">
+                        Fail to add product!
+                    </div>
                 </div>
 
                 <!--Search blog-->

@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.*, model.*, dao.*, util.*" %>
 <aside>
     <div class="filter_col">
         <div class="inner_bt"><a href="#" class="open_filters"><i class="ti-close"></i></a></div>
@@ -115,17 +116,39 @@
             
             <div class="d-flex align-items-center justify-content-start">
                 <div class="rounded me-4" style="width: 100px; height: 100px;">
-                    <img src="${element.img1}" class="img-fluid rounded" alt="">
+                    <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
+                        <img src="${element.img1}" class="img-fluid rounded" alt="">
+                    </a>
                 </div>
                 <div>
                     <h6 class="mb-2">${element.name}</h6>
                     <div class="rating">
-                        <c:forEach begin="1" end="${element.rating}" step="1">
-                            <i class="icon-star voted"></i>
-                        </c:forEach>
-                        <c:forEach begin="${element.rating+1}" end="5" step="1">
-                            <i class="icon-star"></i>
-                        </c:forEach>
+                        <%
+                                                // Access the 'element' object from the pageContext
+                                                Object elementObj = pageContext.findAttribute("element");
+                                                if (elementObj != null) {
+                                                    // Cast it to the expected type
+                                                    SubProducts element = (SubProducts) elementObj;
+
+                                                    // Initialize variables for calculating the average rating
+                                                    int[] ratings = element.getRating();
+                                                    int sum = 0;
+                                                    for (int rating : ratings) {
+                                                        sum += rating;
+                                                    }
+
+                                                    // Calculate the average rating
+                                                    int rate = (ratings.length > 0) ? (sum / ratings.length) : 0;
+                                                    request.setAttribute("rate", rate);
+                                                }
+                                            %>
+                                            <c:set var="rate" value="${requestScope.rate}" />
+                                            <c:forEach begin="1" end="${rate}" step="1">
+                                                <i class="icon-star voted"></i>
+                                            </c:forEach>
+                                            <c:forEach begin="${rate + 1}" end="5" step="1">
+                                                <i class="icon-star"></i>
+                                            </c:forEach>
                     </div>
                     <div class="price_box">
                         <c:if test="${element.discount_status == 1}">                                              

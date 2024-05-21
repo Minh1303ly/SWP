@@ -12,7 +12,7 @@
     <body>
         <div id="page" class="theia-exception">	
             <jsp:include page="header.jsp"/>
-            <main>
+            <main class="bg_gray">
                 <div class="top_banner">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.3)">
                         <div class="container">
@@ -23,10 +23,10 @@
                                             <li>Page active</li>
                                     </ul>
                             </div> -->
-                            <h1>Shoes - Grid listing</h1>
+                            <h1>${slider.title}</h1>                      
                         </div>
                     </div>
-                    <img src="img/bg_cat_shoes.jpg" class="img-fluid" alt="">
+                    <img src="${slider.image}" class="img-fluid" alt="">
                 </div>
                 <!-- /top_banner -->
 
@@ -49,11 +49,11 @@
                                     <div class="col-lg-8">
                                         <div class="owl-carousel owl-theme prod_pics magnific-gallery">
                                             <div class="item">
-                                                <a href="img/products/shoes/product_detail_1.jpg" title="Photo title" data-effect="mfp-zoom-in"><img src="${product.img1}" alt=""></a>
+                                                <a href="${product.img1}" title="Photo title" data-effect="mfp-zoom-in"><img src="${product.img1}" alt=""></a>
                                             </div>
                                             <!-- /item -->
                                             <div class="item">
-                                                <a href="img/products/shoes/product_detail_2.jpg" title="Photo title" data-effect="mfp-zoom-in"><img src="${product.img2}" data-src="${product.img2}" alt="" class="owl-lazy"></a>
+                                                <a href="${product.img2}" title="Photo title" data-effect="mfp-zoom-in"><img src="${product.img2}" data-src="${product.img2}" alt="" class="owl-lazy"></a>
                                             </div>
                                             <!-- /item -->
                                         </div>
@@ -63,29 +63,51 @@
                                 <!-- /row -->
                             </div>
                             <!-- /container -->
-
+                            <<form action="product" method="post">
                             <div class="bg_white">
                                 <div class="container margin_60_35">
                                     <div class="row justify-content-between">
                                         <div class="col-lg-6">
                                             <div class="prod_info version_2">
                                                 <span class="rating">
-                                                    <c:forEach begin="1" end="${product.rating}" step="1">
+                                                    <%
+                                                    // Access the 'element' object from the pageContext
+                                                        Object elementObj1 = pageContext.findAttribute("product");
+                                                        if (elementObj1 != null) {
+                                                            // Cast it to the expected type
+                                                            SubProducts element = (SubProducts) elementObj1;
+
+                                                            // Initialize variables for calculating the average rating
+                                                            int[] ratings = element.getRating();
+                                                            int sum = 0;
+                                                            for (int rating : ratings) {
+                                                                sum += rating;
+                                                            }
+
+                                                            // Calculate the average rating
+                                                            int rate = (ratings.length > 0) ? (sum / ratings.length) : 0;
+                                                            request.setAttribute("rate", rate);
+                                                        }
+                                                    %>
+                                                    <c:set var="rate" value="${requestScope.rate}" />
+                                                    <c:forEach begin="1" end="${rate}" step="1">
                                                         <i class="icon-star voted"></i>
                                                     </c:forEach>
-                                                    <c:forEach begin="${product.rating+1}" end="5" step="1">
+                                                    <c:forEach begin="${rate + 1}" end="5" step="1">
                                                         <i class="icon-star"></i>
                                                     </c:forEach>
                                                 </span>
-                                                <p>
+                                                
                                                     <small>Categories: 
                                                         <c:forEach var="element" items="${product.categories}">
                                                             ${element}  
                                                         </c:forEach>
                                                     </small>
-
-                                                    <!--                                                    <br>eque insolens suscipiantur.</p>-->
-                                                <p>${product.description}</p>
+           
+                                                <c:forEach var="element" items="${product.description}">
+                                                    <p>${element}</p>
+                                                </c:forEach> 
+                                            
                                             </div>
                                         </div>
                                         <div class="col-lg-5">
@@ -110,7 +132,7 @@
                                                             <select class="wide">
                                                                 <option value="" selected="">Size</option>
                                                                 <c:forEach var="element" items="${product.size}">
-                                                                    <option name="color" value="${element}">${element}</option>
+                                                                    <option name="size" value="${element}">${element}</option>
                                                                 </c:forEach> 
                                                             </select>
                                                         </div>
@@ -142,7 +164,9 @@
                                                         </c:if>
                                                     </div>
                                                     <div class="col-lg-5 col-md-6">
-                                                        <div class="btn_add_to_cart"><a href="#0" class="btn_1">Add to Cart</a></div>
+                                                        <input type="hidden" name="name" value="${product.name}">
+                                                        <input type="hidden" name="service" value="addCart">
+                                                        <div class="btn_add_to_cart"><input type="submit" class="btn_1"></input></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,6 +176,7 @@
                                 </div>
                             </div>
                             <!-- /bg_white -->
+                            </form>
 
                             <!--                            <div class="tabs_product bg_white version_2">
                                                             <div class="container">
@@ -303,53 +328,84 @@
                         <div class="main_title">
                             <h2>Related</h2>
                             <span>Products</span>
-                            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+<!--                            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>-->
                         </div>
                         <div class="owl-carousel owl-theme products_carousel">
                             <c:forEach var="element" items="${relateProduct}">
                                 <div class="item">
                                     <div class="grid_item">
-                                        <c:if test="${element.status eq 'new'}">
-                                            <span class="ribbon new">${element.status}</span>
-                                        </c:if>
-                                        <c:if test="${element.status eq 'hot'}">
-                                            <span class="ribbon hot">${element.status}</span>
-                                        </c:if>
-                                        <c:if test="${element.status eq 'common'}">
-                                            <c:if test="${element.discount_status == 1}">
-                                                <span class="ribbon off">-${element.discount}%</span>
-                                            </c:if> 
-                                        </c:if>
+                                        <c:set var="found" value="false" />
+
+                                        <c:forEach var="status" items="${element.status}" >
+                                            <c:if test="${not found}">
+                                                <c:if test="${status eq 'new'}">
+                                                    <span class="ribbon new">${status}</span>
+                                                    <c:set var="found" value="true" />
+                                                </c:if>
+                                                <c:if test="${status eq 'hot'}">
+                                                    <span class="ribbon hot">${status}</span>
+                                                    <c:set var="found" value="true" />
+                                                </c:if>
+                                                <c:if test="${status eq 'common'}">
+                                                    <c:if test="${element.discount_status == 1}">
+                                                        <span class="ribbon off">-${status}%</span>
+                                                        <c:set var="found" value="true" />
+                                                    </c:if> 
+                                                </c:if>
+                                            </c:if>  
+                                        </c:forEach>
                                         <figure>
                                             <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
                                                 <img class="owl-lazy" src="${element.img1}" data-src="${element.img1}" alt="">
                                             </a>
                                         </figure>
-                                        <div class="rating">
-                                            <c:forEach begin="1" end="${element.rating}" step="1">
-                                                <i class="icon-star voted"></i>
-                                            </c:forEach>
-                                            <c:forEach begin="${element.rating+1}" end="5" step="1">
-                                                <i class="icon-star"></i>
-                                            </c:forEach>                  
-                                        </div>
-                                        <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
-                                            <h3>${element.name}</h3>
-                                        </a>
-                                        <div class="price_box">
-                                            <c:if test="${element.discount_status == 1}">                                              
-                                                <span class="new_price">$${element.price*(100-element.discount)/100}</span>
-                                                <span class="old_price">$${element.price}</span>
-                                            </c:if>
-                                            <c:if test="${element.discount_status == 0}">                                              
-                                                <span class="new_price">$${element.price}</span>                                                
-                                            </c:if>     
-                                        </div>
-                                        <ul>
-                                            <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
-                                        </ul>
+                                        <div class="rating">                                        
+                                                <%
+                                                    // Access the 'element' object from the pageContext
+                                                    Object elementObj = pageContext.findAttribute("element");
+                                                    if (elementObj != null) {
+                                                        // Cast it to the expected type
+                                                        SubProducts element = (SubProducts) elementObj;
+
+                                                        // Initialize variables for calculating the average rating
+                                                        int[] ratings = element.getRating();
+                                                        int sum = 0;
+                                                        for (int rating : ratings) {
+                                                            sum += rating;
+                                                        }
+
+                                                        // Calculate the average rating
+                                                        int rate = (ratings.length > 0) ? (sum / ratings.length) : 0;
+                                                        request.setAttribute("rate", rate);
+                                                    }
+                                                %>
+                                                <c:set var="rate" value="${requestScope.rate}" />
+                                                <c:forEach begin="1" end="${rate}" step="1">
+                                                    <i class="icon-star voted"></i>
+                                                </c:forEach>
+                                                <c:forEach begin="${rate + 1}" end="5" step="1">
+                                                    <i class="icon-star"></i>
+                                                </c:forEach>
+
+
+                                            </div>
+                                            <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
+                                                <h3>${element.name}</h3>
+                                            </a>
+                                            <div class="price_box">
+                                                <c:if test="${element.discount_status == 1}">                                              
+                                                    <span class="new_price">$${element.price*(100-element.discount)/100}</span>
+                                                    <span class="old_price">$${element.price}</span>
+                                                </c:if>
+                                                <c:if test="${element.discount_status == 0}">                                              
+                                                    <span class="new_price">$${element.price}</span>                                                
+                                                </c:if>     
+                                            </div>
+                                            <ul>
+                                                <li><a href="#0" class="tooltip-1" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to cart"><i class="ti-shopping-cart"></i><span>Add to cart</span></a></li>
+                                            </ul>
                                     </div>
-                                    <!-- /grid_item -->
+                                        <!-- /grid_item -->
                                 </div>
                                 <!-- /item -->
                             </c:forEach>
@@ -395,7 +451,7 @@
                 </div>
             </div>
             <!-- /item -->
-            <div class="container related">
+<!--            <div class="container related">
                 <h4>Who bought this product also bought</h4>
                 <div class="row">
                     <div class="col-md-4">
@@ -439,9 +495,9 @@
                     </div>
                 </div>
             </div>
-            <!-- /related -->
+             /related 
         </div>
-        <!-- /add_cart_panel -->
+         /add_cart_panel -->
 
         <!-- Size modal -->
         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="size-modal" id="size-modal" aria-hidden="true">
@@ -451,8 +507,7 @@
                         <h5 class="modal-title">Size guide</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <p>Lorem ipsum dolor sit amet, et velit propriae invenire mea, ad nam alia intellegat. Aperiam mediocrem rationibus nec te. Tation persecuti accommodare pro te. Vis et augue legere, vel labitur habemus ocurreret ex.</p>
+                    <div class="modal-body">                       
                         <div class="table-responsive">
                             <table class="table table-striped table-sm sizes">
                                 <tbody><tr>

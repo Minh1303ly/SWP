@@ -12,8 +12,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Slider;
 
 /**
  *
@@ -69,7 +72,11 @@ public class SubProductServlet extends HttpServlet {
     public void view(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
+             DAOSliders daoSlider = new DAOSliders();
             dataForSider(request, response);
+            List<Slider> ls = daoSlider.getAll();
+            Slider slider = ls.get((int)(Math.random()*ls.size()+1));
+            request.setAttribute("slider", slider);
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -81,12 +88,14 @@ public class SubProductServlet extends HttpServlet {
     public void detail(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
+            DAOSliders daoSlider = new DAOSliders();
             dataForSider(request, response);
             request.setAttribute("product",
                     dtoProducts.searchName(
                             request.getParameter("name")).get(0) );
-            request.setAttribute("newProduct", 
-                    dtoProducts.getProductByStatus("new", 2));
+            List<Slider> ls = daoSlider.getAll();
+            Slider slider = ls.get((int)(Math.random()*ls.size()+1));
+            request.setAttribute("slider", slider);
             request.setAttribute("relateProduct",  
                             dtoProducts.getRalateProduct(
                                     request.getParameter("brand"), 6));

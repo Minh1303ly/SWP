@@ -182,10 +182,15 @@ public class DTOProducts extends DBContext {
     public static void main(String[] args) {
         DTOProducts call = new DTOProducts();
 //        List<SubProducts> ls = call.getProductByStatus("Hot", 12);
-        List<SubProducts> ls = call.getAll();
+//        List<SubProducts> ls = call.getAll();
         String[] m = {"men","women"};
 //        List<SubProducts> ls = call.getRalateProduct("nike",20);
-       ls.forEach(a -> System.out.println(a.toString()));
+//       ls.forEach(a -> System.out.println(a.toString()));
+        System.out.println(Math.random()*10);
+//        for (int i = 0; i < 10; i++) {
+//            int randomInt = (int) (Math.random() * 11);
+//            System.out.println("Random Integer (0-10): " + randomInt);
+//        }
 //        for(String k : m){
 //            System.out.println(k);
         }

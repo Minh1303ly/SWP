@@ -100,10 +100,10 @@ public class DTOProducts extends DBContext {
         return new LinkedList<>(list);
     }
 
-    public List<SubProducts> getProductByStatus(String status, int sizeOfList) {
+    public List<SubProducts> getProductLatest(String status, int sizeOfList) {
         List<SubProducts> list = new LinkedList<>();
         StringBuilder query = new StringBuilder(SQL);
-        query.append(" where product_status.name like ?");
+        query.append(" where product_status.name like ? order by products.created_at desc");
         try {
             PreparedStatement pre = connection.prepareStatement(
                     query.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -181,7 +181,7 @@ public class DTOProducts extends DBContext {
 
     public static void main(String[] args) {
         DTOProducts call = new DTOProducts();
-//        List<SubProducts> ls = call.getProductByStatus("Hot", 12);
+//        List<SubProducts> ls = call.getProductLatest("Hot", 12);
 //        List<SubProducts> ls = call.getAll();
         String[] m = {"men","women"};
 //        List<SubProducts> ls = call.getRalateProduct("nike",20);

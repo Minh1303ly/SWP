@@ -60,7 +60,7 @@ public class SubProductServlet extends HttpServlet {
             DTOProducts dtoProducts = new DTOProducts();
             request.setAttribute("message", "Hello");
             request.setAttribute("newProduct", 
-                    dtoProducts.getProductByStatus("new", 2));
+                    dtoProducts.getProductLatest("new", 2));
             RequestDispatcher dispatch = request.getRequestDispatcher("test.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -118,7 +118,7 @@ public class SubProductServlet extends HttpServlet {
             request.setAttribute("brandSider", dAOBrands.getAll());
             request.setAttribute("categorySider", dAOCategories.getAll());
             request.setAttribute("newProductSider", 
-                    dtoProducts.getProductByStatus("new", 3));
+                    dtoProducts.getProductLatest("new", 3));
             
     }
     

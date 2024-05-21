@@ -61,7 +61,7 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("blog", bDao.getHotBlog());
             
            request.setAttribute("topSelling", 
-                    dTOProducts.getProductByStatus("hot", 12));
+                    dTOProducts.getProductLatest("hot", 12));
            
             request.setAttribute("featured", 
                    dTOProducts.getProductByRating(3, 7));

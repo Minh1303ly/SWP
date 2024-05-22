@@ -1,7 +1,7 @@
 package model;
 import java.util.Date;
 
-public class OrderDetails {
+public class OrderDetail {
     private int id; // int
     private int product_id; // int
     private int shop_order_id; // int
@@ -11,7 +11,7 @@ public class OrderDetails {
     private Date modified_at; // datetime
 
     // Constructor
-    public OrderDetails(int product_id, int shop_order_id, int quantity, float price, Date created_at, Date modified_at) {
+    public OrderDetail(int product_id, int shop_order_id, int quantity, float price, Date created_at, Date modified_at) {
         this.product_id = product_id;
         this.shop_order_id = shop_order_id;
         this.quantity = quantity;
@@ -20,7 +20,7 @@ public class OrderDetails {
         this.modified_at = modified_at;
     }
 
-    public OrderDetails() {
+    public OrderDetail() {
     }
 
     // Getters and Setters

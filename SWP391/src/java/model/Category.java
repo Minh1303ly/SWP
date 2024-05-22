@@ -1,6 +1,6 @@
 package model;
 import java.util.Date;
-public class Categories {
+public class Category {
 
     private int id; 
     private int status_id;
@@ -8,13 +8,13 @@ public class Categories {
     private Date createdAt;
     private Date modifiedAt;
 
-    public Categories(int status_id, String name, Date createdAt, Date modifiedAt) {
+    public Category(int status_id, String name, Date createdAt, Date modifiedAt) {
         this.status_id = status_id;
         this.name = name;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
-    public Categories() {
+    public Category() {
     }
     
     public int getId() {

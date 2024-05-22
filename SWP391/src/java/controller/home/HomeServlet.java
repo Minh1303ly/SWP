@@ -2,20 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.home;
 
+import mdao.BlogDAO;
+import mdao.DAOCategories;
+import mdao.DAOSliders;
+import dto.*;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Blog;
+import model.Category;
 
 /**
  *
  * @author Nhat Anh
  */
-public class SiderServlet extends HttpServlet {
+public class HomeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,16 +41,57 @@ public class SiderServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SiderServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SiderServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            switch(request.getParameter("service")){
+                case "view" -> view(request, response);
+                case "setHeader" -> setHeader(request, response);
+//                case "search" -> searchName(request, response);
+                default -> view(request, response);
+            }
         }
+    }
+    
+    public void view(HttpServletRequest request, HttpServletResponse response){
+        
+        try {
+            DAOSliders daoSlider = new DAOSliders();
+            BlogDAO bDao = new BlogDAO();  
+            DTOProducts dTOProducts = new DTOProducts();
+            request.setAttribute("title", "Home");
+            
+            request.setAttribute("blog", bDao.getHotBlog());
+            
+           request.setAttribute("topSelling", 
+                    dTOProducts.getProductLatest("hot", 12));
+           
+            request.setAttribute("featured", 
+                   dTOProducts.getProductByRating(3, 7));
+           
+            request.setAttribute("slider", daoSlider.getAll());
+            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(HomeServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void setHeader(HttpServletRequest request, HttpServletResponse response){
+        try {
+            DAOCategories cDAO = new DAOCategories();
+            request.setAttribute("categories", cDAO.getAll());
+            RequestDispatcher dispatch = request.getRequestDispatcher("header.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(HomeServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void main(String[] args) {
+        BlogDAO bDao = new BlogDAO();     
+        DAOCategories cDAO = new DAOCategories();
+        List<Category> ls = cDAO.getAll();
+        System.out.println(ls.get(0).toString());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

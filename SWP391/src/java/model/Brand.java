@@ -1,15 +1,15 @@
 package model;
 import java.util.Date;
 
-public class Brands{
+public class Brand{
     private int id;
     private int status_id;
     private String name;
     private Date created_at;
     private Date modified_at;
-    public Brands() {
+    public Brand() {
     }
-    public Brands(int status_id, String name, Date created_at, Date modified_at) {
+    public Brand(int status_id, String name, Date created_at, Date modified_at) {
         this.status_id = status_id;
         this.name = name;
         this.created_at = created_at;

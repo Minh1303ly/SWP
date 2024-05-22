@@ -1,4 +1,4 @@
-package dao;
+package mdao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

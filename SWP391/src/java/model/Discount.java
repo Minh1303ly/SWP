@@ -1,7 +1,7 @@
 package model;
 import java.util.Date;
 
-public class Discounts {
+public class Discount {
     private int id; // int
     private String name; // nvarchar(255)
     private String description; // text
@@ -11,7 +11,7 @@ public class Discounts {
     private Date modified_at; // datetime
 
     // Constructor
-    public Discounts(String name, String description, int discount_percent, boolean active, Date created_at, Date modified_at) {
+    public Discount(String name, String description, int discount_percent, boolean active, Date created_at, Date modified_at) {
         this.name = name;
         this.description = description;
         this.discount_percent = discount_percent;

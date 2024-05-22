@@ -2,9 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.home;
 
-import dao.*;
+import mdao.DAOSliders;
+import mdao.DAOCategories;
+import mdao.DAOBrands;
+import mdao.DAOProducts;
 import dto.DTOProducts;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package mdao;
 
 import context.DBContext;
 
@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Categories;
+import model.Category;
 
 /**
  *
@@ -21,8 +21,8 @@ import model.Categories;
  */
 public class DAOCategories extends DBContext{
     
-    public List<Categories> getAll(){
-        List<Categories> list = new LinkedList<>();
+    public List<Category> getAll(){
+        List<Category> list = new LinkedList<>();
         try {
             String sql = """
                         select c.id, c.name from Categories as c
@@ -33,7 +33,7 @@ public class DAOCategories extends DBContext{
                     ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {                
-                list.add(new Categories(rs.getInt(1), rs.getString(2), null, null));
+                list.add(new Category(rs.getInt(1), rs.getString(2), null, null));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCategories.class.getName())
@@ -44,7 +44,7 @@ public class DAOCategories extends DBContext{
     
      public static void main(String[] args) {
         DAOCategories aOBrands = new DAOCategories();
-        List<Categories> ls = new LinkedList<>();
+        List<Category> ls = new LinkedList<>();
         ls = aOBrands.getAll();
         ls.forEach(a -> {System.out.println(a.toString());});
         

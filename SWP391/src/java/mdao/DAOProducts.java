@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package mdao;
 
 import context.DBContext;
 import java.sql.*;
@@ -19,15 +19,15 @@ import model.*;
  */
 public class DAOProducts extends DBContext{
     
-    public List<Products> getAll() {
-        List<Products> list = new LinkedList<>();
+    public List<Product> getAll() {
+        List<Product> list = new LinkedList<>();
         String sql = "SELECT * FROM Products";
 
         try (PreparedStatement pre = connection.prepareStatement(sql, 
                  ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
              ResultSet rs = pre.executeQuery()) {
             while (rs.next()) {
-                    list.add(new Products(
+                    list.add(new Product(
                         rs.getInt(1), 
                         rs.getInt(2), 
                         rs.getInt(3),

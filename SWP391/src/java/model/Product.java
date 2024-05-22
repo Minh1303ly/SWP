@@ -1,7 +1,7 @@
 package model;
 import java.util.Date;
 
-public class Products {
+public class Product {
     private int id;
     private int category_id;
     private int discount_id;
@@ -18,7 +18,7 @@ public class Products {
     private Date created_at;
     private Date modified_at;
 
-    public Products(int id, int category_id, int discount_id, int status_id, int brand_id, String name, int quantity, float price, String size, String color, String description, String img1, String img2, Date created_at, Date modified_at) {
+    public Product(int id, int category_id, int discount_id, int status_id, int brand_id, String name, int quantity, float price, String size, String color, String description, String img1, String img2, Date created_at, Date modified_at) {
         this.id = id;
         this.category_id = category_id;
         this.discount_id = discount_id;
@@ -38,7 +38,7 @@ public class Products {
 
     
 
-    public Products(int category_id, int discount_id, int status_id, int brand_id, String name, int quantity,
+    public Product(int category_id, int discount_id, int status_id, int brand_id, String name, int quantity,
             float price, String size, String color, String description, String img1, String img2, Date created_at,
             Date modified_at) {
         this.category_id = category_id;
@@ -57,7 +57,7 @@ public class Products {
         this.modified_at = modified_at;
     }
 
-    public Products() {
+    public Product() {
     }
 
     public int getId() {

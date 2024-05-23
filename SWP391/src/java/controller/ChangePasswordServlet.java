@@ -7,6 +7,7 @@ package controller;
 import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import util.Encrypt;
  *
  * @author Admin
  */
+@WebServlet(name = "ChangePasswordServlet", urlPatterns = {"/changepassword"})
 public class ChangePasswordServlet extends HttpServlet {
 
     /**
@@ -123,24 +125,24 @@ public class ChangePasswordServlet extends HttpServlet {
             u = (User) obj2;
         }
         if(obj2 == null){
-            request.setAttribute("error", "Login Before Change Password");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Login Before Change Password");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }
         
         if(currentPassword == null || currentPassword.equals("")
                 || newPassword == null || newPassword.equals("")
                 || confirmNewPassword == null || confirmNewPassword.equals("")){
-            request.setAttribute("error", "Not Empty");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Not Empty");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }else if(!(newPassword.equals(confirmNewPassword))){
-            request.setAttribute("error", "New Password and Comfirm Password don't match");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "New Password and Comfirm Password don't match");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }else if(!isValidPassword(newPassword) || !isValidPassword(confirmNewPassword)){
-            request.setAttribute("error", "Wrong Password Format");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Wrong Password Format");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }else if(!(u.getPassword().equals(Encrypt.toSHA1(currentPassword)))){
-            request.setAttribute("error", "Wrong Current Password");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Wrong Current Password");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }else{
             u.setPassword(Encrypt.toSHA1(newPassword));
             

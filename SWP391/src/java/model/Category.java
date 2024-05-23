@@ -18,4 +18,18 @@ public class Category {
     private Date modifiedAt;
 
     private CategoryStatus categoryStatus;
+
+    public Category() {
+    }
+    
+    
+
+    public Category(int statusId, String name, Date createAt, Date modifiedAt) {
+        this.statusId = statusId;
+        this.name = name;
+        this.createAt = createAt;
+        this.modifiedAt = modifiedAt;
+    }
+    
+    
 }

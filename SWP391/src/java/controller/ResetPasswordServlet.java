@@ -8,6 +8,7 @@ import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import util.Encrypt;
  *
  * @author Admin
  */
+@WebServlet(name = "ResetPasswordServlet", urlPatterns = {"/resetpassword"})
 public class ResetPasswordServlet extends HttpServlet {
 
     /**
@@ -119,15 +121,15 @@ public class ResetPasswordServlet extends HttpServlet {
         }
 
         if (obj2 == null) {
-            request.setAttribute("error", "Account Not Existed!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Account Not Existed!");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }
 
         if (verifyCode.equals(u.getToken())) {
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
         } else {
-            request.setAttribute("error", "Reset Password Failed!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Reset Password Failed!");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }
 
     }
@@ -175,7 +177,7 @@ public class ResetPasswordServlet extends HttpServlet {
             u.setPassword(Encrypt.toSHA1(password));
             udb.updateUser(u);
             
-            response.sendRedirect("home");
+            response.sendRedirect("home?service=view");
         }
     }
 

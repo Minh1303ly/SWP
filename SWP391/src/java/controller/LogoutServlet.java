@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Admin
  */
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet {
    
     /** 
@@ -58,7 +60,7 @@ public class LogoutServlet extends HttpServlet {
         if(session.getAttribute("account")!=null){
             session.removeAttribute("account");
         }
-        response.sendRedirect("home");
+        response.sendRedirect("home?service=view");
     } 
 
     /** 

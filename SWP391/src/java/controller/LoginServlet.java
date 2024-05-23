@@ -7,6 +7,7 @@ package controller;
 import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import util.Encrypt;
  *
  * @author Admin
  */
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
     /**
@@ -86,19 +88,19 @@ public class LoginServlet extends HttpServlet {
         if (email_forgot == null || email_forgot.equals("")) {
             if (email == null || email.equals("")
                     || password == null || password.equals("")) {
-                request.setAttribute("error", "Username or Password Don't Allow Blank!");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                session.setAttribute("error", "Username or Password Don't Allow Blank!");
+                request.getRequestDispatcher("home?service=view").forward(request, response);
             } else if (u.getPassword().equals(password)) {
                 if (u.getStatus_id() == 1) {
                     session.setAttribute("account", u);
-                    response.sendRedirect("home");
+                    response.sendRedirect("home?service=view");
                 } else {
-                    request.setAttribute("error", "Account is InActive!");
-                    request.getRequestDispatcher("home.jsp").forward(request, response);
+                    session.setAttribute("error", "Account is InActive!");
+                    request.getRequestDispatcher("home?service=view").forward(request, response);
                 }
             } else {
-                request.setAttribute("error", "Username or Password Invalid!");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                session.setAttribute("error", "Username or Password Invalid!");
+                request.getRequestDispatcher("home?service=view").forward(request, response);
             }
         } else {
             session.setAttribute("email_forgot", email_forgot);

@@ -77,7 +77,7 @@ public class UserAddressDAO extends DBContext {
 
     public UserAddress getUserAddressById(int addressId) {
         UserAddress userAddress = null;
-        String sql = "SELECT id, user_id, address_line, city, country FROM user_address WHERE id = ?";
+        String sql = "SELECT id, user_id, address_line, city, country FROM user_address WHERE user_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, addressId);
             try (ResultSet resultSet = statement.executeQuery()) {

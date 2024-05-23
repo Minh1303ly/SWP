@@ -9,6 +9,7 @@ import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ import util.Encrypt;
  *
  * @author Admin
  */
+@WebServlet(name = "OtpServlet", urlPatterns = {"/otp"})
 public class OtpServlet extends HttpServlet {
 
     /**
@@ -146,7 +148,7 @@ public class OtpServlet extends HttpServlet {
         } catch (NumberFormatException e) {
 
         }
-
+        HttpSession session = request.getSession();
         UsersDAO udb = new UsersDAO();
 //        User_addressDAO uadb = new User_addressDAO();
 
@@ -162,14 +164,14 @@ public class OtpServlet extends HttpServlet {
                 || city == null || city.equals("")
                 || country == null || country.equals("")
                 || telephone == null || telephone.equals("")) {
-            request.setAttribute("error", "Not Empty");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Not Empty");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         } else if (!isValidEmailAddress(email)) {
-            request.setAttribute("error", "Wrong Email Format");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Wrong Email Format");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         } else if (!isValidPassword(password_raw)) {
-            request.setAttribute("error", "Wrong Password Format");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Wrong Password Format");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         } else if (udb.getUserByEmail(email) != null) {
             if (udb.getUserByEmail(email).getStatus_id() == 2) {
                 String code = Email.getRandomNumber();
@@ -185,7 +187,7 @@ public class OtpServlet extends HttpServlet {
                 u.setPassword(password);
 
                 Email.sendEmail(email, "Verify Your Email Address", context, code);
-                HttpSession session = request.getSession();
+                
                 session.setAttribute("signUpAccount", u);
                 session.setAttribute("signUpAddress", ua);
                 session.setAttribute("code", code);
@@ -194,8 +196,8 @@ public class OtpServlet extends HttpServlet {
 
                 request.getRequestDispatcher("otp.jsp").forward(request, response);
             } else {
-                request.setAttribute("error", "Email Existed");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                session.setAttribute("error", "Email Existed");
+                request.getRequestDispatcher("home?service=view").forward(request, response);
             }
         } else {
             String code = Email.getRandomNumber();
@@ -209,7 +211,7 @@ public class OtpServlet extends HttpServlet {
             User u = new User(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date(), code);
 
             Email.sendEmail(email, "Verify Your Email Address", context, code);
-            HttpSession session = request.getSession();
+            
             session.setAttribute("signUpAccount", u);
             session.setAttribute("signUpAddress", ua);
             session.setAttribute("code", code);

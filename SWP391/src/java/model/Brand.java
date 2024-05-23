@@ -18,4 +18,16 @@ public class Brand {
     private Date modifiedAt;
 
     private BrandStatus brandStatus;
+
+    public Brand() {
+    }
+
+    public Brand(int statusId, String name, Date createdAt, Date modifiedAt) {
+        this.statusId = statusId;
+        this.name = name;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+    
+    
 }

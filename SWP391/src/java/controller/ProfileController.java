@@ -37,8 +37,8 @@ public class ProfileController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account");
         // Tam thoi chua co tai khoan login
-        user = new User();
-        user.setId(1);
+//        user = new User();
+//        user.setId(1);
 
         UserDAO uDAO = new UserDAO();
         User profile = uDAO.getUserById(user.getId());

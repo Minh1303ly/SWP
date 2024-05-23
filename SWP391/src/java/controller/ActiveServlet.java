@@ -8,6 +8,7 @@ import dal.User_addressDAO;
 import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import model.User;
  *
  * @author Admin
  */
+@WebServlet(name = "ActiveServlet", urlPatterns = {"/active"})
 public class ActiveServlet extends HttpServlet {
 
     /**
@@ -103,10 +105,10 @@ public class ActiveServlet extends HttpServlet {
             UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddressLine(), ua.getCity(), ua.getCountry());
             uadb.insertUserAddress(ua2);
 
-            response.sendRedirect("home");
+            response.sendRedirect("home?service=view");
         } else {
-            request.setAttribute("error", "Verify Fail!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Verify Fail!");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }
     }
 

@@ -33,13 +33,13 @@
 
         <!-- YOUR CUSTOM CSS -->
         <link href="css/custom.css" rel="stylesheet">
-
+        <jsp:include page="head.jsp"/>
     </head>
 
     <body>
 
         <div id="page">
-            <jsp:include page="components/header.jsp" />
+            <jsp:include page="header.jsp" />
 
 
             <h1 class="text-center mb-4">My Order</h1>

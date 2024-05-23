@@ -8,6 +8,7 @@ import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import util.Email;
  *
  * @author Admin
  */
+@WebServlet(name = "ResendServlet", urlPatterns = {"/resend"})
 public class ResendServlet extends HttpServlet {
 
     /**
@@ -69,13 +71,13 @@ public class ResendServlet extends HttpServlet {
         }
 
         if (email_forgot.equals("")) {
-            request.setAttribute("error", "Reset Password Failed!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Reset Password Failed!");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }
         
         if(udb.getUserByEmail(email_forgot) == null){
-            request.setAttribute("error", "Account Not Existed!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Account Not Existed!");
+            request.getRequestDispatcher("home?service=view").forward(request, response);
         }
 
         long currentTimeMillis = System.currentTimeMillis();

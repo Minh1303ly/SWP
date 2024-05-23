@@ -43,13 +43,14 @@
                 vertical-align: middle;
             }
         </style>
+        <jsp:include page="head.jsp"/>
     </head>
 
     <body>
 
         <div id="page">
 
-            <jsp:include page="components/header.jsp" />
+            <jsp:include page="header.jsp" />
 
             <main class="bg_gray">
                	<main class="bg_gray">

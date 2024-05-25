@@ -19,8 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Blog;
-import model.Category;
+import model.*;
 
 /**
  *
@@ -41,16 +40,20 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            switch(request.getParameter("service")){
-                case "view" -> view(request, response);
-                case "setHeader" -> setHeader(request, response);
-//                case "search" -> searchName(request, response);
-                default -> view(request, response);
+        if(request.getParameter("service")==null){
+            view(request, response);
+        }
+        else{
+            try (PrintWriter out = response.getWriter()) {
+                switch(request.getParameter("service")){
+                    case "view" -> view(request, response);
+                    case "setHeader" -> setHeader(request, response);
+                    default -> view(request, response);
+                }
             }
         }
     }
+    
     
     public void view(HttpServletRequest request, HttpServletResponse response){
         

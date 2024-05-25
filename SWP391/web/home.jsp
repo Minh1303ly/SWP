@@ -28,10 +28,7 @@
                                             <div class="col-lg-6 static">
                                                 <div class="slide-text text-end white">
                                                     <h2 class="owl-slide-animated owl-slide-title">${element.title}</h2>
-                                                    <!--                                                <p class="owl-slide-animated owl-slide-subtitle">
-                                                                                                        Limited items available at this price
-                                                                                                    </p>-->
-                                                    <div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="${element.backLink}" role="button">Shop Now</a></div>
+                                                    <div class="owl-slide-animated owl-slide-cta"><a class="btn_1" href="product" role="button">Shop Now</a></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -51,7 +48,7 @@
                 <ul id="banners_grid" class="clearfix">
                     <c:forEach var="element" items="${slider.subList(5,8)}">
                         <li>
-                            <a href="${element.backLink}" class="img_container">
+                            <a href="product" class="img_container">
                                 <img src="${element.image}" data-src="${element.image}" alt="" class="lazy">
                                 <div class="short_info opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                                     <h3>${element.title}</h3>
@@ -201,7 +198,7 @@
                             <c:forEach var="element" items="${blog}">
                                 <div class="col-lg-12">
                                     <h5>${element.title}</h5>
-                                    <a class="box_news" href="blog.html">
+                                    <a class="box_news" href="blogDetail?id=${element.id}">
 
                                         <figure>
                                             <img src="${element.cover_img}" data-src="${element.cover_img}" alt="" width="100" height="76" class="lazy">								
@@ -236,11 +233,7 @@
                                     <h3>${slider.get(10).title}</h3>
                                     <p>${slider.get(10).content}</p>
                                     <div class="feat_text_block">
-                                        <!--                                        <div class="price_box">
-                                                                                    <span class="new_price">$90.00</span>
-                                                                                    <span class="old_price">$170.00</span>
-                                                                                </div>-->
-                                        <a class="btn_1" href="${slider.get(10).backLink}" role="button">Shop Now</a>
+                                        <a class="btn_1" href="product" role="button">Shop Now</a>
                                     </div>
                                 </div>
                             </div>

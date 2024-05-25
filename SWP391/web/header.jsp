@@ -32,16 +32,16 @@
                         </div>
                         <ul>
                             <li>
-                                <a href="home?service=view">Home</a> 
+                                <a href="home">Home</a> 
                             </li>
                             <li>
-                                <a href="product?service=view">Shop</a> 
+                                <a href="product">Shop</a> 
                             </li>                           
                             <li>
                                 <a href="blogs">Blog</a>
                             </li>
                             <li>
-                                <a href="#0">About Us </a>
+                                <a href="feedback">Feedback</a>
                             </li>
                         </ul>
                     </div>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
 
-                <!--Search blog-->
+                <!--Search block-->
                 <div class="col-xl-6 col-lg-7 col-md-6 d-none d-md-block">
                     <form action="product" method="post"> 
                         <div class="custom-search-input">
@@ -83,7 +83,7 @@
                     <ul class="top_tools">
                         <li>
                             <div class="dropdown dropdown-cart"href="cart.html" >
-                                <a href="cart.html" class="cart_bt"><strong>2</strong></a>
+                            <a href="cart.html" class="cart_bt"><strong>2</strong></a>
                                 <div class="dropdown-menu">
 
                                     <div class="total_drop">

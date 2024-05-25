@@ -41,26 +41,30 @@ public class SubProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        switch (request.getParameter("service")) {
-            case "detail" :
-                detail(request, response);
-                break;
-            case "view" :
-                view(request, response);
-                break;
-            case "addCartByAjax" :
-                addCartByAjax(request, response);
-                break;
-            case "addCart" :
-                addCart(request, response);
-                break;
-            case "searchName":
-                searchName(request, response);
-                break;
-            default:
-                view(request, response);
+        if(request.getParameter("service")==null){
+            view(request, response);
         }
-        
+        else{
+            switch (request.getParameter("service")) {
+                case "detail" :
+                    detail(request, response);
+                    break;
+                case "view" :
+                    view(request, response);
+                    break;
+                case "addCartByAjax" :
+                    addCartByAjax(request, response);
+                    break;
+                case "addCart" :
+                    addCart(request, response);
+                    break;
+                case "searchName":
+                    searchName(request, response);
+                    break;
+                default:
+                    view(request, response);
+            }
+        }
     }
     
     public void addCart(HttpServletRequest request, HttpServletResponse response){

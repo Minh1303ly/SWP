@@ -102,29 +102,34 @@ public class ResetPasswordServlet extends HttpServlet {
         UsersDAO udb = new UsersDAO();
         HttpSession session = request.getSession();
 
+        // get email from session
         Object obj = session.getAttribute("email");
         String email = "";
         if (obj != null) {
             email = (String) obj;
         }
 
+        // Get user by email
         Object obj2 = udb.getUserByEmail(email);
         User u = new User();
         if (obj2 != null) {
             u = (User) obj2;
         }
-
+        
+        // Get verify code form session
         Object obj3 = session.getAttribute("code");
         String verifyCode = "";
         if (obj3 != null) {
             verifyCode = (String) obj3;
         }
 
+        // Check null user get by email
         if (obj2 == null) {
             session.setAttribute("error", "Account Not Existed!");
             request.getRequestDispatcher("home?service=view").forward(request, response);
         }
 
+        // Check verify token from user
         if (verifyCode.equals(u.getToken())) {
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
         } else {
@@ -145,34 +150,45 @@ public class ResetPasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        //get parameter from resetpassword form
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
         UsersDAO udb = new UsersDAO();
         HttpSession session = request.getSession();
 
+        // Get email form session
         Object obj = session.getAttribute("email");
         String email = "";
         if (obj != null) {
             email = (String) obj;
         }
 
+        //get user by email
         Object obj2 = udb.getUserByEmail(email);
         User u = new User();
         if (obj2 != null) {
             u = (User) obj2;
         }
         
+        //Check null parameter
         if (password == null || password.equals("")
                 || confirmPassword == null || confirmPassword.equals("")) {
             request.setAttribute("error", "Password And Confirm Password Empty!");
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+            
+            // Check new password and confirm new password
         }else if(!password.equals(confirmPassword)){
             request.setAttribute("error", "Password And Confirm Password Don't Match!");
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+            
+            // Check valid password form
         }else if(!isValidPassword(password)){
             request.setAttribute("error", "Wrong Password Format");
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+            
+            // Set new password
         }else{
             u.setPassword(Encrypt.toSHA1(password));
             udb.updateUser(u);

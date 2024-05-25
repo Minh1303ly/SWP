@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <header class="version_1">
     <div class="layer"></div><!-- Mobile menu overlay mask -->
     <div class="main_header">
@@ -237,5 +238,6 @@
         <!-- /search_mobile -->
     </div>
     <!-- /main_nav -->
+    <script src="js/validate.js"></script>
 </header>
 

@@ -62,35 +62,31 @@ public class ActiveServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        //Get verify code and email
         String verifyCode = request.getParameter("code");
         String email = request.getParameter("email");
         
         UsersDAO udb = new UsersDAO();
         User_addressDAO uadb = new User_addressDAO();
-        
         String code = udb.getUserByEmail(email).getToken();
-
         HttpSession session = request.getSession();
-//        Object obj = session.getAttribute("code");
-//        String code = (String) obj;
-//        
-//        if(obj == null){
-//            request.setAttribute("error", "Verify Fail!");
-//            request.getRequestDispatcher("home.jsp").forward(request, response);
-//        }
 
+        // Get sign up account from session
         Object obj2 = session.getAttribute("signUpAccount");
         User u = new User();
         if (obj2 != null) {
             u = (User) obj2;
         }
 
+        // Get sign up address from session
         Object obj3 = session.getAttribute("signUpAddress");
         UserAddress ua = new UserAddress();
         if (obj3 != null) {
             ua = (UserAddress) obj3;
         }
 
+        // Check verify code
         if (code.equals(verifyCode)) {
             Object obj4 = udb.getUserByEmail(u.getEmail());
             User u2 = new User();

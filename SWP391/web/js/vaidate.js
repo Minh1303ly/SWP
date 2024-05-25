@@ -2,6 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
+var isValidate = true;
+
 function validateFirstName (fName) {
     let firstName = document.querySelector("#firstName");
     if(fName.value === "") {

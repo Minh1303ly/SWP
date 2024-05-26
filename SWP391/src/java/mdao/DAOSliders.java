@@ -17,9 +17,13 @@ import java.sql.*;
  */
 public class DAOSliders extends DBContext{
     
+    /**
+     * 
+     * @return 
+     */
     public List<Slider> getAll() {
         List<Slider> list = new LinkedList<>();
-        String sql = "SELECT * FROM Sliders";
+        String sql = "SELECT * FROM sliders";
 
         try (PreparedStatement pre = connection.prepareStatement(sql, 
                  ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);

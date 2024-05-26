@@ -4,7 +4,7 @@
  */
 package controller.home;
 
-import mdao.BlogDAO;
+import dao.BlogDAO;
 import mdao.DAOCategories;
 import mdao.DAOSliders;
 import dto.*;
@@ -93,7 +93,6 @@ public class HomeServlet extends HttpServlet {
     }
     
     public static void main(String[] args) {
-        BlogDAO bDao = new BlogDAO();     
         DAOCategories cDAO = new DAOCategories();
         List<Category> ls = cDAO.getAll();
         System.out.println(ls.get(0).toString());

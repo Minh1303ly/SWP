@@ -217,6 +217,8 @@ public class BrandDAO extends DBContext {
 
         return bs;
     }
+    
+    
 
     public static void main(String[] args) {
         BrandDAO bDAO = new BrandDAO();

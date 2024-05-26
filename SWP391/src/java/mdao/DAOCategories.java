@@ -21,6 +21,10 @@ import model.Category;
  */
 public class DAOCategories extends DBContext{
     
+    /**
+     * 
+     * @return 
+     */
     public List<Category> getAll(){
         List<Category> list = new LinkedList<>();
         try {

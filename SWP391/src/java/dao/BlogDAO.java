@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Blog;
 import model.BlogCategories;
 import model.Tag;
@@ -220,6 +223,32 @@ public class BlogDAO extends DBContext {
         }
 
         return result;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public List<Blog> getHotBlog(){
+        List<Blog> list = new LinkedList<>();
+        try {
+            String sql = "select top (4) * from blogs order by created_at desc";
+            PreparedStatement pre = connection.prepareStatement(sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {                
+                list.add(new Blog(rs.getInt(1), rs.getInt(2),
+                        rs.getInt(3), rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6), rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9), rs.getDate(10)));
+            }          
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+        return list;
     }
 
     public static void main(String[] args) {

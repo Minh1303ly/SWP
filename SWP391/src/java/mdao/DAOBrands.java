@@ -18,6 +18,11 @@ import java.sql.SQLException;
  * @author Nhat Anh
  */
 public class DAOBrands extends DBContext{
+    
+    /**
+     * 
+     * @return 
+     */
     public List<Brand> getAll(){
         List<Brand> list = new LinkedList<>();
         try {

@@ -19,6 +19,10 @@ import model.*;
  */
 public class DAOProducts extends DBContext{
     
+    /**
+     * 
+     * @return 
+     */
     public List<Product> getAll() {
         List<Product> list = new LinkedList<>();
         String sql = "SELECT * FROM Products";
@@ -52,6 +56,10 @@ public class DAOProducts extends DBContext{
         return list;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public List<String> getAllColor() {
         List<String> list = new LinkedList<>();
         String sql = "SELECT distinct color FROM Products";

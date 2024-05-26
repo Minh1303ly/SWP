@@ -121,7 +121,7 @@ public class DTOProducts extends DBContext {
     public List<SubProducts> getProductByRating(int rating, int sizeOfList) {
         List<SubProducts> list = new LinkedList<>();
         StringBuilder query = new StringBuilder(SQL);
-        query.append(" where rating.rating = ? and product_status.name not like 'off'");
+        query.append(" where rating.rating >= ? and product_status.name not like 'off'");
         try {
             PreparedStatement pre = connection.prepareStatement(
                     query.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,

@@ -92,7 +92,7 @@ public class LoginServlet extends HttpServlet {
             if (email == null || email.equals("")
                     || password == null || password.equals("")) {
                 session.setAttribute("error", "Username or Password Don't Allow Blank!");
-                request.getRequestDispatcher("home?service=view").forward(request, response);
+                request.getRequestDispatcher("home").forward(request, response);
                 
                 // Check password
             } else if (u.getPassword().equals(password)) {
@@ -100,14 +100,14 @@ public class LoginServlet extends HttpServlet {
                 //Check active account
                 if (u.getStatus_id() == 1) {
                     session.setAttribute("account", u);
-                    response.sendRedirect("home?service=view");
+                    response.sendRedirect("home");
                 } else {
                     session.setAttribute("error", "Account is InActive!");
-                    request.getRequestDispatcher("home?service=view").forward(request, response);
+                    request.getRequestDispatcher("home").forward(request, response);
                 }
             } else {
                 session.setAttribute("error", "Username or Password Invalid!");
-                request.getRequestDispatcher("home?service=view").forward(request, response);
+                request.getRequestDispatcher("home").forward(request, response);
             }
             
         // if forgot email not null send to reset password

@@ -167,17 +167,17 @@ public class OtpServlet extends HttpServlet {
                 || country == null || country.equals("")
                 || telephone == null || telephone.equals("")) {
             session.setAttribute("error", "Not Empty");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
 
             // Check Email format
         } else if (!isValidEmailAddress(email)) {
             session.setAttribute("error", "Wrong Email Format");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
 
             //Check password format
         } else if (!isValidPassword(password_raw)) {
             session.setAttribute("error", "Wrong Password Format");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
 
             //Check email exist
         } else if (udb.getUserByEmail(email) != null) {
@@ -205,7 +205,7 @@ public class OtpServlet extends HttpServlet {
                 request.getRequestDispatcher("otp.jsp").forward(request, response);
             } else {
                 session.setAttribute("error", "Email Existed");
-                request.getRequestDispatcher("home?service=view").forward(request, response);
+                request.getRequestDispatcher("home").forward(request, response);
             }
 
             //Send verify email

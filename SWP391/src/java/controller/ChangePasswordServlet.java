@@ -129,7 +129,7 @@ public class ChangePasswordServlet extends HttpServlet {
         }
         if(obj2 == null){
             session.setAttribute("error", "Login Before Change Password");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
         }
         
         // Check null parameter
@@ -137,22 +137,22 @@ public class ChangePasswordServlet extends HttpServlet {
                 || newPassword == null || newPassword.equals("")
                 || confirmNewPassword == null || confirmNewPassword.equals("")){
             session.setAttribute("error", "Not Empty");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
             
             // Check new password and confirm new password
         }else if(!(newPassword.equals(confirmNewPassword))){
             session.setAttribute("error", "New Password and Comfirm Password don't match");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
             
             // Check newpassword format and confirm new password format
         }else if(!isValidPassword(newPassword) || !isValidPassword(confirmNewPassword)){
             session.setAttribute("error", "Wrong Password Format");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
             
             //Check current password
         }else if(!(u.getPassword().equals(Encrypt.toSHA1(currentPassword)))){
             session.setAttribute("error", "Wrong Current Password");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
             
             // set new password
         }else{

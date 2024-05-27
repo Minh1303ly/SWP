@@ -101,10 +101,10 @@ public class ActiveServlet extends HttpServlet {
             UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddressLine(), ua.getCity(), ua.getCountry());
             uadb.insertUserAddress(ua2);
 
-            response.sendRedirect("home?service=view");
+            response.sendRedirect("home");
         } else {
             session.setAttribute("error", "Verify Fail!");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
         }
     }
 

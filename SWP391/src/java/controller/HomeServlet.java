@@ -45,8 +45,8 @@ public class HomeServlet extends HttpServlet {
                 switch (request.getParameter("service")) {
                     case "view" ->
                         view(request, response);
-//                    case "setHeader" ->
-//                        setHeader(request, response);
+                    case "setHeader" ->
+                        setHeader(request, response);
                     default ->
                         view(request, response);
                 }
@@ -82,11 +82,23 @@ public class HomeServlet extends HttpServlet {
         }
     }
 
-//    public static void main(String[] args) {
-//        CategoryDAO cDAO = new CategoryDAO();
-//        List<Category> ls = cDAO.getAllByStatus();
-//        System.out.println(ls.get(0).toString());
-//    }
+    public void setHeader(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            CategoryDAO cDAO = new CategoryDAO();
+            request.setAttribute("categories", cDAO.getAllByStatus());
+            RequestDispatcher dispatch = request.getRequestDispatcher("header.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(HomeServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void main(String[] args) {
+        CategoryDAO cDAO = new CategoryDAO();
+        List<Category> ls = cDAO.getAllByStatus();
+        System.out.println(ls.get(0).toString());
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -36,6 +36,11 @@ public class DTOProducts extends DBContext {
                     FULL OUTER JOIN categories on products.category_id = categories.id
                     FULL OUTER JOIN brands on products.brand_id = brands.id""";
 
+    /**
+     * Use to get all product have unique name in database
+     * 
+     * @return list product have unique name  
+     */
     public List<SubProducts> getAll() {
         List<SubProducts> list = new LinkedList<>();
         try {
@@ -43,17 +48,28 @@ public class DTOProducts extends DBContext {
                     SQL, ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = pre.executeQuery();
-            list = getProduct(rs);
+            list = getProductUniqueName(rs);
         } catch (SQLException ex) {
             Logger.getLogger(DTOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
 
-    public List<SubProducts> getProduct(ResultSet rs) {
+    /**
+     * Use to get product have unique name with keys are sizes and colors
+     * description, categories, rating, status
+     * 
+     * @param rs is ResultSet take from input
+     * @return list product have unique name
+     */
+    public List<SubProducts> getProductUniqueName(ResultSet rs) {
         Set<SubProducts> list = new HashSet<>();
         // Convert incomingDataList to a Map to aggregate sizes and colors
+        // description, categories, rating, status
         Map<SubProducts, ProductAggregation> productMap = new HashMap<>();
+        
+        //Use to set product have same also have same sizes and colors
+        // description, categories, rating, status
         try {
             while(rs.next()){
                 SubProducts key = new SubProducts(
@@ -100,6 +116,13 @@ public class DTOProducts extends DBContext {
         return new LinkedList<>(list);
     }
 
+    /**
+     * Use to get new product order by date 
+     * 
+     * @param status     is status of product
+     * @param sizeOfList is size of list product you want return
+     * @return list new product order by date with given size
+     */
     public List<SubProducts> getProductLatest(String status, int sizeOfList) {
         List<SubProducts> list = new LinkedList<>();
         StringBuilder query = new StringBuilder(SQL);
@@ -110,14 +133,20 @@ public class DTOProducts extends DBContext {
                     ResultSet.CONCUR_READ_ONLY);
             pre.setString(1,status);
             ResultSet rs = pre.executeQuery();
-            list = getProduct(rs);
+            list = getProductUniqueName(rs);
         } catch (SQLException ex) {
             Logger.getLogger(DTOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list.subList(0, list.size()>sizeOfList?sizeOfList:list.size());
     }
     
-    
+    /**
+     * Use to get all product greater than given rating
+     * 
+     * @param rating     is number rate(1-5) take from input
+     * @param sizeOfList is size of list product you want return
+     * @return list product have rating greater than given rating
+     */
     public List<SubProducts> getProductByRating(int rating, int sizeOfList) {
         List<SubProducts> list = new LinkedList<>();
         StringBuilder query = new StringBuilder(SQL);
@@ -128,7 +157,7 @@ public class DTOProducts extends DBContext {
                     ResultSet.CONCUR_READ_ONLY);
             pre.setInt(1,rating);
             ResultSet rs = pre.executeQuery();
-            list = getProduct(rs);
+            list = getProductUniqueName(rs);
         } catch (SQLException ex) {
             Logger.getLogger(DTOProducts.class.getName())
                     .log(Level.SEVERE, null, ex);
@@ -136,6 +165,12 @@ public class DTOProducts extends DBContext {
         return list.subList(0, list.size()>sizeOfList?sizeOfList:list.size());
     }
     
+    /**
+     * Use to search product have same given name
+     * 
+     * @param name is name or text take from input
+     * @return list product have same name with given name
+     */
     public List<SubProducts> searchName(String name) {
         List<SubProducts> list = new LinkedList<>();
         StringBuilder query = new StringBuilder(SQL);
@@ -146,7 +181,7 @@ public class DTOProducts extends DBContext {
                     ResultSet.CONCUR_READ_ONLY);
             pre.setString(1,"%"+name+"%");
             ResultSet rs = pre.executeQuery();
-            list = getProduct(rs);
+            list = getProductUniqueName(rs);
         } catch (SQLException ex) {
             Logger.getLogger(DTOProducts.class.getName())
                     .log(Level.SEVERE, null, ex);
@@ -154,12 +189,20 @@ public class DTOProducts extends DBContext {
         return list;
     }
     
+    
     public List<SubProducts> filter() {
         List<SubProducts> list = new LinkedList<>();
         StringBuilder query = new StringBuilder(SQL);
         return list;
     } 
     
+    /**
+     * Use to get product have same brand
+     * 
+     * @param brand      is brand name take from input
+     * @param sizeOfList is size of list product you want return 
+     * @return list product have same brand with given brand
+     */
     public List<SubProducts> getRalateProduct(String brand, 
             int sizeOfList) {
         List<SubProducts> list = new LinkedList<>();
@@ -172,7 +215,7 @@ public class DTOProducts extends DBContext {
 //            pre.setString(1,Support.printArray(category));
             pre.setString(1,"%"+brand+"%");
             ResultSet rs = pre.executeQuery();
-            list = getProduct(rs);
+            list = getProductUniqueName(rs);
         } catch (SQLException ex) {
             Logger.getLogger(DTOProducts.class.getName()).log(Level.SEVERE, null, ex);
         }

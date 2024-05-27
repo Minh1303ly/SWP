@@ -53,6 +53,11 @@ public class SubProductServlet extends HttpServlet {
         }
     }
     
+    /**
+     * 
+     * @param request
+     * @param response 
+     */
     public void addCart(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
@@ -76,6 +81,11 @@ public class SubProductServlet extends HttpServlet {
         }
     }
     
+    /**
+     * 
+     * @param request
+     * @param response 
+     */
     public void addCartByAjax(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
@@ -94,6 +104,11 @@ public class SubProductServlet extends HttpServlet {
         }
     }
     
+    /**
+     * 
+     *  @param request servlet request
+     * @param response servlet response
+     */
     public void view(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
@@ -113,11 +128,20 @@ public class SubProductServlet extends HttpServlet {
         }
     }
     
+    /**
+     * Use take information of product for selected product from wed
+     * 
+     * @param request servlet request
+     * @param response servlet response
+     */
     public void detail(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
             SlidersDAO daoSlider = new SlidersDAO();
             dataForSider(request, response);
+            
+            // Because product in database have same name so just select element
+            // index 0 of list
             request.setAttribute("product",
                     dtoProducts.searchName(
                             request.getParameter("name")).get(0) );
@@ -127,8 +151,6 @@ public class SubProductServlet extends HttpServlet {
             request.setAttribute("relateProduct",  
                             dtoProducts.getRalateProduct(
                                     request.getParameter("brand"), 6));
-            
-            
             RequestDispatcher dispatch = request.getRequestDispatcher("product_detail.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -137,6 +159,12 @@ public class SubProductServlet extends HttpServlet {
         }
     }
     
+    /**
+     * Use to set data for sider of wed
+     * 
+     *  @param request servlet request
+     * @param response servlet response
+     */
     public void dataForSider(HttpServletRequest request, HttpServletResponse response){
             DTOProducts dtoProducts = new DTOProducts();
             ProductDAO dAOProducts = new ProductDAO();
@@ -146,10 +174,15 @@ public class SubProductServlet extends HttpServlet {
             request.setAttribute("brandSider", dAOBrands.getAllByStatus());
             request.setAttribute("categorySider", dAOCategories.getAllByStatus());
             request.setAttribute("newProductSider", 
-                    dtoProducts.getProductLatest("new", 3));
-            
+                    dtoProducts.getProductLatest("new", 3));          
     }
     
+    /**
+     * 
+     * 
+     *  @param request servlet request
+     * @param response servlet response
+     */
     public void searchName(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();

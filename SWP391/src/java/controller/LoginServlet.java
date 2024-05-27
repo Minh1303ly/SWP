@@ -75,6 +75,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Get parameter from login form
         String email = request.getParameter("email");
         String password_raw = request.getParameter("password");
         String password = Encrypt.toSHA1(password_raw);
@@ -84,13 +85,19 @@ public class LoginServlet extends HttpServlet {
         User u = udb.getUserByEmail(email);
         HttpSession session = request.getSession();
         
-
+        //Check null parameter
         if (email_forgot == null || email_forgot.equals("")) {
+            
+            //If email forgot null send to home
             if (email == null || email.equals("")
                     || password == null || password.equals("")) {
                 session.setAttribute("error", "Username or Password Don't Allow Blank!");
                 request.getRequestDispatcher("home?service=view").forward(request, response);
+                
+                // Check password
             } else if (u.getPassword().equals(password)) {
+                
+                //Check active account
                 if (u.getStatus_id() == 1) {
                     session.setAttribute("account", u);
                     response.sendRedirect("home?service=view");
@@ -102,6 +109,8 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("error", "Username or Password Invalid!");
                 request.getRequestDispatcher("home?service=view").forward(request, response);
             }
+            
+        // if forgot email not null send to reset password
         } else {
             session.setAttribute("email_forgot", email_forgot);
             response.sendRedirect("resend");

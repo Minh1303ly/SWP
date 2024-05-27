@@ -169,7 +169,12 @@
                 <!-- /container -->
             </main>
             <!--/main-->
+<<<<<<< HEAD
             <jsp:include page="components/footer.jsp" />
+=======
+            <jsp:include page="modal.jsp"/>
+            <jsp:include page="footer.jsp" />
+>>>>>>> f9b3fce013b925e7588797837e7d415f01710463
             
         </div>
         <!-- page -->

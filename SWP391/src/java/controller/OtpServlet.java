@@ -129,6 +129,8 @@ public class OtpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        //Get parameter from sign up form
         String email = request.getParameter("email");
         String password_raw = request.getParameter("password");
         String password = Encrypt.toSHA1(password_raw);
@@ -146,15 +148,15 @@ public class OtpServlet extends HttpServlet {
                 gender = false;
             }
         } catch (NumberFormatException e) {
-
+            PrintWriter out = response.getWriter();
+            out.print("Gender Failed");
         }
+
         HttpSession session = request.getSession();
         UsersDAO udb = new UsersDAO();
-//        User_addressDAO uadb = new User_addressDAO();
-
-        //Users u = new User(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date());
         UserAddress ua = new UserAddress(address_line, city, country);
 
+        //Check null parameter
         if (email == null || email.equals("")
                 || password_raw == null || password_raw.equals("")
                 || gender_raw == null || gender_raw.equals("")
@@ -166,12 +168,18 @@ public class OtpServlet extends HttpServlet {
                 || telephone == null || telephone.equals("")) {
             session.setAttribute("error", "Not Empty");
             request.getRequestDispatcher("home?service=view").forward(request, response);
+
+            // Check Email format
         } else if (!isValidEmailAddress(email)) {
             session.setAttribute("error", "Wrong Email Format");
             request.getRequestDispatcher("home?service=view").forward(request, response);
+
+            //Check password format
         } else if (!isValidPassword(password_raw)) {
             session.setAttribute("error", "Wrong Password Format");
             request.getRequestDispatcher("home?service=view").forward(request, response);
+
+            //Check email exist
         } else if (udb.getUserByEmail(email) != null) {
             if (udb.getUserByEmail(email).getStatus_id() == 2) {
                 String code = Email.getRandomNumber();
@@ -187,7 +195,7 @@ public class OtpServlet extends HttpServlet {
                 u.setPassword(password);
 
                 Email.sendEmail(email, "Verify Your Email Address", context, code);
-                
+
                 session.setAttribute("signUpAccount", u);
                 session.setAttribute("signUpAddress", ua);
                 session.setAttribute("code", code);
@@ -199,6 +207,8 @@ public class OtpServlet extends HttpServlet {
                 session.setAttribute("error", "Email Existed");
                 request.getRequestDispatcher("home?service=view").forward(request, response);
             }
+
+            //Send verify email
         } else {
             String code = Email.getRandomNumber();
             String context = request.getScheme()
@@ -211,7 +221,7 @@ public class OtpServlet extends HttpServlet {
             User u = new User(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date(), code);
 
             Email.sendEmail(email, "Verify Your Email Address", context, code);
-            
+
             session.setAttribute("signUpAccount", u);
             session.setAttribute("signUpAddress", ua);
             session.setAttribute("code", code);

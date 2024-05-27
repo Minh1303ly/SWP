@@ -112,6 +112,8 @@ public class ChangePasswordServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        // Get password from Change password form
         String currentPassword = request.getParameter("currentPassword");
         String newPassword = request.getParameter("newPassword");
         String confirmNewPassword = request.getParameter("confirmNewPassword");
@@ -119,6 +121,7 @@ public class ChangePasswordServlet extends HttpServlet {
         HttpSession session = request.getSession();
         UsersDAO udb = new UsersDAO();
         
+        // Get aacount from session
         Object obj2 = session.getAttribute("account");
         User u = new User();
         if (obj2 != null) {
@@ -129,20 +132,29 @@ public class ChangePasswordServlet extends HttpServlet {
             request.getRequestDispatcher("home?service=view").forward(request, response);
         }
         
+        // Check null parameter
         if(currentPassword == null || currentPassword.equals("")
                 || newPassword == null || newPassword.equals("")
                 || confirmNewPassword == null || confirmNewPassword.equals("")){
             session.setAttribute("error", "Not Empty");
             request.getRequestDispatcher("home?service=view").forward(request, response);
+            
+            // Check new password and confirm new password
         }else if(!(newPassword.equals(confirmNewPassword))){
             session.setAttribute("error", "New Password and Comfirm Password don't match");
             request.getRequestDispatcher("home?service=view").forward(request, response);
+            
+            // Check newpassword format and confirm new password format
         }else if(!isValidPassword(newPassword) || !isValidPassword(confirmNewPassword)){
             session.setAttribute("error", "Wrong Password Format");
             request.getRequestDispatcher("home?service=view").forward(request, response);
+            
+            //Check current password
         }else if(!(u.getPassword().equals(Encrypt.toSHA1(currentPassword)))){
             session.setAttribute("error", "Wrong Current Password");
             request.getRequestDispatcher("home?service=view").forward(request, response);
+            
+            // set new password
         }else{
             u.setPassword(Encrypt.toSHA1(newPassword));
             

@@ -5,7 +5,7 @@
 package model;
 
 import java.util.Objects;
-import utils.Support;
+import util.Support;
 
 /**
  *

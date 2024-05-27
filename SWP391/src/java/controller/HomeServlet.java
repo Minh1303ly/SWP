@@ -2,11 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.home;
+package controller;
 
-import mdao.BlogDAO;
-import mdao.DAOCategories;
-import mdao.DAOSliders;
+import dao.*;
 import dto.*;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -19,8 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Blog;
-import model.Category;
+import model.*;
 
 /**
  *
@@ -41,34 +38,42 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            switch(request.getParameter("service")){
-                case "view" -> view(request, response);
-                case "setHeader" -> setHeader(request, response);
-//                case "search" -> searchName(request, response);
-                default -> view(request, response);
+        if (request.getParameter("service") == null) {
+            view(request, response);
+        } else {
+            try (PrintWriter out = response.getWriter()) {
+                switch (request.getParameter("service")) {
+                    case "view" ->
+                        view(request, response);
+                    case "setHeader" ->
+                        setHeader(request, response);
+                    default ->
+                        view(request, response);
+                }
             }
         }
     }
-    
-    public void view(HttpServletRequest request, HttpServletResponse response){
-        
+
+    /**
+     * Use to get element display in home page include title, slider, top selling 
+     * product, hot blogs, featured product
+     * 
+     * @param request servlet request
+     * @param response servlet response
+     */
+    public void view(HttpServletRequest request, HttpServletResponse response) {
+
         try {
-            DAOSliders daoSlider = new DAOSliders();
-            BlogDAO bDao = new BlogDAO();  
+            SlidersDAO daoSlider = new SlidersDAO();
+            BlogDAO bDao = new BlogDAO();
             DTOProducts dTOProducts = new DTOProducts();
             request.setAttribute("title", "Home");
-            
-            request.setAttribute("blog", bDao.getHotBlog());
-            
-           request.setAttribute("topSelling", 
-                    dTOProducts.getProductLatest("hot", 12));
-           
-            request.setAttribute("featured", 
-                   dTOProducts.getProductByRating(3, 7));
-           
             request.setAttribute("slider", daoSlider.getAll());
+            request.setAttribute("blog", bDao.getHotBlog());
+            request.setAttribute("topSelling",
+                    dTOProducts.getProductLatest("hot", 12));
+            request.setAttribute("featured",
+                    dTOProducts.getProductByRating(3, 7));
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -76,11 +81,11 @@ public class HomeServlet extends HttpServlet {
                     .log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void setHeader(HttpServletRequest request, HttpServletResponse response){
+
+    public void setHeader(HttpServletRequest request, HttpServletResponse response) {
         try {
-            DAOCategories cDAO = new DAOCategories();
-            request.setAttribute("categories", cDAO.getAll());
+            CategoryDAO cDAO = new CategoryDAO();
+            request.setAttribute("categories", cDAO.getAllByStatus());
             RequestDispatcher dispatch = request.getRequestDispatcher("header.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -88,11 +93,10 @@ public class HomeServlet extends HttpServlet {
                     .log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void main(String[] args) {
-        BlogDAO bDao = new BlogDAO();     
-        DAOCategories cDAO = new DAOCategories();
-        List<Category> ls = cDAO.getAll();
+        CategoryDAO cDAO = new CategoryDAO();
+        List<Category> ls = cDAO.getAllByStatus();
         System.out.println(ls.get(0).toString());
     }
 
@@ -123,7 +127,7 @@ public class HomeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
     /**

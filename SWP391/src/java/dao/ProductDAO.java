@@ -5,14 +5,16 @@
 package dao;
 
 import context.DBContext;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import model.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductDAO extends DBContext {
 
@@ -223,4 +225,26 @@ public class ProductDAO extends DBContext {
 
         return product;
     }
+    
+     /**
+     * Use to get all distinct color in product
+     * 
+     * @return list distinct color in product
+     */
+    public List<String> getAllColor() {
+        List<String> list = new LinkedList<>();
+        String sql = "SELECT distinct color FROM Products";
+        try (PreparedStatement pre = connection.prepareStatement(sql, 
+                 ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery()) {
+            while (rs.next()) {
+                    list.add(rs.getString(1));
+                }           
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, "Error fetching products", ex);
+        }
+        return list;
+    }
+    
 }

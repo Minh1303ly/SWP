@@ -2,12 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.home;
+package controller;
 
-import mdao.DAOSliders;
-import mdao.DAOCategories;
-import mdao.DAOBrands;
-import mdao.DAOProducts;
+import dao.SlidersDAO;
+import dao.*;
 import dto.DTOProducts;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -17,7 +15,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Slider;
@@ -46,23 +43,12 @@ public class SubProductServlet extends HttpServlet {
         }
         else{
             switch (request.getParameter("service")) {
-                case "detail" :
-                    detail(request, response);
-                    break;
-                case "view" :
-                    view(request, response);
-                    break;
-                case "addCartByAjax" :
-                    addCartByAjax(request, response);
-                    break;
-                case "addCart" :
-                    addCart(request, response);
-                    break;
-                case "searchName":
-                    searchName(request, response);
-                    break;
-                default:
-                    view(request, response);
+                case "detail" -> detail(request, response);
+                case "view" -> view(request, response);
+                case "addCartByAjax" -> addCartByAjax(request, response);
+                case "addCart" -> addCart(request, response);
+                case "searchName" -> searchName(request, response);
+                default -> view(request, response);
             }
         }
     }
@@ -70,7 +56,7 @@ public class SubProductServlet extends HttpServlet {
     public void addCart(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
-            DAOSliders daoSlider = new DAOSliders();
+            SlidersDAO daoSlider = new SlidersDAO();
             dataForSider(request, response);
             request.setAttribute("product",
                     dtoProducts.searchName(
@@ -111,7 +97,7 @@ public class SubProductServlet extends HttpServlet {
     public void view(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
-            DAOSliders daoSlider = new DAOSliders();
+            SlidersDAO daoSlider = new SlidersDAO();
             dataForSider(request, response);
             List<Slider> ls = daoSlider.getAll();
             Slider slider = ls.get((int)(Math.random()*ls.size()+1));
@@ -130,7 +116,7 @@ public class SubProductServlet extends HttpServlet {
     public void detail(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
-            DAOSliders daoSlider = new DAOSliders();
+            SlidersDAO daoSlider = new SlidersDAO();
             dataForSider(request, response);
             request.setAttribute("product",
                     dtoProducts.searchName(
@@ -153,12 +139,12 @@ public class SubProductServlet extends HttpServlet {
     
     public void dataForSider(HttpServletRequest request, HttpServletResponse response){
             DTOProducts dtoProducts = new DTOProducts();
-            DAOProducts dAOProducts = new DAOProducts();
-            DAOBrands dAOBrands = new DAOBrands();
-            DAOCategories dAOCategories =new DAOCategories();
+            ProductDAO dAOProducts = new ProductDAO();
+            BrandDAO dAOBrands = new BrandDAO();
+            CategoryDAO dAOCategories =new CategoryDAO();
             request.setAttribute("colorSider",dAOProducts.getAllColor().toArray() );
-            request.setAttribute("brandSider", dAOBrands.getAll());
-            request.setAttribute("categorySider", dAOCategories.getAll());
+            request.setAttribute("brandSider", dAOBrands.getAllByStatus());
+            request.setAttribute("categorySider", dAOCategories.getAllByStatus());
             request.setAttribute("newProductSider", 
                     dtoProducts.getProductLatest("new", 3));
             
@@ -167,12 +153,12 @@ public class SubProductServlet extends HttpServlet {
     public void searchName(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
-            DAOProducts dAOProducts = new DAOProducts();
-            DAOBrands dAOBrands = new DAOBrands();
-            DAOCategories dAOCategories =new DAOCategories();
+            ProductDAO dAOProducts = new ProductDAO();
+            BrandDAO dAOBrands = new BrandDAO();
+            CategoryDAO dAOCategories =new CategoryDAO();
             request.setAttribute("colors",dAOProducts.getAllColor().toArray() );
-            request.setAttribute("brands", dAOBrands.getAll());
-            request.setAttribute("categories", dAOCategories.getAll());
+            request.setAttribute("brands", dAOBrands.getAllByStatus());
+            request.setAttribute("categories", dAOCategories.getAllByStatus());
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -293,6 +294,33 @@ public class CategoryDAO extends DBContext {
                 preparedStatement.close();
             }
         }
+    }
+    
+    /**
+     * Use to get all categories have status is active
+     * 
+     * @return list categories have status is active
+     */
+    public List<Category> getAllByStatus(){
+        List<Category> list = new LinkedList<>();
+        try {
+            String sql = """
+                        select c.id, c.name from Categories as c
+                        join category_status as s on c.status_id = s.id
+                        where s.name = 'Active'""";
+            PreparedStatement pre = connection.prepareStatement(sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {                
+                list.add(new Category(rs.getInt(1), rs.getString(2),
+                        null, null));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
     public static void main(String[] args) {

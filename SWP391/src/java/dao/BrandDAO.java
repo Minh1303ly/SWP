@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -216,6 +217,34 @@ public class BrandDAO extends DBContext {
         }
 
         return bs;
+    }
+    
+    /**
+     * Use to get all brand have status is active
+     * 
+     * @return list brand have brand status is active
+     */
+    public List<Brand> getAllByStatus(){
+        List<Brand> list = new LinkedList<>();
+        try {
+            String sql = """
+                         select c.id, c.name from Brands as c
+                                     join brand_status as s on c.status_id = s.id
+                                     where s.name = 'Active'""";
+            
+            PreparedStatement pre = connection.prepareStatement(sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {                
+                list.add(new Brand(rs.getInt(1), rs.getString(2), 
+                        null, null));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     
     

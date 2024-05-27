@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.home;
+package controller;
 
+import dao.*;
+import dto.*;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,13 +14,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.*;
 
 /**
  *
  * @author Nhat Anh
  */
-@WebServlet(name = "CartServlet", urlPatterns = {"/cart"})
-public class CartServlet extends HttpServlet {
+@WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
+public class HomeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,11 +38,55 @@ public class CartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        try (PrintWriter out = response.getWriter()) {
-            
+        if (request.getParameter("service") == null) {
+            view(request, response);
+        } else {
+            try (PrintWriter out = response.getWriter()) {
+                switch (request.getParameter("service")) {
+                    case "view" ->
+                        view(request, response);
+//                    case "setHeader" ->
+//                        setHeader(request, response);
+                    default ->
+                        view(request, response);
+                }
+            }
         }
     }
+
+    /**
+     * Use to get element display in home page include title, slider, top selling 
+     * product, hot blogs, featured product
+     * 
+     * @param request servlet request
+     * @param response servlet response
+     */
+    public void view(HttpServletRequest request, HttpServletResponse response) {
+
+        try {
+            SlidersDAO daoSlider = new SlidersDAO();
+            BlogDAO bDao = new BlogDAO();
+            DTOProducts dTOProducts = new DTOProducts();
+            request.setAttribute("title", "Home");
+            request.setAttribute("slider", daoSlider.getAll());
+            request.setAttribute("blog", bDao.getHotBlog());
+            request.setAttribute("topSelling",
+                    dTOProducts.getProductLatest("hot", 12));
+            request.setAttribute("featured",
+                    dTOProducts.getProductByRating(3, 7));
+            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(HomeServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+
+//    public static void main(String[] args) {
+//        CategoryDAO cDAO = new CategoryDAO();
+//        List<Category> ls = cDAO.getAllByStatus();
+//        System.out.println(ls.get(0).toString());
+//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -64,6 +115,7 @@ public class CartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**

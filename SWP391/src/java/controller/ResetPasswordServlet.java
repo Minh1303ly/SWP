@@ -126,7 +126,7 @@ public class ResetPasswordServlet extends HttpServlet {
         // Check null user get by email
         if (obj2 == null) {
             session.setAttribute("error", "Account Not Existed!");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
         }
 
         // Check verify token from user
@@ -134,7 +134,7 @@ public class ResetPasswordServlet extends HttpServlet {
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
         } else {
             session.setAttribute("error", "Reset Password Failed!");
-            request.getRequestDispatcher("home?service=view").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
         }
 
     }
@@ -193,7 +193,7 @@ public class ResetPasswordServlet extends HttpServlet {
             u.setPassword(Encrypt.toSHA1(password));
             udb.updateUser(u);
             
-            response.sendRedirect("home?service=view");
+            response.sendRedirect("home");
         }
     }
 

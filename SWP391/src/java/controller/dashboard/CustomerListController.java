@@ -17,18 +17,24 @@ import java.util.List;
 import model.Pagination;
 import model.User;
 
-
 @WebServlet(name = "CustomerListController", urlPatterns = {"/customerList"})
 public class CustomerListController extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserDAO uDAO = new UserDAO();
 
-        request.setAttribute("listUser", uDAO.getAllUsers());
+//        request.setAttribute("listUser", uDAO.getAllUsers());
+        String search = request.getParameter("search");
+        if (search != null) {
+            search.replace("+", "");
+        }
         List<User> list = uDAO.getAllUsers();
         HttpSession session = request.getSession();
+
+        list = uDAO.filterCustomersByStatusAndSearch(null, search);
+
         // start pagging
         int limitPage = 10;
         if (request.getParameter("cp") == null) {
@@ -46,6 +52,7 @@ public class CustomerListController extends HttpServlet {
         }
         // set URL
         request.setAttribute("pagging", "customerList");
+        request.setAttribute("paramSearch", search);
         // end pagging
         request.setAttribute("listUser", list);
         request.getRequestDispatcher("viewsAdmin/viewCustomer.jsp").forward(request, response);

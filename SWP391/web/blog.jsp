@@ -169,8 +169,9 @@
                 <!-- /container -->
             </main>
             <!--/main-->
-            <jsp:include page="components/footer.jsp" />
-
+            <jsp:include page="modal.jsp"/>
+            <jsp:include page="footer.jsp" />
+            
         </div>
         <!-- page -->
 

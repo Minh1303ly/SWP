@@ -36,21 +36,23 @@ public class BlogController extends HttpServlet {
         // start param
         String search = request.getParameter("search");
         String cate = request.getParameter("cate");
-        // end param
+        // Lấy tất cả các blog ban đầu
         List<Blog> list = bDAO.getAllBlog(null);
 
         session.setAttribute("listBlogCategoriess", bDAO.getBlogsByCategory());
-        session.setAttribute("listCate", blogCDAO.getAll());
+//        session.setAttribute("listCate", blogCDAO.getAll());
         session.setAttribute("listLastBlog", bDAO.getAllBlog(3));
+        // Lọc blog dựa trên tham số tìm kiếm nếu nó tồn tại
         if (search != null) {
             request.setAttribute("paramSearch", search);
             list = bDAO.filterBlog(search, null, null);
         }
+        // Lọc blog dựa trên tham số danh mục nếu nó tồn tại
         if (cate != null) {
             request.setAttribute("paramCate", cate);
             list = bDAO.filterBlog(search, null, Integer.parseInt(cate));
         }
-        // start pagging
+        // Xử lý phân trang
         int limitPage = 4;
         if (request.getParameter("cp") == null) {
             Pagination Page = new Pagination(list, limitPage, 1);
@@ -67,10 +69,11 @@ public class BlogController extends HttpServlet {
         }
         // set URL
         request.setAttribute("pagging", "blogs");
-        // end pagging
+        // Chuyển tiếp yêu cầu tới trang JSP để hiển thị
         request.setAttribute("listBlog", list);
-
+        // Chuyển tiếp yêu cầu tới trang JSP để hiển thị
         request.getRequestDispatcher("blog.jsp").forward(request, response);
+        
     }
 
     @Override

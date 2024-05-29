@@ -64,7 +64,7 @@
                                 <div class="flex-auto p-0 md:p-4">
                                     <div class="mb-4 border-b border-gray-200 dark:border-slate-700" data-fc-type="tab">
                                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" aria-label="Tabs">
-                                            <li class="me-2" role="presentation">
+<!--                                            <li class="me-2" role="presentation">
                                                 <button class="inline-block p-4 rounded-t-lg border-b-2 active " id="all-tab" data-fc-target="#all" type="button" role="tab" aria-controls="all" aria-selected="false">All <span class="text-slate-400">(4251)</span></button>
                                             </li>
                                             <li class="me-2" role="presentation">
@@ -72,7 +72,7 @@
                                             </li>
                                             <li class="me-2" role="presentation">
                                                 <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="vip-tab" data-fc-target="#vip" type="button" role="tab" aria-controls="vip" aria-selected="false">VIP <span class="text-slate-400">(25)</span></button>
-                                            </li>
+                                            </li>-->
                                         </ul>
                                     </div>
                                     <div class="flex flex-wrap gap-4 mb-3">

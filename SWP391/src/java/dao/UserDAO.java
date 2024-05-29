@@ -78,7 +78,7 @@ public class UserDAO extends DBContext {
         List<User> users = new ArrayList<>();
         String sql = "SELECT id, email, password, role_id, status_id, first_name, last_name, telephone, created_at, modified_at, gender "
                 + "FROM users "
-                + "WHERE 1 = 1 AND "
+                + "WHERE role_id = 1 AND "
                 + "(status_id = ? OR ? IS NULL) AND "
                 + "("
                 + "    (first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR telephone LIKE ?) OR "

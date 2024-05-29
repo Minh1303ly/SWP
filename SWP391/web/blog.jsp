@@ -148,16 +148,6 @@
                             <!-- /widget -->
                             <div class="widget">
                                 <div class="widget-title">
-                                    <h4>Popular Tags</h4>
-                                </div>
-                                <div class="tags">
-                                    <a href="#">Food</a>
-                                    <a href="#">Bars</a>
-                                    <a href="#">Cooktails</a>
-                                    <a href="#">Shops</a>
-                                    <a href="#">Best Offers</a>
-                                    <a href="#">Transports</a>
-                                    <a href="#">Restaurants</a>
                                 </div>
                             </div>
                             <!-- /widget -->

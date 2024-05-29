@@ -24,12 +24,11 @@ public class CustomerListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserDAO uDAO = new UserDAO();
-
-//        request.setAttribute("listUser", uDAO.getAllUsers());
         String search = request.getParameter("search");
         if (search != null) {
             search.replace("+", "");
         }
+        // Lấy danh sách tất cả người dùng
         List<User> list = uDAO.getAllUsers();
         HttpSession session = request.getSession();
 

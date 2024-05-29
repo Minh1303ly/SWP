@@ -28,6 +28,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
+<link href="css/tu.css" rel="stylesheet">
 <!-- SPECIFIC CSS -->
 <link href="css/home_1.css" rel="stylesheet">
 <link href="css/blog.css" rel="stylesheet">
@@ -41,5 +42,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- SPECIFIC CSS -->
+    
         <link href="css/product_page.css" rel="stylesheet">
         <link href="css/listing.css" rel="stylesheet">

@@ -78,7 +78,7 @@
                             </div>
                             <!-- /single-post -->
 
-                            <div id="comments">
+<!--                            <div id="comments">
                                 <h5>Comments</h5>
                                 <ul>
                                     <li>
@@ -149,9 +149,9 @@
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>-->
 
-                            <hr>
+<!--                            <hr>-->
 
                             <h5>Leave a comment</h5>
                             <div class="row">

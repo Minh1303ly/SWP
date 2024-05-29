@@ -31,7 +31,7 @@ import model.UserAddress;
 
 /**
  *
- * @author tungl
+ * @author 
  */
 @WebServlet(name = "MyOrderController", urlPatterns = {"/myOrder"})
 public class MyOrderController extends HttpServlet {

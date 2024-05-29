@@ -109,6 +109,26 @@
                                             </select>
                                         </div>
                                         <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">Create At</label>
+                                            <input type="text" id="created_at" name="created_at" value="${user.created_at}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" placeholder="CreatedAt" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">Modified At</label>
+                                            <input type="text" id="modified_at" name="" value="${user.modified_at}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" placeholder="ModifiedAt" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">Address Line</label>
+                                            <input type="text" id="" name="" value="${user.userAddress.addressLine}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" readonly  placeholder="Address Line" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">City</label>
+                                            <input type="text" id="" name="" value="${user.userAddress.city}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" readonly  placeholder="City" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">Country</label>
+                                            <input type="text" id="" name="" value="${user.userAddress.country}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" readonly  placeholder="Country" required>
+                                        </div>
+                                        <div class="mb-2">
                                             <label class="font-medium text-sm text-slate-600 dark:text-slate-400">Role</label>
                                             <div class="flex items-center space-x-4">
                                                 <c:forEach var="role" items="${listRole}">

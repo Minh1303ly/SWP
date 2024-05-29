@@ -412,7 +412,7 @@
         <script src="js/specific_listing.js"></script>
         <script src="js/jquery.cookiebar.js"></script>
         <script src="js/tu.js"></script>
-        <script src="js/validate.js"></script>
+        <script src="js/vaidate.js"></script>
         <script>
             $(document).ready(function () {
                 'use strict';

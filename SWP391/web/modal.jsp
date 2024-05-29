@@ -73,12 +73,12 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input onkeyup="validateEmail(this)" type="email" class="form-control" name="email" id="email" required>
-                        <span id="uEmail" class="danger_msg">${requestScope.email_err}</span>
+                        <span style="color: red" id="uEmail" class="danger_msg">${requestScope.email_err}</span>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input onkeyup="validatePassword(this)" type="password" class="form-control" name="password" id="password" required>
-                        <div id="passwordMsg" class="danger_msg">${requestScope.password_err}</div>
+                        <div style="color: red" id="passwordMsg" class="danger_msg">${requestScope.password_err}</div>
                     </div>
                     <div class="form-group">
                         <label>Gender</label><br>
@@ -114,7 +114,7 @@
                     <div class="form-group">
                         <label for="telephone">Telephone</label>
                         <input onkeyup="validatePhoneNumber(this)" type="tel" class="form-control" name="telephone" id="telephone" required>
-                        <span id="phoneNumber" class="danger_msg">${requestScope.phone_err}</span>
+                        <span style="color: red" id="phoneNumber" class="danger_msg">${requestScope.phone_err}</span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -147,12 +147,12 @@
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
                         <input onkeyup="validatePassword2(this)" type="password" class="form-control" name="newPassword" id="newPassword" required>
-                        <div id="passwordMsg2" class="danger_msg">${requestScope.password_err}</div>
+                        <div style="color: red" id="passwordMsg2" class="danger_msg">${requestScope.password_err}</div>
                     </div>
                     <div class="form-group">
                         <label for="confirmNewPassword">Confirm New Password</label>
                         <input onkeyup="checkPasswordAndCfPassword(this)" type="password" class="form-control" name="confirmNewPassword" id="confirmNewPassword" required>
-                        <div id="cfPassowrdMsg" class="danger_msg">${requestScope.cfPassword_err}</div>
+                        <div style="color: red" id="cfPassowrdMsg" class="danger_msg">${requestScope.cfPassword_err}</div>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -28,7 +28,6 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 
-<link href="css/tu.css" rel="stylesheet">
 <!-- SPECIFIC CSS -->
 <link href="css/home_1.css" rel="stylesheet">
 <link href="css/blog.css" rel="stylesheet">

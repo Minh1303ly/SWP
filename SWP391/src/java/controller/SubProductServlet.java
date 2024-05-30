@@ -138,13 +138,13 @@ public class SubProductServlet extends HttpServlet {
         try {
             DTOProducts dtoProducts = new DTOProducts();
             SlidersDAO daoSlider = new SlidersDAO();
-            dataForSider(request, response);
-            
+            dataForSider(request, response);            
             // Because product in database have same name so just select element
             // index 0 of list
             request.setAttribute("product",
                     dtoProducts.searchName(
                             request.getParameter("name")).get(0) );
+            //Set random slider for wed page direct
             List<Slider> ls = daoSlider.getAll();
             Slider slider = ls.get((int)(Math.random()*ls.size()+1));
             request.setAttribute("slider", slider);

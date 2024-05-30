@@ -226,8 +226,9 @@ public class BlogDAO extends DBContext {
     }
     
     /**
+     * Use to get top 4 blog order by date created descending
      * 
-     * @return 
+     * @return list 4 blog order by date created descending
      */
     public List<Blog> getHotBlog(){
         List<Blog> list = new LinkedList<>();

@@ -87,6 +87,8 @@ public class DTOProducts extends DBContext {
                 aggregation.rating.add(rs.getInt(8));
                 aggregation.status.add(rs.getString(11));
             }
+            
+            //Convert map to set
             list = productMap.entrySet().stream()
                     .map((Map.Entry<SubProducts, ProductAggregation> entry) -> {
                         SubProducts key = entry.getKey();

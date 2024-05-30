@@ -47,7 +47,7 @@ public class SubProductServlet extends HttpServlet {
                 case "view" -> view(request, response);
                 case "addCartByAjax" -> addCartByAjax(request, response);
                 case "addCart" -> addCart(request, response);
-                case "searchName" -> searchName(request, response);
+                case "searchName" -> search(request, response);
                 default -> view(request, response);
             }
         }
@@ -105,6 +105,7 @@ public class SubProductServlet extends HttpServlet {
     }
     
     /**
+     * 
      * 
      *  @param request servlet request
      * @param response servlet response
@@ -183,7 +184,7 @@ public class SubProductServlet extends HttpServlet {
      *  @param request servlet request
      * @param response servlet response
      */
-    public void searchName(HttpServletRequest request, HttpServletResponse response){
+    public void search(HttpServletRequest request, HttpServletResponse response){
         try {
             DTOProducts dtoProducts = new DTOProducts();
             ProductDAO dAOProducts = new ProductDAO();

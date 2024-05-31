@@ -229,7 +229,7 @@ public class BlogDAO extends DBContext {
      * 
      * @return 
      */
-    public List<Blog> getHotBlog(){
+    public List<Blog> getLatestBlog(){
         List<Blog> list = new LinkedList<>();
         try {
             String sql = "select top (4) * from blogs order by created_at desc";

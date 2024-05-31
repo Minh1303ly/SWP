@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<header class="version_1">
+<header class="version_1" style="width: 100%;">
     <div class="layer"></div><!-- Mobile menu overlay mask -->
     <div class="main_header">
         <div class="container">

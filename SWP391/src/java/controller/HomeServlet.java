@@ -45,8 +45,6 @@ public class HomeServlet extends HttpServlet {
                 switch (request.getParameter("service")) {
                     case "view" ->
                         view(request, response);
-                    case "setHeader" ->
-                        setHeader(request, response);
                     default ->
                         view(request, response);
                 }
@@ -69,24 +67,12 @@ public class HomeServlet extends HttpServlet {
             DTOProducts dTOProducts = new DTOProducts();
             request.setAttribute("title", "Home");
             request.setAttribute("slider", daoSlider.getAll());
-            request.setAttribute("blog", bDao.getHotBlog());
+            request.setAttribute("latestBlog", bDao.getLatestBlog());
             request.setAttribute("topSelling",
                     dTOProducts.getProductLatest("hot", 12));
             request.setAttribute("featured",
                     dTOProducts.getProductByRating(3, 7));
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
-            dispatch.forward(request, response);
-        } catch (ServletException | IOException ex) {
-            Logger.getLogger(HomeServlet.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setHeader(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            CategoryDAO cDAO = new CategoryDAO();
-            request.setAttribute("categories", cDAO.getAllByStatus());
-            RequestDispatcher dispatch = request.getRequestDispatcher("header.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
             Logger.getLogger(HomeServlet.class.getName())

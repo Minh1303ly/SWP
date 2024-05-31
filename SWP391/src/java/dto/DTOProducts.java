@@ -222,29 +222,65 @@ public class DTOProducts extends DBContext {
         }
         return list.subList(0, list.size()>sizeOfList?sizeOfList:list.size());
     }
+    
+    public void updateImage() {      
+        String sql = """
+                     UPDATE [dbo].[products]
+                        SET 
+                           [img1] = ?
+                           ,[img2] = ?
+                      WHERE id = ?
+                     """;
+        try {
+            int j = 1;
+            PreparedStatement pre = connection.prepareStatement(
+                        sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+            for(int i = 1; i <= 1200;i++){
+                
+                pre.setString(1,"img/products/product"+j+".jpg");
+                pre.setString(2,"img/products/product"+j+".jpg");
+                pre.setInt(3,i);
+                pre.execute();
+                if(i%25==0){
+                    j++;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DTOProducts.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateSlider() {      
+        String sql = """
+                     UPDATE [dbo].[sliders]
+                        SET 
+                           [img] = ?
+                      WHERE id=?
+                     """;
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                        sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+            for(int i = 49; i >= 1;i--){
+                
+                pre.setString(1,"img/products/product"+i+".jpg");
+                pre.setInt(2,i);
+                pre.execute();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DTOProducts.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
 
     public static void main(String[] args) {
         DTOProducts call = new DTOProducts();
-//        List<SubProducts> ls = call.getProductLatest("Hot", 12);
-//        List<SubProducts> ls = call.getAll();
-        String[] m = {"men","women"};
-//        List<SubProducts> ls = call.getRalateProduct("nike",20);
-//       ls.forEach(a -> System.out.println(a.toString()));
-        System.out.println(Math.random()*10);
-//        for (int i = 0; i < 10; i++) {
-//            int randomInt = (int) (Math.random() * 11);
-//            System.out.println("Random Integer (0-10): " + randomInt);
-//        }
-//        for(String k : m){
-//            System.out.println(k);
-        }
-//        String[] m = {"a"};
-//        System.out.println(m.toString());
-//        String k = "123456";
-//        System.out.println(Support.printArray(m));
+        call.updateSlider();
     }
 
-
+}
 
 class ProductAggregation {
 

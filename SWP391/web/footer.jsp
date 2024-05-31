@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<footer class="revealed">
+<footer class="revealed" style="width: 100% !important;">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6">

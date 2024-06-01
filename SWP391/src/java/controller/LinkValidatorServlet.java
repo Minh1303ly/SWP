@@ -9,6 +9,7 @@ import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author Admin
  */
+@WebServlet(name = "LinkValidatorServlet", urlPatterns = {"/linkvalidator"})
 public class LinkValidatorServlet extends HttpServlet {
 
     /**
@@ -58,15 +60,19 @@ public class LinkValidatorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        // Get email, verify code and time expired
         String email = request.getParameter("email");
         String verifyCode = request.getParameter("code");
         String expires = request.getParameter("expirationTimeMillis");
 
+        // Send error null parameter
         if (email == null || verifyCode == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters");
             return;
         }
 
+        // Send error invalid time expired
         long expirationTimeMillis;
         try {
             expirationTimeMillis = Long.parseLong(expires);
@@ -75,7 +81,7 @@ public class LinkValidatorServlet extends HttpServlet {
             return;
         }
 
-
+        // Send error time expired
         long currentTimeMillis = System.currentTimeMillis();
         if (currentTimeMillis > expirationTimeMillis) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Link has expired");
@@ -86,12 +92,13 @@ public class LinkValidatorServlet extends HttpServlet {
         
         String code = udb.getUserByEmail(email).getToken();
 
+        // Send error invalid verify code
         if (!code.equals(verifyCode)) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid signature");
             return;
         }
 
-        // Link is valid
+        // Link is valid send to resetpassword form
         HttpSession session = request.getSession(true);
         session.setAttribute("email", email);
         session.setAttribute("code", code);

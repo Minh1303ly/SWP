@@ -7,6 +7,7 @@ package controller;
 import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import util.Encrypt;
  *
  * @author Admin
  */
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
 public class LoginServlet extends HttpServlet {
 
     /**
@@ -73,6 +75,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Get parameter from login form
         String email = request.getParameter("email");
         String password_raw = request.getParameter("password");
         String password = Encrypt.toSHA1(password_raw);
@@ -82,24 +85,32 @@ public class LoginServlet extends HttpServlet {
         User u = udb.getUserByEmail(email);
         HttpSession session = request.getSession();
         
-
+        //Check null parameter
         if (email_forgot == null || email_forgot.equals("")) {
+            
+            //If email forgot null send to home
             if (email == null || email.equals("")
                     || password == null || password.equals("")) {
-                request.setAttribute("error", "Username or Password Don't Allow Blank!");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                session.setAttribute("error", "Username or Password Don't Allow Blank!");
+                request.getRequestDispatcher("home").forward(request, response);
+                
+                // Check password
             } else if (u.getPassword().equals(password)) {
+                
+                //Check active account
                 if (u.getStatus_id() == 1) {
                     session.setAttribute("account", u);
                     response.sendRedirect("home");
                 } else {
-                    request.setAttribute("error", "Account is InActive!");
-                    request.getRequestDispatcher("home.jsp").forward(request, response);
+                    session.setAttribute("error", "Account is InActive!");
+                    request.getRequestDispatcher("home").forward(request, response);
                 }
             } else {
-                request.setAttribute("error", "Username or Password Invalid!");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                session.setAttribute("error", "Username or Password Invalid!");
+                request.getRequestDispatcher("home").forward(request, response);
             }
+            
+        // if forgot email not null send to reset password
         } else {
             session.setAttribute("email_forgot", email_forgot);
             response.sendRedirect("resend");

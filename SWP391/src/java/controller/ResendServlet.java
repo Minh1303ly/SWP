@@ -8,6 +8,7 @@ import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import util.Email;
  *
  * @author Admin
  */
+@WebServlet(name = "ResendServlet", urlPatterns = {"/resend"})
 public class ResendServlet extends HttpServlet {
 
     /**
@@ -62,25 +64,30 @@ public class ResendServlet extends HttpServlet {
         HttpSession session = request.getSession(true); // create a session if one doesn't exist
         UsersDAO udb = new UsersDAO();
 
+        // get email forgot from form
         Object obj = session.getAttribute("email_forgot");
         String email_forgot = "";
         if (obj != null) {
             email_forgot = (String) obj;
         }
 
+        // Check null email forgot
         if (email_forgot.equals("")) {
-            request.setAttribute("error", "Reset Password Failed!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Reset Password Failed!");
+            request.getRequestDispatcher("home").forward(request, response);
         }
         
+        // Check null email 
         if(udb.getUserByEmail(email_forgot) == null){
-            request.setAttribute("error", "Account Not Existed!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Account Not Existed!");
+            request.getRequestDispatcher("home").forward(request, response);
         }
 
+        // Set timr expired for email
         long currentTimeMillis = System.currentTimeMillis();
         long expirationTimeMillis = currentTimeMillis + (60 * 1000);
 
+        // Link of resetpassword
         String code = Email.getRandomNumber();
         String context = request.getScheme()
                 + "://"
@@ -92,6 +99,7 @@ public class ResendServlet extends HttpServlet {
         User u = udb.getUserByEmail(email_forgot);
         u.setToken(code);
 
+        //send email
         Email.sendEmail2(email_forgot, "Reset Your Password", context, code, expirationTimeMillis);
         session.setAttribute("code", code);
 

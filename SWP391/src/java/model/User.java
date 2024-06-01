@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class User {
     private int id;
@@ -24,6 +24,7 @@ public class User {
     private Date modified_at;
     private String token;
     
+
     private Roles role;
     private UserStatus usersStatus;
     private UserAddress userAddress;
@@ -211,6 +212,5 @@ public class User {
     public void setModified_at(Date modified_at) {
         this.modified_at = modified_at;
     }
-    
-    
+
 }

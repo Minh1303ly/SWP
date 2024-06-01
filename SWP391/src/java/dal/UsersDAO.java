@@ -12,7 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import model.Roles;
 import model.User;
+import model.UserStatus;
 
 /**
  *
@@ -20,6 +22,7 @@ import model.User;
  */
 public class UsersDAO extends DBContext {
 
+    // Insert user vao database
     public void insertUser(User u) {
         String sql = "INSERT INTO [dbo].[users]\n"
                 + "           ([email]\n"//1
@@ -62,6 +65,7 @@ public class UsersDAO extends DBContext {
         }
     }
 
+    // Get user by email
     public User getUserByEmail(String email) {
         String sql = "SELECT [id]\n"//1
                 + "      ,[email]\n"//2
@@ -104,7 +108,8 @@ public class UsersDAO extends DBContext {
         }
         return null;
     }
-
+    
+    // Update an user
     public void updateUser(User u) {
         String sql = "UPDATE [dbo].[users]\n"
                 + "   SET [email] = ?\n"//1
@@ -146,6 +151,7 @@ public class UsersDAO extends DBContext {
         }
     }
 
+    // Update user active and modify date
     public void updateUserActive(User u) {
         String sql = "UPDATE [dbo].[users]\n"
                 + "   SET [status_id] = ?\n"//1
@@ -168,6 +174,7 @@ public class UsersDAO extends DBContext {
         }
     }
 
+    // Update user token and modify date
     public void updateUserToken(User u) {
         String sql = "UPDATE [dbo].[users]\n"
                 + "   SET [password] = ?\n"//1

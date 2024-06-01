@@ -8,6 +8,7 @@ import dal.User_addressDAO;
 import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import model.User;
  *
  * @author Admin
  */
+@WebServlet(name = "ActiveServlet", urlPatterns = {"/active"})
 public class ActiveServlet extends HttpServlet {
 
     /**
@@ -60,35 +62,31 @@ public class ActiveServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        //Get verify code and email
         String verifyCode = request.getParameter("code");
         String email = request.getParameter("email");
         
         UsersDAO udb = new UsersDAO();
         User_addressDAO uadb = new User_addressDAO();
-        
         String code = udb.getUserByEmail(email).getToken();
-
         HttpSession session = request.getSession();
-//        Object obj = session.getAttribute("code");
-//        String code = (String) obj;
-//        
-//        if(obj == null){
-//            request.setAttribute("error", "Verify Fail!");
-//            request.getRequestDispatcher("home.jsp").forward(request, response);
-//        }
 
+        // Get sign up account from session
         Object obj2 = session.getAttribute("signUpAccount");
         User u = new User();
         if (obj2 != null) {
             u = (User) obj2;
         }
 
+        // Get sign up address from session
         Object obj3 = session.getAttribute("signUpAddress");
         UserAddress ua = new UserAddress();
         if (obj3 != null) {
             ua = (UserAddress) obj3;
         }
 
+        // Check verify code
         if (code.equals(verifyCode)) {
             Object obj4 = udb.getUserByEmail(u.getEmail());
             User u2 = new User();
@@ -100,13 +98,13 @@ public class ActiveServlet extends HttpServlet {
             udb.updateUserActive(u2);
             session.setAttribute("account", u2);
 
-            UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddress_line(), ua.getCity(), ua.getCountry());
+            UserAddress ua2 = new UserAddress(u2.getId(), ua.getAddressLine(), ua.getCity(), ua.getCountry());
             uadb.insertUserAddress(ua2);
 
             response.sendRedirect("home");
         } else {
-            request.setAttribute("error", "Verify Fail!");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Verify Fail!");
+            request.getRequestDispatcher("home").forward(request, response);
         }
     }
 
@@ -122,6 +120,7 @@ public class ActiveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**

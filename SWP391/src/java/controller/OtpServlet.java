@@ -9,6 +9,7 @@ import dal.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ import util.Encrypt;
  *
  * @author Admin
  */
+@WebServlet(name = "OtpServlet", urlPatterns = {"/otp"})
 public class OtpServlet extends HttpServlet {
 
     /**
@@ -101,6 +103,23 @@ public class OtpServlet extends HttpServlet {
         return m.matches();
     }
 
+//    ^: Asserts the position at the start of the string.
+//\\+?: Matches an optional + sign.
+//\\d{0,2}: Matches zero, one, or two digits (the country code).
+//\\s?: Matches an optional whitespace character.
+//\\(?: Matches an optional opening parenthesis (.
+//(\\d{3}): Matches exactly three digits (area code), captured as a group.
+//\\)?: Matches an optional closing parenthesis ).
+//[-.\\s]?: Matches an optional hyphen -, period ., or whitespace.
+//\\d{3}: Matches exactly three digits (first part of the phone number).
+//[-.\\s]?: Matches an optional hyphen -, period ., or whitespace.
+//\\d{4}: Matches exactly four digits (second part of the phone number).
+//$: Asserts the position at the end of the string.
+    public boolean CheckFormatPhone(String phone) {
+        String phoneRegex = "^\\+?\\d{0,2}\\s?\\(?(\\d{3})\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$";
+        return phone.matches(phoneRegex);
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -127,6 +146,8 @@ public class OtpServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        //Get parameter from sign up form
         String email = request.getParameter("email");
         String password_raw = request.getParameter("password");
         String password = Encrypt.toSHA1(password_raw);
@@ -144,15 +165,15 @@ public class OtpServlet extends HttpServlet {
                 gender = false;
             }
         } catch (NumberFormatException e) {
-
+            PrintWriter out = response.getWriter();
+            out.print("Gender Failed");
         }
 
+        HttpSession session = request.getSession();
         UsersDAO udb = new UsersDAO();
-//        User_addressDAO uadb = new User_addressDAO();
-
-        //Users u = new User(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date());
         UserAddress ua = new UserAddress(address_line, city, country);
 
+        //Check null parameter
         if (email == null || email.equals("")
                 || password_raw == null || password_raw.equals("")
                 || gender_raw == null || gender_raw.equals("")
@@ -162,14 +183,25 @@ public class OtpServlet extends HttpServlet {
                 || city == null || city.equals("")
                 || country == null || country.equals("")
                 || telephone == null || telephone.equals("")) {
-            request.setAttribute("error", "Not Empty");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Not Empty");
+            request.getRequestDispatcher("home").forward(request, response);
+
+            // Check Email format
         } else if (!isValidEmailAddress(email)) {
-            request.setAttribute("error", "Wrong Email Format");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Wrong Email Format");
+            request.getRequestDispatcher("home").forward(request, response);
+
+            //Check password format
         } else if (!isValidPassword(password_raw)) {
-            request.setAttribute("error", "Wrong Password Format");
-            request.getRequestDispatcher("home.jsp").forward(request, response);
+            session.setAttribute("error", "Wrong Password Format");
+            request.getRequestDispatcher("home").forward(request, response);
+
+            // Check telephone format
+        } else if (!CheckFormatPhone(telephone)) {
+            session.setAttribute("error", "Wrong Telephone Format");
+            request.getRequestDispatcher("home").forward(request, response);
+
+            //Check email exist
         } else if (udb.getUserByEmail(email) != null) {
             if (udb.getUserByEmail(email).getStatus_id() == 2) {
                 String code = Email.getRandomNumber();
@@ -185,7 +217,7 @@ public class OtpServlet extends HttpServlet {
                 u.setPassword(password);
 
                 Email.sendEmail(email, "Verify Your Email Address", context, code);
-                HttpSession session = request.getSession();
+
                 session.setAttribute("signUpAccount", u);
                 session.setAttribute("signUpAddress", ua);
                 session.setAttribute("code", code);
@@ -194,9 +226,11 @@ public class OtpServlet extends HttpServlet {
 
                 request.getRequestDispatcher("otp.jsp").forward(request, response);
             } else {
-                request.setAttribute("error", "Email Existed");
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                session.setAttribute("error", "Email Existed");
+                request.getRequestDispatcher("home").forward(request, response);
             }
+
+            //Send verify email
         } else {
             String code = Email.getRandomNumber();
             String context = request.getScheme()
@@ -209,7 +243,7 @@ public class OtpServlet extends HttpServlet {
             User u = new User(email, password, 1, 2, first_name, last_name, gender, telephone, new Date(), new Date(), code);
 
             Email.sendEmail(email, "Verify Your Email Address", context, code);
-            HttpSession session = request.getSession();
+
             session.setAttribute("signUpAccount", u);
             session.setAttribute("signUpAddress", ua);
             session.setAttribute("code", code);

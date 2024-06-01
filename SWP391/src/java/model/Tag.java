@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author Admin
+ * @author tungl
  */
 public class Tag {
     private int id;
@@ -40,6 +40,4 @@ public class Tag {
     public String toString() {
         return "Tag{" + "id=" + id + ", name=" + name + '}';
     }
-    
-    
 }

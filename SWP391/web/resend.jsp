@@ -53,7 +53,7 @@
         }
     </style>
     <script>
-        let countdownTime = 60; // 30 seconds countdown
+        let countdownTime = 60; // 60 seconds countdown
 
         function startCountdown() {
             let countdownElement = document.getElementById('countdown');

@@ -23,25 +23,65 @@
         </div>
         <!-- /filter_type -->
         <div class="filter_type version_2">
-            <h4><a href="#filter_1" data-bs-toggle="collapse" class="opened">Categories</a></h4>
-            <div class="collapse show" id="filter_1">
+            <h4><a href="#filter_1" data-bs-toggle="collapse" class="closed">Categories</a></h4>
+            <div class="collapse" id="filter_1">
                 <ul>
-                    <c:forEach var="element" items="${categorySider}">
-                        <li>
-                            <label class="container_check">${element.name}
-                                <input type="checkbox" name="category" value="${element.name}">
-                                <span class="checkmark"></span>
-                            </label>
-                        </li>
-                    </c:forEach>
+                    <li>
+                        <div class="filter_type version_2">
+                             <h4><a href="#men" data-bs-toggle="collapse" class="arrowRight">Men</a></h4>
+                             <div class="collapse" id="men">
+                                 <ul>
+                                     <li><a href="#"> Running</a></li>
+                                      <li><a href="#"> Sneakers</a></li>
+                                       <li><a href="#">Boots</a></li>
+                                 </ul>
+                             </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="filter_type version_2">
+                             <h4><a href="#women" data-bs-toggle="collapse" class="arrowRight">Women</a></h4>
+                             <div class="collapse" id="women">
+                                 <ul>
+                                     <li><a href="#"> Running</a></li>
+                                      <li><a href="#"> Sneakers</a></li>
+                                       <li><a href="#">Sports</a></li>
+                                 </ul>
+                             </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="filter_type version_2">
+                             <h4><a href="#boy" data-bs-toggle="collapse" class="arrowRight">Boy</a></h4>
+                             <div class="collapse" id="boy">
+                                 <ul>
+                                     <li><a href="#"> Running</a></li>
+                                      <li><a href="#"> Sneakers</a></li>
+                                       <li><a href="#">Sports</a></li>
+                                 </ul>
+                             </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="filter_type version_2">
+                             <h4><a href="#girl" data-bs-toggle="collapse" class="arrowRight">Girl</a></h4>
+                             <div class="collapse" id="girl">
+                                 <ul>
+                                     <li><a href="#"> Running</a></li>
+                                      <li><a href="#"> Sneakers</a></li>
+                                       <li><a href="#"></a></li>
+                                 </ul>
+                             </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <!-- /filter_type -->
         </div>
         <!-- /filter_type -->
         <div class="filter_type version_2">
-            <h4><a href="#filter_2" data-bs-toggle="collapse" class="opened">Color</a></h4>
-            <div class="collapse show" id="filter_2">
+            <h4><a href="#filter_2" data-bs-toggle="collapse" class="closed">Color</a></h4>
+            <div class="collapse" id="filter_2">
                 <ul>
                     <c:forEach var="element" items="${colorSider}">
                         <li>
@@ -112,50 +152,30 @@
     </div>
     <div class="col-lg-12">
         <h4 class="mb-3">New products</h4>
-        <c:forEach var="element" items="${newProductSider}"> 
-            
-            <div class="d-flex align-items-center justify-content-start">
+        <c:forEach var="element" items="${latestProduct}"> 
+
+            <div class="d-flex align-items-center justify-content-start p-lg-1">
                 <div class="rounded me-4" style="width: 100px; height: 100px;">
-                    <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
+                    <a href="product?service=detail&name=${element.name}">
                         <img src="${element.img1}" class="img-fluid rounded" alt="">
                     </a>
                 </div>
                 <div>
                     <h6 class="mb-2">${element.name}</h6>
                     <div class="rating">
-                        <%
-                                                // Access the 'element' object from the pageContext
-                                                Object elementObj = pageContext.findAttribute("element");
-                                                if (elementObj != null) {
-                                                    // Cast it to the expected type
-                                                    SubProducts element = (SubProducts) elementObj;
-
-                                                    // Initialize variables for calculating the average rating
-                                                    int[] ratings = element.getRating();
-                                                    int sum = 0;
-                                                    for (int rating : ratings) {
-                                                        sum += rating;
-                                                    }
-
-                                                    // Calculate the average rating
-                                                    int rate = (ratings.length > 0) ? (sum / ratings.length) : 0;
-                                                    request.setAttribute("rate", rate);
-                                                }
-                                            %>
-                                            <c:set var="rate" value="${requestScope.rate}" />
-                                            <c:forEach begin="1" end="${rate}" step="1">
-                                                <i class="icon-star voted"></i>
-                                            </c:forEach>
-                                            <c:forEach begin="${rate + 1}" end="5" step="1">
-                                                <i class="icon-star"></i>
-                                            </c:forEach>
+                        <c:forEach begin="1" end="${element.ratting.ratting}" step="1">
+                            <i class="icon-star voted"></i>
+                        </c:forEach>
+                        <c:forEach begin="${element.ratting.ratting + 1}" end="5" step="1">
+                            <i class="icon-star"></i>
+                        </c:forEach>
                     </div>
                     <div class="price_box">
-                        <c:if test="${element.discount_status == 1}">                                              
-                            <span class="new_price">$${element.price*(100-element.discount)/100}</span>
+                        <c:if test="${element.discount.active}">                                              
+                            <span class="new_price">$${String.format("%.2f", element.price*(100-element.discount.discountPercent)/100)}</span>
                             <span class="old_price">$${element.price}</span>
                         </c:if>
-                        <c:if test="${element.discount_status == 0}">                                              
+                        <c:if test="${!element.discount.active}">                                              
                             <span class="new_price">$${element.price}</span>                                                
                         </c:if> 
                     </div>
@@ -164,7 +184,7 @@
         </c:forEach>
         <div class="d-flex justify-content-center my-4">
             <a href="#"
-               class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Contact</a>
+               class="btn border border-secondary px-3 py-2 rounded-pill text-primary w-100">Contact</a>
         </div>
     </div>
 </aside>

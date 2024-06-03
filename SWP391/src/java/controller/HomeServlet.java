@@ -5,7 +5,6 @@
 package controller;
 
 import dao.*;
-import dto.*;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -64,14 +63,13 @@ public class HomeServlet extends HttpServlet {
         try {
             SlidersDAO daoSlider = new SlidersDAO();
             BlogDAO bDao = new BlogDAO();
-            DTOProducts dTOProducts = new DTOProducts();
+            ProductDAO productDAO = new ProductDAO();
             request.setAttribute("title", "Home");
             request.setAttribute("slider", daoSlider.getAll());
             request.setAttribute("latestBlog", bDao.getLatestBlog());
-            request.setAttribute("topSelling",
-                    dTOProducts.getProductLatest("hot", 12));
+            request.setAttribute("hotBlog", bDao.getHotBlog());
             request.setAttribute("featured",
-                    dTOProducts.getProductByRating(3, 7));
+                    productDAO.getProductByRating(3, 7));
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {

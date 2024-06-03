@@ -18,6 +18,7 @@
             }
 
         </style>
+        
     </head>
     <body>
         <div id="page">
@@ -103,7 +104,7 @@
                                             <div class="post_info">
                                                 <small><fmt:formatDate value="${element.created_at}" pattern="dd.MM.yyyy"/></small>
                                                 <h2><a href="blogDetail?id=${element.id}">${element.title}</a></h2>
-                                                <p>${element.context}</p>
+                                                <p>${element.context.substring(0,70)}...</p>
                                             </div>
                                         </article>
                                         <!-- /article -->
@@ -117,7 +118,7 @@
 
                         <aside class="col-lg-3">
                             <div class="main_title">
-                                <h2>HOT BLOGS</h2>
+                                <h2>LATEST BLOGS</h2>
                                 <span>BLOG</span>
                             </div>
                             <!-- /widget -->
@@ -133,11 +134,15 @@
                                             </div>
                                             <small><fmt:formatDate value="${element.created_at}" pattern="dd.MM.yyyy"/></small>      
                                             <h3><a href="blogDetail?id=${element.id}" title="">${element.title}</a></h3>
-                                            <small>${element.context}</small>
+                                            <small>${element.context.substring(0,50)}...</small>
                                         </li>
 
                                     </c:forEach>
                                 </ul>
+                                <div class="d-flex justify-content-center my-4">
+                                    <a href="#"
+                                       class="btn border border-secondary px-3 py-2 rounded-pill text-primary w-100">Contact</a>
+                                </div>
                             </div>
                             <!-- /widget -->
                         </aside>
@@ -149,7 +154,8 @@
 
 
                 <!--Slider-->
-                <div class="featured lazy" data-bg="url(${slider.get(6).image}">
+                <a>
+                    <div class="featured lazy" data-bg="url(${slider.get(6).image}">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
                         <div class="container margin_60">
                             <div class="row justify-content-center justify-content-md-start">
@@ -163,7 +169,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                </a>
+                
                 <!-- /featured -->
 
                 <div class="container margin_60_35">
@@ -176,101 +184,58 @@
                         <c:forEach var="element" items="${featured}">
                             <div class="item">
                                 <div class="grid_item">
-                                    <c:set var="found" value="false" />
-
-                                    <c:forEach var="status" items="${element.status}" >
-                                        <c:if test="${not found}">
-                                            <c:if test="${status eq 'new'}">
-                                                <span class="ribbon new">${status}</span>
-                                                <c:set var="found" value="true" />
+                                    
+                                            <c:if test="${element.productStatus.name eq 'new'}">
+                                                <span class="ribbon new">${element.productStatus.name}</span>
+                                                
                                             </c:if>
-                                            <c:if test="${status eq 'hot'}">
-                                                <span class="ribbon hot">${status}</span>
-                                                <c:set var="found" value="true" />
-                                            </c:if>
-                                            <c:if test="${status eq 'common'}">
-                                                <c:if test="${element.discount_status == 1}">
-                                                    <span class="ribbon off">-${status}%</span>
-                                                    <c:set var="found" value="true" />
+                                            
+                                            <c:if test="${element.productStatus.name eq 'hot'}">
+                                               <span class="ribbon hot">${element.productStatus.name}</span>
+                                                
+                                            </c:if> 
+                                            
+                                            <c:if test="${element.productStatus.name eq 'common'}">
+                                                <c:if test="${element.discount.active}">
+                                                    <span class="ribbon off">-${element.discount.discountPercent}%</span>
+                                                    
                                                 </c:if> 
                                             </c:if>
-                                        </c:if>  
-                                    </c:forEach>
+                  
                                     <figure>
-                                        <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
+                                        <a href="product?service=detail&name=${element.name}">
                                             <img class="owl-lazy" src="${element.img1}" data-src="${element.img1}" alt="">
                                         </a>
                                     </figure>
-                                    <div class="rating">                                        
-                                        <%
-                                            // Access the 'element' object from the pageContext
-                                            Object elementObj = pageContext.findAttribute("element");
-                                            if (elementObj != null) {
-                                                // Cast it to the expected type
-                                                SubProducts element = (SubProducts) elementObj;
-
-                                                // Initialize variables for calculating the average rating
-                                                int[] ratings = element.getRating();
-                                                int sum = 0;
-                                                for (int rating : ratings) {
-                                                    sum += rating;
-                                                }
-
-                                                // Calculate the average rating
-                                                int rate = (ratings.length > 0) ? (sum / ratings.length) : 0;
-                                                request.setAttribute("rate", rate);
-                                            }
-                                        %>
-                                        <c:set var="rate" value="${requestScope.rate}" />
-                                        <c:forEach begin="1" end="${rate}" step="1">
+                                    <div class="rating">                                                                                                                     
+                                        <c:forEach begin="1" end="${element.ratting.ratting}" step="1">
                                             <i class="icon-star voted"></i>
                                         </c:forEach>
-                                        <c:forEach begin="${rate + 1}" end="5" step="1">
+                                        <c:forEach begin="${element.ratting.ratting + 1}" end="5" step="1">
                                             <i class="icon-star"></i>
                                         </c:forEach>
 
 
                                     </div>
-                                    <a href="product?service=detail&name=${element.name}&brand=${element.brand_name}">
+                                    <a href="product?service=detail&name=${element.name}">
                                         <h3>${element.name}</h3>
                                     </a>
                                     <div class="price_box">
-                                        <c:if test="${element.discount_status == 1}">                                              
-                                            <span class="new_price">$${element.price*(100-element.discount)/100}</span>
+                                        <c:if test="${element.discount.active}">                                              
+                                            <span class="new_price">$${String.format("%.2f", element.price*(100-element.discount.discountPercent)/100)}</span>
                                             <span class="old_price">$${element.price}</span>
                                         </c:if>
-                                        <c:if test="${element.discount_status == 0}">                                              
+                                        <c:if test="${!element.discount.active}">                                              
                                             <span class="new_price">$${element.price}</span>                                                
                                         </c:if>     
                                     </div>
                                     <ul>
-                                        <li>
-                                            <c:set var="colors" value="${element.color}" />
-                                            <c:set var="formattedColors" value="" />
-                                            <c:forEach items="${colors}" var="color" varStatus="loop">
-                                                <c:set var="formattedColor" value='"${color}"' />
-                                                <c:if test="${not loop.last}">
-                                                    <c:set var="formattedColor" value='${formattedColor}, ' />
-                                                </c:if>
-                                                <c:set var="formattedColors" value="${formattedColors}${formattedColor}" />
-                                            </c:forEach>
-
-                                            <c:set var="sizes" value="${element.size}" />
-                                            <c:set var="formattedSizes" value="" />
-                                            <c:forEach items="${sizes}" var="size" varStatus="loop">
-                                                <c:set var="formattedSize" value='"${size}"' />
-                                                <c:if test="${not loop.last}">
-                                                    <c:set var="formattedSize" value='${formattedSize}, ' />
-                                                </c:if>
-                                                <c:set var="formattedSizes" value="${formattedSizes}${formattedSize}" />
-                                            </c:forEach>
+                                        <li>                               
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
                                                     data-name="${element.name}" 
-                                                    data-colors='[${formattedColors}]' 
-                                                    data-sizes='[${formattedSizes}]' 
                                                     >                  
                                                 <i class="ti-shopping-cart"></i>
-                                            </button>
+                                            </button>                                               
                                         </li>
                                     </ul>
                                 </div>

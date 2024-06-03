@@ -20,4 +20,11 @@ public class Discount {
     private boolean active;
     private Date createdAt;
     private Date modifiedAt;
+
+    public Discount(int discountPercent, boolean active) {
+        this.discountPercent = discountPercent;
+        this.active = active;
+    }
+    
+    
 }

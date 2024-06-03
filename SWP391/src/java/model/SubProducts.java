@@ -24,7 +24,6 @@ public class SubProducts {
     private int discount_status;
     private String[] status;
     private String brand_name;
-    private String[] categories;
     
     public int getDiscount_status() {
         return discount_status;
@@ -41,7 +40,7 @@ public class SubProducts {
     public SubProducts(String name, int price, int[] size, String[] color, 
             String[] description, String img1, String img2, int[] rating, 
             int discount, int discount_status, String[] status, 
-            String brand_name, String[] categories) {
+            String brand_name) {
         this.name = name;
         this.price = price;
         this.size = size;
@@ -54,7 +53,7 @@ public class SubProducts {
         this.discount_status = discount_status;
         this.status = status;
         this.brand_name = brand_name;
-        this.categories = categories;
+       
     }
     
     
@@ -65,14 +64,6 @@ public class SubProducts {
 
     public void setBrand_name(String brand_name) {
         this.brand_name = brand_name;
-    }
-
-    public String[] getCategories() {
-        return categories;
-    }
-
-    public void setCategories(String[] categories) {
-        this.categories = categories;
     }
 
     public String[] getDescription() {
@@ -157,17 +148,14 @@ public class SubProducts {
         this.discount = discount;
     }
 
-    public String printCategories(){
-        return Support.printArray(categories);
-    }
     @Override
     public String toString() {
         return "SubProducts{" + "name=" + name + ", price=" + price + ", size=" 
                 + size + ", color=" + color + ", description=" + description 
                 + ", img1=" + img1 + ", img2=" + img2 + ", rating=" + rating 
                 + ", discount=" + discount + ", discount_status=" + discount_status 
-                + ", status=" + status + ", brand_name=" + brand_name 
-                + ", categories=" + categories + '}';
+                + ", status=" + status + ", brand_name=" + brand_name +
+                 '}';
     }
     
     public String toString(String a) {

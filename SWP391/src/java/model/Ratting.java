@@ -20,4 +20,10 @@ public class Ratting {
 
     private User user;
     private Product product;
+
+    public Ratting(int ratting) {
+        this.ratting = ratting;
+    }
+    
+    
 }

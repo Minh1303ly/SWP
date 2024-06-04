@@ -4,21 +4,25 @@
  */
 package model;
 
-import lombok.*;
-
+import lombok.Data;
+/**
+ *
+ * @author Admin
+ */
 @Data
-public class ProductStatus {
-
+public class SubCategory {
     private int id;
+    private int category_id;
     private String name;
 
-    public ProductStatus() {
+    public SubCategory() {
     }
 
-    public ProductStatus(int id, String name) {
+    public SubCategory(int id, int category_id, String name) {
         this.id = id;
+        this.category_id = category_id;
         this.name = name;
     }
-
+    
     
 }

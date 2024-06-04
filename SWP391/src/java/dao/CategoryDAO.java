@@ -325,10 +325,12 @@ public class CategoryDAO extends DBContext {
 
     public static void main(String[] args) {
         CategoryDAO cDAO = new CategoryDAO();
-        try {
-            System.out.println(cDAO.getAllCategory());
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        List<Category> categories = new ArrayList<>();
+        try{
+            categories = cDAO.getAll();
+        }catch(SQLException e){
+            System.out.println(e);
         }
+        System.out.println(categories);
     }
 }

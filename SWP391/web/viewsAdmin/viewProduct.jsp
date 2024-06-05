@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth group" data-sidebar="brand" dir="ltr">
@@ -93,15 +94,7 @@
                                 <div class="flex-auto p-0 md:p-4">
                                     <div class="mb-4 border-b border-gray-200 dark:border-slate-700" data-fc-type="tab">
                                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" aria-label="Tabs">
-                                            <!--                                            <li class="me-2" role="presentation">
-                                                                                            <button class="inline-block p-4 rounded-t-lg border-b-2 active " id="all-tab" data-fc-target="#all" type="button" role="tab" aria-controls="all" aria-selected="false">All <span class="text-slate-400">(4251)</span></button>
-                                                                                        </li>
-                                                                                        <li class="me-2" role="presentation">
-                                                                                            <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="new-tab" data-fc-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New <span class="text-slate-400">(3255)</span></button>
-                                                                                        </li>
-                                                                                        <li class="me-2" role="presentation">
-                                                                                            <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="vip-tab" data-fc-target="#vip" type="button" role="tab" aria-controls="vip" aria-selected="false">VIP <span class="text-slate-400">(25)</span></button>
-                                                                                        </li>-->
+                                            
                                         </ul>
                                     </div>
                                     <div>
@@ -125,13 +118,13 @@
                                                     <div id="menu">
                                                         <ul>
                                                             <c:forEach var="c" items="${categories}">
-                                                                <li><span><a href="productList?category=${c.name}">${c.name}</a></span>
+                                                                <li><span><a href="productList?category=${c.name}&subcategory=${sc.name}&search=${search}&status=${status}">${c.name}</a></span>
                                                                     <ul>
                                                                         <c:forEach var="sc" items="${subCategories}">
                                                                             <c:if test="${c.id == sc.category_id}">
-                                                                                <li><a href="productList?subcategory=${sc.name}">${sc.name}</a></li>
-                                                                            </c:if>
-                                                                        </c:forEach>
+                                                                                <li><a href="productList?category=${c.name}&subcategory=${sc.name}&search=${search}&status=${status}">${sc.name}</a></li>
+                                                                                </c:if>
+                                                                            </c:forEach>
                                                                     </ul>
                                                                 </li>
                                                             </c:forEach>
@@ -149,8 +142,8 @@
                                                     <div id="menu">
                                                         <ul>
                                                             <c:forEach var="ps" items="${listProductStatus}">
-                                                                <li><a href="productList?status=${ps.name}">${ps.name}</a></li>
-                                                            </c:forEach>
+                                                                <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=${ps.name}">${ps.name}</a></li>
+                                                                </c:forEach>
                                                         </ul>
                                                     </div>
                                                 </li>
@@ -175,23 +168,26 @@
                                                             <thead class="bg-gray-50 dark:bg-slate-700/20">
                                                                 <tr>
 
-                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Product & Title
+                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        ID
                                                                     </th>
                                                                     <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Categories
+                                                                        Thumbnail
                                                                     </th>
                                                                     <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Stock status
+                                                                        Title
                                                                     </th>
                                                                     <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Attributes
+                                                                        Category
                                                                     </th>
                                                                     <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Price
                                                                     </th>
                                                                     <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Date
+                                                                        Feature
+                                                                    </th>
+                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        Status
                                                                     </th>
                                                                     <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Action
@@ -200,60 +196,87 @@
                                                             </thead>
                                                             <tbody>
                                                                 <!-- 1 -->
-                                                                <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
-
-                                                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                        <div class="flex items-center">
-                                                                            <img src="assets/images/products/02.png" alt="" class="me-2 h-8 inline-block">
-                                                                            <div class="self-center">                                                                        
-                                                                                <h5 class="text-sm font-semibold text-slate-700 dark:text-gray-400">New Colorfull Shoes </h5>
-                                                                                <span class="block  font-medium text-slate-500">Size-04-15 (Model 2023)</span>
+                                                                <c:set value="0" var="id"/> 
+                                                                <c:forEach var="p" items="${listProduct}">
+                                                                    <c:set var="id" value="${id + 1}" />
+                                                                    <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
+                                                                        <!--ID-->
+                                                                        <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
+                                                                            <div class="flex items-center">
+                                                                                <!--                                                                                <img src="assets/images/products/02.png" alt="" class="me-2 h-8 inline-block">-->
+                                                                                <div class="self-center">                                                                        
+                                                                                    <h5 class="text-sm font-semibold text-slate-700 dark:text-gray-400">${id}</h5>
+                                                                                    <!--                                                                                    <span class="block  font-medium text-slate-500">Size-04-15 (Model 2023)</span>-->
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-brand-500 underline">Footwear</a>,
-                                                                        <a href="#" class="text-brand-500 underline">Lifestayle</a>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">In stock</span>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <div>color : 
-                                                                            <span class="ms-2">
-                                                                                <i class="icofont-brand-mts text-purple-500"></i> 
-                                                                                <i class="icofont-brand-mts text-pink-500"></i>
-                                                                                <i class="icofont-brand-mts text-blue-500"></i>
-                                                                                <i class="icofont-brand-mts text-green-500"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                        <div>Size : 
-                                                                            <span class="ms-2">S</span>
-                                                                            <span class="mx-1">M</span>
-                                                                            <span class="mx-1">L</span>
-                                                                            <span class="mx-1">XL</span>
-                                                                            <span class="mx-1">XXL</span>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
-                                                                        $99 <del class="text-slate-500 font-normal">$130</del>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        12 Sep 2023
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                        <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
-                                                                    </td>
-                                                                </tr>
+                                                                        </td>
+                                                                        <!--Thumbnail-->
+                                                                        <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
+                                                                            <div class="flex items-center">
+                                                                                <img src="${p.img1}" alt="" class="me-2 h-8 inline-block">
+                                                                            </div>
+                                                                        </td>
+                                                                        <!--Title-->
+                                                                        <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
+                                                                            <div class="flex items-center">
+                                                                                <img src="assets/images/products/02.png" alt="" class="me-2 h-8 inline-block">
+                                                                                <div class="self-center">                                                                        
+                                                                                    <h5 class="text-sm font-semibold text-slate-700 dark:text-gray-400">${p.name}</h5>
+                                                                                    <!--                                                                                    <span class="block  font-medium text-slate-500">Size-04-15 (Model 2023)</span>-->
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <!--Category-->
+                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                            <c:forEach var="c" items="${categories}">
+                                                                                <c:if test="${c.id == p.categoryId}">
+                                                                                    <a href="#" class="text-brand-500 underline">${c.name}</a>: 
+                                                                                </c:if>
+                                                                            </c:forEach>
+                                                                            <c:forEach var="sc" items="${subCategories}">
+                                                                                <c:forEach var="scid" items="${p.subCategoryId}">
+                                                                                    <c:if test="${sc.id == scid}">
+                                                                                        <a href="#" class="text-brand-500 underline">${sc.name}</a>&nbsp;
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                            </c:forEach>
+                                                                        </td>
 
+                                                                        <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
+                                                                            <c:forEach var="d" items="${listDiscount}">
+                                                                                <c:if test="${d.id == p.discountId}">
+                                                                                    <span><fmt:formatNumber value="${p.price * (1-d.discountPercent/100)}" maxIntegerDigits="3" maxFractionDigits="2"/> &nbsp;<del class="text-slate-500 font-normal">${p.price}</del></span>
+                                                                                    </c:if>
+                                                                                </c:forEach>
+                                                                        </td>
+
+                                                                        <!--Feature-->
+                                                                        
+                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                            ${p.description}
+                                                                        </td>
+                                                                        <!--Status-->
+                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                            <c:forEach var="ps" items="${listProductStatus}">
+                                                                                <c:if test="${ps.id == p.statusId}">
+                                                                                    <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">${ps.name}</span>
+                                                                                </c:if>
+                                                                            </c:forEach>
+                                                                        </td>
+                                                                        <!--Action-->
+                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                            <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
+                                                                            <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </c:forEach>
                                                             </tbody>
                                                         </table>
                                                     </div><!--end div-->
                                                 </div><!--end div-->
                                             </div><!--end grid-->
                                             <div class="flex justify-between mt-4">
-                                                <jsp:include page="components/pagination.jsp"/>
+                                                <jsp:include page="components/pagination2.jsp"/>
                                             </div>
                                         </div>
 

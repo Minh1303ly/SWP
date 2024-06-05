@@ -54,4 +54,38 @@ public class SubCategoryDAO extends DBContext {
 
         return subCategories;
     }
+
+    // Get user by email
+    public int[] getSubCategoryByProduct(String productName) {
+        String sql = "SELECT DISTINCT S.[id] "
+                + "FROM [dbo].[subcategories] AS S "
+                + "JOIN [dbo].[product_subcate] AS PS "
+                + "ON S.id = PS.subcategory_id "
+                + "JOIN [dbo].[products] AS P "
+                + "ON P.id = PS.product_id "
+                + "WHERE P.name = ?";
+        ArrayList<Integer> subcategoryIds = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, productName);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                subcategoryIds.add(rs.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exception properly, maybe rethrow or return an error code
+        }
+        // Convert ArrayList to int[]
+        int[] result = new int[subcategoryIds.size()];
+        for (int i = 0; i < subcategoryIds.size(); i++) {
+            result[i] = subcategoryIds.get(i);
+        }
+        return result;
+    }
+    
+    public static void main(String[] args) {
+        SubCategoryDAO s = new SubCategoryDAO();
+        System.out.println(s.getSubCategoryByProduct("Running Shoes").length);
+    }
 }

@@ -6,8 +6,11 @@
 package controller.dashboard;
 
 import dao.CategoryDAO;
+import dao.DiscountDAO;
 import dao.ProductStatusDAO;
+import dao.ProductsDAO;
 import dao.SubCategoryDAO;
+import dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +23,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Category;
+import model.Discount;
+import model.Pagination;
 import model.ProductStatus;
 import model.SubCategory;
+import model.User;
 
 /**
  *
@@ -69,7 +75,16 @@ public class ProductListServlet extends HttpServlet {
         CategoryDAO cdb = new CategoryDAO();
         SubCategoryDAO scdb = new SubCategoryDAO();
         ProductStatusDAO psdb = new ProductStatusDAO();
+        ProductsDAO pdb = new ProductsDAO();
+        DiscountDAO ddb = new DiscountDAO();
         
+        //Get parameter
+        String search = request.getParameter("search");
+        String category = request.getParameter("category");
+        String subcategory = request.getParameter("subcategory");
+        String status = request.getParameter("status");
+        
+        //get list category
         List<Category> categories = new ArrayList<>();
         try{
             categories = cdb.getAll();
@@ -77,6 +92,7 @@ public class ProductListServlet extends HttpServlet {
             e.printStackTrace();
         }
         
+        //get list sub category
         List<SubCategory> subCategories = new ArrayList<>();
         try{
             subCategories = scdb.getAll();
@@ -84,6 +100,7 @@ public class ProductListServlet extends HttpServlet {
             e.printStackTrace();
         }
         
+        //get list product status
         List<ProductStatus> listProductStatus = new ArrayList<>();
         try{
             listProductStatus = psdb.getAll();
@@ -91,9 +108,44 @@ public class ProductListServlet extends HttpServlet {
             e.printStackTrace();
         }
         
+        //get list discount
+        List<Discount> listDiscount = ddb.getAllDiscount();
+        
+        // get list product
+        List<ProductDTO> listProduct = pdb.getAllProduct();
+        
+        // start pagging
+        int limitPage = 10;
+        if (request.getParameter("cp") == null) {
+            Pagination Page = new Pagination(listProduct, limitPage, 1);
+            Pagination<ProductDTO> pagination = new Pagination<>(listProduct, limitPage, 1);
+            listProduct = pagination.getItemsOnPage();
+            session.setAttribute("page", Page);
+            request.setAttribute("listProduct", pagination.getItemsOnPage());
+        } else if (request.getParameter("cp") != null) {
+            int cp = Integer.parseInt(request.getParameter("cp"));
+            Pagination Page = new Pagination(listProduct, limitPage, cp);
+            Pagination<ProductDTO> pagination = new Pagination<>(listProduct, limitPage, cp);
+            listProduct = pagination.getItemsOnPage();
+            session.setAttribute("page", Page);
+        }
+        
+        // set URL
+        request.setAttribute("pagging", "productList");
+        
+        request.setAttribute("search", search);
+        request.setAttribute("category", category);
+        request.setAttribute("subcategory", subcategory);
+        request.setAttribute("status", status);
+        
+        
+        // end pagging
+        request.setAttribute("listProduct", listProduct);
+        
         session.setAttribute("categories", categories);
         session.setAttribute("subCategories", subCategories);
         session.setAttribute("listProductStatus", listProductStatus);
+        session.setAttribute("listDiscount", listDiscount);
         
         request.getRequestDispatcher("viewsAdmin/viewProduct.jsp").forward(request, response);
     } 

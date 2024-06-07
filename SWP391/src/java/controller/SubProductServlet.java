@@ -143,9 +143,11 @@ public class SubProductServlet extends HttpServlet {
         try {
             SlidersDAO daoSlider = new SlidersDAO();
             dataForSider(request, response);
+            ProductDAO productDAO = new ProductDAO();
             List<Slider> ls = daoSlider.getAll();
             Slider slider = ls.get((int) (Math.random() * ls.size() + 1));
             request.setAttribute("slider", slider);
+            request.setAttribute("products", productDAO.getProductOrderByDate(7));
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -193,7 +195,7 @@ public class SubProductServlet extends HttpServlet {
         CategoryDAO dAOCategories = new CategoryDAO();
         request.setAttribute("colorSider", dAOProducts.getAllColor().toArray());
         request.setAttribute("brandSider", dAOBrands.getAllByStatus());
-        request.setAttribute("categorySider", dAOCategories.getAllByStatus());
+        request.setAttribute("categorySider", dAOCategories.getHierarchyCategory());
         request.setAttribute("latestProduct",
                 productDAO.getProductLatest( 3));
     }

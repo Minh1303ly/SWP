@@ -290,7 +290,6 @@
         var button = $(event.relatedTarget); // Button that triggered the modal
         var name = button.data('name'); // Extract info from data-* attributes
         var modal = $(this);
-        
         modal.find('.modal-title').text(name); // Set the title
         modal.find('#productName').val(name); // Set the hidden input value
         var search = name.replace(" ","_");

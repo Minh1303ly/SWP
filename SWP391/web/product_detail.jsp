@@ -16,17 +16,16 @@
                 <div class="top_banner">
                     <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.3)">
                         <div class="container">
-                            <!-- <div class="breadcrumbs">
-                                    <ul>
-                                            <li><a href="#">Home</a></li>
-                                            <li><a href="#">Category</a></li>
-                                            <li>Page active</li>
-                                    </ul>
-                            </div> -->
-                            <h1>${slider.title}</h1>                      
+                            <h1>
+                                <a href="${slider.backLink}" style="color:#ffffff;">
+                                    ${slider.title}
+                                </a>
+                            </h1>                      
                         </div>
                     </div>
-                    <img src="${slider.image}" class="img-fluid" alt="">
+                    <a href="${slider.backLink}">
+                        <img src="${slider.image}" class="img-fluid" alt="">
+                    </a>
                 </div>
                 <!-- /top_banner -->
 
@@ -34,12 +33,12 @@
                 <div class="container margin_30">
                     <div class="row">
                         <!-- Sider -->
-                        <div class="col-lg-4"> 
+                        <div class="col-lg-3"> 
                             <jsp:include page="sider.jsp"/> 
                         </div>
 
                         <!-- Body content -->
-                        <div class="col-lg-8 bg_gray">
+                        <div class="col-lg-9 bg_gray">
                             <div class="container margin_30">
                                 <div class="page_header">
                                     <h1>${product.name}</h1>

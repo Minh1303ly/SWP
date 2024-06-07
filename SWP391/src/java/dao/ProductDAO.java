@@ -546,11 +546,8 @@ public class ProductDAO extends DBContext {
 //        ls.forEach(a -> {
 //            System.out.println(a.getName());
 //        });
-        
+        String a="";
         List<SubProducts> lis = productDAO.searchName("k");
-        lis.forEach(a -> {
-            System.out.println(a.getBrand_name());
-        });
     }
 
 }

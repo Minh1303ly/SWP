@@ -5,17 +5,17 @@
 package dao;
 
 import context.DBContext;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
+import util.CategoryAggregation;
 
 public class CategoryDAO extends DBContext {
 
@@ -178,6 +178,7 @@ public class CategoryDAO extends DBContext {
             }
         }
     }
+
     public CategoryStatus getStatusById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -295,13 +296,13 @@ public class CategoryDAO extends DBContext {
             }
         }
     }
-    
+
     /**
      * Use to get all categories have status is active
-     * 
+     *
      * @return list categories have status is active
      */
-    public List<Category> getAllByStatus(){
+    public List<Category> getAllByStatus() {
         List<Category> list = new LinkedList<>();
         try {
             String sql = """
@@ -312,7 +313,7 @@ public class CategoryDAO extends DBContext {
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = pre.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 list.add(new Category(rs.getInt(1), rs.getString(2),
                         null, null));
             }
@@ -323,12 +324,53 @@ public class CategoryDAO extends DBContext {
         return list;
     }
 
+    /**
+     * 
+     * @return 
+     */
+    public Map<Category, CategoryAggregation> getHierarchyCategory() {
+        Map<Category, CategoryAggregation> listMap = new HashMap<>();
+        String sql = """
+                     select categories.name, subcategories.name
+                     from categories full outer join subcategories
+                     on categories.id = subcategories.category_id""";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Category key = new Category(rs.getString(1));
+                CategoryAggregation categoryAggregation = 
+                        listMap.computeIfAbsent(key, k -> new CategoryAggregation());
+                categoryAggregation.nameSubCategories.add(rs.getString(2));
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+
+        }
+        return listMap;
+    }
+
+    
+
     public static void main(String[] args) {
         CategoryDAO cDAO = new CategoryDAO();
-        try {
-            System.out.println(cDAO.getAllCategory());
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            System.out.println(cDAO.getAllCategory());
+//        } catch (SQLException ex) {
+//            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    Map<Category, CategoryAggregation> listMap= cDAO.getHierarchyCategory();
+    listMap.forEach( (k,v) -> {
+        System.out.println(k.getName() + " ");
+        v.nameSubCategories.forEach( m -> {
+            System.out.print(m+ " ");
+        });
+        System.out.println("");
+    });
     }
 }

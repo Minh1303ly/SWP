@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/84355/Downloads/SWP391/SWP391/web/viewsAdmin/components/leftBar.jsp</file>
-            <file>file:/C:/Users/84355/Downloads/SWP391/SWP391/web/viewsAdmin/components/topBar.jsp</file>
-            <file>file:/C:/Users/84355/Downloads/SWP391/SWP391/web/viewsAdmin/updateCustomer.jsp</file>
-            <file>file:/C:/Users/84355/Downloads/SWP391/SWP391/src/java/controller/dashboard/UpdateCustomerController.java</file>
+            <file>file:/C:/Users/84355/Desktop/SWP/summer2024-swp391.se1811-g3/SWP391/SWP391/web/viewsAdmin/viewFeedback.jsp</file>
+            <file>file:/C:/Users/84355/Desktop/SWP/summer2024-swp391.se1811-g3/SWP391/SWP391/src/java/controller/dashboard/CustomerListController.java</file>
+            <file>file:/C:/Users/84355/Desktop/SWP/summer2024-swp391.se1811-g3/SWP391/SWP391/src/java/model/User.java</file>
+            <file>file:/C:/Users/84355/Desktop/SWP/summer2024-swp391.se1811-g3/SWP391/SWP391/src/java/controller/dashboard/FeedBackListController.java</file>
         </group>
     </open-files>
 </project-private>

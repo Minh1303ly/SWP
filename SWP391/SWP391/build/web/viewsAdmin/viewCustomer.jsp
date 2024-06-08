@@ -18,9 +18,9 @@
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
         <script>
-        function autoSubmitForm() {
-            document.getElementById("myForm").submit();
-        }
+            function autoSubmitForm() {
+                document.getElementById("myForm").submit();
+            }
         </script>
     </head>
 
@@ -68,32 +68,23 @@
                                 <div class="flex-auto p-0 md:p-4">
                                     <div class="mb-4 border-b border-gray-200 dark:border-slate-700" data-fc-type="tab">
                                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" aria-label="Tabs">
-<!--                                            <li class="me-2" role="presentation">
-                                                <button class="inline-block p-4 rounded-t-lg border-b-2 active " id="all-tab" data-fc-target="#all" type="button" role="tab" aria-controls="all" aria-selected="false">All <span class="text-slate-400">(4251)</span></button>
-                                            </li>
-                                            <li class="me-2" role="presentation">
-                                                <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="new-tab" data-fc-target="#new" type="button" role="tab" aria-controls="new" aria-selected="false">New <span class="text-slate-400">(3255)</span></button>
-                                            </li>
-                                            <li class="me-2" role="presentation">
-                                                <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="vip-tab" data-fc-target="#vip" type="button" role="tab" aria-controls="vip" aria-selected="false">VIP <span class="text-slate-400">(25)</span></button>
-                                            </li>-->
                                         </ul>
                                     </div>
                                     <div class="flex flex-wrap gap-4 mb-3">
                                         <a href="updateCustomer">
                                             <div class="mb-2 w-36">
-                                                <button class="px-2 py-1 bg-primary-500/10 border border-transparent collapse:bg-green-100 text-primary text-sm rounded hover:bg-blue-600 hover:text-white">Create Account</button>
+                                                <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-sm font-medium py-2 px-4 rounded">Create Account</button>
                                             </div>
                                         </a>
                                         <div class="mb-2 w-36">
-                                            <form id="myForm" method="get" action="customerList">
-                                            <select style="background: #DCE4FC" name="status" onchange="autoSubmitForm()" required>
-                                                <option value="">Status</option>
-                                                <option value="1">Active</option>
-                                                <option value="2">InActive</option>
-                                            </select>
+                                            <form id="myForm"  method="get" action="customerList">
+                                                <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="status" onchange="autoSubmitForm()" required>
+                                                    <option class="dark:text-slate-700" value="">Status</option>
+                                                    <option class="dark:text-slate-700" value="1">Active</option>
+                                                    <option class="dark:text-slate-700" value="2">InActive</option>
+                                                </select>
                                             </form>
-                                        </div> 
+                                        </div>
                                         <div class="ms-auto">
                                             <form method="get" action="customerList">
                                                 <div class="relative">
@@ -101,7 +92,6 @@
                                                         <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
                                                     </div>
                                                     <input type="search" value="${search}" name="search" id="searchTable" onkeyup="searchTable()" class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5" placeholder="search">
-<!--                                                    <input type="search" id="productSearch" onkeyup="searchTable()" class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5" placeholder="search">-->
                                                 </div>
                                             </form>
                                         </div>
@@ -129,12 +119,12 @@
                                                                     <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         PhoneNumber
                                                                     </th>
-<!--                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        CreateAt
-                                                                    </th>
-                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        ModifiedAt
-                                                                    </th>-->
+                                                                    <!--                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                                                                                            CreateAt
+                                                                                                                                        </th>
+                                                                                                                                        <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                                                                                            ModifiedAt
+                                                                                                                                        </th>-->
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Status
                                                                     </th>
@@ -189,54 +179,54 @@
                                                         </table>
                                                     </div><!--end div
                                                 </div><!--end div-->
-                                            </div><!--end grid-->
-                                            <div class="flex justify-between mt-4">
-                                                <jsp:include page="components/pagination.jsp"/>
+                                                </div><!--end grid-->
+                                                <div class="flex justify-between mt-4">
+                                                    <jsp:include page="components/pagination.jsp"/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div><!--end card-body--> 
-                            </div><!--end card-->                                  
-                        </div><!--end col-->                        
-                    </div> <!--end grid-->                                        
-                    <!-- footer -->
-                    <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
-                        <div class="container">
-                            <!-- Footer Start -->
-                            <footer
-                                class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
-                                >
-                                &copy;
-                                <script>
-                                    var year = new Date();
-                                    document.write(year.getFullYear());
-                                </script>
-                                Robotech
-                                <span class="float-right hidden text-slate-600 dark:text-slate-400 md:inline-block"
-                                      >Crafted with <i class="ti ti-heart text-red-500"></i> by
-                                    Mannatthemes</span
-                                >
-                            </footer>
-                            <!-- end Footer -->
+                                    </div><!--end card-body--> 
+                                </div><!--end card-->                                  
+                            </div><!--end col-->                        
+                        </div> <!--end grid-->                                        
+                        <!-- footer -->
+                        <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
+                            <div class="container">
+                                <!-- Footer Start -->
+                                <footer
+                                    class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
+                                    >
+                                    &copy;
+                                    <script>
+                                        var year = new Date();
+                                        document.write(year.getFullYear());
+                                    </script>
+                                    Robotech
+                                    <span class="float-right hidden text-slate-600 dark:text-slate-400 md:inline-block"
+                                          >Crafted with <i class="ti ti-heart text-red-500"></i> by
+                                        Mannatthemes</span
+                                    >
+                                </footer>
+                                <!-- end Footer -->
+                            </div>
                         </div>
-                    </div>
 
 
-                </div><!--end container-->
-            </div><!--end page-wrapper-->
-        </div><!--end /div-->
-        <!-- JAVASCRIPTS -->
-        <!-- <div class="menu-overlay"></div> -->
-        <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>
-        <script src="viewsAdmin/assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="viewsAdmin/assets/libs/flatpickr/flatpickr.min.js"></script>
-        <script src="viewsAdmin/assets/libs/@frostui/tailwindcss/frostui.js"></script>
+                    </div><!--end container-->
+                </div><!--end page-wrapper-->
+            </div><!--end /div-->
+            <!-- JAVASCRIPTS -->
+            <!-- <div class="menu-overlay"></div> -->
+            <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>
+            <script src="viewsAdmin/assets/libs/simplebar/simplebar.min.js"></script>
+            <script src="viewsAdmin/assets/libs/flatpickr/flatpickr.min.js"></script>
+            <script src="viewsAdmin/assets/libs/@frostui/tailwindcss/frostui.js"></script>
 
-        <script src="viewsAdmin/assets/libs/apexcharts/apexcharts.min.js"></script>
-        <script src="viewsAdmin/assets/js/pages/analytics-index.init.js"></script>
-        <script src="viewsAdmin/assets/js/app.js"></script>
-        <!-- JAVASCRIPTS -->
-        <script src="${pageContext.request.contextPath}/viewsAdmin/assets/js/dataTable.js"></script>
+            <script src="viewsAdmin/assets/libs/apexcharts/apexcharts.min.js"></script>
+            <script src="viewsAdmin/assets/js/pages/analytics-index.init.js"></script>
+            <script src="viewsAdmin/assets/js/app.js"></script>
+            <!-- JAVASCRIPTS -->
+            <script src="${pageContext.request.contextPath}/viewsAdmin/assets/js/dataTable.js"></script>
 
     </body>
 </html>

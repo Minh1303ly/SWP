@@ -117,67 +117,9 @@
                                         <span class="dark:text-slate-400">${u.userAddress.country}</span>
                                     </div><!--end col-->
                                 </div><!--end grid-->
-                                <div class="border-b border-dashed dark:border-slate-700/40 my-3 group-data-[sidebar=dark]:border-slate-700/40 group-data-[sidebar=brand]:border-slate-700/40"></div>
-                                <h5 class="text-xl font-semibold mb-4 dark:text-slate-300">About</h5>
-                                <p class="dark:text-slate-400">Hi I'm Merri Diamond,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.</p>
-                                <div class="mt-4 text-center">
-                                    <div class="border-2 border-slate-200/50 dark:border-slate-600/60 inline-flex rounded-full cursor-pointer">
-                                        <img src="assets/images/logos/facebook.png" alt="" class="rounded-full h-9 w-9">                                    
-                                    </div>
-                                    <div class="border-2 border-slate-200/50 dark:border-slate-600/60 inline-flex rounded-full cursor-pointer">
-                                        <img src="assets/images/logos/insta.png" alt="" class="rounded-full h-9 w-9">                                    
-                                    </div>
-                                    <div class="border-2 border-slate-200/50 dark:border-slate-600/60 inline-flex rounded-full cursor-pointer">
-                                        <img src="assets/images/logos/twitter.png" alt="" class="rounded-full h-9 w-9">                                    
-                                    </div>
-                                </div>
                             </div>
                         </div><!--end col-->
                         <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-8 xl:col-span-9">
-<!--                            <div class="grid  grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 p-4">
-                                <div class="bg-primary-500/5 dark:bg-primary-500/10 border border-dashed border-primary-500  rounded-md w-full relative ">                                
-                                    <div class="flex-auto p-4 text-center">                                       
-                                        <span class="inline-flex  justify-center items-center h-14 w-14 rounded-full bg-white dark:bg-gray-900 border border-dashed border-primary-500">
-                                            <i data-lucide="dollar-sign" class="stroke-primary-500 text-3xl"></i>
-                                        </span>
-                                        <h4 class="my-1 font-semibold text-3xl dark:text-slate-200">$8564</h4>
-                                        <h6 class="text-gray-800 dark:text-gray-400 mb-0 text-lg font-medium uppercase">Total Cost</h6>
-                                        <p class="truncate text-gray-700 dark:text-slate-500 text-sm font-normal">
-                                            <span class="text-green-500">
-                                                <i class="mdi mdi-checkbox-marked-circle-outline me-1"></i>
-                                            </span>
-                                            Last Payment <span class="text-green-500">$300.00</span>
-                                        </p>
-                                    </div>end card-body
-                                </div> end card
-                                <div class="bg-orange-500/5 dark:bg-pink-500/10 border border-dashed border-orange-500  rounded-md w-full relative ">                                
-                                    <div class="flex-auto p-4 text-center">
-
-                                        <span class="inline-flex  justify-center items-center h-14 w-14 rounded-full bg-white dark:bg-gray-900 border border-dashed border-orange-500">
-                                            <i data-lucide="shopping-cart" class="stroke-orange-500 text-3xl"></i>
-                                        </span>
-                                        <h4 class="my-1 font-semibold text-3xl dark:text-slate-200">312</h4>
-                                        <h6 class="text-gray-800 dark:text-gray-400 text-lg mb-0 font-medium uppercase">Total Order</h6>
-                                        <p class="truncate text-gray-700 dark:text-slate-500 text-sm font-normal">
-                                            <span class="bg-green-600/5 text-green-500 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">3</span>
-                                            Weekly Average
-                                        </p>
-                                    </div>end card-body
-                                </div> end card
-                                <div class="bg-purple-500/5 dark:bg-cyan-500/5 border border-dashed border-purple-500  rounded-md w-full relative ">                                
-                                    <div class="flex-auto p-4 text-center">
-
-                                        <span class="inline-flex  justify-center items-center h-14 w-14 rounded-full bg-white dark:bg-gray-900 border border-dashed border-purple-600">
-                                            <i data-lucide="circle-dollar-sign" class="stroke-purple-500 text-3xl"></i>
-                                        </span>
-                                        <h4 class="my-1 font-semibold text-3xl dark:text-slate-200">$450.00</h4>
-                                        <h6 class="text-gray-800 dark:text-gray-400 mb-0 text-lg font-medium uppercase">Pending Payment</h6>
-                                        <p class="truncate text-gray-700 dark:text-slate-500 text-sm font-normal">
-                                            Last Date : 26 Nov 2023 <span class="text-red-500">15 Days</span>
-                                        </p>
-                                    </div>end card-body
-                                </div> end card
-                            </div>-->
                             <div class="w-full relative mb-4">  
                                 <div class="flex-auto p-0 md:p-4">
                                     <div class="mb-4 border-b border-gray-200 dark:border-slate-700" data-fc-type="tab">
@@ -190,201 +132,7 @@
 
 
                                     <div id="myTabContent">
-<!--                                        <div class="active  p-4 bg-gray-50 rounded-lg dark:bg-gray-700/20" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-                                            <div class="grid grid-cols-1 p-0 md:p-4">
-                                                <div class="sm:-mx-6 lg:-mx-8">
-                                                    <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
-                                                        <table class="w-full">
-                                                            <thead class="bg-gray-50 dark:bg-gray-600/20">
-                                                                <tr>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Order ID
-                                                                    </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Payment
-                                                                    </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Date
-                                                                    </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Invoice
-                                                                    </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Status
-                                                                    </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Action
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                 1 
-                                                                <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">    
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">#332152</a>
-                                                                    </td>                                                                
-                                                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                        $300
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        28 Nov 2023
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">Invoice</a>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Shiped</span>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                        <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
-                                                                    </td>
-                                                                </tr>
-                                                                 2 
-                                                                <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">    
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">#365214</a>
-                                                                    </td>                                                                
-                                                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                        $450
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        01 Oct 2023
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">Invoice</a>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Shiped</span>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                        <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
-                                                                    </td>
-                                                                </tr>
-                                                                 3 
-                                                                <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">    
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">#635987</a>
-                                                                    </td>                                                                
-                                                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                        $600
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        20 Feb 2023
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">Invoice</a>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <span class="bg-yellow-600/5 text-yellow-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Panding</span>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                        <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
-                                                                    </td>
-                                                                </tr>
-                                                                 4 
-                                                                <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">    
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">#258963</a>
-                                                                    </td>                                                                
-                                                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                        $850
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        08 Dec 2023
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">Invoice</a>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Shiped</span>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                        <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
-                                                                    </td>
-                                                                </tr>
-                                                                5
-                                                                <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">    
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">#321456</a>
-                                                                    </td>                                                                
-                                                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                        $530
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        30 Mar 2023
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">Invoice</a>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <span class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Cancel</span>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                        <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
-                                                                    </td>
-                                                                </tr>
-                                                                6
-                                                                <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">    
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">#989896</a>
-                                                                    </td>                                                                
-                                                                    <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                        $1120
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        20 Sep 2023
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#" class="text-primary-500 underline">Invoice</a>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Shiped</span>
-                                                                    </td>
-                                                                    <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                        <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                        <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
-                                                                    </td>
-                                                                </tr>                                                                
-                                                            </tbody>
-                                                        </table>
-                                                    </div>end div
-                                                </div>end div
-                                            </div>end grid
-                                            <div class="flex justify-between mt-4">
-                                                <div class="self-center">
-                                                    <p class="dark:text-slate-400">Showing 1 - 20 of 1,524</p>
-                                                </div>
-                                                <div class="self-center">
-                                                    <ul class="inline-flex items-center -space-x-px">
-                                                        <li>
-                                                            <a href="#" class=" py-2 px-3 ms-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                                <i class="icofont-simple-left"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" aria-current="page" class="z-10 py-2 px-3 leading-tight text-brand-600 bg-brand-50 border border-brand-300 hover:bg-brand-100 hover:text-brand-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">2</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class=" py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                                <i class="icofont-simple-right"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>-->
-                                        <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+                                        <div class="p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
                                             <div class="grid grid-cols-1 p-0 md:p-4">
                                                 <div class="sm:-mx-6 lg:-mx-8">
                                                     <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
@@ -445,34 +193,6 @@
                                                     </div><!--end div-->
                                                 </div><!--end div-->
                                             </div><!--end grid-->
-<!--                                            <div class="flex justify-between">
-                                                <div class="self-center">
-                                                    <p class="dark:text-slate-400">Showing 1 - 20 of 1,524</p>
-                                                </div>
-                                                <div class="self-center">
-                                                    <ul class="inline-flex items-center -space-x-px">
-                                                        <li>
-                                                            <a href="#" class=" py-2 px-3 ms-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                                <i class="icofont-simple-left"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" aria-current="page" class="z-10 py-2 px-3 leading-tight text-brand-600 bg-brand-50 border border-brand-300 hover:bg-brand-100 hover:text-brand-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">2</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">3</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#" class=" py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                                                <i class="icofont-simple-right"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>-->
                                         </div>
                                         <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="ratings" role="tabpanel" aria-labelledby="ratings-tab">
                                             <div class="grid grid-cols-1 p-0 md:p-4">
@@ -498,9 +218,9 @@
                                                                     </th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+<!--                                                            <tbody>
 
-                                                                <!-- 1 -->
+                                                                 1 
                                                                 <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                                     <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                                         <div class="flex items-center">
@@ -532,7 +252,7 @@
                                                                         <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                                     </td>
                                                                 </tr>
-                                                                <!-- 2 -->
+                                                                 2 
                                                                 <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                                     <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                                         <div class="flex items-center">
@@ -564,7 +284,7 @@
                                                                         <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                                     </td>
                                                                 </tr>
-                                                                <!-- 3 -->
+                                                                 3 
                                                                 <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                                     <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
                                                                         <div class="flex items-center">
@@ -596,7 +316,7 @@
                                                                         <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                                     </td>
                                                                 </tr>
-                                                            </tbody>
+                                                            </tbody>-->
                                                         </table>
                                                     </div><!--end div-->
                                                 </div><!--end div-->

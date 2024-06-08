@@ -18,14 +18,7 @@
         <link rel="stylesheet" href="viewsAdmin/assets/libs/icofont/icofont.min.css">
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
-        <script>
-            function autoSubmitForm() {
-                document.getElementById("category").submit();
-            }
-            function autoSubmitForm2() {
-                document.getElementById("subcategory").submit();
-            }
-        </script>
+
 
         <!-- Favicons-->
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -48,6 +41,11 @@
 
         <!-- YOUR CUSTOM CSS -->
         <link href="css/custom.css" rel="stylesheet">
+
+        <script type="text/javascript">
+
+        </script>
+
     </head>
 
     <body data-layout-mode="light"  data-sidebar-size="default" data-theme-layout="vertical" class="bg-[#EEF0FC] dark:bg-gray-900">
@@ -55,6 +53,8 @@
         <jsp:include page="components/leftBar.jsp" />
 
         <jsp:include page="components/topBar.jsp" />
+        
+        <jsp:include page="components/notification.jsp" />
 
 
         <div class="ltr:flex flex-1 rtl:flex-row-reverse">
@@ -94,7 +94,7 @@
                                 <div class="flex-auto p-0 md:p-4">
                                     <div class="mb-4 border-b border-gray-200 dark:border-slate-700" data-fc-type="tab">
                                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" aria-label="Tabs">
-                                            
+
                                         </ul>
                                     </div>
                                     <div>
@@ -117,7 +117,8 @@
                                                     </div>
                                                     <div id="menu">
                                                         <ul>
-                                                            <c:forEach var="c" items="${categories}">
+                                                            <li><span><a href="productList?category=&subcategory=&search=${search}&status=${status}">All Category</a></span></li>
+                                                                        <c:forEach var="c" items="${categories}">
                                                                 <li><span><a href="productList?category=${c.name}&subcategory=${sc.name}&search=${search}&status=${status}">${c.name}</a></span>
                                                                     <ul>
                                                                         <c:forEach var="sc" items="${subCategories}">
@@ -141,8 +142,9 @@
                                                     </div>
                                                     <div id="menu">
                                                         <ul>
-                                                            <c:forEach var="ps" items="${listProductStatus}">
-                                                                <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=${ps.name}">${ps.name}</a></li>
+                                                            <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=">All Status</a></li>
+                                                                <c:forEach var="ps" items="${listProductStatus}">
+                                                                <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=${ps.id}">${ps.name}</a></li>
                                                                 </c:forEach>
                                                         </ul>
                                                     </div>
@@ -153,7 +155,10 @@
                                         <div class="ms-auto">
                                             <form action="productList" method="get">
                                                 <div class="relative">
+                                                    <input type="hidden" name="category" value="${category}">
+                                                    <input type="hidden" name="subcategory" value="${subcategory}">
                                                     <input type="search" value="${search}" name="search" id="searchTable" onkeyup="searchTable()" class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5" placeholder="search">
+                                                    <input type="hidden" name="status" value="${status}">
                                                 </div>
                                             </form>                                               
                                         </div>
@@ -168,25 +173,25 @@
                                                             <thead class="bg-gray-50 dark:bg-slate-700/20">
                                                                 <tr>
 
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         ID
                                                                     </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Thumbnail
                                                                     </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Title
                                                                     </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Category
                                                                     </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Price
                                                                     </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Feature
                                                                     </th>
-                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Status
                                                                     </th>
                                                                     <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
@@ -202,29 +207,15 @@
                                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                                         <!--ID-->
                                                                         <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                            <div class="flex items-center">
-                                                                                <!--                                                                                <img src="assets/images/products/02.png" alt="" class="me-2 h-8 inline-block">-->
-                                                                                <div class="self-center">                                                                        
-                                                                                    <h5 class="text-sm font-semibold text-slate-700 dark:text-gray-400">${id}</h5>
-                                                                                    <!--                                                                                    <span class="block  font-medium text-slate-500">Size-04-15 (Model 2023)</span>-->
-                                                                                </div>
-                                                                            </div>
+                                                                            ${id}
                                                                         </td>
                                                                         <!--Thumbnail-->
-                                                                        <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                            <div class="flex items-center">
-                                                                                <img src="${p.img1}" alt="" class="me-2 h-8 inline-block">
-                                                                            </div>
+                                                                        <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">    
+                                                                            <img src="${p.img1}" alt="" class="me-2 h-8 inline-block"><div hidden="">${p.img1}</div>
                                                                         </td>
                                                                         <!--Title-->
                                                                         <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                            <div class="flex items-center">
-                                                                                <img src="assets/images/products/02.png" alt="" class="me-2 h-8 inline-block">
-                                                                                <div class="self-center">                                                                        
-                                                                                    <h5 class="text-sm font-semibold text-slate-700 dark:text-gray-400">${p.name}</h5>
-                                                                                    <!--                                                                                    <span class="block  font-medium text-slate-500">Size-04-15 (Model 2023)</span>-->
-                                                                                </div>
-                                                                            </div>
+                                                                            ${p.name}
                                                                         </td>
                                                                         <!--Category-->
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
@@ -251,7 +242,7 @@
                                                                         </td>
 
                                                                         <!--Feature-->
-                                                                        
+
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             ${p.description}
                                                                         </td>
@@ -259,13 +250,22 @@
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             <c:forEach var="ps" items="${listProductStatus}">
                                                                                 <c:if test="${ps.id == p.statusId}">
-                                                                                    <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">${ps.name}</span>
+                                                                                    <button type="button"  data-fc-autoclose="both" data-fc-type="dropdown" class="px-2 py-1 lg:px-4 bg-transparent  text-primary text-sm  rounded transition hover:bg-primary-500 hover:text-white border border-primary font-medium mb-2">${ps.name} <i class="fas fa-chevron-down ms-1 text-xs self-center"></i></button>
+                                                                                    <div id="dropdown-target-7" class=" hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-800 border border-slate-700/10">
+                                                                                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+                                                                                            <c:forEach var="ps2" items="${listProductStatus}">
+                                                                                                <li>
+                                                                                                    <a href="updateProduct?status=${ps2.id}&productName=${p.name}" class="block py-2 px-4 text-gray-600 dark:text-gray-300 hover:text-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/40 dark:hover:text-white">${ps2.name}</a>
+                                                                                                </li>
+                                                                                            </c:forEach>
+                                                                                        </ul>
+                                                                                    </div>
                                                                                 </c:if>
                                                                             </c:forEach>
                                                                         </td>
                                                                         <!--Action-->
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <a href="#"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
+                                                                            <a href="productDetail?productName=${p.name}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
                                                                             <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                                         </td>
                                                                     </tr>
@@ -305,11 +305,11 @@
                                 <!-- end Footer -->
                             </div>
                         </div>
-
-
                     </div><!--end container-->
                 </div><!--end page-wrapper-->
             </div><!--end /div-->
+
+            
             <!-- JAVASCRIPTS -->
             <!-- <div class="menu-overlay"></div> -->
             <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>
@@ -322,6 +322,7 @@
             <script src="viewsAdmin/assets/js/app.js"></script>
             <!-- JAVASCRIPTS -->
             <script src="${pageContext.request.contextPath}/viewsAdmin/assets/js/dataTable.js"></script>
+            <script src="${pageContext.request.contextPath}/viewsAdmin/assets/js/product.js"></script>
 
             <!-- COMMON SCRIPTS -->
             <script src="js/common_scripts.min.js"></script>
@@ -329,5 +330,9 @@
 
             <!-- SPECIFIC SCRIPTS -->
             <script src="js/carousel-home.js"></script>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

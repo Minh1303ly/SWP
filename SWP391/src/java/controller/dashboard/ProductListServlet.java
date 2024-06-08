@@ -82,7 +82,15 @@ public class ProductListServlet extends HttpServlet {
         String search = request.getParameter("search");
         String category = request.getParameter("category");
         String subcategory = request.getParameter("subcategory");
-        String status = request.getParameter("status");
+        String status_raw = request.getParameter("status");
+        int status = 0;
+        
+        try{
+            status = Integer.parseInt(status_raw);
+        }catch(NumberFormatException e){
+            e.printStackTrace();
+        }
+        
         
         //get list category
         List<Category> categories = new ArrayList<>();
@@ -112,7 +120,14 @@ public class ProductListServlet extends HttpServlet {
         List<Discount> listDiscount = ddb.getAllDiscount();
         
         // get list product
-        List<ProductDTO> listProduct = pdb.getAllProduct();
+        List<ProductDTO> listProduct = pdb.filterProductAndSearch(category, subcategory, search, status);
+        
+        if(search == null || search.equals("")
+                && category == null || category.equals("")
+                && subcategory == null || subcategory.equals("")
+                && status_raw == null || status_raw.equals("")){
+            listProduct = pdb.getAllProduct();
+        }
         
         // start pagging
         int limitPage = 10;

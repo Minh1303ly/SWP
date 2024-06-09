@@ -60,21 +60,6 @@ public class UserDAO extends DBContext {
     }
 
     public List<User> filterCustomersByStatusAndSearch(Integer status, String searchTerm) {
-//        List<User> users = new ArrayList<>();
-//        String sql = "SELECT id, email, password, role_id, status_id, first_name, last_name, telephone, created_at, modified_at, gender FROM users WHERE (status_id = ? OR ? IS NULL) AND ((first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR telephone LIKE ?) OR ? IS NULL)";
-//        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-//            if (status != null) {
-//                statement.setInt(1, status);
-//                statement.setInt(6, status);
-//            } else {
-//                statement.setNull(1, java.sql.Types.INTEGER);
-//                statement.setNull(6, java.sql.Types.INTEGER);
-//            }
-//            if (searchTerm != null) {
-//                statement.setString(3, "%" + searchTerm + "%");
-//                statement.setString(4, "%" + searchTerm + "%");
-//                statement.setString(5, "%" + searchTerm + "%");
-//                statement.setString(6, "%" + searchTerm + "%");
         List<User> users = new ArrayList<>();
         String sql = "SELECT id, email, password, role_id, status_id, first_name, last_name, telephone, created_at, modified_at, gender "
                 + "FROM users "

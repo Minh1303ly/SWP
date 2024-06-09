@@ -146,7 +146,7 @@
                                                                                     <img src="assets/images/users/avatar-2.png" alt="" class="me-2 h-8 inline-block">
                                                                                     <div class="self-center">                                                                        
                                                                                         <a href="customerDetail?id=${u.id}" class="text-sm font-semibold text-slate-700 dark:text-gray-400"><u>${u.first_name} ${u.last_name}</u></a>
-                                                                                        <span class="block  font-medium text-slate-500">Việt Nam</span>
+                                                                                        <span class="block  font-medium text-slate-500">${u.userAddress.country}</span>
                                                                                     </div>
                                                                                 </div>
                                                                             </a>

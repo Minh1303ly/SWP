@@ -40,13 +40,13 @@
                                 <div class="">
                                     <div class="flex flex-wrap justify-between">
                                         <div class="items-center ">
-                                            <h1 class="font-medium text-3xl block dark:text-slate-100">Customers</h1>
+                                            <h1 class="font-medium text-3xl block dark:text-slate-100">Feedback List</h1>
                                             <ol class="list-reset flex text-sm">
                                                 <li><a href="#" class="text-gray-500 dark:text-slate-400">Robotech</a></li>
                                                 <li><span class="text-gray-500 dark:text-slate-400 mx-2">/</span></li>
-                                                <li class="text-gray-500 dark:text-slate-400">Admin</li>
+                                                <li class="text-gray-500 dark:text-slate-400">Marketing</li>
                                                 <li><span class="text-gray-500 dark:text-slate-400 mx-2">/</span></li>
-                                                <li class="text-primary-500 hover:text-primary-600 dark:text-primary-400">Customers</li>
+                                                <li class="text-primary-500 hover:text-primary-600 dark:text-primary-400">Feedback</li>
                                             </ol>
                                         </div>
                                         <div class="flex items-center">
@@ -71,11 +71,11 @@
                                         </ul>
                                     </div>
                                     <div class="flex flex-wrap gap-4 mb-3">
-                                        <a href="updateCustomer">
+<!--                                        <a href="updateCustomer">
                                             <div class="mb-2 w-36">
                                                 <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-sm font-medium py-2 px-4 rounded">Create Account</button>
                                             </div>
-                                        </a>
+                                        </a>-->
                                         <div class="mb-2 w-36">
                                             <form id="myForm"  method="get" action="customerList">
                                                 <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="status" onchange="autoSubmitForm()" required>
@@ -104,27 +104,18 @@
                                                         <table id="userTable" class="w-full">
                                                             <thead class="bg-gray-50 dark:bg-gray-700/20">
                                                                 <tr>
-                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        CustomerId
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        FeedBack
                                                                     </th>
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        FullName
+                                                                        Full Name
                                                                     </th>
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Gender
-                                                                    </th>
-                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        Email
+                                                                        Product Name
                                                                     </th>
                                                                     <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                        PhoneNumber
+                                                                        Rate
                                                                     </th>
-                                                                    <!--                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                                                                                            CreateAt
-                                                                                                                                        </th>
-                                                                                                                                        <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                                                                                            ModifiedAt
-                                                                                                                                        </th>-->
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Status
                                                                     </th>
@@ -134,38 +125,38 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <c:forEach var="u" items="${listUser}">
+                                                                <c:forEach var="f" items="${listFeedBack}">
                                                                     <!-- 1 -->
                                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
-                                                                        <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                            ${u.id}
+                                                                        <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
+                                                                            ${f.comment}
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             <a>
                                                                                 <div class="flex items-center">
-                                                                                    <img src="assets/images/users/avatar-2.png" alt="" class="me-2 h-8 inline-block">
                                                                                     <div class="self-center">                                                                        
-                                                                                        <a href="customerDetail?id=${u.id}" class="text-sm font-semibold text-slate-700 dark:text-gray-400"><u>${u.first_name} ${u.last_name}</u></a>
-                                                                                        <span class="block  font-medium text-slate-500">Việt Nam</span>
+                                                                                        <a class="text-sm font-semibold text-slate-700 dark:text-gray-400"><u>${f.user.first_name}${f.user.last_name}</u></a>
                                                                                     </div>
                                                                                 </div>
                                                                             </a>
                                                                         </td>
                                                                         <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
-                                                                            ${u.gender?"Male":"Female"}
+                                                                            ${f.product.name}
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <a>${u.email}</a>
+                                                                            <c:forEach var="star" begin="1" end="${f.ratting}">
+                                                                                ⭐
+                                                                            </c:forEach>
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            ${u.telephone}
-                                                                        </td>
-                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <c:if test="${u.getUsersStatus().name ==  'Active'}">
-                                                                                <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Active</span>
+                                                                            <c:if test="${f.status ==  'pending'}">
+                                                                                <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Pending</span>
                                                                             </c:if>
-                                                                            <c:if test="${u.getUsersStatus().name !=  'Active'}">
-                                                                                <span class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">InActive</span>
+                                                                            <c:if test="${f.status ==  'approved'}">
+                                                                                <span class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Approved</span>
+                                                                            </c:if>
+                                                                            <c:if test="${f.status ==  'rejected'}">
+                                                                                <span class="bg-yellow-600/5 text-yellow-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Rejected</span>
                                                                             </c:if>
                                                                         </td>                                                                    
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">

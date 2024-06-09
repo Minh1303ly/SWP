@@ -310,20 +310,22 @@ public class ProductDAO extends DBContext {
     
     /**
      *
-     * @param size
+     * @param from
+     * @param to
      * @return
      */
-    public List<Product> getProductOrderByDate(int size) {
+    public List<Product> getProductOrderByDate(int from, int to) {
         List<Product> list = new LinkedList<>();
         StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
         sql.append(GROUP_BY_PRODUCT);
         sql.append("order by products.created_at desc ");
-        sql.append("OFFSET 0 ROWS FETCH NEXT ? rows ONLY; ");
+        sql.append("OFFSET ? ROWS FETCH NEXT ? rows ONLY; ");
         try {
             PreparedStatement pre = connection.prepareStatement(
                     sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            pre.setInt(1, size);
+            pre.setInt(1, from);
+            pre.setInt(2, to);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 Product product = new Product(rs.getString(1),
@@ -395,6 +397,44 @@ public class ProductDAO extends DBContext {
                     ResultSet.CONCUR_READ_ONLY);
             pre.setFloat(1, rating);
             pre.setInt(2, size);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getFloat(2), rs.getString(3),
+                        rs.getString(4),
+                        new Ratting(rs.getInt(5)),
+                        new Discount(rs.getInt(6), rs.getBoolean(7)),
+                        new ProductStatus(rs.getString(8)));
+                list.add(product);
+                product.getProductStatus().getName();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    /**
+     * 
+     * @param name
+     * @param from
+     * @param to
+     * @return 
+     */
+    public List<Product> search(String name, int from, int to) {
+        List<Product> list = new LinkedList<>();
+        StringBuilder sql = new StringBuilder(QUERY_PRODUCT);    
+        sql.append(" where LOWER(products.name) like ? ");
+        sql.append(GROUP_BY_PRODUCT);
+        sql.append("order by products.created_at desc ");
+        sql.append("OFFSET ? ROWS FETCH NEXT ? rows ONLY;");
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setString(1, "%"+name.toLowerCase()+"%");
+            pre.setInt(2, from);
+            pre.setInt(3, to);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 Product product = new Product(rs.getString(1),
@@ -510,7 +550,7 @@ public class ProductDAO extends DBContext {
      * @param name is name or text take from input
      * @return list product have same name with given name
      */
-    public List<SubProducts> searchName(String name) {
+    public List<SubProducts> searchUniqueName(String name) {
         List<SubProducts> list = new LinkedList<>();
         String sql = """
                     select products.name, products.price, products.size, products.color, products.description,
@@ -541,13 +581,13 @@ public class ProductDAO extends DBContext {
     
     public static void main(String[] args) {
         ProductDAO productDAO = new ProductDAO();
-//        List<Product> ls = productDAO.getProductLatest(3);
+        List<Product> ls = productDAO.search("pl", 0, 7);
 //        System.out.println(ls.get(0).getDiscount().isActive());
-//        ls.forEach(a -> {
-//            System.out.println(a.getName());
-//        });
-        String a="";
-        List<SubProducts> lis = productDAO.searchName("k");
+        ls.forEach(a -> {
+            System.out.println(a.getName());
+        });
+//        String a="";
+//        List<SubProducts> lis = productDAO.searchUniqueName("k");
     }
 
 }

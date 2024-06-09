@@ -41,8 +41,14 @@ public class SlidersDAO extends DBContext{
         return list;
     }
     
+    public Slider getRadom(){
+        List<Slider> ls = getAll();
+        Slider slider = ls.get((int) (Math.random() * ls.size() + 1));
+        return slider;
+    }
+    
     public static void main(String[] args) {
         SlidersDAO cs = new SlidersDAO();
-        System.out.println(cs.getAll().get(0).toString());
+        System.out.println(cs.getRadom());
     }
 }

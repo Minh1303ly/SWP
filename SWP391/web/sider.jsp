@@ -9,15 +9,15 @@
 <%@page import="java.util.*, model.*, dao.*, util.*" %>
 
 
-<form action="product" method="get">
+<form action="product" method="post">
     <div class="input-group">
         <input type="text" class="form-control" name="name" placeholder="Search products">
+        <input type="hidden" name="service" value="search">
         <div class="input-group-append">
             <button class="btn btn-secondary" type="submit">
                 <i class="ti-search"></i>
             </button>
-        </div>
-        <input type="hidden" name="service" value="search">
+        </div>        
     </div>
 </form>
 
@@ -123,7 +123,7 @@
             <button type="submit" class="btn_1 border border-secondary px-3 py-2 rounded-pill">
                 Filter
             </button>
-            <input type="hidden"  name="filter" value="true">          
+            <input type="hidden"  name="service" value="filter">          
         </div>
     </form>
 </div>

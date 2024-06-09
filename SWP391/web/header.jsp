@@ -75,7 +75,7 @@
                     <form action="product" method="post"> 
                         <div class="custom-search-input">
                             <input type="text" name="name" placeholder="Search over 10.000 products">
-                            <input type="hidden" name="service" value="searchName">
+                            <input type="hidden" name="service" value="search">
                             <button type="submit"><i class="header-icon_search_custom"></i></button>
                         </div>
                     </form>

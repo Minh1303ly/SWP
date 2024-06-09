@@ -40,7 +40,7 @@
 
         <!-- YOUR CUSTOM CSS -->
         <link href="css/custom.css" rel="stylesheet">
-        
+
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -66,7 +66,7 @@
                 text-align: center;
             }
         </style>
-        
+
 
     </head>
 
@@ -129,93 +129,75 @@
                             </div>
                             <div id="containerProduct">
                                 <!-- /toolbox -->
-                            <c:forEach var="element" items="${products}">
-                                <div class="row row_item">
-                                    <div class="col-sm-4">
-                                        <figure>
-                                            <c:if test="${element.productStatus.name eq 'new'}">
-                                                <span class="ribbon new">${element.productStatus.name}</span>
+                                <c:forEach var="element" items="${products}">
+                                    <div class="row row_item">
+                                        <div class="col-sm-4">
+                                            <figure>
+                                                <c:if test="${element.productStatus.name eq 'new'}">
+                                                    <span class="ribbon new">${element.productStatus.name}</span>
 
-                                            </c:if>
+                                                </c:if>
 
-                                            <c:if test="${element.productStatus.name eq 'hot'}">
-                                                <span class="ribbon hot">${element.productStatus.name}</span>
-
-                                            </c:if> 
-
-                                            <c:if test="${element.productStatus.name eq 'common'}">
-                                                <c:if test="${element.discount.active}">
-                                                    <span class="ribbon off">-${element.discount.discountPercent}%</span>
+                                                <c:if test="${element.productStatus.name eq 'hot'}">
+                                                    <span class="ribbon hot">${element.productStatus.name}</span>
 
                                                 </c:if> 
-                                            </c:if>
-                                            <a href="product?service=detail&name=${element.name}">
-                                                <img class="img-fluid lazy" src="${element.img1}" data-src="${element.img1}" alt="">
-                                            </a>
 
-                                        </figure>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <div class="rating">
-                                            <c:forEach begin="1" end="${element.ratting.ratting}" step="1">
-                                                <i class="icon-star voted"></i>
-                                            </c:forEach>
-                                            <c:forEach begin="${element.ratting.ratting + 1}" end="5" step="1">
-                                                <i class="icon-star"></i>
-                                            </c:forEach>
+                                                <c:if test="${element.productStatus.name eq 'common'}">
+                                                    <c:if test="${element.discount.active}">
+                                                        <span class="ribbon off">-${element.discount.discountPercent}%</span>
+
+                                                    </c:if> 
+                                                </c:if>
+                                                <a href="product?service=detail&name=${element.name}">
+                                                    <img class="img-fluid lazy" src="${element.img1}" data-src="${element.img1}" alt="">
+                                                </a>
+                                            </figure>
                                         </div>
-                                        <a href="product?service=detail&name=${element.name}">
-                                            <h3>${element.name}</h3>
-                                        </a>
-                                        <p>Description for ${element.name}</p>
-                                        <div class="price_box">
-                                            <c:if test="${element.discount.active}">                                              
-                                                <span class="new_price">$${String.format("%.2f", element.price*(100-element.discount.discountPercent)/100)}</span>
-                                                <span class="old_price">$${element.price}</span>
-                                            </c:if>
-                                            <c:if test="${!element.discount.active}">                                              
-                                                <span class="new_price">$${element.price}</span>                                                
-                                            </c:if>  
-                                        </div>
-                                        <ul>
-                                            <li><a class="btn_1" type="button" data-toggle="modal" data-target="#exampleModal" 
-                                                   data-name="${element.name}">
-                                                    Add to cart</a>
-                                            </li>
-                                            <li><a class="btn_1 gray tooltip-1" data-toggle="collapse" href="#collapseExample${element.name}" role="button" aria-expanded="false" aria-controls="collapseExample" title="Add to favorites"><i class="ti-comment-alt"></i><span>Add to favorites</span></a></li>
-                                        </ul>
-                                        <div class="collapse" id="collapseExample${element.name}">
-                                            <div class="card card-body">
-                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                                        <div class="col-sm-8">
+                                            <div class="rating">
+                                                <c:forEach begin="1" end="${element.ratting.ratting}" step="1">
+                                                    <i class="icon-star voted"></i>
+                                                </c:forEach>
+                                                <c:forEach begin="${element.ratting.ratting + 1}" end="5" step="1">
+                                                    <i class="icon-star"></i>
+                                                </c:forEach>
                                             </div>
+                                            <a href="product?service=detail&name=${element.name}">
+                                                <h3>${element.name}</h3>
+                                            </a>
+                                            <p>Description for ${element.name}</p>
+                                            <div class="price_box">
+                                                <c:if test="${element.discount.active}">                                              
+                                                    <span class="new_price">$${String.format("%.2f", element.price*(100-element.discount.discountPercent)/100)}</span>
+                                                    <span class="old_price">$${element.price}</span>
+                                                </c:if>
+                                                <c:if test="${!element.discount.active}">                                              
+                                                    <span class="new_price">$${element.price}</span>                                                
+                                                </c:if>  
+                                            </div>
+                                            <ul>
+                                                <li><a class="btn_1" type="button" data-toggle="modal" data-target="#exampleModal" 
+                                                       data-name="${element.name}">
+                                                        Add to cart</a>
+                                                </li>
+                                                <li><a class="btn_1 gray tooltip-1" href="feedback?name=${element.name}">
+                                                        <i class="ti-comment-alt"></i>
+                                                        <span>Feedback</span>
+                                                    </a>
+                                                </li>
+                                            </ul>                
                                         </div>
                                     </div>
-                                </div>
-                            </c:forEach>
+                                </c:forEach>
                             </div>
-                            
+
 
                             <div class="items" id="items"></div>
                             <!-- /row_item -->
                             <div class="pagination__wrapper d-flex justify-content-center my-2">
                                 <ul class="pagination"  id="pagination">
-                                    <!--                                    <li><a href="#0" class="prev" title="previous page">&#10094;</a></li>
-                                    -->                                    <li class="align-self-center">
-                                        <a href="#0" class="active">1</a>
-                                    </li><!--
-                                    <li>
-                                        <a href="#0">2</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">3</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">4</a>
-                                    </li>
-                                    <li>
-                                        <a href="#0">5</a>
-                                    </li>
-                                    <li><a href="#0" class="next" title="next page">&#10095;</a></li>-->
+
                                 </ul>
                             </div>                         
                         </div>
@@ -243,55 +225,35 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const ITEMS_PER_PAGE = 7;
-                const TOTAL_PAGINATION_BUTTONS = 15;
+                const TOTAL_PAGINATION_BUTTONS = 48;
                 const MAX_VISIBLE_PAGINATION_BUTTONS = 5;
                 const itemsContainer = document.getElementById('containerProduct');
                 const paginationContainer = document.getElementById('pagination');
-                let currentPage = 1;
-
-                // Generate dummy items
-                const items = [];
-                for (let i = 1; i <= 300; i++) {  // Assuming we have 300 items
-                    items.push(`Item ` + i);
-                }
+                let currentPage = 0;
 
                 function getItemsForPage(pageNumber) {
                     const start = pageNumber * ITEMS_PER_PAGE;
-                    const end = Math.min(start + ITEMS_PER_PAGE, items.length);
-                    return items.slice(start, end);
+                    const end = Math.min(start + ITEMS_PER_PAGE, TOTAL_PAGINATION_BUTTONS);
                 }
 
                 function updateItems() {
-                    itemsContainer.innerHTML = '';
-                    const itemsForPage = getItemsForPage(currentPage);
-//                    $("#containerProduct").load("pagination");
-//                    itemsForPage.forEach(item => {
-//                        const itemElement = document.createElement('div');
-//                        itemElement.classList.add('item');
-//                        itemElement.textContent = item;
-//                        itemsContainer.appendChild(itemElement);
-//                    });
                     $.get("/SWP391/pagination",
-                {
-                    pagination : currentPage
-                    
-                },
-                function (data, status) {
-                    //      alert("Data: " + data + "\nStatus: " + status);
-//                    $('#exampleModal').click();
-//                    if(data!=="hello"){
-//                        alert("Data: " + data);
-//                    }
-                    alert(data);               
-                    $('#containerProduct').html(data);
+                            {
+                                pagination: currentPage + 1
 
-                    //      document.getElementById('#div1').innerHTML=data;
-                });
+                            },
+                            function (data, status) {
+//                                alert(currentPage + 1);
+                                $('#containerProduct').html(data);
+                                $('#toTop').click();
+
+                                //      document.getElementById('#div1').innerHTML=data;
+                            });
                 }
 
                 function updatePagination() {
                     paginationContainer.innerHTML = '';
-                    const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+                    const totalPages = Math.ceil(TOTAL_PAGINATION_BUTTONS / ITEMS_PER_PAGE);
                     const startPage = Math.max(0, Math.min(currentPage - Math.floor(MAX_VISIBLE_PAGINATION_BUTTONS / 2), totalPages - MAX_VISIBLE_PAGINATION_BUTTONS));
                     const endPage = Math.min(totalPages, startPage + MAX_VISIBLE_PAGINATION_BUTTONS);
 
@@ -301,7 +263,7 @@
                     }
 
                     for (let i = startPage; i < endPage; i++) {
-                        paginationContainer.appendChild(createButton(i + 1, i+1));
+                        paginationContainer.appendChild(createButton(i + 1, i));
                     }
 
                     if (currentPage < totalPages - 1) {
@@ -321,7 +283,8 @@
 //                           button.style.color='white';
                         button.style.backgroundColor = "#FFC107";
                     }
-                    button.href = "#" + pageIndex;
+                    let index = parseInt(pageIndex)+ 1;
+                    button.href = "#" + index;
                     button.addEventListener('click', function () {
                         currentPage = pageIndex;
                         updateItems();

@@ -13,11 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Slider;
+import util.Filter;
 
 /**
  *
@@ -50,18 +52,23 @@ public class SubProductServlet extends HttpServlet {
                     addCartByAjax(request, response);
                 case "addCart" ->
                     addCart(request, response);
-                case "searchName" ->
+                case "search" ->
                     search(request, response);
                 case "getAllColorByName" ->
                     getAllColorByName(request, response);
                 case "getAllSizeByName" ->
                     getAllSizeByName(request, response);
                 default ->
-                    view(request, response);
+                    response.sendRedirect("404.html");
             }
         }
     }
-
+    
+    /**
+     * 
+     * @param request
+     * @param response 
+     */
     public void getAllColorByName(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             ProductDAO productDAO = new ProductDAO();
@@ -76,6 +83,11 @@ public class SubProductServlet extends HttpServlet {
         }
     }
 
+    /**
+     * 
+     * @param request
+     * @param response 
+     */
     public void getAllSizeByName(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             ProductDAO productDAO = new ProductDAO();
@@ -102,12 +114,9 @@ public class SubProductServlet extends HttpServlet {
             SlidersDAO daoSlider = new SlidersDAO();
             dataForSider(request, response);
             request.setAttribute("product",
-                    productDAO.searchName(
-                            request.getParameter("name")).get(0));
-            List<Slider> ls = daoSlider.getAll();
-            Slider slider = ls.get((int) (Math.random() * ls.size() + 1));
-            request.setAttribute("slider", slider);
-
+                    productDAO.searchUniqueName(
+                            request.getParameter("name")).get(0));          
+            request.setAttribute("slider", daoSlider.getRadom());
             RequestDispatcher dispatch = request.getRequestDispatcher("product_detail.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -143,11 +152,37 @@ public class SubProductServlet extends HttpServlet {
         try {
             SlidersDAO daoSlider = new SlidersDAO();
             dataForSider(request, response);
-            ProductDAO productDAO = new ProductDAO();
-            List<Slider> ls = daoSlider.getAll();
-            Slider slider = ls.get((int) (Math.random() * ls.size() + 1));
-            request.setAttribute("slider", slider);
-            request.setAttribute("products", productDAO.getProductOrderByDate(7));
+            request.setAttribute("slider", daoSlider.getRadom());
+            HttpSession session= request.getSession(true);  
+            Filter filter = new Filter("view",null,null, 
+                    null, null, null, null);
+            session.setAttribute("filter", filter);       
+            RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(SubProductServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     *
+     *
+     * @param request servlet request
+     * @param response servlet response
+     */
+    public void viewByCategory(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            SlidersDAO daoSlider = new SlidersDAO();
+            dataForSider(request, response);
+            request.setAttribute("slider", daoSlider.getRadom());
+            HttpSession session= request.getSession(true);  
+            Filter filter = new Filter("viewByCategory",
+                    null,
+                    request.getParameter("category"), 
+                    request.getParameter("subCategory"), 
+                    null, null, null);
+            session.setAttribute("filter", filter);       
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -168,12 +203,9 @@ public class SubProductServlet extends HttpServlet {
             SlidersDAO daoSlider = new SlidersDAO();
             dataForSider(request, response);
             request.setAttribute("product",
-                    productDAO.searchName(
+                    productDAO.searchUniqueName(
                             request.getParameter("name")).get(0));
-            
-            List<Slider> ls = daoSlider.getAll();
-            Slider slider = ls.get((int) (Math.random() * ls.size() + 1));
-            request.setAttribute("slider", slider);
+            request.setAttribute("slider", daoSlider.getRadom());
             RequestDispatcher dispatch = request.getRequestDispatcher("product_detail.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
@@ -207,14 +239,15 @@ public class SubProductServlet extends HttpServlet {
      * @param response servlet response
      */
     public void search(HttpServletRequest request, HttpServletResponse response) {
-        try {
-
-            ProductDAO dAOProducts = new ProductDAO();
-            BrandDAO dAOBrands = new BrandDAO();
-            CategoryDAO dAOCategories = new CategoryDAO();
-            request.setAttribute("colors", dAOProducts.getAllColor().toArray());
-            request.setAttribute("brands", dAOBrands.getAllByStatus());
-            request.setAttribute("categories", dAOCategories.getAllByStatus());
+        try {   
+            SlidersDAO daoSlider = new SlidersDAO();
+            dataForSider(request, response);
+            request.setAttribute("slider", daoSlider.getRadom());
+            HttpSession session= request.getSession(true);  
+            Filter filter = new Filter("search", 
+                    request.getParameter("name"),
+                    null, null, null, null, null);
+            session.setAttribute("filter", filter);
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {

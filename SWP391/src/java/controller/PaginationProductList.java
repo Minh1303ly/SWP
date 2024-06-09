@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.*;
 import dao.*;
+import jakarta.servlet.http.HttpSession;
 import model.*;
+import util.Filter;
 
 /**
  *
@@ -35,17 +37,101 @@ public class PaginationProductList extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            ProductDAO  productDAO = new ProductDAO();
+            ProductDAO productDAO = new ProductDAO();
             List<Product> list = new LinkedList<>();
-            int size = Integer.parseInt(request.getParameter("pagination"));
-            list = productDAO.getProductOrderByDate(size);
-            list.forEach( a -> {
-                out.print("<p>"+a.getName()+"</p>");
+            int pagination = Integer.parseInt(request.getParameter("pagination"));
+            HttpSession session = request.getSession(true);
+            Filter filter = (Filter)session.getAttribute("filter");
+            switch (filter.getService()) {
+                case "view":   
+                    list = productDAO.getProductOrderByDate(7 * pagination - 7, 7);
+                    break;
+                case "search":   
+                    list = productDAO.search(filter.getNameSearch(),7 * pagination - 7, 7);
+                    break;
+                case "viewByCategory":                  
+                    break;
+                case "viewByFilter":                  
+                    break;
+                default:
+                    response.sendRedirect("404.html");
+            }       
+            list.forEach(a -> {
+                out.println("<div class=\"row row_item\">");
+                //Status, image
+                out.println("<div class=\"col-sm-4\">");
+                out.println("<figure>");
+                switch (a.getProductStatus().getName()) {
+                    case "new" ->
+                        out.println("<span class=\"ribbon new\">" + a.getProductStatus().getName() + "</span>");
+                    case "hot" ->
+                        out.println("<span class=\"ribbon hot\">" + a.getProductStatus().getName() + "</span>");
+                    default -> {
+                        if (a.getDiscount().isActive()) {
+                            out.println("<span class=\"ribbon off\">-" + a.getDiscount().getDiscountPercent() + "%</span>");
+                        }
+                    }
+                }
+                out.println("<a href=\"product?service=detail&name=" + a.getName() + "\">\n"
+                        + "                             <img class=\"img-fluid lazy\" src=\"" + a.getImg1() + "\" data-src=\"" + a.getImg1() + "\" alt=\"\">\n"
+                        + "                              </a>");
+                out.println("</figure>");
+                out.println("</div>");
+                //End Status, image
+
+                //product
+                out.println("<div class=\"col-sm-8\">");
+                int rating = (int) a.getRatting().getRatting();
+
+                //rating
+                out.println("<div class=\"rating\">");
+                for (int i = 1; i <= rating; i++) {
+                    out.println("<i class=\"icon-star voted\"></i>");
+                }
+                for (int i = rating + 1; i <= 5; i++) {
+                    out.println("<i class=\"icon-star\"></i>");
+                }
+                out.println("</div>");
+                //End rating
+
+                //Name, description
+                out.println("<a href=\"product?service=detail&name=" + a.getName() + "\">\n"
+                        + "                                            <h3>" + a.getName() + "</h3>\n"
+                        + "                                        </a>");
+                out.println("<p>Description for " + a.getName() + "</p>");
+                //End Name, description
+
+                //Price
+                if (a.getDiscount().isActive()) {
+                    out.println("<span class=\"new_price\">$" + String.format("%.2f", a.getPrice() * (100 - a.getDiscount().getDiscountPercent()) / 100) + "</span>");
+                    out.println("<span class=\"old_price\">$" + a.getPrice() + "</span>");
+                } else {
+                    out.println("<span class=\"new_price\">$" + a.getPrice() + "</span>");
+                }
+                //End Price
+
+                //Add to cart
+                out.println("<ul >\n"
+                        + "                               <li><a href=\"\" style=\"text-decoration: none;\" class=\"btn_1\" type=\"button\" data-toggle=\"modal\" data-target=\"#exampleModal\" \n"
+                        + "                                    data-name=\"" + a.getName() + "\">\n"
+                        + "                                         Add to cart</a>\n"
+                        + "                                    </li>\n"
+                        + "<li><a class=\"btn_1 gray tooltip-1\" style=\"text-decoration: none;\" href=\"feedback?name=" + a.getName() + "\">\n"
+                        + "                                                    <i class=\"ti-comment-alt\"></i>\n"
+                        + "                                                    <span>Feedback</span>\n"
+                        + "                                                </a>\n"
+                        + "                                            </li>"
+                        + "                                </ul>");
+                //End add to cart
+
+                out.println("</div>");
+                //End product
+                out.println("</div>");
             });
-                
+
             /* TODO output your page here. You may use following sample code. */
-            
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

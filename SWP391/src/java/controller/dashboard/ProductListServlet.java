@@ -5,6 +5,7 @@
 
 package controller.dashboard;
 
+import dao.BrandDAO;
 import dao.CategoryDAO;
 import dao.DiscountDAO;
 import dao.ProductStatusDAO;
@@ -22,6 +23,7 @@ import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Brand;
 import model.Category;
 import model.Discount;
 import model.Pagination;
@@ -77,6 +79,7 @@ public class ProductListServlet extends HttpServlet {
         ProductStatusDAO psdb = new ProductStatusDAO();
         ProductsDAO pdb = new ProductsDAO();
         DiscountDAO ddb = new DiscountDAO();
+        BrandDAO bdb = new BrandDAO();
         
         //Get parameter
         String search = request.getParameter("search");
@@ -104,6 +107,14 @@ public class ProductListServlet extends HttpServlet {
         List<SubCategory> subCategories = new ArrayList<>();
         try{
             subCategories = scdb.getAll();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        //get list brand
+        List<Brand> listBrand = new ArrayList<>();
+        try{
+            listBrand = bdb.getAll();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -161,6 +172,7 @@ public class ProductListServlet extends HttpServlet {
         session.setAttribute("subCategories", subCategories);
         session.setAttribute("listProductStatus", listProductStatus);
         session.setAttribute("listDiscount", listDiscount);
+        session.setAttribute("listBrand", listBrand);
         
         request.getRequestDispatcher("viewsAdmin/viewProduct.jsp").forward(request, response);
     } 

@@ -4,7 +4,13 @@
  */
 package controller.dashboard;
 
+import dao.BrandDAO;
+import dao.CategoryDAO;
+import dao.DiscountDAO;
+import dao.ProductStatusDAO;
 import dao.ProductsDAO;
+import dao.SubCategoryDAO;
+import dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +19,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import model.Brand;
+import model.Category;
+import model.Discount;
+import model.ProductStatus;
+import model.SubCategory;
 
 /**
  *
@@ -74,6 +88,7 @@ public class UpdateProductServlet extends HttpServlet {
             session.setAttribute("messSuccess", "Update successfuly!");
         } catch (NumberFormatException e) {
             session.setAttribute("messError", "Update Failed!");
+            response.sendRedirect("productList");
         }
         response.sendRedirect("productList");
     }
@@ -89,7 +104,141 @@ public class UpdateProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        CategoryDAO cdb = new CategoryDAO();
+        SubCategoryDAO scdb = new SubCategoryDAO();
+        ProductStatusDAO psdb = new ProductStatusDAO();
+        ProductsDAO pdb = new ProductsDAO();
+        DiscountDAO ddb = new DiscountDAO();
+        BrandDAO bdb = new BrandDAO();
+
+        String img1 = request.getParameter("thumbnail");
+        String img2 = request.getParameter("img2");
+        String name = request.getParameter("title");
+        String oldName = request.getParameter("oldName");
+        String[] subCategoryId_raw = request.getParameterValues("subcategory");
+        String description = request.getParameter("description");
+        String price_raw = request.getParameter("price");
+        String discount_raw = request.getParameter("discount");
+        String status_raw = request.getParameter("status");
+        List<Integer> subCategoryId = new ArrayList<>();
+
+        //get list category
+        List<Category> categories = new ArrayList<>();
+        try {
+            categories = cdb.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //get list sub category
+        List<SubCategory> subCategories = new ArrayList<>();
+        try {
+            subCategories = scdb.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //get list brand
+        List<Brand> listBrand = new ArrayList<>();
+        try {
+            listBrand = bdb.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //get list product status
+        List<ProductStatus> listProductStatus = new ArrayList<>();
+        try {
+            listProductStatus = psdb.getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //get list discount
+        List<Discount> listDiscount = ddb.getAllDiscount();
+
+        // get product by name
+        ProductDTO product = pdb.getProductByName(name);
+
+        //List size
+        List<String> listSize = new ArrayList<>();
+        listSize.add("39");
+        listSize.add("40");
+        listSize.add("41");
+        listSize.add("42");
+        listSize.add("43");
+
+        //List color
+        List<String> listColor = pdb.getListColorByProduct(name);
+
+        // List one product
+        List<ProductDTO> listOneProduct = pdb.getListProductByName(oldName);
+
+        try {
+            for (String s : subCategoryId_raw) {
+                int number = Integer.parseInt(s);
+                subCategoryId.add(number);
+            }
+            session.setAttribute("messSuccess", "Update successfuly!");
+        } catch (NumberFormatException e) {
+            session.setAttribute("messError", "Update Failed!");
+            request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
+        }
+
+        //Update category
+        pdb.deleteProductSubCate(oldName);
+
+        for (ProductDTO p : listOneProduct) {
+            for (int n : subCategoryId) {
+                pdb.insertProductSubCate(p.getId(), n);
+            }
+        }
+
+        //Update quantity
+        for (ProductDTO p : listOneProduct) {
+            String quantity_raw = request.getParameter(p.getSize() + "of" + p.getColor());
+            try {
+                int quantity = Integer.parseInt(quantity_raw);
+                pdb.updateQuantityProduct(quantity, p.getName(), p.getSize(), p.getColor());
+                session.setAttribute("messSuccess", "Update successfuly!");
+            } catch (NumberFormatException e) {
+
+                request.setAttribute("product", product);
+
+                session.setAttribute("categories", categories);
+                session.setAttribute("subCategories", subCategories);
+                session.setAttribute("listProductStatus", listProductStatus);
+                session.setAttribute("listDiscount", listDiscount);
+                session.setAttribute("listSize", listSize);
+                session.setAttribute("listColor", listColor);
+                session.setAttribute("listOneProduct", listOneProduct);
+                session.setAttribute("listBrand", listBrand);
+
+                session.setAttribute("messError", "Update Failed!");
+                request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
+            }
+        }
+        
+        //Update
+        
+        
+
+        //after update
+        listOneProduct = pdb.getListProductByName(oldName);
+
+        request.setAttribute("product", product);
+
+        session.setAttribute("categories", categories);
+        session.setAttribute("subCategories", subCategories);
+        session.setAttribute("listProductStatus", listProductStatus);
+        session.setAttribute("listDiscount", listDiscount);
+        session.setAttribute("listSize", listSize);
+        session.setAttribute("listColor", listColor);
+        session.setAttribute("listOneProduct", listOneProduct);
+        session.setAttribute("listBrand", listBrand);
+
+        request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
     }
 
     /**

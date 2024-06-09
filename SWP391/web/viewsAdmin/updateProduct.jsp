@@ -86,138 +86,191 @@
                     </div>
                 </div><!--end container-->
 
-                <div class="xl:w-full  min-h-[calc(100vh-138px)] relative pb-14"> 
-                    <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 justify-between">
-                        <c:set var="p" value="${product}"/>
-                        <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-9 xl:col-span-9">
-                            <div class="w-full relative mb-4">  
-                                <div class="flex-auto p-0 md:p-4">                                   
-                                    <div class="mb-2">
-                                        <label for="thumbnail" class="font-medium text-sm text-slate-600 dark:text-slate-400">Thumbnail</label>
-                                        <input type="text" id="thumbnail" value="${p.img1}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="img2" class="font-medium text-sm text-slate-600 dark:text-slate-400">Image 2</label>
-                                        <input type="text" id="img2" value="${p.img2}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="title" class="font-medium text-sm text-slate-600 dark:text-slate-400">Title</label>
-                                        <input type="text" id="title" value="${p.name}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="category" class="font-medium text-sm text-slate-600 dark:text-slate-400">Category</label>
-                                        <select id="category" class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700">
-                                            <option  class="dark:text-slate-700">All Category</option>
-                                            <option  class="dark:text-slate-700">Electronics</option>
-                                            <option  class="dark:text-slate-700">Furniture</option>
-                                            <option  class="dark:text-slate-700">Footwear</option>
-                                            <option  class="dark:text-slate-700">Clothes</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="description" class="font-medium text-sm text-slate-600 dark:text-slate-400">Description</label>
-                                        <textarea id="description" rows="3" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-1 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" placeholder="Description ..."></textarea>
-                                    </div>
-                                    <div class="mb-2">
-                                        <div class="grid grid-cols-2 gap-3">
-                                            <div class="col-span-1">
-                                                <label for="Product-date" class="font-medium text-sm text-slate-600 dark:text-slate-400">Product Date</label>
-                                                <input type="text" id="Product-date" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="foo">
-                                            </div>
-                                            <div class="col-span-1">
-                                                <label for="price" class="font-medium text-sm text-slate-600 dark:text-slate-400">Price</label>
-                                                <input type="title" id="price" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Price" required>
+                <form action="updateProduct" method="post">
+                    <div class="xl:w-full  min-h-[calc(100vh-138px)] relative pb-14"> 
+                        <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 justify-between">
+                            <c:set var="p" value="${product}"/>
+                            <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-9 xl:col-span-9">
+                                <div class="w-full relative mb-4">  
+                                    <div class="flex-auto p-0 md:p-4">                                   
+                                        <div class="mb-2">
+                                            <label for="thumbnail" class="font-medium text-sm text-slate-600 dark:text-slate-400">Thumbnail</label>
+                                            <input type="text" id="thumbnail" name="thumbnail" value="${p.img1}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="img2" class="font-medium text-sm text-slate-600 dark:text-slate-400">Image 2</label>
+                                            <input type="text" id="img2" name="img2" value="${p.img2}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="title" class="font-medium text-sm text-slate-600 dark:text-slate-400">Title</label>
+                                            <input type="text" id="title" name="title" value="${p.name}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
+                                        </div>
+                                        <input type="hidden" name="oldName" value="${p.name}">
+                                        <div class="mb-2">
+                                            <label class="font-medium text-sm text-slate-600 dark:text-slate-400">Category</label><br>
+                                            <div class="grid sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
+                                                <c:forEach var="c" items="${categories}">
+                                                    <div class="sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-2 bg-slate-50 dark:bg-slate-700/25 text-center p-4 rounded-md border border-slate-100 dark:border-slate-700">
+                                                        <label class="font-medium text-sm text-slate-600 dark:text-slate-400">${c.name}</label><br>
+                                                        <c:forEach var="sc" items="${subCategories}">
+                                                            <c:if test="${c.id == sc.category_id}">
+                                                                <input type="checkbox" id="subcategory" name="subcategory" value="${sc.id}">
+                                                                <label for="subcategory">${sc.name}</label><br>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </div>
+                                                </c:forEach>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="gender" class="font-medium text-sm text-slate-600 dark:text-slate-400">For this product</label>
-                                        <select id="gender" class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700">
-                                            <option  class="dark:text-slate-700">-- Gender --</option>
-                                            <option  class="dark:text-slate-700">Male</option>
-                                            <option  class="dark:text-slate-700">Female</option>
-                                            <option  class="dark:text-slate-700">Children</option>
-                                            <option  class="dark:text-slate-700">Other</option>
-                                        </select>                                       
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="sizing" class="font-medium text-sm text-slate-600 dark:text-slate-400">Size</label>
-                                        <select id="sizing" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700">
-                                            <option>Size</option>
-                                            <option>SM</option>
-                                            <option>MD</option>
-                                            <option>LG</option>
-                                            <option>XL</option>
-                                            <option>XXL</option>
-                                        </select>
-                                    </div>
+                                        <div class="mb-2">
+                                            <label for="description" class="font-medium text-sm text-slate-600 dark:text-slate-400">Description</label>
+                                            <textarea id="description" name="description" rows="3" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-1 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" placeholder="Description ...">${p.description}</textarea>
+                                        </div>
 
-                                    <div class="">
-                                        <button class="px-2 py-2 lg:px-4 bg-brand  text-white text-sm  rounded hover:bg-brand-600 border border-brand-500">Add Product</button>
-                                        <button class="px-2 py-2 lg:px-4 bg-transparent  text-brand text-sm  rounded transition hover:bg-brand-500 hover:text-white border border-brand font-medium">Save Product</button>
-                                    </div>
-                                </div><!--end card-body--> 
-                            </div><!--end card-->                                  
-                        </div><!--end col-->  
-                        <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-3 xl:col-span-3">
-                            <div class="w-full relative mb-4">  
-                                <div class="flex-auto p-0 md:p-4">                                   
-                                    <div>
-                                        <p class="text-slate-700 text-base dark:text-slate-400">Thumbnail</p>
-                                        <img src="${p.img1}" alt="" class="w-20 h-auto">
-                                    </div>
-                                    <div>
-                                        <p class="text-slate-700 text-base dark:text-slate-400">Product Image 2</p>
-                                        <img src="${p.img2}" alt="" class="w-20 h-auto">
-                                    </div>
-                                    <div class="mb-5">
-                                        <p class="text-slate-700 text-base dark:text-slate-400">Product Title</p>
-                                        <h4 class="text-xl font-semibold text-slate-700 dark:text-slate-300">Mannat HD, Smart LED Fire TV</h4>
-                                    </div>
-                                    <div class="mb-5">
-                                        <p class="text-slate-600 text-base dark:text-slate-400">Description</p>
-                                        <h4 class="text-base font-medium text-slate-900 dark:text-slate-300">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</h4>
-                                    </div>
-                                    <div class="mb-5">
-                                        <p class="text-slate-600 text-base dark:text-slate-400">Pro. Date</p>
-                                        <h4 class="text-base font-semibold text-slate-900 dark:text-slate-300">02/05/2023</h4>
-                                    </div>
-                                    <div class="mb-5">
-                                        <p class="text-slate-600 text-base dark:text-slate-400">For this product</p>
-                                        <h4 class="text-base font-semibold text-slate-900 dark:text-slate-300">Other</h4>
-                                    </div>
-                                    <div class="mb-5">
-                                        <p class="text-slate-600 text-base dark:text-slate-400">Size</p>
-                                        <h4 class="text-base font-semibold text-slate-900 dark:text-slate-300">SM, MD, LG, XL</h4>
-                                    </div>
-                                </div><!--end card-body--> 
-                            </div><!--end card-->                                  
-                        </div><!--end col-->                        
-                    </div> <!--end grid-->                                        
-                    <!-- footer -->
-                    <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
-                        <div class="container">
-                            <!-- Footer Start -->
-                            <footer
-                                class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
-                                >
-                                &copy;
-                                <script>
-                                    var year = new Date();
-                                    document.write(year.getFullYear());
-                                </script>
-                                Robotech
-                                <span class="float-right hidden text-slate-600 dark:text-slate-400 md:inline-block"
-                                      >Crafted with <i class="ti ti-heart text-red-500"></i> by
-                                    Mannatthemes</span
-                                >
-                            </footer>
-                            <!-- end Footer -->
+                                        <div class="mb-2">
+                                            <label for="price" class="font-medium text-sm text-slate-600 dark:text-slate-400">Price</label>
+                                            <input type="number" id="price" name="price" value="${p.price}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="discount" class="font-medium text-sm text-slate-600 dark:text-slate-400">Discount</label>
+                                            <select id="discount" name="discount" class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700">
+                                                <c:forEach var="d" items="${listDiscount}">
+                                                    <option <c:if test="${p.discountId == d.id}">selected</c:if> class="dark:text-slate-700" value="${d.id}">${d.discountPercent}%</option>
+                                                </c:forEach>
+                                            </select>                                       
+                                        </div>
+                                        
+                                        <div class="mb-2">
+                                            <label for="brand" class="font-medium text-sm text-slate-600 dark:text-slate-400">Brand</label>
+                                            <select id="brand" name="brand" class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700">
+                                                <c:forEach var="b" items="${listBrand}">
+                                                    <option <c:if test="${p.brandId == b.id}">selected</c:if> class="dark:text-slate-700" value="${b.id}">${b.name}</option>
+                                                </c:forEach>
+                                            </select>                                       
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label for="status" class="font-medium text-sm text-slate-600 dark:text-slate-400">Status</label>
+                                            <select id="status" name="status" class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700">
+                                                <c:forEach var="ps" items="${listProductStatus}">
+                                                    <option <c:if test="${p.statusId == ps.id}">selected</c:if> class="dark:text-slate-700" value="${ps.id}">${ps.name}</option>
+                                                </c:forEach>
+                                            </select>                                       
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <label class="font-medium text-sm text-slate-600 dark:text-slate-400">Quantity</label><br>
+                                            <div class="grid sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
+                                                <c:forEach var="co" items="${listColor}">
+                                                    <div class="sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-2 bg-slate-50 dark:bg-slate-700/25 p-4 rounded-md border border-slate-100 dark:border-slate-700">
+                                                        <label class="font-medium text-sm text-slate-600 dark:text-slate-400">${co}</label><br>
+                                                        <c:forEach var="s" items="${listSize}">
+                                                            <c:forEach var="p1" items="${listOneProduct}">
+                                                                <c:if test="${p1.size == s && p1.color == co}">
+                                                                    <label>Size ${s}</label><br>
+                                                                    <input type="text" id="quantity" name="${s}of${co}" value="${p1.quantity}"><br>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </c:forEach>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+
+                                        <div class="">
+                                            <button class="px-2 py-2 lg:px-4 bg-brand  text-white text-sm  rounded hover:bg-brand-600 border border-brand-500">Save Product</button>
+                                            <a href="#" class="px-2 py-2 lg:px-4 bg-transparent  text-brand text-sm  rounded transition hover:bg-brand-500 hover:text-white border border-brand font-medium">Update Quantity</a>
+                                        </div>
+                                    </div><!--end card-body--> 
+                                </div><!--end card-->                                  
+                            </div><!--end col-->  
+                            <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-3 xl:col-span-3">
+                                <div class="w-full relative mb-4">  
+                                    <div class="flex-auto p-0 md:p-4">
+                                        <div class="grid sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
+                                            <div class="sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-6 bg-slate-50 dark:bg-slate-700/25 text-center p-4 rounded-md border border-slate-100 dark:border-slate-700">
+                                                <p class="text-slate-700 text-base dark:text-slate-400">Thumbnail</p>
+                                                <img src="${p.img1}" alt="" class="w-full h-auto"><br>
+                                            </div>
+                                            <div class="sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-6 bg-slate-50 dark:bg-slate-700/25 text-center p-4 rounded-md border border-slate-100 dark:border-slate-700">
+                                                <p class="text-slate-700 text-base dark:text-slate-400">Product Image 2</p>
+                                                <img src="${p.img2}" alt="" class="w-full h-auto"><br>
+                                            </div>
+                                        </div>
+                                        <div class="mb-5">
+                                            <p class="text-slate-700 text-base dark:text-slate-400">Product Title</p>
+                                            <h4 class="text-xl font-semibold text-slate-700 dark:text-slate-300">${p.name}</h4>
+                                        </div>
+                                        <div class="mb-5">
+                                            <p class="text-slate-600 text-base dark:text-slate-400">Category</p>
+                                            <c:forEach var="c" items="${categories}">
+                                                <c:if test="${c.id == p.categoryId}">
+                                                    <h4 class="text-base font-medium text-slate-900 dark:text-slate-300">${c.name}</h4>
+                                                </c:if>
+                                            </c:forEach>
+                                            <br><p class="text-slate-600 text-base dark:text-slate-400">Sub Category</p>
+                                            <c:forEach var="sc" items="${subCategories}">
+                                                <c:forEach var="scid" items="${p.subCategoryId}">
+                                                    <c:if test="${sc.id == scid}">
+                                                        <h4 class="text-base font-medium text-slate-900 dark:text-slate-300">${sc.name}</h4>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:forEach>
+                                        </div>
+                                        <div class="mb-5">
+                                            <p class="text-slate-600 text-base dark:text-slate-400">Description</p>
+                                            <h4 class="text-base font-medium text-slate-900 dark:text-slate-300">${p.description}</h4>
+                                        </div>
+                                        <div class="mb-5">
+                                            <p class="text-slate-700 text-base dark:text-slate-400">Price</p>
+                                            <h4 class="text-xl font-semibold text-slate-700 dark:text-slate-300">$${p.price}</h4>
+                                        </div>
+                                        <div class="mb-5">
+                                            <p class="text-slate-700 text-base dark:text-slate-400">Discount</p>
+                                            <c:forEach var="d" items="${listDiscount}">
+                                                <c:if test="${d.id == p.discountId}">
+                                                    <h4 class="text-xl font-semibold text-slate-700 dark:text-slate-300">${d.discountPercent}%</h4>
+                                                </c:if>
+                                            </c:forEach>
+                                        </div>
+                                        <div class="mb-5">
+                                            <p class="text-slate-700 text-base dark:text-slate-400">Status</p>
+                                            <c:forEach var="ps" items="${listProductStatus}">
+                                                <c:if test="${ps.id == p.statusId}">
+                                                    <h4 class="text-xl font-semibold text-slate-700 dark:text-slate-300">${ps.name}</h4>
+                                                </c:if>
+                                            </c:forEach>
+                                        </div>
+                                    </div><!--end card-body--> 
+                                </div><!--end card-->                                  
+                            </div><!--end col-->                        
+                        </div> <!--end grid-->                                        
+                        <!-- footer -->
+                        <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
+                            <div class="container">
+                                <!-- Footer Start -->
+                                <footer
+                                    class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
+                                    >
+                                    &copy;
+                                    <script>
+                                        var year = new Date();
+                                        document.write(year.getFullYear());
+                                    </script>
+                                    Robotech
+                                    <span class="float-right hidden text-slate-600 dark:text-slate-400 md:inline-block"
+                                          >Crafted with <i class="ti ti-heart text-red-500"></i> by
+                                        Mannatthemes</span
+                                    >
+                                </footer>
+                                <!-- end Footer -->
+                            </div>
                         </div>
-                    </div>
 
 
-                </div><!--end container-->
+                    </div><!--end container-->
+                </form>
             </div><!--end page-wrapper-->
         </div><!--end /div-->
 

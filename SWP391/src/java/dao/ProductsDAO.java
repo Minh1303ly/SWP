@@ -224,19 +224,19 @@ public class ProductsDAO extends DBContext {
     // get list product by name
     public List<ProductDTO> getListProductByName(String productName) {
         List<ProductDTO> listProduct = new ArrayList<>();
-        String sql = "SELECT DISTINCT C.[id] AS category_id\n"
-                + "	  ,P.[id]\n"
-                + "	  ,P.[discount_id]\n"
-                + "      ,P.[status_id]\n"
-                + "      ,P.[brand_id]\n"
-                + "      ,P.[name]\n"
-                + "	  ,P.[quantity]\n"
-                + "	  ,P.[price]\n"
-                + "	  ,P.[size]\n"
-                + "	  ,P.[color]\n"
-                + "      ,P.[description]\n"
-                + "      ,P.[img1]\n"
-                + "      ,P.[img2]\n"
+        String sql = "SELECT DISTINCT C.[id] AS category_id\n"//1
+                + "	  ,P.[id]\n"//2
+                + "	  ,P.[discount_id]\n"//3
+                + "      ,P.[status_id]\n"//4
+                + "      ,P.[brand_id]\n"//5
+                + "      ,P.[name]\n"//6
+                + "	  ,P.[quantity]\n"//7
+                + "	  ,P.[price]\n"//8
+                + "	  ,P.[size]\n"//9
+                + "	  ,P.[color]\n"//10
+                + "      ,P.[description]\n"//11
+                + "      ,P.[img1]\n"//12
+                + "      ,P.[img2]\n"//13
                 + "  FROM [dbo].[products] AS P\n"
                 + "  FULL JOIN [dbo].[product_subcate] AS PS\n"
                 + "  ON P.id = PS.product_id\n"
@@ -252,25 +252,132 @@ public class ProductsDAO extends DBContext {
             while (rs.next()) {
                 ProductDTO p = new ProductDTO();
 
-                p.setDiscountId(rs.getInt(1));
-                p.setStatusId(rs.getInt(2));
-                p.setBrandId(rs.getInt(3));
-                p.setName(rs.getString(4));
-                p.setPrice(rs.getFloat(5));
-                p.setDescription(rs.getString(6));
-                p.setImg1(rs.getString(7));
-                p.setImg2(rs.getString(8));
-                p.setCategoryId(rs.getInt(9));
+                p.setCategoryId(rs.getInt(1));
+                p.setId(rs.getInt(2));
+                p.setDiscountId(rs.getInt(3));
+                p.setStatusId(rs.getInt(4));
+                p.setBrandId(rs.getInt(5));
+                p.setName(rs.getString(6));
+                p.setQuantity(rs.getInt(7));
+                p.setPrice(rs.getFloat(8));
+                p.setSize(rs.getString(9));
+                p.setColor(rs.getString(10));
+                p.setDescription(rs.getString(11));
+                p.setImg1(rs.getString(12));
+                p.setImg2(rs.getString(13));
 
                 SubCategoryDAO sdb = new SubCategoryDAO();
                 p.setSubCategoryId(sdb.getSubCategoryByProduct(p.getName()));
-                
+
                 listProduct.add(p);
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
         return listProduct;
+    }
+
+    // get list color by product name
+    public List<String> getListColorByProduct(String productName) {
+        List<String> listColor = new ArrayList<>();
+        String sql = "SELECT DISTINCT [color]\n"//1
+                + "  FROM [dbo].[products]\n"
+                + "  WHERE [name] = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, productName);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                listColor.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listColor;
+    }
+
+    public void deleteProductSubCate(String productName) {
+        String sql = "DELETE FROM [dbo].[product_subcate]\n"
+                + "      WHERE product_id IN (SELECT [id]\n"
+                + "	  FROM [dbo].[products]\n"
+                + "	  WHERE [name] = ?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setString(1, productName);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void insertProductSubCate(int productId, int subCategoryId) {
+        String sql = "INSERT INTO [dbo].[product_subcate]\n"
+                + "           ([product_id]\n"
+                + "           ,[subcategory_id])\n"
+                + "     VALUES (?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setInt(1, productId);
+            st.setInt(2, subCategoryId);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void updateProduct(ProductDTO p, String oldProductName) {
+        String sql = "UPDATE [dbo].[products]\n"
+                + "   SET [discount_id] = ?\n"//1
+                + "      ,[status_id] = ?\n"//2
+                + "      ,[brand_id] = ?\n"//3
+                + "      ,[name] = ?\n"//4
+                + "      ,[price] = ?\n"//5
+                + "      ,[description] = ?\n"//6
+                + "      ,[img1] = ?\n"//7
+                + "      ,[img2] = ?\n"//8
+                + " WHERE [name] = ?";//9
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setInt(1, p.getDiscountId());
+            st.setInt(2, p.getStatusId());
+            st.setInt(3, p.getBrandId());
+            st.setString(4, p.getName());
+            st.setFloat(5, p.getPrice());
+            st.setString(6, p.getDescription());
+            st.setString(7, p.getImg1());
+            st.setString(8, p.getImg2());
+            st.setString(9, oldProductName);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void updateQuantityProduct(int quantity,String name, String size, String color) {
+        String sql = "UPDATE [dbo].[products]\n"
+                + "   SET [quantity] = ?\n"//1
+                + " WHERE [name] = ? \n"//2
+                + " AND [color] = ?\n"//3
+                + " AND [size] = ?";//4
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setInt(1, quantity);
+            st.setString(2, name);
+            st.setString(3, color);
+            st.setString(4, size);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
     public static void main(String[] args) {

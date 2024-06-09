@@ -53,7 +53,7 @@
         <jsp:include page="components/leftBar.jsp" />
 
         <jsp:include page="components/topBar.jsp" />
-        
+
         <jsp:include page="components/notification.jsp" />
 
 
@@ -192,6 +192,9 @@
                                                                         Feature
                                                                     </th>
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        Brand
+                                                                    </th>
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Status
                                                                     </th>
                                                                     <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
@@ -246,6 +249,16 @@
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             ${p.description}
                                                                         </td>
+
+                                                                        <!--Brand-->
+
+                                                                        <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
+                                                                            <c:forEach var="b" items="${listBrand}">
+                                                                                <c:if test="${b.id == p.brandId}">
+                                                                                    <span>${b.name}</span>
+                                                                                </c:if>
+                                                                            </c:forEach>
+                                                                        </td>
                                                                         <!--Status-->
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             <c:forEach var="ps" items="${listProductStatus}">
@@ -263,10 +276,10 @@
                                                                                 </c:if>
                                                                             </c:forEach>
                                                                         </td>
+
                                                                         <!--Action-->
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             <a href="productDetail?productName=${p.name}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                            <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                                         </td>
                                                                     </tr>
                                                                 </c:forEach>
@@ -309,7 +322,7 @@
                 </div><!--end page-wrapper-->
             </div><!--end /div-->
 
-            
+
             <!-- JAVASCRIPTS -->
             <!-- <div class="menu-overlay"></div> -->
             <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>

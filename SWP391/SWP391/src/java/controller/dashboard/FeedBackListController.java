@@ -42,23 +42,23 @@ public class FeedBackListController extends HttpServlet {
             HttpSession session = request.getSession();
 
             if (name != null) {
-                name = name.replace("+", "");
+                name = name.replace("+", " ");
                 list = fDAO.getAllRatingFilter(null, null, name, null);
             }
-            if (search != null) {
-                search = search.replace("+", "");
+            else if (search != null && !search.isEmpty()) {
+                search = search.replace("+", " ");
                 list = fDAO.getAllRatingFilter(null, null, null, search);
             }
-            if (status != null) {
+            else if (status != null && !status.isEmpty()) {
                 list = fDAO.getAllRatingFilter(status, null, null, null);
             }
-            if (ratingString != null && !ratingString.isEmpty()) {
+            else if (ratingString != null && !ratingString.isEmpty()) {
                 int rating = Integer.parseInt(ratingString);
                 list = fDAO.getAllRatingFilter(null, rating, null, null);
             }
 
             // start pagging
-            int limitPage = 5;
+            int limitPage = 10;
             if (request.getParameter("cp") == null) {
                 Pagination Page = new Pagination(list, limitPage, 1);
                 Pagination<Ratting> pagination = new Pagination<>(list, limitPage, 1);
@@ -75,7 +75,8 @@ public class FeedBackListController extends HttpServlet {
             // set URL
             request.setAttribute("pagging", "feedbackList");
             session.setAttribute("paramSearch", search);
-            session.setAttribute("paramStatus", ratingString);
+            session.setAttribute("paramStatus", status);
+            session.setAttribute("paramRating", ratingString);
             // end pagging
             request.setAttribute("listFeedBack", list);
             request.getRequestDispatcher("viewsAdmin/viewFeedback.jsp").forward(request, response);

@@ -154,7 +154,7 @@ public class FeedbackDAO extends DBContext {
     public static void main(String[] args) {
         try {
             FeedbackDAO dao = new FeedbackDAO();
-            System.out.println(dao.getAllRatingFilter(null, 2, null, null));
+            System.out.println(dao.getAllRatingFilter(null, null,"Running Shoes", null));
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

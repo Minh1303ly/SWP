@@ -18,8 +18,8 @@
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
         <script>
-            function autoSubmitForm() {
-                document.getElementById("myForm").submit();
+            function autoSubmitForm(formID) {
+                document.getElementById(formID).submit();
             }
         </script>
     </head>
@@ -71,27 +71,40 @@
                                         </ul>
                                     </div>
                                     <div class="flex flex-wrap gap-4 mb-3">
-<!--                                        <a href="updateCustomer">
-                                            <div class="mb-2 w-36">
-                                                <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-sm font-medium py-2 px-4 rounded">Create Account</button>
-                                            </div>
-                                        </a>-->
+                                        <!--                                        <a href="updateCustomer">
+                                                                                    <div class="mb-2 w-36">
+                                                                                        <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-sm font-medium py-2 px-4 rounded">Create Account</button>
+                                                                                    </div>
+                                                                                </a>-->
                                         <div class="mb-2 w-36">
-                                            <form id="myForm"  method="get" action="customerList">
-                                                <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="status" onchange="autoSubmitForm()" required>
+                                            <form id="statusForm"  method="get" action="feedbackList">
+                                                <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="status" onchange="autoSubmitForm('statusForm')" >
                                                     <option class="dark:text-slate-700" value="">Status</option>
-                                                    <option class="dark:text-slate-700" value="1">Active</option>
-                                                    <option class="dark:text-slate-700" value="2">InActive</option>
+                                                    <option class="dark:text-slate-700" value="pending">Pending</option>
+                                                    <option class="dark:text-slate-700" value="approved">Approved</option>
+                                                    <option class="dark:text-slate-700" value="rejected">Rejected</option>
                                                 </select>
                                             </form>
                                         </div>
-                                        <div class="ms-auto">
-                                            <form method="get" action="customerList">
-                                                <div class="relative">
-                                                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                                        <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
-                                                    </div>
-                                                    <input type="search" value="${search}" name="search" id="searchTable" onkeyup="searchTable()" class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5" placeholder="search">
+                                        <div class="mb-2 w-36">
+                                            <form id="ratingForm"  method="get" action="feedbackList">
+                                                <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="rating" onchange="autoSubmitForm('ratingForm')" >
+                                                    <option value="">Select Rating</option>
+                                                    <option value="1" <c:if test="${rating == 1}">selected</c:if>>⭐</option>
+                                                    <option value="2" <c:if test="${rating == 2}">selected</c:if>>⭐⭐</option>
+                                                    <option value="3" <c:if test="${rating == 3}">selected</c:if>>⭐⭐⭐</option>
+                                                    <option value="4" <c:if test="${rating == 4}">selected</c:if>>⭐⭐⭐⭐</option>
+                                                    <option value="5" <c:if test="${rating == 5}">selected</c:if>>⭐⭐⭐⭐⭐</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <form method="get" action="feedbackList">
+                                                    <div class="relative">
+                                                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                            <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
+                                                        </div>
+                                                        <input type="search" value="${search}" name="search" id="searchTable" onkeyup="searchTable()" class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5" placeholder="search">
                                                 </div>
                                             </form>
                                         </div>
@@ -172,7 +185,7 @@
                                                 </div><!--end div-->
                                                 </div><!--end grid-->
                                                 <div class="flex justify-between mt-4">
-                                                    <jsp:include page="components/pagination.jsp"/>
+                                                    <jsp:include page="components/pagination_feedback.jsp"/>
                                                 </div>
                                             </div>
                                         </div>

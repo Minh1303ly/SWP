@@ -12,6 +12,12 @@ import java.util.List;
  */
 public class Support {
 
+    /**
+     * Use to print array
+     * 
+     * @param array is given array
+     * @return a string after print array
+     */
     public static String printArray(String[] array) {
         String result = "";
         for (String element : array) {
@@ -20,6 +26,12 @@ public class Support {
         return result.substring(0, result.length() - 2);
     }
 
+        /**
+     * Use to print array
+     * 
+     * @param array is given array
+     * @return a string after print array
+     */
     public static String printArray(int[] array) {
         String result = "";
         for (int element : array) {
@@ -37,6 +49,12 @@ public class Support {
         return false;
     }
 
+        /**
+     * Use to print array follow by 'a', 'b', ...
+     * 
+     * @param arr is given array
+     * @return a string after print array
+     */
     public static String generateSqlQuery(String[] arr) {
         // Generate the SQL query with the appropriate number of placeholders
         StringBuilder sql = new StringBuilder("(");
@@ -50,6 +68,12 @@ public class Support {
         return sql.toString();
     }
 
+    /**
+     * Use to calculate average of integer array
+     * 
+     * @param array is given array
+     * @return a number is average
+     */
     public static int average(Integer[] array) {
         int result = 0;
         int count = 0;
@@ -60,6 +84,12 @@ public class Support {
         return result / count;
     }
 
+            /**
+     * Use to print list
+     * 
+     * @param ls is given list
+     * @return a string after print list
+     */
     public static String print(List<String> ls) {
         String string = "";
         for (String a : ls) {

@@ -326,7 +326,7 @@ public class CategoryDAO extends DBContext {
 
     /**
      * Use to get hierarchy category
-     * 
+     *
      * @return map hierarchy category
      */
     public Map<Category, CategoryAggregation> getHierarchyCategory() {
@@ -342,18 +342,24 @@ public class CategoryDAO extends DBContext {
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 Category key = new Category(rs.getString(1));
-                CategoryAggregation categoryAggregation = 
-                        listMap.computeIfAbsent(key, k -> new CategoryAggregation());
+                CategoryAggregation categoryAggregation
+                        = listMap.computeIfAbsent(key, k -> new CategoryAggregation());
                 categoryAggregation.nameSubCategories.add(rs.getString(2));
-            }   
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAO.class.getName())
                     .log(Level.SEVERE, null, ex);
         }
         return listMap;
     }
-    
-        public List<String> getCategoryByNameProduct(String name) {
+
+    /**
+     * Use to get category of given name
+     * 
+     * @param name name of product
+     * @return list string name category
+     */
+    public List<String> getCategoryByNameProduct(String name) {
         Set<String> set = new HashSet<>();
         List<String> categorys = new LinkedList<>();
         List<String> categorieses = new LinkedList<>();
@@ -385,8 +391,6 @@ public class CategoryDAO extends DBContext {
         return new LinkedList<>(set);
     }
 
-    
-
     public static void main(String[] args) {
         CategoryDAO cDAO = new CategoryDAO();
 //        try {
@@ -402,9 +406,9 @@ public class CategoryDAO extends DBContext {
 //        });
 //        System.out.println("");
 //    });
-    List<String> ls = cDAO.getCategoryByNameProduct("Ballet Flats");
-    ls.forEach( a ->{
-        System.out.println(a);
-    });
+        List<String> ls = cDAO.getCategoryByNameProduct("Ballet Flats");
+        ls.forEach(a -> {
+            System.out.println(a);
+        });
     }
 }

@@ -245,8 +245,9 @@ public class ProductDAO extends DBContext {
     }
 
     /**
+     * Use to get total of product
      * 
-     * @return 
+     * @return a number is total of product and return 0 if empty
      */
     public int getTotalProduct(){
         String sql = "SELECT COUNT(distinct name) FROM Products";
@@ -284,9 +285,10 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     *
-     * @param name
-     * @return
+     * Use to get all size of product have given name
+     * 
+     * @param name is given product name
+     * @return a list size of product
      */
     public List<Integer> getAllSizeByName(String name) {
         List<Integer> list = new LinkedList<>();
@@ -307,9 +309,10 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     *
-     * @param name
-     * @return
+     * Use to get all color of product have given name
+     * 
+     * @param name is given product name
+     * @return a list color of product
      */
     public List<String> getAllColorByName(String name) {
         List<String> list = new LinkedList<>();
@@ -330,10 +333,11 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     *
-     * @param from
-     * @param to
-     * @return
+     * Use to get product order by modified date
+     * 
+     * @param from is start row in database
+     * @param to   is next how much row from start
+     * @return a list product order by modified date
      */
     public List<Product> getProductOrderByDate(int from, int to) {
         List<Product> list = new LinkedList<>();
@@ -364,10 +368,11 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     *
-     * @param rating
-     * @param size
-     * @return
+     * Use to get product order by rating
+     * 
+     * @param rating is rating that you want order
+     * @param size   is size of list you want get
+     * @return a list product order by rating
      */
     public List<Product> getProductByRating(int rating, int size) {
         List<Product> list = new LinkedList<>();
@@ -400,11 +405,12 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     *
-     * @param name
-     * @param from
-     * @param to
-     * @return
+     *  Use to get product have given name
+     * 
+     * @param name is name product you want search
+     * @param from is start row in database
+     * @param to   is next how much row from start
+     * @return a list product have given name
      */
     public List<Product> search(String name, int from, int to) {
         List<Product> list = new LinkedList<>();
@@ -438,9 +444,10 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     *
-     * @param size
-     * @return
+     * Use to get latest product
+     * 
+     * @param size is size product you want get
+     * @return a list latest product
      */
     public List<Product> getProductLatest(int size) {
         List<Product> list = new LinkedList<>();
@@ -472,12 +479,13 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     *
-     * @param category
-     * @param subCategory
-     * @param from
-     * @param to
-     * @return
+     * Use to get product follow by category
+     * 
+     * @param category    is parent category
+     * @param subCategory is child category
+     * @param from        is start row in database
+     * @param to          is next how much row from start
+     * @return a list product have given category
      */
     public List<Product> getProductByCategory(String category, String subCategory,
             int from, int to) {
@@ -534,9 +542,10 @@ public class ProductDAO extends DBContext {
     }
 
     /**
+     * Use to make query follow fields in filter
      * 
-     * @param filter
-     * @return 
+     * @param filter is class have fields that following
+     * @return a string is query to take product follow fields in filter
      */
     public String getSqlOfFilter(Filter filter){
         StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
@@ -595,11 +604,12 @@ public class ProductDAO extends DBContext {
     }
     
     /**
+     * Use to get product have given value fields
      * 
-     * @param filter
-     * @param from
-     * @param to
-     * @return 
+     * @param filter is class have fields that following
+     * @param from        is start row in database
+     * @param to          is next how much row from start
+     * @return a list product following filter
      */
     public List<Product> getProductByFilter(Filter filter, int from, int to) {
         List<Product> list = new LinkedList<>();

@@ -156,6 +156,11 @@ public class ProductListServlet extends HttpServlet {
             session.setAttribute("page", Page);
         }
         
+        String statusName = "All Status";
+        if(psdb.getStatusByID(status) != null){
+            statusName = psdb.getStatusByID(status).getName();
+        }
+        
         // set URL
         request.setAttribute("pagging", "productList");
         
@@ -163,7 +168,7 @@ public class ProductListServlet extends HttpServlet {
         request.setAttribute("category", category);
         request.setAttribute("subcategory", subcategory);
         request.setAttribute("status", status);
-        
+        request.setAttribute("statusName", statusName);
         
         // end pagging
         request.setAttribute("listProduct", listProduct);
@@ -187,7 +192,7 @@ public class ProductListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /** 

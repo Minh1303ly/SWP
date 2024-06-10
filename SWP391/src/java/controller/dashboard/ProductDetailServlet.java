@@ -134,6 +134,9 @@ public class ProductDetailServlet extends HttpServlet {
         
         // List one product
         List<ProductDTO> listOneProduct = pdb.getListProductByName(productName);
+        
+        // List of subcategory of one product
+        int[] listSubCategoryOfProduct = scdb.getSubCategoryByProduct(productName);
 
         request.setAttribute("product", product);
 
@@ -145,6 +148,7 @@ public class ProductDetailServlet extends HttpServlet {
         session.setAttribute("listColor", listColor);
         session.setAttribute("listOneProduct", listOneProduct);
         session.setAttribute("listBrand", listBrand);
+        session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
 
         request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
     }

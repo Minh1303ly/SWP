@@ -55,7 +55,7 @@ public class SubCategoryDAO extends DBContext {
         return subCategories;
     }
 
-    // Get user by email
+    // Get subcategory by product
     public int[] getSubCategoryByProduct(String productName) {
         String sql = "SELECT DISTINCT S.[id] "
                 + "FROM [dbo].[subcategories] AS S "
@@ -84,8 +84,9 @@ public class SubCategoryDAO extends DBContext {
         return result;
     }
     
+    
     public static void main(String[] args) {
         SubCategoryDAO s = new SubCategoryDAO();
-        System.out.println(s.getSubCategoryByProduct("Running Shoes").length);
+        System.out.println(s.getSubCategoryByProduct("Running Shoes"));
     }
 }

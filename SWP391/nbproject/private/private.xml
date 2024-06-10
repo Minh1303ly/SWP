@@ -5,11 +5,10 @@
         <group>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/dashboard/ProductDetailServlet.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/dashboard/ProductListServlet.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/dto/ProductDTO.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/viewProduct.jsp</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/updateProduct.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/dao/ProductsDAO.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/dashboard/UpdateProductServlet.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/dao/ProductStatusDAO.java</file>
         </group>
     </open-files>
 </project-private>

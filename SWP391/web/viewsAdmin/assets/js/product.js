@@ -1,16 +1,16 @@
-function closeEditProductModal() {
-    $('#editProductModal').modal('hide');
+function openAddModal() {
+    $('#addProductModal').modal('show');
+}
+function closeAddModal() {
+    $('#addProductModal').modal('hide');
 }
 
-function saveEditProduct() {
-    // Your save functionality here
+function openAddModal() {
+    $('#addProductModal').val('');
 
-    // Close the modal after saving
-    $('#editProductModal').modal('hide');
+    $('#addProductModal').modal('show');
 }
 
-function openEditProductModal() {
-    $('#editProductModal').val('');
-
-    $('#editProductModal').modal('show');
+function closeAddModal() {
+    $('#addProductModal').modal('hide');
 }

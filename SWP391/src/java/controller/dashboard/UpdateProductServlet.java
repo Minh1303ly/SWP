@@ -121,6 +121,7 @@ public class UpdateProductServlet extends HttpServlet {
         String price_raw = request.getParameter("price");
         String discount_raw = request.getParameter("discount");
         String status_raw = request.getParameter("status");
+        String brand_raw = request.getParameter("brand");
         List<Integer> subCategoryId = new ArrayList<>();
 
         //get list category
@@ -159,7 +160,7 @@ public class UpdateProductServlet extends HttpServlet {
         List<Discount> listDiscount = ddb.getAllDiscount();
 
         // get product by name
-        ProductDTO product = pdb.getProductByName(name);
+        ProductDTO product = pdb.getProductByName(oldName);
 
         //List size
         List<String> listSize = new ArrayList<>();
@@ -170,7 +171,7 @@ public class UpdateProductServlet extends HttpServlet {
         listSize.add("43");
 
         //List color
-        List<String> listColor = pdb.getListColorByProduct(name);
+        List<String> listColor = pdb.getListColorByProduct(oldName);
 
         // List one product
         List<ProductDTO> listOneProduct = pdb.getListProductByName(oldName);
@@ -182,6 +183,7 @@ public class UpdateProductServlet extends HttpServlet {
             }
             session.setAttribute("messSuccess", "Update successfuly!");
         } catch (NumberFormatException e) {
+            session.removeAttribute("messSuccess");
             session.setAttribute("messError", "Update Failed!");
             request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
         }
@@ -194,6 +196,9 @@ public class UpdateProductServlet extends HttpServlet {
                 pdb.insertProductSubCate(p.getId(), n);
             }
         }
+
+        // List of subcategory of one product after update category
+        int[] listSubCategoryOfProduct = scdb.getSubCategoryByProduct(oldName);
 
         //Update quantity
         for (ProductDTO p : listOneProduct) {
@@ -214,18 +219,95 @@ public class UpdateProductServlet extends HttpServlet {
                 session.setAttribute("listColor", listColor);
                 session.setAttribute("listOneProduct", listOneProduct);
                 session.setAttribute("listBrand", listBrand);
+                session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
 
+                session.removeAttribute("messSuccess");
                 session.setAttribute("messError", "Update Failed!");
                 request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
             }
         }
-        
+
         //Update
-        
-        
+        int discountId = 0;
+        int statusId = 0;
+        float price = 0;
+        int brandId = 0;
+
+        if (pdb.getProductByName(name) != null && !oldName.equals(name)) {
+            request.setAttribute("product", product);
+
+            session.setAttribute("categories", categories);
+            session.setAttribute("subCategories", subCategories);
+            session.setAttribute("listProductStatus", listProductStatus);
+            session.setAttribute("listDiscount", listDiscount);
+            session.setAttribute("listSize", listSize);
+            session.setAttribute("listColor", listColor);
+            session.setAttribute("listOneProduct", listOneProduct);
+            session.setAttribute("listBrand", listBrand);
+            session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
+
+            session.removeAttribute("messSuccess");
+            session.setAttribute("messError", "Product Existed!");
+            request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
+        } else {
+            if (img1 == null || img1.equals("")
+                    || img2 == null || img2.equals("")
+                    || discount_raw == null || discount_raw.equals("")
+                    || status_raw == null || status_raw.equals("")
+                    || price_raw == null || price_raw.equals("")
+                    || brand_raw == null || brand_raw.equals("")
+                    || name == null || name.equals("")
+                    || description == null || description.equals("")) {
+                request.setAttribute("product", product);
+
+                session.setAttribute("categories", categories);
+                session.setAttribute("subCategories", subCategories);
+                session.setAttribute("listProductStatus", listProductStatus);
+                session.setAttribute("listDiscount", listDiscount);
+                session.setAttribute("listSize", listSize);
+                session.setAttribute("listColor", listColor);
+                session.setAttribute("listOneProduct", listOneProduct);
+                session.setAttribute("listBrand", listBrand);
+                session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
+
+                session.removeAttribute("messSuccess");
+                session.setAttribute("messError", "Update Failed!");
+                request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
+            }
+
+            try {
+                discountId = Integer.parseInt(discount_raw);
+                statusId = Integer.parseInt(status_raw);
+                price = Float.parseFloat(price_raw);
+                brandId = Integer.parseInt(brand_raw);
+
+                ProductDTO p = new ProductDTO(discountId, statusId, brandId, name, price, description, img1, img2);
+
+                pdb.updateProduct(p, oldName);
+
+                session.setAttribute("messSuccess", "Update successfuly!");
+            } catch (NumberFormatException e) {
+                request.setAttribute("product", product);
+
+                session.setAttribute("categories", categories);
+                session.setAttribute("subCategories", subCategories);
+                session.setAttribute("listProductStatus", listProductStatus);
+                session.setAttribute("listDiscount", listDiscount);
+                session.setAttribute("listSize", listSize);
+                session.setAttribute("listColor", listColor);
+                session.setAttribute("listOneProduct", listOneProduct);
+                session.setAttribute("listBrand", listBrand);
+                session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
+
+                session.removeAttribute("messSuccess");
+                session.setAttribute("messError", "Update Failed!");
+                request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
+            }
+        }
 
         //after update
-        listOneProduct = pdb.getListProductByName(oldName);
+        listOneProduct = pdb.getListProductByName(name);
+        product = pdb.getProductByName(name);
 
         request.setAttribute("product", product);
 
@@ -237,6 +319,7 @@ public class UpdateProductServlet extends HttpServlet {
         session.setAttribute("listColor", listColor);
         session.setAttribute("listOneProduct", listOneProduct);
         session.setAttribute("listBrand", listBrand);
+        session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
 
         request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
     }

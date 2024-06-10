@@ -382,6 +382,6 @@ public class ProductsDAO extends DBContext {
 
     public static void main(String[] args) {
         ProductsDAO p = new ProductsDAO();
-        System.out.println(p.getListProductByName("Running Shoes"));
+        System.out.println(p.getProductByName(""));
     }
 }

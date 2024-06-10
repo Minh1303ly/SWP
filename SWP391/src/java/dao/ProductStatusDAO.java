@@ -37,7 +37,7 @@ public class ProductStatusDAO extends DBContext {
                 ProductStatus productStatus = new ProductStatus();
                 productStatus.setId(resultSet.getInt("id"));
                 productStatus.setName(resultSet.getString("name"));
-                
+
                 listProductStatus.add(productStatus);
             }
         } finally {
@@ -51,5 +51,37 @@ public class ProductStatusDAO extends DBContext {
         }
 
         return listProductStatus;
+    }
+
+    //Get status name by id
+    public ProductStatus getStatusByID(int id) {
+        String sql = "SELECT [id]\n"//1
+                + "      ,[name]\n"//2
+                + "  FROM [dbo].[product_status]\n"
+                + "  WHERE [id] =?";//3
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                ProductStatus ps = new ProductStatus();
+                ps.setId(rs.getInt(1));
+                ps.setName(rs.getString(2));
+                
+                return ps;
+                
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exception properly, maybe rethrow or return an error code
+        }
+
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        ProductStatusDAO psdb = new ProductStatusDAO();
+        System.out.println(psdb.getStatusByID(1));
     }
 }

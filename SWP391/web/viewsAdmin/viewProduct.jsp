@@ -66,13 +66,13 @@
                                 <div class="">
                                     <div class="flex flex-wrap justify-between">
                                         <div class="items-center ">
-                                            <h1 class="font-medium text-3xl block dark:text-slate-100">Customers</h1>
+                                            <h1 class="font-medium text-3xl block dark:text-slate-100">Products</h1>
                                             <ol class="list-reset flex text-sm">
                                                 <li><a href="#" class="text-gray-500 dark:text-slate-400">Robotech</a></li>
                                                 <li><span class="text-gray-500 dark:text-slate-400 mx-2">/</span></li>
                                                 <li class="text-gray-500 dark:text-slate-400">Admin</li>
                                                 <li><span class="text-gray-500 dark:text-slate-400 mx-2">/</span></li>
-                                                <li class="text-primary-500 hover:text-primary-600 dark:text-primary-400">Customers</li>
+                                                <li class="text-primary-500 hover:text-primary-600 dark:text-primary-400">Products</li>
                                             </ol>
                                         </div>
                                         <div class="flex items-center">
@@ -98,7 +98,7 @@
                                         </ul>
                                     </div>
                                     <div>
-                                        <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
+                                        <button data-toggle="modal" data-target="#addProductModal" data-backdrop="false" class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-md font-medium py-2 px-4 rounded">
                                             Add product
                                         </button>
                                     </div>
@@ -113,11 +113,11 @@
                                         <nav class="categories">
                                             <ul class="clearfix">
                                                 <li><div>
-                                                        <button style="width: 140px; height: 40px" type="button"  data-fc-autoclose="both" data-fc-type="dropdown" class="px-2 py-1 lg:px-4 bg-transparent text-gray-900 text-sm font-medium mb-2  focus:outline-none  rounded transition border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10  dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Category <i class="fas fa-chevron-down ms-1 text-xs self-center"></i></button>
-                                                    </div>
-                                                    <div id="menu">
-                                                        <ul>
-                                                            <li><span><a href="productList?category=&subcategory=&search=${search}&status=${status}">All Category</a></span></li>
+                                                        <button style="width: 140px; height: 40px" type="button"  data-fc-autoclose="both" data-fc-type="dropdown" class="px-2 py-1 lg:px-4 bg-transparent text-gray-900 text-sm font-medium mb-2  focus:outline-none  rounded transition border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10  dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><c:if test="${category == '' || category == null}">All Category</c:if><c:if test="${category != null}">${category}</c:if><i class="fas fa-chevron-down ms-1 text-xs self-center"></i></button>
+                                                        </div>
+                                                        <div id="menu">
+                                                            <ul>
+                                                                    <li><span><a href="productList?category=&subcategory=&search=${search}&status=${status}">All Category</a></span></li>
                                                                         <c:forEach var="c" items="${categories}">
                                                                 <li><span><a href="productList?category=${c.name}&subcategory=${sc.name}&search=${search}&status=${status}">${c.name}</a></span>
                                                                     <ul>
@@ -138,11 +138,11 @@
                                         <nav class="categories">
                                             <ul class="clearfix">
                                                 <li><div>
-                                                        <button style="width: 140px; height: 40px" type="button"  data-fc-autoclose="both" data-fc-type="dropdown" class="px-2 py-1 lg:px-4 bg-transparent text-gray-900 text-sm font-medium mb-2  focus:outline-none  rounded transition border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10  dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Status <i class="fas fa-chevron-down ms-1 text-xs self-center"></i></button>
-                                                    </div>
-                                                    <div id="menu">
-                                                        <ul>
-                                                            <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=">All Status</a></li>
+                                                        <button style="width: 140px; height: 40px" type="button"  data-fc-autoclose="both" data-fc-type="dropdown" class="px-2 py-1 lg:px-4 bg-transparent text-gray-900 text-sm font-medium mb-2  focus:outline-none  rounded transition border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10  dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><c:if test="${status == 0}">All Status</c:if><c:if test="${status != 0}">${statusName}</c:if><i class="fas fa-chevron-down ms-1 text-xs self-center"></i></button>
+                                                        </div>
+                                                        <div id="menu">
+                                                            <ul>
+                                                                    <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=">All Status</a></li>
                                                                 <c:forEach var="ps" items="${listProductStatus}">
                                                                 <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=${ps.id}">${ps.name}</a></li>
                                                                 </c:forEach>
@@ -322,6 +322,74 @@
                 </div><!--end page-wrapper-->
             </div><!--end /div-->
 
+            <!--Add product-->
+            <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <!--Modal Header--> 
+                        <div class="modal-header" style="background-color: #007bff">
+                            <h5 class="modal-title" id="editProductModalLabel">Add Product</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeAddModal()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <!--Modal Body--> 
+                        <div class="modal-body">
+                            <form>
+                                <input type="hidden" id="sizeId" value="">
+                                <!-- Product Information -->
+                                <div class="form-group input-group">
+                                    <label for="productName">Name:</label>
+                                    <input class="input-group" type="text" id="productName" name="productName" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productCategoryID">Category:</label>
+                                    <select class="form-select" type="text" id="productCategoryID" name="productCategoryID" required>
+                                       
+                                    </select>
+                                </div>
+
+                                <div class="form-group input-group">
+                                    <label for="productPrice">Price:</label>
+                                    <input class="input-group" type="number" id="productPrice" name="productPrice" required>
+                                </div>
+
+                                <div class="form-group input-group">
+                                    <label for="productQuantity">Quantity:</label>
+                                    <input class="input-group" type="number" id="productQuantity" name="productQuantity" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productDiscount">Discount:</label>
+                                    <select class="form-select" id="productDiscount" name="productDiscount" required>
+                                        
+                                    </select>
+                                </div>
+
+                                <div class="form-group input-group">
+                                    <label for="productDescription">Description:</label>
+                                    <input class="input-group" type="text" id="productDescription" name="productDescription" required>
+                                </div>
+
+                                <!-- Images Upload -->
+                                <div class="form-group input-group">
+                                    <label for="images">Images:</label>
+                                    <div class="form-group input-group" id="images">
+                                        
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--Modal Footer--> 
+                        <div class="modal-footer" style="background-color: #007bff">
+                            <button type="button" class="btn btn-primary" onclick="saveEditProduct()">Save change</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeAddModal()"">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- JAVASCRIPTS -->
             <!-- <div class="menu-overlay"></div> -->

@@ -31,7 +31,6 @@ public class CustomerListController extends HttpServlet {
         HttpSession session = request.getSession();
         
         if (search != null) {
-            search = search.replace("+", "");
             list = uDAO.filterCustomersByStatusAndSearch(null, search);
         }
         

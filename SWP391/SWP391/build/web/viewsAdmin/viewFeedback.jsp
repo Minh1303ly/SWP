@@ -71,26 +71,21 @@
                                         </ul>
                                     </div>
                                     <div class="flex flex-wrap gap-4 mb-3">
-                                        <!--                                        <a href="updateCustomer">
-                                                                                    <div class="mb-2 w-36">
-                                                                                        <button class="inline-block focus:outline-none bg-brand-500 mt-1 text-white hover:bg-brand-600 hover:text-white  text-sm font-medium py-2 px-4 rounded">Create Account</button>
-                                                                                    </div>
-                                                                                </a>-->
                                         <div class="mb-2 w-36">
                                             <form id="statusForm"  method="get" action="feedbackList">
                                                 <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="status" onchange="autoSubmitForm('statusForm')" >
                                                     <option class="dark:text-slate-700" value="">Status</option>
-                                                    <option class="dark:text-slate-700" value="pending">Pending</option>
-                                                    <option class="dark:text-slate-700" value="approved">Approved</option>
-                                                    <option class="dark:text-slate-700" value="rejected">Rejected</option>
-                                                </select>
-                                            </form>
-                                        </div>
-                                        <div class="mb-2 w-36">
-                                            <form id="ratingForm"  method="get" action="feedbackList">
-                                                <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="rating" onchange="autoSubmitForm('ratingForm')" >
-                                                    <option value="">Select Rating</option>
-                                                    <option value="1" <c:if test="${rating == 1}">selected</c:if>>⭐</option>
+                                                    <option class="dark:text-slate-700" <c:if test="${paramStatus == 'pending'}">selected</c:if> value="pending">Pending</option>
+                                                    <option class="dark:text-slate-700" <c:if test="${paramStatus == 'approved'}">selected</c:if> value="approved">Approved</option>
+                                                    <option class="dark:text-slate-700" <c:if test="${paramStatus == 'rejecteds'}">selected</c:if> value="rejected">Rejected</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="mb-2 w-36">
+                                                <form id="ratingForm"  method="get" action="feedbackList">
+                                                    <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="rating" onchange="autoSubmitForm('ratingForm')" >
+                                                        <option value="">Select Rating</option>
+                                                        <option value="1" <c:if test="${rating == 1}">selected</c:if>>⭐</option>
                                                     <option value="2" <c:if test="${rating == 2}">selected</c:if>>⭐⭐</option>
                                                     <option value="3" <c:if test="${rating == 3}">selected</c:if>>⭐⭐⭐</option>
                                                     <option value="4" <c:if test="${rating == 4}">selected</c:if>>⭐⭐⭐⭐</option>
@@ -109,6 +104,51 @@
                                             </form>
                                         </div>
                                     </div>
+                                    <form action="feedbackList" method="get" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-12">
+                                        <!-- Status Filter -->
+                                        <div class="md:col-span-2">
+                                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                                            <select name="status" id="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                <option value="">Select Status</option>
+                                                <option value="pending" <c:if test="${paramStatus == 'pending'}">selected</c:if>>Pending</option>
+                                                <option value="approved"<c:if test="${paramStatus == 'approved'}">selected</c:if>>Approved</option>
+                                                <option value="rejected"<c:if test="${paramStatus == 'rejected'}">selected</c:if>>Rejected</option>
+                                                    <!-- Add more status options as needed -->
+                                                </select>
+                                            </div>
+
+                                            <!-- Rating Filter -->
+                                            <div class="md:col-span-3">
+                                                <label for="rating" class="block text-sm font-medium text-gray-700">Rating</label>
+                                                <select name="rating" id="rating" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                    <option value="">Select Rating</option>
+                                                    <option value="1" <c:if test="${paramRating == 1}">selected</c:if>>⭐</option>
+                                                <option value="2" <c:if test="${paramRating == 2}">selected</c:if>>⭐⭐</option>
+                                                <option value="3" <c:if test="${paramRating == 3}">selected</c:if>>⭐⭐⭐</option>
+                                                <option value="4" <c:if test="${paramRating == 4}">selected</c:if>>⭐⭐⭐⭐</option>
+                                                <option value="5" <c:if test="${paramRating == 5}">selected</c:if>>⭐⭐⭐⭐⭐</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- User Name Filter -->
+                                            <div class="md:col-span-3">
+                                                <label for="name" class="block text-sm font-medium text-gray-700">User Name</label>
+                                                <input type="text" name="name" id="name" value="${paramName}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        </div>
+
+                                        <!-- Comment Keyword Filter -->
+                                        <div class="md:col-span-3">
+                                            <label for="comment" class="block text-sm font-medium text-gray-700">Comment</label>
+                                            <input type="text" name="comment" id="comment" value="${paramComment}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        </div>
+
+                                        <!-- Submit Button -->
+                                        <div class="md:col-span-1 flex justify-end items-end">
+                                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-dark bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                Apply Filters
+                                            </button>
+                                        </div>
+                                    </form>
                                     <div id="myTabContent">
                                         <div class="active  p-4 bg-gray-50 rounded-lg dark:bg-gray-800/40" id="all" role="tabpanel" aria-labelledby="all-tab">
                                             <div class="grid grid-cols-1 p-0 md:p-4">
@@ -148,7 +188,7 @@
                                                                             <a>
                                                                                 <div class="flex items-center">
                                                                                     <div class="self-center">                                                                        
-                                                                                        <a class="text-sm font-semibold text-slate-700 dark:text-gray-400"><u>${f.user.first_name}${f.user.last_name}</u></a>
+                                                                                        <a class="text-sm font-semibold text-slate-700 dark:text-gray-400"><u>${f.user.first_name} ${f.user.last_name}</u></a>
                                                                                     </div>
                                                                                 </div>
                                                                             </a>
@@ -178,9 +218,8 @@
                                                                         </td>
                                                                     </tr>
                                                                 </c:forEach>
-
                                                             </tbody>
-                                                        </table>
+                                                        </table>                                                                                                  
                                                     </div><!--end div
                                                 </div><!--end div-->
                                                 </div><!--end grid-->

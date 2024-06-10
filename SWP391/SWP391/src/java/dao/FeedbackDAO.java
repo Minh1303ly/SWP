@@ -36,7 +36,7 @@ public class FeedbackDAO extends DBContext {
                 + "WHERE 1=1"
         );
 
-        if (status != null && !status.isEmpty()) {
+        if (status != null) {
             queryBuilder.append(" AND r.status LIKE ?");
         }
 
@@ -45,7 +45,14 @@ public class FeedbackDAO extends DBContext {
         }
 
         if (userName != null && !userName.isEmpty()) {
-            queryBuilder.append(" AND (u.first_name LIKE ? OR u.last_name LIKE ?)");
+            String[] nameParts = userName.split(" ");
+            if (nameParts.length >= 2) {
+                String firstName = nameParts[0];
+                String lastName = nameParts[1];
+                queryBuilder.append(" AND (u.first_name LIKE ? AND u.last_name LIKE ?)");
+            } else {
+                queryBuilder.append(" AND (u.first_name LIKE ? OR u.last_name LIKE ?)");
+            }
         }
 
         if (comment != null && !comment.isEmpty()) {
@@ -66,12 +73,20 @@ public class FeedbackDAO extends DBContext {
             }
 
             if (userName != null && !userName.isEmpty()) {
-                statement.setString(paramIndex++, "%" + userName + "%");
-                statement.setString(paramIndex++, "%" + userName + "%");
+                String[] nameParts = userName.split(" ");
+                if (nameParts.length >= 2) {
+                    String firstName = nameParts[0];
+                    String lastName = nameParts[1];
+                    statement.setString(paramIndex++, "%" + firstName + "%");
+                    statement.setString(paramIndex++, "%" + lastName + "%");
+                } else {
+                    statement.setString(paramIndex++, "%" + userName + "%");
+                    statement.setString(paramIndex++, "%" + userName + "%");
+                }
             }
 
             if (comment != null && !comment.isEmpty()) {
-                statement.setString(paramIndex++, "%" + comment+ "%");
+                statement.setString(paramIndex++, "%" + comment + "%");
             }
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -154,7 +169,7 @@ public class FeedbackDAO extends DBContext {
     public static void main(String[] args) {
         try {
             FeedbackDAO dao = new FeedbackDAO();
-            System.out.println(dao.getAllRatingFilter(null, null,"Running Shoes", null));
+            System.out.println(dao.getAllRatingFilter("", null, null, ""));
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

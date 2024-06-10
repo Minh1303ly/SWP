@@ -114,10 +114,11 @@ public class UpdateCustomerController extends HttpServlet {
             uUpdate.setModified_at(new Date());
 
             try {
-                session.setAttribute("messSusess", "Update User Success!");
+                session.setAttribute("messSuccess", "Update User Success!");
                 uDAO.updateUser(uUpdate);
                 
             } catch (Exception e) {
+                session.removeAttribute("messSuccess");
                 session.setAttribute("messError", "Update User Failed!");
             }
         }

@@ -325,8 +325,9 @@ public class CategoryDAO extends DBContext {
     }
 
     /**
+     * Use to get hierarchy category
      * 
-     * @return 
+     * @return map hierarchy category
      */
     public Map<Category, CategoryAggregation> getHierarchyCategory() {
         Map<Category, CategoryAggregation> listMap = new HashMap<>();
@@ -344,15 +345,44 @@ public class CategoryDAO extends DBContext {
                 CategoryAggregation categoryAggregation = 
                         listMap.computeIfAbsent(key, k -> new CategoryAggregation());
                 categoryAggregation.nameSubCategories.add(rs.getString(2));
-            }
-            
-            
+            }   
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDAO.class.getName())
                     .log(Level.SEVERE, null, ex);
-
         }
         return listMap;
+    }
+    
+        public List<String> getCategoryByNameProduct(String name) {
+        Set<String> set = new HashSet<>();
+        List<String> categorys = new LinkedList<>();
+        List<String> categorieses = new LinkedList<>();
+        String sql = """
+                     select categories.name, subcategories.name
+                     from categories full outer join subcategories
+                     on categories.id = subcategories.category_id
+                     full outer join product_subcate
+                     on product_subcate.subcategory_id = subcategories.id
+                     full outer join products
+                     on products.id = product_subcate.product_id
+                     where products.name like ?""";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setString(1, name);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                categorys.add(rs.getString(1));
+                categorieses.add(rs.getString(2));
+            }
+            set.addAll(categorys);
+            set.addAll(categorieses);
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return new LinkedList<>(set);
     }
 
     
@@ -364,13 +394,17 @@ public class CategoryDAO extends DBContext {
 //        } catch (SQLException ex) {
 //            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-    Map<Category, CategoryAggregation> listMap= cDAO.getHierarchyCategory();
-    listMap.forEach( (k,v) -> {
-        System.out.println(k.getName() + " ");
-        v.nameSubCategories.forEach( m -> {
-            System.out.print(m+ " ");
-        });
-        System.out.println("");
+//    Map<Category, CategoryAggregation> listMap= cDAO.getCategoryByNameProduct("Ballet Flats");
+//    listMap.forEach( (k,v) -> {
+//        System.out.println(k.getName() + " ");
+//        v.nameSubCategories.forEach( m -> {
+//            System.out.print(m+ " ");
+//        });
+//        System.out.println("");
+//    });
+    List<String> ls = cDAO.getCategoryByNameProduct("Ballet Flats");
+    ls.forEach( a ->{
+        System.out.println(a);
     });
     }
 }

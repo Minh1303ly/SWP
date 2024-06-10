@@ -305,7 +305,7 @@
     $('#AddToCart').on('click', function () {
         var form = document.getElementById('modalFormAddToCart');
         var formData = new FormData(form);
-        $.post("/SWP391/product?service=addCartByAjax",
+        $.post("/SWP391/cart?service=addCartByAjax",
                 {
                     name: formData.get("name"),
                     color: formData.get("color"),

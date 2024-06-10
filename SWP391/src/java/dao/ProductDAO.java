@@ -29,9 +29,11 @@ public class ProductDAO extends DBContext {
                                          """;
     private final String GROUP_BY_PRODUCT = """
             group by products.name, products.price, products.img1, products.img2, 
-            discounts.discount_percent, discounts.active,product_status.name, products.created_at
+            discounts.discount_percent, discounts.active,product_status.name, products.modified_at
                                             """;
-    
+
+    private final String ORDER_BY_UPDATE_DATE = " order by products.modified_at desc ";
+
     // Method to retrieve all products
     public List<Product> getAll(ProductStatus status) throws SQLException {
         List<Product> products = new ArrayList<>();
@@ -243,6 +245,25 @@ public class ProductDAO extends DBContext {
     }
 
     /**
+     * 
+     * @return 
+     */
+    public int getTotalProduct(){
+        String sql = "SELECT COUNT(distinct name) FROM Products";
+        try (PreparedStatement pre = connection.prepareStatement(sql,
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+                ResultSet rs = pre.executeQuery()) {
+            while(rs.next()){
+                return rs.getInt(1);
+            }       
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    /**
      * Use to get all distinct color in product
      *
      * @return list distinct color in product
@@ -263,9 +284,9 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     * 
+     *
      * @param name
-     * @return 
+     * @return
      */
     public List<Integer> getAllSizeByName(String name) {
         List<Integer> list = new LinkedList<>();
@@ -286,9 +307,9 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     * 
+     *
      * @param name
-     * @return 
+     * @return
      */
     public List<String> getAllColorByName(String name) {
         List<String> list = new LinkedList<>();
@@ -307,7 +328,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     /**
      *
      * @param from
@@ -318,7 +339,7 @@ public class ProductDAO extends DBContext {
         List<Product> list = new LinkedList<>();
         StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
         sql.append(GROUP_BY_PRODUCT);
-        sql.append("order by products.created_at desc ");
+        sql.append(ORDER_BY_UPDATE_DATE);
         sql.append("OFFSET ? ROWS FETCH NEXT ? rows ONLY; ");
         try {
             PreparedStatement pre = connection.prepareStatement(
@@ -343,53 +364,17 @@ public class ProductDAO extends DBContext {
     }
 
     /**
-     * 
-     * @param brandName
-     * @param size
-     * @return 
-     */
-    public List<Product> getProductHaveSameBrand(String brandName, int size) {
-        List<Product> list = new LinkedList<>();
-        StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
-        sql.append(" LEFT JOIN brands ON products.brand_id = brands.id ");
-        sql.append(" where brands.name like ? ");
-        sql.append(GROUP_BY_PRODUCT);
-        sql.append("order by products.created_at desc ");
-        sql.append("OFFSET 0 ROWS FETCH NEXT ? rows ONLY;");
-        try {
-            PreparedStatement pre = connection.prepareStatement(
-                    sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-            pre.setString(1, "%" + brandName + "%");
-            pre.setInt(2, size);
-            ResultSet rs = pre.executeQuery();
-            while (rs.next()) {
-                Product product = new Product(rs.getString(1),
-                        rs.getFloat(2), rs.getString(3),
-                        rs.getString(4),
-                        new Ratting(rs.getInt(5)),
-                        new Discount(rs.getInt(6), rs.getBoolean(7)),
-                        new ProductStatus(rs.getString(8)));
-                list.add(product);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
-    
-    /**
-     * 
+     *
      * @param rating
      * @param size
-     * @return 
+     * @return
      */
     public List<Product> getProductByRating(int rating, int size) {
         List<Product> list = new LinkedList<>();
         StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
         sql.append(GROUP_BY_PRODUCT);
         sql.append(" having AVG(rating.rating) >= ? ");
-        sql.append("order by products.created_at desc ");
+        sql.append(ORDER_BY_UPDATE_DATE);
         sql.append("OFFSET 0 ROWS FETCH NEXT ? rows ONLY;");
         try {
             PreparedStatement pre = connection.prepareStatement(
@@ -413,26 +398,26 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     /**
-     * 
+     *
      * @param name
      * @param from
      * @param to
-     * @return 
+     * @return
      */
     public List<Product> search(String name, int from, int to) {
         List<Product> list = new LinkedList<>();
-        StringBuilder sql = new StringBuilder(QUERY_PRODUCT);    
+        StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
         sql.append(" where LOWER(products.name) like ? ");
         sql.append(GROUP_BY_PRODUCT);
-        sql.append("order by products.created_at desc ");
+        sql.append(ORDER_BY_UPDATE_DATE);
         sql.append("OFFSET ? ROWS FETCH NEXT ? rows ONLY;");
         try {
             PreparedStatement pre = connection.prepareStatement(
                     sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            pre.setString(1, "%"+name.toLowerCase()+"%");
+            pre.setString(1, "%" + name.toLowerCase() + "%");
             pre.setInt(2, from);
             pre.setInt(3, to);
             ResultSet rs = pre.executeQuery();
@@ -451,17 +436,17 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     /**
-     * 
+     *
      * @param size
-     * @return 
+     * @return
      */
     public List<Product> getProductLatest(int size) {
         List<Product> list = new LinkedList<>();
         StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
         sql.append(GROUP_BY_PRODUCT);
-        sql.append("order by products.created_at desc ");
+        sql.append(ORDER_BY_UPDATE_DATE);
         sql.append("OFFSET 0 ROWS FETCH NEXT ? rows ONLY;");
         try {
             PreparedStatement pre = connection.prepareStatement(
@@ -480,15 +465,192 @@ public class ProductDAO extends DBContext {
                 product.getProductStatus().getName();
             }
         } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    /**
+     *
+     * @param category
+     * @param subCategory
+     * @param from
+     * @param to
+     * @return
+     */
+    public List<Product> getProductByCategory(String category, String subCategory,
+            int from, int to) {
+        List<Product> list = new LinkedList<>();
+        StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
+        sql.append("""
+                   where products.name in (select products.name
+                   from products
+                   left join product_subcate on products.id = product_subcate.product_id
+                   left outer join subcategories on product_subcate.subcategory_id = subcategories.id
+                   left outer join categories on categories.id = subcategories.category_id
+                                """);
+        if (category != null) {
+            sql.append(" where categories.name like ? ");
+        }
+        if (subCategory != null) {
+            sql.append(" and subcategories.name like ? ");
+        }
+        sql.append(" group by products.name) ");
+        sql.append(GROUP_BY_PRODUCT);
+        sql.append(ORDER_BY_UPDATE_DATE);
+        sql.append("OFFSET ? ROWS FETCH NEXT ? rows ONLY;");
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql.toString(), ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+
+            if (subCategory != null) {
+                pre.setString(1, category);
+                pre.setString(2, subCategory);
+                pre.setInt(3, from);
+                pre.setInt(4, to);
+            } else {
+                pre.setString(1, category);
+                pre.setInt(2, from);
+                pre.setInt(3, to);
+            }
+
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getFloat(2), rs.getString(3),
+                        rs.getString(4),
+                        new Ratting(rs.getInt(5)),
+                        new Discount(rs.getInt(6), rs.getBoolean(7)),
+                        new ProductStatus(rs.getString(8)));
+                list.add(product);
+                product.getProductStatus().getName();
+            }
+        } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
+
+    /**
+     * 
+     * @param filter
+     * @return 
+     */
+    public String getSqlOfFilter(Filter filter){
+        StringBuilder sql = new StringBuilder(QUERY_PRODUCT);
+        sql.append(" LEFT JOIN  brands on brands.id = products.brand_id ");
+        sql.append("""
+                   left join product_subcate on products.id = product_subcate.product_id
+                   left outer join subcategories on product_subcate.subcategory_id = subcategories.id
+                   left outer join categories on categories.id = subcategories.category_id """);
+        sql.append(" where 1=1 ");
+        if (filter.getNameSearch() != null) {
+            sql.append(" and LOWER(products.name) like ? ");
+        }
+        if (filter.getCategory() != null) {
+            sql.append(" and categories.name like ?  ");
+        }
+
+        if (filter.getSubCategory() != null) {
+            sql.append(" and subcategories.name like ? ");
+        }
+
+        if (filter.getColor() != null) {
+            sql.append(" and products.color in ");
+            sql.append(Support.generateSqlQuery(filter.getColor())).append(" ");
+        }
+        if (filter.getBrand() != null) {
+            sql.append(" and brands.name in ");
+            sql.append(Support.generateSqlQuery(filter.getBrand())).append(" ");
+        }
+        if (filter.getPrice() != null) {
+            String[] price = filter.getPrice();
+            sql.append("and ( ");
+            for (int i = 0; i < price.length; i++) {
+                switch (price[i]) {
+                    case "1" ->
+                        sql.append("(products.price > 0 and products.price <= 50)");
+                    case "2" ->
+                        sql.append(" (products.price > 50 and products.price <100)");
+                    case "3" ->
+                        sql.append("(products.price >= 100 and products.price <= 150)");
+                    case "4" ->
+                        sql.append("(products.price >150)");
+                    default ->
+                        sql.append("1=1");
+                }
+                if (i != price.length - 1) {
+                    sql.append(" or ");
+                }
+            }
+            sql.append(" ) ");
+        }
+        sql.append(GROUP_BY_PRODUCT);
+        sql.append(", brands.name ");
+        sql.append(ORDER_BY_UPDATE_DATE);
+        sql.append("OFFSET ? ROWS FETCH NEXT ? rows ONLY;");
+        return sql.toString();
+    }
     
+    /**
+     * 
+     * @param filter
+     * @param from
+     * @param to
+     * @return 
+     */
+    public List<Product> getProductByFilter(Filter filter, int from, int to) {
+        List<Product> list = new LinkedList<>();
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    getSqlOfFilter(filter), ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            int insertIndex = 0;
+            if (filter.getNameSearch() != null) {
+                pre.setString(++insertIndex, filter.getNameSearch());
+            }
+            if (filter.getCategory() != null) {
+                pre.setString(++insertIndex, filter.getCategory());
+            }
+            if (filter.getSubCategory() != null) {
+                pre.setString(++insertIndex, filter.getSubCategory());
+            }
+            if (filter.getColor() != null) {
+                for(String a : filter.getColor()){
+                    pre.setString(++insertIndex, a);
+                }            
+            }
+            if (filter.getBrand() != null) {
+                for(String a : filter.getBrand()){
+                    pre.setString(++insertIndex, a);
+                }
+            }
+            pre.setInt(++insertIndex, from);
+            pre.setInt(++insertIndex, to);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(rs.getString(1),
+                        rs.getFloat(2), rs.getString(3),
+                        rs.getString(4),
+                        new Ratting(rs.getInt(5)),
+                        new Discount(rs.getInt(6), rs.getBoolean(7)),
+                        new ProductStatus(rs.getString(8)));
+                list.add(product);
+                product.getProductStatus().getName();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     /**
      * Use to get product have unique name with keys are sizes and colors
      * description, categories, rating, status
-     * 
+     *
      * @param rs is ResultSet take from input
      * @return list product have unique name
      */
@@ -500,15 +662,15 @@ public class ProductDAO extends DBContext {
         //Use to set product have same also have same sizes and colors
         // description, categories, rating, status
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 SubProducts key = new SubProducts(
                         rs.getString(1), rs.getInt(2),
                         null, null, null,
                         rs.getString(6), rs.getString(7), null,
                         rs.getInt(9), rs.getInt(10),
                         null, rs.getString(12));
-                ProductAggregation aggregation = 
-                        productMap.computeIfAbsent(key, k -> new ProductAggregation());
+                ProductAggregation aggregation
+                        = productMap.computeIfAbsent(key, k -> new ProductAggregation());
                 aggregation.sizes.add(rs.getInt(3));
                 aggregation.colors.add(rs.getString(4));
                 aggregation.description.add(rs.getString(5));
@@ -525,7 +687,7 @@ public class ProductDAO extends DBContext {
                         String[] description = aggregation.description.toArray(String[]::new);
                         int[] rating = aggregation.rating.stream().mapToInt(i -> i).toArray();
                         String[] status = aggregation.status.toArray(String[]::new);
-                        return new SubProducts( key.getName(),
+                        return new SubProducts(key.getName(),
                                 key.getPrice(), sizes, colors,
                                 description,
                                 key.getImg1(), key.getImg2(),
@@ -533,7 +695,7 @@ public class ProductDAO extends DBContext {
                                 key.getDiscount_status(),
                                 status,
                                 key.getBrand_name());
-            })
+                    })
                     .collect(Collectors.toSet());
 
         } catch (SQLException ex) {
@@ -543,10 +705,10 @@ public class ProductDAO extends DBContext {
 
         return new LinkedList<>(list);
     }
-    
-        /**
+
+    /**
      * Use to search product have same given name
-     * 
+     *
      * @param name is name or text take from input
      * @return list product have same name with given name
      */
@@ -567,7 +729,7 @@ public class ProductDAO extends DBContext {
             PreparedStatement pre = connection.prepareStatement(
                     sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            pre.setString(1,"%"+name+"%");
+            pre.setString(1, "%" + name + "%");
             ResultSet rs = pre.executeQuery();
             list = getProductUniqueName(rs);
         } catch (SQLException ex) {
@@ -576,20 +738,21 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
-    
-    
+
     public static void main(String[] args) {
         ProductDAO productDAO = new ProductDAO();
-        List<Product> ls = productDAO.search("pl", 0, 7);
-//        System.out.println(ls.get(0).getDiscount().isActive());
+        String[] arr = {"1", "2"};
+        String[] color = {"Pink", "Grey"};
+        String[] brand = {"Nike"};
+        Filter filter = new Filter("viewByFilter",
+                null, null, null, color, brand,
+                arr);
+        List<Product> ls = productDAO.getProductByFilter(filter, 0, 50);
         ls.forEach(a -> {
-            System.out.println(a.getName());
+            System.out.println(a.getName() +"  "+a.getPrice());
         });
-//        String a="";
-//        List<SubProducts> lis = productDAO.searchUniqueName("k");
+        System.out.println(productDAO.getTotalProduct());
+
     }
 
 }
-
-

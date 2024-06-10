@@ -45,7 +45,7 @@ public class HomeServlet extends HttpServlet {
                     case "view" ->
                         view(request, response);
                     default ->
-                        view(request, response);
+                        response.sendRedirect("404.html");
                 }
             }
         }

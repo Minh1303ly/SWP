@@ -31,12 +31,12 @@
                 <c:forEach var="element" items="${categorySider}">
                     <li>
                         <div class="filter_type version_2">
-                            <h4><a href="#${element.key.name.replace(" ","_")}" data-bs-toggle="collapse" class="arrowRight">${element.key.name}</a></h4>
+                            <h4><a href="#${element.key.name}" data-bs-toggle="collapse" class="arrowRight">${element.key.name}</a></h4>
                             <div class="collapse" id="${element.key.name}">
                                 <ul>
-                                    <li><a href="product?service=view&category=${element.key.name}"> All</a></li>
+                                    <li><a href="product?service=viewByCategory&category=${element.key.name}"> All</a></li>
                                         <c:forEach var="elementValue" items="${element.value.nameSubCategories}">
-                                        <li><a href="product?service=view&category=${element.key.name.replace(" ","_")}&subCategory=${elementValue.replace(" ","_")}"> 
+                                        <li><a href="product?service=viewByCategory&category=${element.key.name}&subCategory=${elementValue}"> 
                                                 ${elementValue}
                                             </a>
                                         </li>
@@ -50,7 +50,7 @@
         </div>
         <!-- /filter_type -->
     </div>
-    <form action="product" method="get">
+    <form action="product" method="post">
         <!-- /filter_type -->
         <div class="filter_type version_2">
             <h4><a href="#filter_2" data-bs-toggle="collapse" class="closed">Color</a></h4>
@@ -110,7 +110,7 @@
                         </label>
                     </li>
                     <li>
-                        <label class="container_check">$150 — $200
+                        <label class="container_check">$150>
                             <input type="checkbox" name="price" value="4">
                             <span class="checkmark"></span>
                         </label>
@@ -123,7 +123,7 @@
             <button type="submit" class="btn_1 border border-secondary px-3 py-2 rounded-pill">
                 Filter
             </button>
-            <input type="hidden"  name="service" value="filter">          
+            <input type="hidden"  name="service" value="viewByFilter">          
         </div>
     </form>
 </div>

@@ -14,19 +14,19 @@ public class Filter {
     private String category;
     private String subCategory;
     private String[] color;
-    private int[] size;
-    private int[] price;
+    private String[] brand;
+    private String[] price;
 
     public Filter() {
     }
 
-    public Filter(String service, String nameSearch, String category, String subCategory, String[] color, int[] size, int[] price) {
+    public Filter(String service, String nameSearch, String category, String subCategory, String[] color, String[] brand, String[] price) {
         this.service = service;
         this.nameSearch = nameSearch;
-        this.category = category.replace("_", " ");
-        this.subCategory = subCategory.replace("_", " ");
+        this.category = category;
+        this.subCategory = subCategory;
         this.color = color;
-        this.size = size;
+        this.brand = brand;
         this.price = price;
     }
 
@@ -71,21 +71,19 @@ public class Filter {
         this.color = color;
     }
 
-    public int[] getSize() {
-        return size;
+    public String[] getBrand() {
+        return brand;
     }
 
-    public void setSize(int[] size) {
-        this.size = size;
+    public void setBrand(String[] brand) {
+        this.brand = brand;
     }
 
-    public int[] getPrice() {
+    public String[] getPrice() {
         return price;
     }
 
-    public void setPrice(int[] price) {
+    public void setPrice(String[] price) {
         this.price = price;
-    }
-    
-    
+    }   
 }

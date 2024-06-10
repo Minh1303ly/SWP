@@ -16,6 +16,12 @@ public class SubCategories {
     public SubCategories() {
     }
 
+    public SubCategories(String name) {
+        this.name = name;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

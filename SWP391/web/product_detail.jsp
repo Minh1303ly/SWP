@@ -62,7 +62,7 @@
                                 <!-- /row -->
                             </div>
                             <!-- /container -->
-                            <form action="product" method="post">
+                            <form action="cart" method="post">
                                 <div class="bg_white">
                                     <div class="container margin_60_35">
                                         <div class="row justify-content-between">
@@ -96,13 +96,12 @@
                                                             <i class="icon-star"></i>
                                                         </c:forEach>
                                                     </span>
-
-                                                    <small>Categories: 
-                                                        <c:forEach var="element" items="${categoryOfProduct}">
-                                                            ${element}  
-                                                        </c:forEach>
-                                                        Men/Running
-                                                    </small>
+                                                    <small>Brand: ${product.brand_name}</small>
+                                                        <p>
+                                                            <small >
+                                                               Categories: ${category} 
+                                                            </small>
+                                                        </p>
 
                                                     <c:forEach var="element" items="${product.description}">
                                                         <p>${element}</p>
@@ -190,6 +189,5 @@
         <!-- SPECIFIC SCRIPTS -->
         <script src="js/sticky_sidebar.min.js"></script>
         <script src="js/specific_listing.js"></script>
-
     </body>
 </html>

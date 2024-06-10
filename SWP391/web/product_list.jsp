@@ -224,8 +224,8 @@
         <script src="js/validate.js"></script>   
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const ITEMS_PER_PAGE = 7;
-                const TOTAL_PAGINATION_BUTTONS = 48;
+                const ITEMS_PER_PAGE = 5;
+                const TOTAL_PAGINATION_BUTTONS = ${TOTAL_PAGINATION};
                 const MAX_VISIBLE_PAGINATION_BUTTONS = 5;
                 const itemsContainer = document.getElementById('containerProduct');
                 const paginationContainer = document.getElementById('pagination');

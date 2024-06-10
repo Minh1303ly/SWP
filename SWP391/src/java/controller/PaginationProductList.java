@@ -44,14 +44,22 @@ public class PaginationProductList extends HttpServlet {
             Filter filter = (Filter)session.getAttribute("filter");
             switch (filter.getService()) {
                 case "view":   
-                    list = productDAO.getProductOrderByDate(7 * pagination - 7, 7);
+                    list = productDAO.
+                            getProductOrderByDate(5 * pagination - 5, 5);
                     break;
                 case "search":   
-                    list = productDAO.search(filter.getNameSearch(),7 * pagination - 7, 7);
+                    list = productDAO.search(filter.getNameSearch(),
+                            5 * pagination - 5, 5);
                     break;
-                case "viewByCategory":                  
+                case "viewByCategory":   
+                    list = productDAO.getProductByCategory(
+                            filter.getCategory(), 
+                            filter.getSubCategory(), 
+                            5 * pagination - 5, 5);
                     break;
-                case "viewByFilter":                  
+                case "viewByFilter":
+                    list = productDAO.getProductByFilter(filter, 
+                            5 * pagination - 5, 5);
                     break;
                 default:
                     response.sendRedirect("404.html");
@@ -128,6 +136,9 @@ public class PaginationProductList extends HttpServlet {
                 //End product
                 out.println("</div>");
             });
+            if(list.isEmpty()){
+                out.println("<p class=\"d-flex justify-content-center my-4\">Dont have any product</p>");
+            }
 
             /* TODO output your page here. You may use following sample code. */
         }

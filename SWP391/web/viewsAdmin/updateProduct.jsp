@@ -234,11 +234,25 @@
                                             </c:forEach>
                                         </div>
                                         <div class="mb-5">
+                                            <p class="text-slate-700 text-base dark:text-slate-400">Brand</p>
+                                            <c:forEach var="b" items="${listBrand}">
+                                                <c:if test="${b.id == p.brandId}">
+                                                    <h4 class="text-xl font-semibold text-slate-700 dark:text-slate-300">${b.name}</h4>
+                                                </c:if>
+                                            </c:forEach>
+                                        </div>
+                                        <div class="mb-5">
                                             <p class="text-slate-700 text-base dark:text-slate-400">Status</p>
                                             <c:forEach var="ps" items="${listProductStatus}">
                                                 <c:if test="${ps.id == p.statusId}">
                                                     <h4 class="text-xl font-semibold text-slate-700 dark:text-slate-300">${ps.name}</h4>
                                                 </c:if>
+                                            </c:forEach>
+                                        </div>
+                                        <div class="mb-5">
+                                            <p class="text-slate-700 text-base dark:text-slate-400">Color</p>
+                                            <c:forEach var="c" items="${listColor}">
+                                                <h4 class="text-xl font-semibold text-slate-700 dark:text-slate-300">${c}</h4>
                                             </c:forEach>
                                         </div>
                                     </div><!--end card-body--> 

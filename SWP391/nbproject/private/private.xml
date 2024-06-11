@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/dashboard/ProductDetailServlet.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/assets/js/product.js</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/dashboard/ProductListServlet.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/dao/ProductsDAO.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/viewProduct.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/updateProduct.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/dashboard/UpdateProductServlet.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/dao/ProductStatusDAO.java</file>
         </group>
     </open-files>
 </project-private>

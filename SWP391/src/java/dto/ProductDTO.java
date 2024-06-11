@@ -53,6 +53,23 @@ public class ProductDTO {
         this.img2 = img2;
     }
 
+    public ProductDTO(int discountId, int statusId, int brandId, String name, float price, String size, String color, String description, String img1, String img2, Date createdAt, Date modifiedAt) {
+        this.discountId = discountId;
+        this.statusId = statusId;
+        this.brandId = brandId;
+        this.name = name;
+        this.price = price;
+        this.size = size;
+        this.color = color;
+        this.description = description;
+        this.img1 = img1;
+        this.img2 = img2;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+    
+    
+
     public ProductDTO(int discountId, int statusId, int brandId, String name, float price, String description, String img1, String img2, int categoryId, int[] subCategoryId) {
         this.discountId = discountId;
         this.statusId = statusId;

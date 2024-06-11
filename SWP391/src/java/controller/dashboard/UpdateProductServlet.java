@@ -205,6 +205,11 @@ public class UpdateProductServlet extends HttpServlet {
             String quantity_raw = request.getParameter(p.getSize() + "of" + p.getColor());
             try {
                 int quantity = Integer.parseInt(quantity_raw);
+                
+                if(quantity<0){
+                    throw new NumberFormatException();
+                }
+                
                 pdb.updateQuantityProduct(quantity, p.getName(), p.getSize(), p.getColor());
                 session.setAttribute("messSuccess", "Update successfuly!");
             } catch (NumberFormatException e) {
@@ -280,6 +285,10 @@ public class UpdateProductServlet extends HttpServlet {
                 statusId = Integer.parseInt(status_raw);
                 price = Float.parseFloat(price_raw);
                 brandId = Integer.parseInt(brand_raw);
+                
+                if(price<0){
+                    throw new NumberFormatException();
+                }
 
                 ProductDTO p = new ProductDTO(discountId, statusId, brandId, name, price, description, img1, img2);
 

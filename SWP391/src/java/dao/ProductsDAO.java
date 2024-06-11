@@ -360,7 +360,7 @@ public class ProductsDAO extends DBContext {
         }
     }
 
-    public void updateQuantityProduct(int quantity,String name, String size, String color) {
+    public void updateQuantityProduct(int quantity, String name, String size, String color) {
         String sql = "UPDATE [dbo].[products]\n"
                 + "   SET [quantity] = ?\n"//1
                 + " WHERE [name] = ? \n"//2
@@ -380,8 +380,51 @@ public class ProductsDAO extends DBContext {
         }
     }
 
+    public void insertProduct(ProductDTO p) {
+        String sql = "INSERT INTO [dbo].[products]\n"
+                + "           ([discount_id]\n"//1
+                + "           ,[status_id]\n"//2
+                + "           ,[brand_id]\n"//3
+                + "           ,[name]\n"//4
+                + "           ,[price]\n"//5
+                + "           ,[size]\n"//6
+                + "           ,[color]\n"//7
+                + "           ,[description]\n"//8
+                + "           ,[img1]\n"//9
+                + "           ,[img2]\n"//10
+                + "           ,[created_at]\n"//11
+                + "           ,[modified_at])\n"//12
+                + "     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setInt(1, p.getDiscountId());
+            st.setInt(2, p.getStatusId());
+            st.setInt(3, p.getBrandId());
+            st.setString(4, p.getName());
+            st.setFloat(5, p.getPrice());
+            st.setString(6, p.getSize());
+            st.setString(7, p.getColor());
+            st.setString(8, p.getDescription());
+            st.setString(9, p.getImg1());
+            st.setString(10, p.getImg2());
+            
+            java.util.Date utilDate = p.getCreatedAt();
+            java.sql.Date created_at = new java.sql.Date(utilDate.getTime());
+            st.setDate(11, created_at);
+            
+            utilDate = p.getModifiedAt();
+            java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
+            st.setDate(12, modified_at);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     public static void main(String[] args) {
         ProductsDAO p = new ProductsDAO();
-        System.out.println(p.getProductByName(""));
+        System.out.println(p.filterProductAndSearch("Men", "", "", 0));
     }
 }

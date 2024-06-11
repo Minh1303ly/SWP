@@ -142,7 +142,7 @@
                                                         </div>
                                                         <div id="menu">
                                                             <ul>
-                                                                    <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=">All Status</a></li>
+                                                                    <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=0">All Status</a></li>
                                                                 <c:forEach var="ps" items="${listProductStatus}">
                                                                 <li><a href="productList?category=${category}&subcategory=${subcategory}&search=${search}&status=${ps.id}">${ps.name}</a></li>
                                                                 </c:forEach>
@@ -335,58 +335,66 @@
                         </div>
 
                         <!--Modal Body--> 
-                        <div class="modal-body">
-                            <form>
-                                <input type="hidden" id="sizeId" value="">
-                                <!-- Product Information -->
+                        <form action="productList" method="post">
+                            <div class="modal-body">
                                 <div class="form-group input-group">
-                                    <label for="productName">Name:</label>
-                                    <input class="input-group" type="text" id="productName" name="productName" required>
+                                    <label for="img1">Image 1:</label>
+                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="text" id="img1" name="img1" required>
                                 </div>
-
                                 <div class="form-group">
-                                    <label for="productCategoryID">Category:</label>
-                                    <select class="form-select" type="text" id="productCategoryID" name="productCategoryID" required>
-                                       
+                                    <label for="img2">Image 2:</label>
+                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="text" id="img2" name="img2" required>
+                                </div>
+                                <div class="form-group input-group">
+                                    <label for="title">Title:</label>
+                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="text" id="title" name="title" required>
+                                </div>
+                                <div class="form-group input-group">
+                                    <label for="description">Description:</label>
+                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="text" id="description" name="description" required>
+                                </div>
+                                <div class="form-group input-group">
+                                    <label for="price">Price:</label>
+                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="number" step="0.01" id="price" name="price" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="discount">Discount:</label>
+                                    <select class="form-select" id="discount" name="discount" required>
+                                        <c:forEach var="d" items="${listDiscount}">
+                                            <option value="${d.id}">${d.discountPercent}%</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
-
-                                <div class="form-group input-group">
-                                    <label for="productPrice">Price:</label>
-                                    <input class="input-group" type="number" id="productPrice" name="productPrice" required>
-                                </div>
-
-                                <div class="form-group input-group">
-                                    <label for="productQuantity">Quantity:</label>
-                                    <input class="input-group" type="number" id="productQuantity" name="productQuantity" required>
-                                </div>
-
                                 <div class="form-group">
-                                    <label for="productDiscount">Discount:</label>
-                                    <select class="form-select" id="productDiscount" name="productDiscount" required>
-                                        
+                                    <label for="brand">Brand:</label>
+                                    <select class="form-select" id="brand" name="brand" required>
+                                        <c:forEach var="b" items="${listBrand}">
+                                            <option value="${b.id}">${b.name}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
-
-                                <div class="form-group input-group">
-                                    <label for="productDescription">Description:</label>
-                                    <input class="input-group" type="text" id="productDescription" name="productDescription" required>
+                                <div class="form-group">
+                                    <label for="status">Status:</label>
+                                    <select class="form-select" id="status" name="status" required>
+                                        <c:forEach var="s" items="${listProductStatus}">
+                                            <option value="${s.id}">${s.name}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
-
-                                <!-- Images Upload -->
-                                <div class="form-group input-group">
-                                    <label for="images">Images:</label>
-                                    <div class="form-group input-group" id="images">
-                                        
-                                    </div>
+                                <div>
+                                    <label>Color:</label><br>
+                                    <c:forEach var="c" items="${listColor}">
+                                        <input <c:if test="${c == 'White'}">checked</c:if> type="checkbox" id="color" name="color" value="${c}">
+                                        <label for="color">${c}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </c:forEach>
                                 </div>
-                            </form>
-                        </div>
-                        <!--Modal Footer--> 
-                        <div class="modal-footer" style="background-color: #007bff">
-                            <button type="button" class="btn btn-primary" onclick="saveEditProduct()">Save change</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeAddModal()"">Cancel</button>
-                        </div>
+                            </div>
+                            <!--Modal Footer--> 
+                            <div class="modal-footer" style="background-color: #007bff">
+                                <button type="submit" class="btn btn-primary" >Save Product</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeAddModal()"">Cancel</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

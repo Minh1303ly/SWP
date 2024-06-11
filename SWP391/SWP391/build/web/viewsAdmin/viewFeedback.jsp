@@ -17,11 +17,11 @@
         <link rel="stylesheet" href="viewsAdmin/assets/libs/icofont/icofont.min.css">
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
-        <script>
+<!--        <script>
             function autoSubmitForm(formID) {
                 document.getElementById(formID).submit();
             }
-        </script>
+        </script>-->
     </head>
 
     <body data-layout-mode="light"  data-sidebar-size="default" data-theme-layout="vertical" class="bg-[#EEF0FC] dark:bg-gray-900">
@@ -70,7 +70,7 @@
                                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" aria-label="Tabs">
                                         </ul>
                                     </div>
-                                    <div class="flex flex-wrap gap-4 mb-3">
+<!--                                    <div class="flex flex-wrap gap-4 mb-3">
                                         <div class="mb-2 w-36">
                                             <form id="statusForm"  method="get" action="feedbackList">
                                                 <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="status" onchange="autoSubmitForm('statusForm')" >
@@ -103,7 +103,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <form action="feedbackList" method="get" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-12">
                                         <!-- Status Filter -->
                                         <div class="md:col-span-2">

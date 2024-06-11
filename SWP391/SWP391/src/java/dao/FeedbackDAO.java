@@ -169,10 +169,30 @@ public class FeedbackDAO extends DBContext {
         return null;
     }
 
+    public void changeRatingStatus(int ratingId, String newStatus) throws SQLException {
+        String updateQuery = "UPDATE rating SET status = ? WHERE id = ?";
+        try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+            updateStatement.setString(1, newStatus);
+            updateStatement.setInt(2, ratingId);
+            int rowsUpdated = updateStatement.executeUpdate();
+        } catch (SQLException ex) {
+        }
+    }
+
+    public void changeRatingStatusImage(int ratingId, String newStatus) throws SQLException {
+        String updateQuery = "UPDATE rating SET statusImage = ? WHERE id = ?";
+        try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
+            updateStatement.setString(1, newStatus);
+            updateStatement.setInt(2, ratingId);
+            int rowsUpdated = updateStatement.executeUpdate();
+        } catch (SQLException ex) {
+        }
+    }
+
     public static void main(String[] args) {
         try {
             FeedbackDAO dao = new FeedbackDAO();
-            dao.getFeedbackById(1);
+            dao.changeRatingStatus(1, "pending");
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -192,9 +192,6 @@ public class UserDAO extends DBContext {
 
             // Execute the insert statement
             int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("A new user was inserted successfully!");
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception

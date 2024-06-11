@@ -119,12 +119,6 @@
                                                                     <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         PhoneNumber
                                                                     </th>
-                                                                    <!--                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                                                                                            CreateAt
-                                                                                                                                        </th>
-                                                                                                                                        <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                                                                                            ModifiedAt
-                                                                                                                                        </th>-->
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Status
                                                                     </th>

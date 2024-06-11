@@ -17,11 +17,11 @@
         <link rel="stylesheet" href="viewsAdmin/assets/libs/icofont/icofont.min.css">
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
-<!--        <script>
-            function autoSubmitForm(formID) {
-                document.getElementById(formID).submit();
+        <script>
+            function submitForm() {
+                document.getElementById("statusChangeForm").submit();
             }
-        </script>-->
+        </script>
     </head>
 
     <body data-layout-mode="light"  data-sidebar-size="default" data-theme-layout="vertical" class="bg-[#EEF0FC] dark:bg-gray-900">
@@ -70,40 +70,6 @@
                                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" aria-label="Tabs">
                                         </ul>
                                     </div>
-<!--                                    <div class="flex flex-wrap gap-4 mb-3">
-                                        <div class="mb-2 w-36">
-                                            <form id="statusForm"  method="get" action="feedbackList">
-                                                <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="status" onchange="autoSubmitForm('statusForm')" >
-                                                    <option class="dark:text-slate-700" value="">Status</option>
-                                                    <option class="dark:text-slate-700" <c:if test="${paramStatus == 'pending'}">selected</c:if> value="pending">Pending</option>
-                                                    <option class="dark:text-slate-700" <c:if test="${paramStatus == 'approved'}">selected</c:if> value="approved">Approved</option>
-                                                    <option class="dark:text-slate-700" <c:if test="${paramStatus == 'rejecteds'}">selected</c:if> value="rejected">Rejected</option>
-                                                    </select>
-                                                </form>
-                                            </div>
-                                            <div class="mb-2 w-36">
-                                                <form id="ratingForm"  method="get" action="feedbackList">
-                                                    <select class="w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500  dark:hover:border-slate-700" name="rating" onchange="autoSubmitForm('ratingForm')" >
-                                                        <option value="">Select Rating</option>
-                                                        <option value="1" <c:if test="${rating == 1}">selected</c:if>>⭐</option>
-                                                    <option value="2" <c:if test="${rating == 2}">selected</c:if>>⭐⭐</option>
-                                                    <option value="3" <c:if test="${rating == 3}">selected</c:if>>⭐⭐⭐</option>
-                                                    <option value="4" <c:if test="${rating == 4}">selected</c:if>>⭐⭐⭐⭐</option>
-                                                    <option value="5" <c:if test="${rating == 5}">selected</c:if>>⭐⭐⭐⭐⭐</option>
-                                                    </select>
-                                                </form>
-                                            </div>
-                                            <div class="ms-auto">
-                                                <form method="get" action="feedbackList">
-                                                    <div class="relative">
-                                                        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                                            <i data-lucide="search" class="z-[1] w-5 h-5 stroke-slate-400"></i>
-                                                        </div>
-                                                        <input type="search" value="${search}" name="search" id="searchTable" onkeyup="searchTable()" class="form-input w-52 rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700 pl-10 p-2.5" placeholder="search">
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>-->
                                     <form action="feedbackList" method="get" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-12">
                                         <!-- Status Filter -->
                                         <div class="md:col-span-2">
@@ -202,18 +168,18 @@
                                                                             </c:forEach>
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <c:if test="${f.status ==  'pending'}">
-                                                                                <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Pending</span>
-                                                                            </c:if>
-                                                                            <c:if test="${f.status ==  'approved'}">
-                                                                                <span class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Approved</span>
-                                                                            </c:if>
-                                                                            <c:if test="${f.status ==  'rejected'}">
-                                                                                <span class="bg-yellow-600/5 text-yellow-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Rejected</span>
-                                                                            </c:if>
-                                                                        </td>                                                                    
-                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <a href="feedbackDetail?id=${f.id}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
+                                                                            <form method="POST" action="feedbackStatus" id="statusChangeForm">
+                                                                                <input type="text" name="id" value="${f.id}" hidden="">
+                                                                                <input type="text" name="mode" value="status" hidden="">
+                                                                                <select name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="submitForm()">
+                                                                                    <option class="bg-yellow-600/5 text-yellow-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"  value="pending" <c:if test="${f.status == 'pending'}">selected</c:if>>Pending</option>
+                                                                                    <option class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="approved" <c:if test="${f.status == 'approved'}">selected</c:if>>Approve</option>
+                                                                                    <option class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="rejected" <c:if test="${f.status == 'rejected'}">selected</c:if>>Rejected</option>
+                                                                                    </select>
+                                                                                </form>
+                                                                            </td>   
+                                                                            <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                                <a href="feedbackDetail?id=${f.id}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
                                                                             <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                                         </td>
                                                                     </tr>

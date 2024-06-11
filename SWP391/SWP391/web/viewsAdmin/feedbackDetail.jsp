@@ -62,7 +62,7 @@
                         <div class="text-center">
                             <img src="https://via.placeholder.com/150" alt="User Avatar" class="rounded-full mx-auto mb-4">
                             <h2 class="text-lg font-bold">${feedback.user.first_name} ${feedback.user.last_name}</h2>
-                            <p class="text-gray-700">${feedback.user.telephone}</p>
+                            <p class="text-gray-700">CustomerID: ${feedback.user.id}</p>
                         </div>
                         <div class="mt-4">
                             <p><strong>Telephone:</strong> ${feedback.user.telephone}</p>

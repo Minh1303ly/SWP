@@ -97,7 +97,7 @@ public class UpdateCustomerController extends HttpServlet {
                 session.setAttribute("messSusess", "Create User Success!");
                 response.sendRedirect("customerList");
                 return;
-            } catch (Exception e) {
+            } catch (IOException e) {
                 session.setAttribute("messError", "Create User Failed!");
             }
         } else {

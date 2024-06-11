@@ -122,9 +122,9 @@ public class FeedbackDAO extends DBContext {
     }
 
     public Ratting getFeedbackById(int feedbackId) throws SQLException {
-        String query = "SELECT r.id, r.product_id, r.user_id, r.rating, r.comment, r.created_at, r.modified_at, "
+        String query = "SELECT r.id, r.product_id, r.user_id, r.rating, r.comment, r.created_at, r.modified_at, r.status_image, "
                 + "u.first_name, u.last_name, u.email, u.telephone, u.gender, u.status_id, "
-                + "p.name AS product_name "
+                + "p.name AS product_name, p.size, p.color "
                 + "FROM rating r "
                 + "JOIN users u ON r.user_id = u.id "
                 + "JOIN products p ON r.product_id = p.id "
@@ -142,6 +142,7 @@ public class FeedbackDAO extends DBContext {
                     ratingDTO.setComment(resultSet.getString("comment"));
                     ratingDTO.setCreated_at(resultSet.getDate("created_at"));
                     ratingDTO.setModified_at(resultSet.getDate("modified_at"));
+                    ratingDTO.setStatus_image(resultSet.getString("status_image"));
 
                     User user = new User();
                     user.setId(resultSet.getInt("user_id"));
@@ -155,6 +156,8 @@ public class FeedbackDAO extends DBContext {
                     Product product = new Product();
                     product.setId(resultSet.getInt("product_id"));
                     product.setName(resultSet.getString("product_name"));
+                    product.setSize(resultSet.getString("size"));
+                    product.setColor(resultSet.getString("color"));
                     ratingDTO.setProduct(product);
 
                     return ratingDTO;
@@ -169,7 +172,7 @@ public class FeedbackDAO extends DBContext {
     public static void main(String[] args) {
         try {
             FeedbackDAO dao = new FeedbackDAO();
-            System.out.println(dao.getAllRatingFilter("", null, null, ""));
+            dao.getFeedbackById(1);
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

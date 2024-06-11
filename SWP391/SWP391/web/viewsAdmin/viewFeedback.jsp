@@ -213,7 +213,7 @@
                                                                             </c:if>
                                                                         </td>                                                                    
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <a href="updateCustomer?id=${u.id}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
+                                                                            <a href="feedbackDetail?id=${f.id}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
                                                                             <a href="#"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                                         </td>
                                                                     </tr>

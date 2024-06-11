@@ -65,8 +65,6 @@
                             <p class="text-gray-700">${feedback.user.telephone}</p>
                         </div>
                         <div class="mt-4">
-                            <h3 class="text-lg font-bold mb-2">User Details</h3>
-                            <p><strong>Email:</strong> ${feedback.user.email}</p>
                             <p><strong>Telephone:</strong> ${feedback.user.telephone}</p>
                             <p><strong>Gender:</strong> ${feedback.user.gender ? "Male" : "Female"}</p>
                         </div>
@@ -82,7 +80,10 @@
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Star</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Color</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comment</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Feedback Image</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status Image</th>
                                     </tr>
                                 </thead>
@@ -95,10 +96,13 @@
                                                 ⭐
                                             </c:forEach>
                                         </td>
+                                        <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.product.size}</td>
+                                        <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.product.color}</td>
                                         <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.comment}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <img src="https://via.placeholder.com/50" alt="Status Image" class="rounded">
+                                            <img  src="https://genk.mediacdn.vn/thumb_w/640/2015/2-1440133142840.gif" alt="Status Image" class="rounded">
                                         </td>
+                                        <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.status_image}</td>
                                     </tr>
                                 </tbody>
                             </table>

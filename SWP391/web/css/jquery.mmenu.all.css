@@ -509,7 +509,7 @@ html.mm-opening .mm-menu.mm-opened~.mm-slideout {
 	}
 }
 
-@charset "UTF-8";
+/*@charset "UTF-8";*/
 .mm-sronly {
 	border: 0!important;
 	clip: rect(1px, 1px, 1px, 1px)!important;

@@ -32,7 +32,7 @@ import model.UserAddress;
 
 /**
  *
- * @author tungl
+ * @author 
  */
 @WebServlet(name = "OrderDetailController", urlPatterns = {"/orderDetail"})
 public class OrderDetailController extends HttpServlet {
@@ -61,7 +61,10 @@ public class OrderDetailController extends HttpServlet {
         request.getRequestDispatcher("orderDetail.jsp").forward(request, response);
 
     }
-
+/**
+     * Handles the POST request, currently not implemented for this controller.
+     * Forwards the request to the profile page (profile.jsp).
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

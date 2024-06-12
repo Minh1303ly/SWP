@@ -21,6 +21,20 @@ public class Discount {
     private Date createdAt;
     private Date modifiedAt;
 
+
+    public Discount() {
+    }
+
+    public Discount(int id, String name, String description, int discountPercent, boolean active, Date createdAt, Date modifiedAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.discountPercent = discountPercent;
+        this.active = active;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
     public Discount(int discountPercent, boolean active) {
         this.discountPercent = discountPercent;
         this.active = active;

@@ -203,10 +203,9 @@
                     <div class="buttonWrapper">
                         <button type="submit" id="submitButton" onclick="validateSignupForm()" class="submitButton pure-button pure-button-primary">
                             <span>Continue</span>
-                            <span id="loader"></span>
                         </button>
                     </div>
-                    <h5 class="text-center" style="color: red">${requestScope.error}</h5>
+                    <h5 class="text-center" style="text-align: center; color: red">${requestScope.error}</h5>
                 </form>
             </div>
         </div>

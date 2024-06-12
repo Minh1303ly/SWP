@@ -94,9 +94,21 @@ function validatePassword(password) {
     }
 }
 
+function validatePassword2(password) {
+    let passwordMsg2 = document.querySelector("#passwordMsg2");
+    const passwordPattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,20}$/;
+    if(!passwordPattern.test(password.value)) {
+        isValidate = false;
+        passwordMsg2.innerHTML = "Password is wrong format";
+    } else {
+        isValidate = true;
+        passwordMsg2.innerHTML = "";
+    }
+}
+
 function checkPasswordAndCfPassword(cfPassword) {
     let cfPasswordMsg = document.querySelector("#cfPassowrdMsg");
-    let password = document.querySelector("#password");
+    let password = document.querySelector("#newPassword");
     if(cfPassword.value !== password.value) {
         isValidate = false;
         cfPasswordMsg.innerHTML = "Password and Confirm password do not match";

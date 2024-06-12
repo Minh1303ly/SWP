@@ -27,26 +27,36 @@ public class UpdateCustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Retrieve form data
+
         String idRaw = request.getParameter("id");
 
         UserDAO uDAO = new UserDAO();
+        
+        // Lấy danh sách tất cả các vai trò và trạng thái người dùng và đặt vào thuộc tính request
         request.setAttribute("listRole", uDAO.getAllRoles());
         request.setAttribute("listStatus", uDAO.getAllStatus());
-
+        
+        // Nếu không có tham số id (trường hợp tạo mới người dùng)
         if (idRaw == null) {
             request.getRequestDispatcher("viewsAdmin/updateCustomer.jsp").forward(request, response);
 
         } else {
+            
+            // Nếu có tham số id (trường hợp cập nhật thông tin người dùng)
+            // Lấy người dùng từ cơ sở dữ liệu theo id
             User u = uDAO.getUserById(Integer.parseInt(idRaw));
-
+            
+            // Kiểm tra nếu người dùng không tồn tại, chuyển hướng đến trang lỗi
             if (u == null) {
                 response.sendRedirect("Error.jsp");
             } else {
+                // Nếu người dùng tồn tại, đặt thuộc tính user cho request
                 request.setAttribute("user", u);
                 request.getRequestDispatcher("viewsAdmin/updateCustomer.jsp").forward(request, response);
             }
         }
     }
+    
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -87,7 +97,7 @@ public class UpdateCustomerController extends HttpServlet {
                 session.setAttribute("messSusess", "Create User Success!");
                 response.sendRedirect("customerList");
                 return;
-            } catch (Exception e) {
+            } catch (IOException e) {
                 session.setAttribute("messError", "Create User Failed!");
             }
         } else {
@@ -100,13 +110,15 @@ public class UpdateCustomerController extends HttpServlet {
             uUpdate.setGender(gender);
             uUpdate.setRole_id(roleId);
             uUpdate.setStatus_id(satusId);
-            uUpdate.setCreated_at(new Date());
+//            uUpdate.setCreated_at(new Date());
             uUpdate.setModified_at(new Date());
 
             try {
+                session.setAttribute("messSuccess", "Update User Success!");
                 uDAO.updateUser(uUpdate);
-                session.setAttribute("messSusess", "Update User Success!");
+                
             } catch (Exception e) {
+                session.removeAttribute("messSuccess");
                 session.setAttribute("messError", "Update User Failed!");
             }
         }

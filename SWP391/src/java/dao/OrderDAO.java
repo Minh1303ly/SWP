@@ -48,13 +48,21 @@ public class OrderDAO extends DBContext {
                     order.setRecipientPhone(resultSet.getString("recipient_phone"));
                     order.setCreatedAt(resultSet.getTimestamp("created_at"));
                     order.setModifiedAt(resultSet.getTimestamp("modified_at"));
-                    
                     order.setOrderStatus(getStatusById(order.getStatusId()));
                     order.setUser(new UserDAO().getUserById(order.getUserId()));
                 }
             }
         }
         return order;
+    }
+
+    public void updateOrderStatus(int orderId, int newStatusId) throws SQLException {
+        String query = "UPDATE shop_orders SET status_id = ?, modified_at = CURRENT_TIMESTAMP WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, newStatusId);
+            statement.setInt(2, orderId);
+            statement.executeUpdate();
+        }
     }
 
     public List<Order> getOrdersByUserId(int userId) throws SQLException {
@@ -171,7 +179,6 @@ public class OrderDAO extends DBContext {
                     orderDetail.setPrice(resultSet.getDouble("price"));
                     orderDetail.setCreatedAt(resultSet.getTimestamp("created_at"));
                     orderDetail.setModifiedAt(resultSet.getTimestamp("modified_at"));
-                    
                     orderDetail.setProduct(new ProductDAO().getProductById(orderDetail.getProductId()));
                     orderDetails.add(orderDetail);
                 }

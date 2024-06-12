@@ -5,13 +5,18 @@
 package dao;
 
 import context.DBContext;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
@@ -178,7 +183,6 @@ public class CategoryDAO extends DBContext {
             }
         }
     }
-
     public CategoryStatus getStatusById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -296,13 +300,13 @@ public class CategoryDAO extends DBContext {
             }
         }
     }
-
+    
     /**
      * Use to get all categories have status is active
-     *
+     * 
      * @return list categories have status is active
      */
-    public List<Category> getAllByStatus() {
+    public List<Category> getAllByStatus(){
         List<Category> list = new LinkedList<>();
         try {
             String sql = """
@@ -313,7 +317,7 @@ public class CategoryDAO extends DBContext {
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = pre.executeQuery();
-            while (rs.next()) {
+            while (rs.next()) {                
                 list.add(new Category(rs.getInt(1), rs.getString(2),
                         null, null));
             }
@@ -323,7 +327,7 @@ public class CategoryDAO extends DBContext {
         }
         return list;
     }
-
+    
     /**
      * Use to get hierarchy category
      *
@@ -391,24 +395,15 @@ public class CategoryDAO extends DBContext {
         return new LinkedList<>(set);
     }
 
+
     public static void main(String[] args) {
         CategoryDAO cDAO = new CategoryDAO();
-//        try {
-//            System.out.println(cDAO.getAllCategory());
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    Map<Category, CategoryAggregation> listMap= cDAO.getCategoryByNameProduct("Ballet Flats");
-//    listMap.forEach( (k,v) -> {
-//        System.out.println(k.getName() + " ");
-//        v.nameSubCategories.forEach( m -> {
-//            System.out.print(m+ " ");
-//        });
-//        System.out.println("");
-//    });
-        List<String> ls = cDAO.getCategoryByNameProduct("Ballet Flats");
-        ls.forEach(a -> {
-            System.out.println(a);
-        });
+        List<Category> categories = new ArrayList<>();
+        try{
+            categories = cDAO.getAll();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        System.out.println(categories);
     }
 }

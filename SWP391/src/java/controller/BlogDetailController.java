@@ -24,20 +24,25 @@ public class BlogDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Chuyển tiếp yêu cầu tới trang JSP để hiển thị
         String idRaw = request.getParameter("id");
 
         BlogDAO bDAO = new BlogDAO();
 
         try {
+            // Chuyển đổi tham số id từ chuỗi sang số nguyên            
             int id = Integer.parseInt(idRaw);
             Blog b = bDAO.getByID(id);
+            // Chuyển đổi tham số id từ chuỗi sang số nguyên            
             if (b == null) {
                 response.sendRedirect("Error.jsp");
             }
+            // Thiết lập thuộc tính blog cho request
             request.setAttribute("blog", b);
         } catch (Exception e) {
             response.sendRedirect("Error.jsp");
         }
+        // Chuyển tiếp request và response đến trang blog_detail.jsp để hiển thị chi tiết blog
         request.getRequestDispatcher("blog_detail.jsp").forward(request, response);
     }
 

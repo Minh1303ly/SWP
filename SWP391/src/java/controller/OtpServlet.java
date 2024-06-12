@@ -103,6 +103,23 @@ public class OtpServlet extends HttpServlet {
         return m.matches();
     }
 
+//    ^: Asserts the position at the start of the string.
+//\\+?: Matches an optional + sign.
+//\\d{0,2}: Matches zero, one, or two digits (the country code).
+//\\s?: Matches an optional whitespace character.
+//\\(?: Matches an optional opening parenthesis (.
+//(\\d{3}): Matches exactly three digits (area code), captured as a group.
+//\\)?: Matches an optional closing parenthesis ).
+//[-.\\s]?: Matches an optional hyphen -, period ., or whitespace.
+//\\d{3}: Matches exactly three digits (first part of the phone number).
+//[-.\\s]?: Matches an optional hyphen -, period ., or whitespace.
+//\\d{4}: Matches exactly four digits (second part of the phone number).
+//$: Asserts the position at the end of the string.
+    public boolean CheckFormatPhone(String phone) {
+        String phoneRegex = "^\\+?\\d{0,2}\\s?\\(?(\\d{3})\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$";
+        return phone.matches(phoneRegex);
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -177,6 +194,11 @@ public class OtpServlet extends HttpServlet {
             //Check password format
         } else if (!isValidPassword(password_raw)) {
             session.setAttribute("error", "Wrong Password Format");
+            request.getRequestDispatcher("home").forward(request, response);
+
+            // Check telephone format
+        } else if (!CheckFormatPhone(telephone)) {
+            session.setAttribute("error", "Wrong Telephone Format");
             request.getRequestDispatcher("home").forward(request, response);
 
             //Check email exist

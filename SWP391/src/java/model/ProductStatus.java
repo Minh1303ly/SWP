@@ -12,8 +12,19 @@ public class ProductStatus {
     private int id;
     private String name;
 
+
+    public ProductStatus() {
+    }
+
+    public ProductStatus(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+
     public ProductStatus(String name) {
         this.name = name;
     }
+
     
 }

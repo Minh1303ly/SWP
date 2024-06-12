@@ -58,17 +58,46 @@ public class UserAddressDAO extends DBContext {
     }
 
     public void updateUserAddress(UserAddress userAddress) {
-        String sql = "UPDATE user_address SET address_line = ?, city = ?, country = ? WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, userAddress.getAddressLine());
-            statement.setString(2, userAddress.getCity());
-            statement.setString(3, userAddress.getCountry());
-            statement.setInt(4, userAddress.getId());
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected == 0) {
-                System.out.println("No rows updated.");
-            } else {
-                System.out.println("User address updated successfully.");
+        String selectSql = "SELECT COUNT(*) FROM user_address WHERE user_id = ?";
+        String updateSql = "UPDATE user_address SET address_line = ?, city = ?, country = ? WHERE user_id = ?";
+        String insertSql = "INSERT INTO user_address (user_id, address_line, city, country) VALUES (?, ?, ?, ?)";
+
+        try {
+            // Kiểm tra xem bản ghi đã tồn tại hay không
+            try (PreparedStatement selectStatement = connection.prepareStatement(selectSql)) {
+                selectStatement.setInt(1, userAddress.getUserId());
+                ResultSet resultSet = selectStatement.executeQuery();
+                resultSet.next();
+                int count = resultSet.getInt(1);
+                if (count > 0) {
+                    // Nếu bản ghi tồn tại, thực hiện câu lệnh UPDATE
+                    try (PreparedStatement updateStatement = connection.prepareStatement(updateSql)) {
+                        updateStatement.setString(1, userAddress.getAddressLine());
+                        updateStatement.setString(2, userAddress.getCity());
+                        updateStatement.setString(3, userAddress.getCountry());
+                        updateStatement.setInt(4, userAddress.getUserId());
+                        int rowsAffected = updateStatement.executeUpdate();
+                        if (rowsAffected == 0) {
+                            System.out.println("No rows updated.");
+                        } else {
+                            System.out.println("User address updated successfully.");
+                        }
+                    }
+                } else {
+                    // Nếu không tồn tại, thực hiện câu lệnh INSERT
+                    try (PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
+                        insertStatement.setInt(1, userAddress.getUserId());
+                        insertStatement.setString(2, userAddress.getAddressLine());
+                        insertStatement.setString(3, userAddress.getCity());
+                        insertStatement.setString(4, userAddress.getCountry());
+                        int rowsAffected = insertStatement.executeUpdate();
+                        if (rowsAffected == 0) {
+                            System.out.println("No rows inserted.");
+                        } else {
+                            System.out.println("User address inserted successfully.");
+                        }
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,6 +127,9 @@ public class UserAddressDAO extends DBContext {
 
     public static void main(String[] args) {
         UserAddressDAO uaDAO = new UserAddressDAO();
-        System.out.println(uaDAO.getUserAddressById(1));
+        UserAddress ud = new UserAddress();
+        ud.setUserId(51);
+        ud.setCity("HN");
+        uaDAO.updateUserAddress(ud);
     }
 }

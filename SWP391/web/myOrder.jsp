@@ -67,21 +67,33 @@
                     <tbody>
                         <c:forEach items="${orders}" var="order">
                             <tr>
-                                <td>${order.id}</td>
+                                <td>
+                                    <a href="orderDetail?id=${order.id}">
+                                        ${order.id}
+                                    </a>
+                                </td>
                                 <td>${order.getUser().first_name} ${order.getUser().last_name}</td>
                                 <td>${order.email}</td>
                                 <td>${order.orderTotal}</td>
                                 <td>${order.modifiedAt}</td>
                                 <td>${order.getOrderStatus().name}</td>
                                 <td>
-                                    <a href="orderDetail?id=${order.id}" class="btn btn-success">
-                                        Detail
-                                    </a>
+                                    <form action="cancelOrder" method="POST">
+                                        <a href="orderDetail?id=${order.id}" class="btn btn-success">
+                                            Detail
+                                        </a>
+                                        <input type="text" id="id" name="id" value="${order.id}" hidden="">
+                                        <c:if test="${order.getOrderStatus().id == 1}">
+                                            <input type="submit" value="Cancel" class="btn btn-warning" />
+                                        </c:if>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
+                <jsp:include page="components/notification.jsp"/>
+
                 <jsp:include page="components/pagination.jsp"/>
             </div>
             <div class="ml-5">

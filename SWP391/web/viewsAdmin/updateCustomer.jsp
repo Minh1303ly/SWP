@@ -25,6 +25,8 @@
         <jsp:include page="components/leftBar.jsp" />
 
         <jsp:include page="components/topBar.jsp" />
+        
+        <jsp:include page="components/notification.jsp"/>
 
 
 
@@ -38,10 +40,10 @@
                                     <div class="flex flex-wrap justify-between">
                                         <div class="items-center ">
                                             <h1 class="font-medium text-3xl block dark:text-slate-100">Update Customer</h1>
-                                            <h1 class="font-medium text-3xl block dark:text-slate-100">
+                                            <h1 style="color: red" class="font-medium text-3xl block dark:text-slate-100">
                                                 <c:if test="${not empty messSuccess}">
                                                     ${messSuccess}
-                                                    <c:set var="messSuccess" value="${null}" scope="session" />
+                                                    <c:set  var="messSuccess" value="${null}" scope="session" />
                                                 </c:if>
 
                                                 <c:if test="${not empty messError}">
@@ -69,7 +71,7 @@
                         </div>
                     </div>
                 </div><!--end container-->
-                <form onsubmit="return validateForm()" method="Post" action="updateCustomer">
+                <form onsubmit="return validate()" method="Post" action="updateCustomer">
                     <input type="text" name="id" hidden="" value="${user.id}">
                     <div class="xl:w-full min-h-[calc(100vh-138px)] relative pb-14"> 
                         <div class="grid grid-cols-12 gap-4 justify-between">
@@ -107,6 +109,26 @@
                                                 <option value="true" ${user.gender?"selected":""}>Male</option>
                                                 <option value="false"  ${!user.gender?"selected":""}>Female</option>
                                             </select>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">Create At</label>
+                                            <input type="text" id="created_at" name="created_at" value="${user.created_at}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" placeholder="CreatedAt" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">Modified At</label>
+                                            <input type="text" id="modified_at" name="" value="${user.modified_at}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" placeholder="ModifiedAt" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">Address Line</label>
+                                            <input type="text" id="" name="" value="${user.userAddress.addressLine}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" readonly  placeholder="Address Line" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">City</label>
+                                            <input type="text" id="" name="" value="${user.userAddress.city}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" readonly  placeholder="City" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="" class="font-medium text-sm text-slate-600 dark:text-slate-400">Country</label>
+                                            <input type="text" id="" name="" value="${user.userAddress.country}"  class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-primary-500 dark:focus:border-primary-500 dark:hover:border-slate-700" readonly  placeholder="Country" required>
                                         </div>
                                         <div class="mb-2">
                                             <label class="font-medium text-sm text-slate-600 dark:text-slate-400">Role</label>

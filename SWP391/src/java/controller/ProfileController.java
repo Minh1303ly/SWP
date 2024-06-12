@@ -76,7 +76,7 @@ public class ProfileController extends HttpServlet {
         profile.setFirst_name(firstName);
         profile.setLast_name(lastName);
         UserAddress ua = new UserAddress();
-        ua.setId(user.getId());
+        ua.setUserId(user.getId());
         ua.setCity(city);
         ua.setAddressLine(address);
         ua.setCountry(country);
@@ -85,10 +85,10 @@ public class ProfileController extends HttpServlet {
         try {
             uDAO.updateUser(profile);
             uaDAO.updateUserAddress(ua);
-            request.setAttribute("messSuccess", "Update successfuly!");
+            session.setAttribute("messSuccess", "Update successfuly!");
         } catch (Exception e) {
-            request.setAttribute("messError", "Update Failed!");
+            session.setAttribute("messError", "Update Failed!");
         }
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        response.sendRedirect("home");
     }
 }

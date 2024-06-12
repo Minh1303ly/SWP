@@ -89,10 +89,12 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="thumb_cart me-3">
-                                                            <img src="${o.getImgView()}" alt="Image">
+                                                            <a href="product?service=detail&name=${o.product.name}&brand=${o.product.brand.name}">
+                                                                <img src="${o.getImgView()}" alt="Image">
+                                                                </div>
+                                                            </a>
+                                                            <span class="item_cart">${o.getNameView()}</span>
                                                         </div>
-                                                        <span class="item_cart">${o.getNameView()}</span>
-                                                    </div>
                                                 </td>
                                                 <td><strong>${o.getPriceName()}</strong></td>
                                                 <td>${o.quantity}</td>

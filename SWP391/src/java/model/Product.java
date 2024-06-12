@@ -28,6 +28,7 @@ public class Product {
     private Date modifiedAt;
     
     private Ratting ratting;
+
     private Brand brand;
     private Discount discount;
     private ProductStatus productStatus;
@@ -50,6 +51,27 @@ public class Product {
     
 
 
+    
+    
+    
+
+    public Product(int id, int categoryId, int discountId, int statusId, int brandId, String name, int quantity, float price, String size, String color, String description, String img1, String img2, Date createdAt, Date modifiedAt) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.discountId = discountId;
+        this.statusId = statusId;
+        this.brandId = brandId;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.size = size;
+        this.color = color;
+        this.description = description;
+        this.img1 = img1;
+        this.img2 = img2;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
     
    
 }

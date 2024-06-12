@@ -52,7 +52,7 @@ public class MyOrderController extends HttpServlet {
             List<Order> list = oDAO.getAllOrders();
 
             // start pagging
-            int limitPage = 10;
+            int limitPage = 1;
             if (request.getParameter("cp") == null) {
                 Pagination Page = new Pagination(list, limitPage, 1);
                 Pagination<Order> pagination = new Pagination<>(list, limitPage, 1);

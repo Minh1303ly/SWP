@@ -207,16 +207,13 @@ public class UserDAO extends DBContext {
 
             // Execute the insert statement
             int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("A new user was inserted successfully!");
-            }
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception
         }
     }
 
-    public void updateUser(User user) {
+    public void updateUser(User user) throws Exception {
         String sql = "UPDATE users SET email = ?, password = ?, role_id = ?, status_id = ?, first_name = ?, last_name = ?, "
                 + "telephone = ?, created_at = ?, modified_at = ?, gender = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -238,8 +235,7 @@ public class UserDAO extends DBContext {
                 System.out.println("User with ID " + user.getId() + " was updated successfully!");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle the exception
+            throw new Exception();
         }
     }
 

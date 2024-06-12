@@ -4,20 +4,20 @@
 <footer class="revealed">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <h3 data-bs-target="#collapse_1">Quick Links</h3>
                 <div class="collapse dont-collapse-sm links" id="collapse_1">
                     <ul>
-                        <li><a href="about.html">About us</a></li>
-                        <li><a href="help.html">Faq</a></li>
-                        <li><a href="help.html">Help</a></li>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Faq</a></li>
+                        <li><a href="#">Help</a></li>
                         <li><a href="account.html">My account</a></li>
-                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="blogs">Blog</a></li>
                         <li><a href="contacts.html">Contacts</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <h3 data-bs-target="#collapse_2">Categories</h3>
                 <div class="collapse dont-collapse-sm links" id="collapse_2">
                     <ul>
@@ -30,7 +30,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+<!--            <div class="col-lg-3 col-md-6">
                 <h3 data-bs-target="#collapse_3">Contacts</h3>
                 <div class="collapse dont-collapse-sm contacts" id="collapse_3">
                     <ul>
@@ -39,8 +39,8 @@
                         <li><i class="ti-email"></i><a href="#0">info@allaia.com</a></li>
                     </ul>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
+            </div>-->
+            <div class="col-lg-4 col-md-6">
                 <h3 data-bs-target="#collapse_4">Keep in touch</h3>
                 <div class="collapse dont-collapse-sm" id="collapse_4">
                     <div id="newsletter">

@@ -25,17 +25,22 @@ public class CustomerListController extends HttpServlet {
             throws ServletException, IOException {
         UserDAO uDAO = new UserDAO();
         String search = request.getParameter("search");
-        if (search != null) {
-            search.replace("+", "");
-        }
+        String statusString = request.getParameter("status");
         // Lấy danh sách tất cả người dùng
-        List<User> list = uDAO.getAllUsers();
+        List<User> list = uDAO.filterCustomersByStatusAndSearch(null, null);
         HttpSession session = request.getSession();
-
-        list = uDAO.filterCustomersByStatusAndSearch(null, search);
+        
+        if (search != null) {
+            list = uDAO.filterCustomersByStatusAndSearch(null, search);
+        }
+        
+        if(statusString != null && !statusString.isEmpty()){
+            int status = Integer.parseInt(statusString);
+            list = uDAO.filterCustomersByStatusAndSearch(status, null);
+        }
 
         // start pagging
-        int limitPage = 10;
+        int limitPage = 5;
         if (request.getParameter("cp") == null) {
             Pagination Page = new Pagination(list, limitPage, 1);
             Pagination<User> pagination = new Pagination<>(list, limitPage, 1);
@@ -51,7 +56,8 @@ public class CustomerListController extends HttpServlet {
         }
         // set URL
         request.setAttribute("pagging", "customerList");
-        request.setAttribute("paramSearch", search);
+        session.setAttribute("paramSearch", search);
+        session.setAttribute("paramStatus", statusString);
         // end pagging
         request.setAttribute("listUser", list);
         request.getRequestDispatcher("viewsAdmin/viewCustomer.jsp").forward(request, response);

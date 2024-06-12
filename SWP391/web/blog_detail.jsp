@@ -223,16 +223,15 @@
                             <!-- /widget -->
                             <div class="widget">
                                 <div class="widget-title">
-                                    <h4>Popular Tags</h4>
+                                    <h4>Contacts</h4>
                                 </div>
-                                <div class="tags">
-                                    <a href="#">Food</a>
-                                    <a href="#">Bars</a>
-                                    <a href="#">Cooktails</a>
-                                    <a href="#">Shops</a>
-                                    <a href="#">Best Offers</a>
-                                    <a href="#">Transports</a>
-                                    <a href="#">Restaurants</a>
+                                <h3 data-bs-target="#collapse_3"></h3>
+                                <div class="collapse dont-collapse-sm contacts" id="collapse_3">
+                                    <ul>
+                                        <li><i class="ti-home"></i> 97845 Baker st. 567<br>Los Angeles - US</li>
+                                        <li><i class="ti-headphone-alt"></i> +94 423-23-221</li>
+                                        <li><i class="ti-email"></i><a href="#0"> info@allaia.com</a></li>
+                                    </ul>
                                 </div>
                             </div>
                             <!-- /widget -->

@@ -11,19 +11,23 @@ import java.sql.Date;
 @Data
 public class Ratting {
     private int id;
-    private int productId;
-    private int userId;
+    private int product_id;
+    private int user_id;
     private int ratting;
     private String comment;
-    private Date createAt;
-    private Date modifiedAt;
+    private Date created_at;
+    private Date modified_at;
+    private String status;
+    private String status_image;
 
     private User user;
     private Product product;
 
+    public Ratting() {
+    }
+    
     public Ratting(int ratting) {
         this.ratting = ratting;
     }
-    
-    
+
 }

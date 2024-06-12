@@ -13,6 +13,7 @@
 
             <!-- Header -->
             <jsp:include page="header.jsp"/>
+            <jsp:include page="components/notification.jsp"/>
 
             <main>
 

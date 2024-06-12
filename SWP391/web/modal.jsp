@@ -289,6 +289,7 @@
 
 
 
+
 <script>
     $('#exampleModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
@@ -328,7 +329,123 @@
                 });
     });
 
+<!-- My Profile -->
 
+<div class="modal fade" id="myProfile" tabindex="-1" role="dialog" aria-labelledby="myProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">My Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="profileForm" action="myProfile" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">First Name:</label>
+                            <input type="text" id="firstName" name="firstName" class="form-control" value="${profile.first_name}" required>
+                        </div>
+                    </div>  
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">Last Name:</label>
+                            <input type="text" id="lastName" name="lastName" class="form-control" value="${profile.last_name}" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" id="email" readonly="" disabled="" name="email" class="form-control" value="${profile.email}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="address" class="form-label">Address:</label>
+                            <input type="text" id="address" name="address" class="form-control" value="${profile.getUserAddress().addressLine}" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="city" class="form-label">City:</label>
+                            <input type="text" id="city" name="city" class="form-control" value="${profile.getUserAddress().city}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="country" class="form-label">Country:</label>
+                            <input type="text" id="country" name="country" class="form-control" value="${profile.getUserAddress().country}" required>
+                        </div>
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+                            $('#exampleModal').on('show.bs.modal', function (event) {
+                                var button = $(event.relatedTarget); // Button that triggered the modal
+                                var name = button.data('name'); // Extract info from data-* attributes
+                                var colors = button.data('colors');
+                                var sizes = button.data('sizes');
+
+                                //            colors = JSON.parse(colors);
+                                //            sizes = JSON.parse(sizes);
+
+                                var modal = $(this);
+                                modal.find('.modal-title').text(name); // Set the title
+                                modal.find('#productName').val(name); // Set the hidden input value
+
+                                // Populate the color dropdown
+                                var colorSelect = modal.find('#colorSelect');
+                                colorSelect.empty();
+                                colors.forEach(function (color) {
+                                    colorSelect.append('<option value="' + color + '">' + color + '</option>');
+                                });
+
+                                // Populate the size dropdown
+                                var sizeSelect = modal.find('#sizeSelect');
+                                sizeSelect.empty();
+                                sizes.forEach(function (size) {
+                                    sizeSelect.append('<option value="' + size + '">' + size + '</option>');
+                                });
+                            });
+
+                            $('#saveChanges').on('click', function () {
+                                var formData = $('#modalForm').serialize();
+
+                                $.ajax({
+                                    url: '/SWP391/product?service=addCartByAjax',
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (response) {
+                                        // Handle the response from the servlet
+                                        $('#exampleModal').click();
+                                        //                    showAlert("Success");
+                                        $('#successMessage').show().delay(3000).fadeOut();
+                                        // Ensure the modal button is re-enabled
+                                        //                    $('[data-target="#exampleModal"]').prop('disabled', false);
+                                    },
+                                    error: function (xhr, status, error) {
+                                        // Handle the error
+                                        console.error(error);
+                                    }
+                                });
+                            });
 </script>
 
 <!-- COMMON SCRIPTS -->

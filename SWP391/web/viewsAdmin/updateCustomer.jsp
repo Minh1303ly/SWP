@@ -25,6 +25,8 @@
         <jsp:include page="components/leftBar.jsp" />
 
         <jsp:include page="components/topBar.jsp" />
+        
+        <jsp:include page="components/notification.jsp"/>
 
 
 
@@ -38,10 +40,10 @@
                                     <div class="flex flex-wrap justify-between">
                                         <div class="items-center ">
                                             <h1 class="font-medium text-3xl block dark:text-slate-100">Update Customer</h1>
-                                            <h1 class="font-medium text-3xl block dark:text-slate-100">
+                                            <h1 style="color: red" class="font-medium text-3xl block dark:text-slate-100">
                                                 <c:if test="${not empty messSuccess}">
                                                     ${messSuccess}
-                                                    <c:set var="messSuccess" value="${null}" scope="session" />
+                                                    <c:set  var="messSuccess" value="${null}" scope="session" />
                                                 </c:if>
 
                                                 <c:if test="${not empty messError}">
@@ -69,7 +71,7 @@
                         </div>
                     </div>
                 </div><!--end container-->
-                <form onsubmit="return validateForm()" method="Post" action="updateCustomer">
+                <form onsubmit="return validate()" method="Post" action="updateCustomer">
                     <input type="text" name="id" hidden="" value="${user.id}">
                     <div class="xl:w-full min-h-[calc(100vh-138px)] relative pb-14"> 
                         <div class="grid grid-cols-12 gap-4 justify-between">

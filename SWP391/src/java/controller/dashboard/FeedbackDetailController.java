@@ -4,8 +4,7 @@
  */
 package controller.dashboard;
 
-import dao.UserDAO;
-import dao.UserHistoryDAO;
+import dao.FeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,40 +12,37 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.User;
+import model.Ratting;
 
 /**
  *
- * @author tungl
+ * @author 84355
  */
-@WebServlet(name = "CustomerDetailController", urlPatterns = {"/customerDetail"})
-public class CustomerDetailController extends HttpServlet {
+@WebServlet(name = "FeedbackDetailController", urlPatterns = {"/feedbackDetail"})
+public class FeedbackDetailController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDAO uDAO = new UserDAO();
 
-// Lấy tham số id từ request
+        FeedbackDAO fD = new FeedbackDAO();
         String idRaw = request.getParameter("id");
-
         try {
 
-            // Chuyển đổi tham số id từ chuỗi sang số nguyên
+            // Parse the 'id' parameter to an integer
             int id = Integer.parseInt(idRaw);
+            
+            // Retrieve the feedback details using the id
+            Ratting r = fD.getFeedbackById(id);
 
-            // Lấy người dùng từ cơ sở dữ liệu theo id            
-            User b = uDAO.getUserById(id);
-            if (b == null) {
+            if (r == null) {
                 response.sendRedirect("Error.jsp");
             }
-            request.setAttribute("userHistories", new UserHistoryDAO().getAll(id, null, 1, 10));
-            // Thiết lập thuộc tính người dùng cho request
-            request.setAttribute("u", b);
+            request.setAttribute("feedback", r);
         } catch (Exception e) {
             response.sendRedirect("Error.jsp");
         }
-        request.getRequestDispatcher("viewsAdmin/customerDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("viewsAdmin/feedbackDetail.jsp").forward(request, response);
     }
 
     @Override

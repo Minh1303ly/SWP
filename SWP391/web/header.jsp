@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<header class="version_1" style="width: 100%;">
+<header class="version_1">
     <div class="layer"></div><!-- Mobile menu overlay mask -->
     <div class="main_header">
         <div class="container">
@@ -75,7 +75,7 @@
                     <form action="product" method="post"> 
                         <div class="custom-search-input">
                             <input type="text" name="name" placeholder="Search over 10.000 products">
-                            <input type="hidden" name="service" value="search">
+                            <input type="hidden" name="service" value="searchName">
                             <button type="submit"><i class="header-icon_search_custom"></i></button>
                         </div>
                     </form>
@@ -125,7 +125,7 @@
                                                 <a href="myOrder"><i class="ti-package"></i>My Orders</a>
                                             </li>
                                             <li>
-                                                <a href="myProfile"><i class="ti-user"></i>My Profile</a>
+                                                <a href="#" data-toggle="modal" data-target="#myProfile"><i class="ti-user"></i>My Profile</a>
                                             </li>
                                             <li>
                                                 <a href="logout"><i class="ti-help-alt"></i>Log Out</a>

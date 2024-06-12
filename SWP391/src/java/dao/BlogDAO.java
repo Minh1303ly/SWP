@@ -28,7 +28,7 @@ public class BlogDAO extends DBContext {
         if (quantity == null) {
             query = "SELECT id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at FROM blogs";
         } else {
-            query = "SELECT TOP (?) id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at FROM blogs ORDER BY created_at DESC";
+            query = "SELECT TOP (?) id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at FROM blogs ORDER BY created_at ASC";
         }
         try (PreparedStatement st = connection.prepareStatement(query)) {
             if (quantity != null) {
@@ -59,40 +59,40 @@ public class BlogDAO extends DBContext {
     }
 
 
-    public List<Blog> getAllBlog(int currentPage, int limitSize) {
-        List<Blog> list = new ArrayList<>();
-        // Edit query with other entity
-        String query = "SELECT id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at "
-                // Select total of blog
-                + "FROM (SELECT ROW_NUMBER() OVER (ORDER BY created_at DESC) AS RowNum, * FROM blogs) AS RowConstrainedResult "
-                + "WHERE RowNum > ? AND RowNum <= ?";
-        try (PreparedStatement st = connection.prepareStatement(query)) {
-            int offset = (currentPage - 1) * limitSize;
-            st.setInt(1, offset);
-            st.setInt(2, offset + limitSize);
-            try (ResultSet resultSet = st.executeQuery()) {
-                while (resultSet.next()) {
-                    Blog p = new Blog();
-                    p.setId(resultSet.getInt("id"));
-                    p.setUser_id(resultSet.getInt("user_id"));
-                    p.setBlog_cate_id(resultSet.getInt("blog_cate_id"));
-                    p.setTitle(resultSet.getString("title"));
-                    p.setContext(resultSet.getString("content"));
-                    p.setCover_img(resultSet.getString("cover_img"));
-                    p.setMain_img(resultSet.getString("main_img"));
-                    p.setDescription(resultSet.getString("description"));
-                    p.setCreated_at(resultSet.getDate("created_at"));
-                    p.setModified_at(resultSet.getDate("modified_at"));
-                    BlogCategories blogCategory = new BlogCategoriesDAO().getByID(resultSet.getInt("blog_cate_id"));
-                    p.setBlogCategory(blogCategory);
-                    list.add(p);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+//    public List<Blog> getAllBlog(int currentPage, int limitSize) {
+//        List<Blog> list = new ArrayList<>();
+//        // Edit query with other entity
+//        String query = "SELECT id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at "
+//                // Select total of blog
+//                + "FROM (SELECT ROW_NUMBER() OVER (ORDER BY created_at DESC) AS RowNum, * FROM blogs) AS RowConstrainedResult "
+//                + "WHERE RowNum > ? AND RowNum <= ?";
+//        try (PreparedStatement st = connection.prepareStatement(query)) {
+//            int offset = (currentPage - 1) * limitSize;
+//            st.setInt(1, offset);
+//            st.setInt(2, offset + limitSize);
+//            try (ResultSet resultSet = st.executeQuery()) {
+//                while (resultSet.next()) {
+//                    Blog p = new Blog();
+//                    p.setId(resultSet.getInt("id"));
+//                    p.setUser_id(resultSet.getInt("user_id"));
+//                    p.setBlog_cate_id(resultSet.getInt("blog_cate_id"));
+//                    p.setTitle(resultSet.getString("title"));
+//                    p.setContext(resultSet.getString("content"));
+//                    p.setCover_img(resultSet.getString("cover_img"));
+//                    p.setMain_img(resultSet.getString("main_img"));
+//                    p.setDescription(resultSet.getString("description"));
+//                    p.setCreated_at(resultSet.getDate("created_at"));
+//                    p.setModified_at(resultSet.getDate("modified_at"));
+//                    BlogCategories blogCategory = new BlogCategoriesDAO().getByID(resultSet.getInt("blog_cate_id"));
+//                    p.setBlogCategory(blogCategory);
+//                    list.add(p);
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
 
     public Blog getByID(int id) {
         Blog blog = null;
@@ -226,6 +226,33 @@ public class BlogDAO extends DBContext {
     }
     
     /**
+     * Use to get top 4 blog order by date created descending
+     * 
+     * @return list 4 blog order by date created descending
+     */
+    public List<Blog> getHotBlog(){
+        List<Blog> list = new LinkedList<>();
+        try {
+            String sql = "select top (4) * from blogs order by created_at desc";
+            PreparedStatement pre = connection.prepareStatement(sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {                
+                list.add(new Blog(rs.getInt(1), rs.getInt(2),
+                        rs.getInt(3), rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6), rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9), rs.getDate(10)));
+            }          
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+        return list;
+    }
+    
+    /**
      * Use to get top 3 blog order by created_at descending
      * 
      * @return list blog order by created_at descending
@@ -251,33 +278,7 @@ public class BlogDAO extends DBContext {
         }       
         return list;
     }
-    
-    /**
-     * Use to get top 2 blog order by created_at ascending
-     * 
-     * @return list blog order by created_at ascending
-     */
-    public List<Blog> getHotBlog(){
-        List<Blog> list = new LinkedList<>();
-        try {
-            String sql = "select top (2) * from blogs order by created_at asc";
-            PreparedStatement pre = connection.prepareStatement(sql,
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = pre.executeQuery();
-            while (rs.next()) {                
-                list.add(new Blog(rs.getInt(1), rs.getInt(2),
-                        rs.getInt(3), rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6), rs.getString(7),
-                        rs.getString(8),
-                        rs.getDate(9), rs.getDate(10)));
-            }          
-        } catch (SQLException ex) {
-            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }       
-        return list;
-    }
+
 
     public static void main(String[] args) {
         BlogDAO bDAO = new BlogDAO();

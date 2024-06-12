@@ -29,9 +29,12 @@ public class FeedbackDetailController extends HttpServlet {
         String idRaw = request.getParameter("id");
         try {
 
+            // Parse the 'id' parameter to an integer
             int id = Integer.parseInt(idRaw);
-            Ratting r = fD.getFeedbackById(id);
             
+            // Retrieve the feedback details using the id
+            Ratting r = fD.getFeedbackById(id);
+
             if (r == null) {
                 response.sendRedirect("Error.jsp");
             }

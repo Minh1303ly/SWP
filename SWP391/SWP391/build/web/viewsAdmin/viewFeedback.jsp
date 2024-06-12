@@ -174,9 +174,9 @@
                                                                                 <input type="text" name="id" value="${f.id}" hidden="">
                                                                                 <input type="text" name="mode" value="status" hidden="">
                                                                                 <select name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="submitForm(${f.id})">
-                                                                                    <option class="bg-yellow-600/5 text-yellow-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"  value="pending" <c:if test="${f.status == 'pending'}">selected</c:if>>Pending</option>
-                                                                                    <option class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="approved" <c:if test="${f.status == 'approved'}">selected</c:if>>Approve</option>
-                                                                                    <option class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="rejected" <c:if test="${f.status == 'rejected'}">selected</c:if>>Rejected</option>
+                                                                                    <option class="bg-yellow-600/5 text-yellow-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"  value="Pending" <c:if test="${f.status == 'Pending'}">selected</c:if>>Pending</option>
+                                                                                    <option class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="Approved" <c:if test="${f.status == 'Approved'}">selected</c:if>>Approve</option>
+                                                                                    <option class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="Rejected" <c:if test="${f.status == 'Rejected'}">selected</c:if>>Rejected</option>
                                                                                     </select>
                                                                                 </form>
                                                                             </td>   

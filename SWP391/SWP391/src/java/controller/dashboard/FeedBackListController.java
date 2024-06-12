@@ -33,22 +33,22 @@ public class FeedBackListController extends HttpServlet {
 
         try {
             FeedbackDAO fDAO = new FeedbackDAO();
+
+            // Get the parameters from the request
             String comment = request.getParameter("comment");
             String name = request.getParameter("name");
             String status = request.getParameter("status");
             String ratingString = request.getParameter("rating");
-            // Lấy danh sách tất cả người dùng
 
             HttpSession session = request.getSession();
             Integer rating = null;
+
+            // Convert ratingString to Integer if it's not null or empty
             if (ratingString != null && !ratingString.isEmpty()) {
                 rating = Integer.parseInt(ratingString);
             }
             List<Ratting> list = fDAO.getAllRatingFilter(status, rating, name, comment);
-            session.setAttribute("rating", ratingString);
-            session.setAttribute("status", status);
-            session.setAttribute("name", name);
-            session.setAttribute("comment", comment);
+
             // start pagging
             int limitPage = 10;
             if (request.getParameter("cp") == null) {
@@ -66,10 +66,10 @@ public class FeedBackListController extends HttpServlet {
             }
             // set URL
             request.setAttribute("pagging", "feedbackList");
-            session.setAttribute("paramComment", comment);
-            session.setAttribute("paramStatus", status);
-            session.setAttribute("paramRating", ratingString);
-            session.setAttribute("paramName", name);
+            session.setAttribute("rating", ratingString);
+            session.setAttribute("status", status);
+            session.setAttribute("name", name);
+            session.setAttribute("comment", comment);
             // end pagging
             request.setAttribute("listFeedBack", list);
             request.getRequestDispatcher("viewsAdmin/viewFeedback.jsp").forward(request, response);

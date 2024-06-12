@@ -39,16 +39,30 @@ public class ChangeStatusController extends HttpServlet {
             String messSuccess;
             switch (mode) {
                 case "status":
+                    // Change the feedback status in the database
                     dao.changeRatingStatus(id, status);
+
+                    // Set the success message
                     messSuccess = "Change feedback status successfully!";
+
+                    // Store the success message in the session
                     session.setAttribute("messSuccess", messSuccess);
+
+                    // Redirect the user to the feedback list page
                     response.sendRedirect("feedbackList");
 
                     break;
                 case "image":
+                    // Change the feedback image status in the database
                     dao.changeRatingStatusImage(id, status);
+                    
+                    // Set the success message
                     messSuccess = "Change image status successfully!";
+                    
+                    // Store the success message in the session
                     session.setAttribute("messSuccess", messSuccess);
+                    
+                    // Redirect the user to the feedback detail page with the specific feedback id
                     response.sendRedirect("feedbackDetail?id=" + id);
                     break;
             }

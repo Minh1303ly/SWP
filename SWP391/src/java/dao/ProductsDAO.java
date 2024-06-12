@@ -172,6 +172,38 @@ public class ProductsDAO extends DBContext {
 
         }
     }
+    
+    public void updateProductThumbnail(String img, String productName) {
+        String sql = "UPDATE [dbo].[products]\n"
+                + "   SET [img1] = ?\n"//1
+                + " WHERE [name] = ?";//2
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setString(1, img);
+            st.setString(2, productName);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+
+        }
+    }
+    
+    public void updateProductImage(String img, String productName) {
+        String sql = "UPDATE [dbo].[products]\n"
+                + "   SET [img2] = ?\n"//1
+                + " WHERE [name] = ?";//2
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setString(1, img);
+            st.setString(2, productName);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+
+        }
+    }
 
     // get product by name
     public ProductDTO getProductByName(String productName) {

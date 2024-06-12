@@ -10,6 +10,7 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -144,9 +145,9 @@ public class UserDAO extends DBContext {
                     user.setModified_at(resultSet.getDate("modified_at"));
 
                     user.setRole(getRoleById(user.getRole_id()));
-                    
+
                     user.setUsersStatus(getUserStatusById(user.getStatus_id()));
-                    
+
                     user.setUserAddress(uaDAO.getUserAddressById(user.getId()));
                     users.add(user);
                 }
@@ -156,6 +157,181 @@ public class UserDAO extends DBContext {
             // Xử lý ngoại lệ, có thể throw hoặc log
         }
         return users;
+    }
+
+    public List<User> filterUserByStatusAndSearch(Integer status, String searchTerm, Integer role) {
+
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT id, email, password, role_id, status_id, first_name, last_name, telephone, created_at, modified_at, gender "
+                + "FROM users "
+                + "WHERE  "
+                + "(status_id = ? OR ? IS NULL) AND "
+                + "("
+                + "    (first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR telephone LIKE ?) OR "
+                + "    (first_name LIKE ? AND last_name LIKE ?) OR "
+                + "    ? IS NULL"
+                + ")"
+                + "And role_id = ? or ? is null"
+                + "";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            // Setting parameters for status
+            if (status != null) {
+                statement.setInt(1, status);
+                statement.setInt(2, status);
+            } else {
+                statement.setNull(1, java.sql.Types.INTEGER);
+                statement.setNull(2, java.sql.Types.INTEGER);
+            }
+
+            // Setting parameters for search term
+            if (searchTerm != null && !searchTerm.isEmpty()) {
+                String searchPattern = "%" + searchTerm + "%";
+                statement.setString(3, searchPattern);
+                statement.setString(4, searchPattern);
+                statement.setString(5, searchPattern);
+                statement.setString(6, searchPattern);
+
+                // Handle full name search by splitting searchTerm
+                String[] nameParts = searchTerm.split("\\s+");
+                if (nameParts.length == 2) {
+                    String firstNamePart = "%" + nameParts[0] + "%";
+                    String lastNamePart = "%" + nameParts[1] + "%";
+                    statement.setString(7, firstNamePart);
+                    statement.setString(8, lastNamePart);
+
+                } else {
+                    statement.setString(7, searchPattern);
+                    statement.setString(8, searchPattern);
+                }
+
+                statement.setString(9, searchPattern);
+            } else {
+                statement.setNull(3, java.sql.Types.VARCHAR);
+                statement.setNull(4, java.sql.Types.VARCHAR);
+                statement.setNull(5, java.sql.Types.VARCHAR);
+                statement.setNull(6, java.sql.Types.VARCHAR);
+                statement.setNull(7, java.sql.Types.VARCHAR);
+                statement.setNull(8, java.sql.Types.VARCHAR);
+                statement.setNull(9, java.sql.Types.VARCHAR);
+            }
+
+            // Execute query and process results
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setRole_id(resultSet.getInt("role_id"));
+                    user.setStatus_id(resultSet.getInt("status_id"));
+                    user.setFirst_name(resultSet.getString("first_name"));
+                    user.setLast_name(resultSet.getString("last_name"));
+                    user.setTelephone(resultSet.getString("telephone"));
+                    user.setGender(resultSet.getBoolean("gender"));
+                    user.setCreated_at(resultSet.getDate("created_at"));
+                    user.setModified_at(resultSet.getDate("modified_at"));
+
+                    user.setRole(getRoleById(user.getRole_id()));
+
+                    user.setUsersStatus(getUserStatusById(user.getStatus_id()));
+
+                    user.setUserAddress(uaDAO.getUserAddressById(user.getId()));
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Xử lý ngoại lệ, có thể throw hoặc log
+        }
+        return users;
+    }
+
+    public List<User> getAllUserWithParam(int userId, String searchParam, Integer status, Integer role_id) {
+        List<User> users = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
+
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("""
+                       Select * FROM users where id != ? """);
+            list.add(userId);
+            if (searchParam != null && !searchParam.trim().isEmpty()) {
+                query.append(" AND ( first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR telephone LIKE ? )");
+                list.add("%" + searchParam + "%");
+                list.add("%" + searchParam + "%");
+                list.add("%" + searchParam + "%");
+                list.add("%" + searchParam + "%");
+            }
+            if (status != null) {
+                query.append(" AND  status_id = ? ");
+                list.add(status);
+            }
+            if (role_id != null) {
+                query.append(" AND  role_id = ? ");
+                list.add(role_id);
+            }
+            query.append(" ORDER BY id DESC");
+            PreparedStatement preparedStatement;
+            preparedStatement = connection.prepareStatement(query.toString());
+            mapParams(preparedStatement, list);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = new User();
+
+                    user.setId(resultSet.getInt("id"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setRole_id(resultSet.getInt("role_id"));
+                    user.setStatus_id(resultSet.getInt("status_id"));
+                    user.setFirst_name(resultSet.getString("first_name"));
+                    user.setLast_name(resultSet.getString("last_name"));
+                    user.setTelephone(resultSet.getString("telephone"));
+                    user.setGender(resultSet.getBoolean("gender"));
+                    user.setCreated_at(resultSet.getDate("created_at"));
+                    user.setModified_at(resultSet.getDate("modified_at"));
+
+                    user.setRole(getRoleById(user.getRole_id()));
+                    user.setUsersStatus(getUserStatusById(user.getStatus_id()));
+                    user.setUserAddress(uaDAO.getUserAddressById(user.getId()));
+                    users.add(user);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public void mapParams(PreparedStatement ps, List<Object> args) throws SQLException {
+        int i = 1;
+        for (Object arg : args) {
+            if (arg instanceof Date) {
+                ps.setTimestamp(i++, new Timestamp(((Date) arg).getTime()));
+            } else if (arg instanceof Integer) {
+                ps.setInt(i++, (Integer) arg);
+            } else if (arg instanceof Long) {
+                ps.setLong(i++, (Long) arg);
+            } else if (arg instanceof Double) {
+                ps.setDouble(i++, (Double) arg);
+            } else if (arg instanceof Float) {
+                ps.setFloat(i++, (Float) arg);
+            } else {
+                ps.setString(i++, (String) arg);
+            }
+
+        }
+    }
+
+    public List<User> Paging(List<User> users, int page, int pageSize) {
+        int fromIndex = (page - 1) * pageSize;
+        int toIndex = Math.min(fromIndex + pageSize, users.size());
+
+        if (fromIndex > toIndex) {
+            // Handle the case where fromIndex is greater than toIndex
+            fromIndex = toIndex;
+        }
+
+        return users.subList(fromIndex, toIndex);
     }
 
     public User getUserById(int userId) {
@@ -207,6 +383,9 @@ public class UserDAO extends DBContext {
 
             // Execute the insert statement
             int rowsInserted = statement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new user was inserted successfully!");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception
@@ -327,7 +506,9 @@ public class UserDAO extends DBContext {
 
         // Test addUser method
         UserDAO uDAO = new UserDAO(); // Assuming you have a UserDAO class that contains the addUser method
-        uDAO.addUser(newUser);
+//        uDAO.addUser(newUser);
+
+//        System.out.println(uDAO.getAllUserWithParam("A", 1, 1).size());
     }
 
 }

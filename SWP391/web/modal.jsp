@@ -359,7 +359,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email" class="form-label">Email:</label>
-                            <input type="email" id="email" readonly="" disabled="" name="email" class="form-control" value="${profile.email}" required>
+                            <input type="email" id="email" readonly="" disabled="" name="email" class="form-control" value="${profile.email}" required/>
                         </div>
                     </div>
                     <div class="col-md-6">

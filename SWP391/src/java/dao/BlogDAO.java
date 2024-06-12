@@ -226,14 +226,41 @@ public class BlogDAO extends DBContext {
     }
     
     /**
-     * Use to get top 4 blog order by date created descending
+     * Use to get top 3 blog order by created_at descending
      * 
-     * @return list 4 blog order by date created descending
+     * @return list blog order by created_at descending
+     */
+    public List<Blog> getLatestBlog(){
+        List<Blog> list = new LinkedList<>();
+        try {
+            String sql = "select top (3) * from blogs order by created_at desc";
+            PreparedStatement pre = connection.prepareStatement(sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {                
+                list.add(new Blog(rs.getInt(1), rs.getInt(2),
+                        rs.getInt(3), rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6), rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9), rs.getDate(10)));
+            }          
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+        return list;
+    }
+    
+    /**
+     * Use to get top 2 blog order by created_at ascending
+     * 
+     * @return list blog order by created_at ascending
      */
     public List<Blog> getHotBlog(){
         List<Blog> list = new LinkedList<>();
         try {
-            String sql = "select top (4) * from blogs order by created_at desc";
+            String sql = "select top (2) * from blogs order by created_at asc";
             PreparedStatement pre = connection.prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);

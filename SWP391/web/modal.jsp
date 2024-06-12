@@ -255,7 +255,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="modalForm">
+            <form id="modalFormAddToCart">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -265,7 +265,9 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="colorSelect">Color</label>
-                        <select id="colorSelect" name="color" class="form-control"></select>
+                        <select id="colorSelect" name="color" class="form-control">
+
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="sizeSelect">Size</label>
@@ -277,7 +279,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveChanges">Add to cart</button>
+                    <button type="button" class="btn btn-primary" id="AddToCart">Add to cart</button>
                 </div>
             </form>
         </div>
@@ -286,61 +288,45 @@
 <!-- Add cart Modal -->
 
 
-<!-- jQuery and Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-                            $('#exampleModal').on('show.bs.modal', function (event) {
-                                var button = $(event.relatedTarget); // Button that triggered the modal
-                                var name = button.data('name'); // Extract info from data-* attributes
-                                var colors = button.data('colors');
-                                var sizes = button.data('sizes');
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var name = button.data('name'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('.modal-title').text(name); // Set the title
+        modal.find('#productName').val(name); // Set the hidden input value
+        var search = name.replace(" ","_");
+        $(document).ready(function () {
+            $("#colorSelect").load("product?service=getAllColorByName&name="+search);
+            $("#sizeSelect").load("product?service=getAllSizeByName&name="+search);
 
-//            colors = JSON.parse(colors);
-//            sizes = JSON.parse(sizes);
+        });
 
-                                var modal = $(this);
-                                modal.find('.modal-title').text(name); // Set the title
-                                modal.find('#productName').val(name); // Set the hidden input value
+    });
 
-                                // Populate the color dropdown
-                                var colorSelect = modal.find('#colorSelect');
-                                colorSelect.empty();
-                                colors.forEach(function (color) {
-                                    colorSelect.append('<option value="' + color + '">' + color + '</option>');
-                                });
 
-                                // Populate the size dropdown
-                                var sizeSelect = modal.find('#sizeSelect');
-                                sizeSelect.empty();
-                                sizes.forEach(function (size) {
-                                    sizeSelect.append('<option value="' + size + '">' + size + '</option>');
-                                });
-                            });
+    $('#AddToCart').on('click', function () {
+        var form = document.getElementById('modalFormAddToCart');
+        var formData = new FormData(form);
+        $.post("/SWP391/cart?service=addCartByAjax",
+                {
+                    name: formData.get("name"),
+                    color: formData.get("color"),
+                    size: formData.get("size")
 
-                            $('#saveChanges').on('click', function () {
-                                var formData = $('#modalForm').serialize();
+                },
+                function (data, status) {
+                    //      alert("Data: " + data + "\nStatus: " + status);
+                    $('#exampleModal').click();
+                    if(data!=="hello"){
+                        alert("Data: " + data);
+                    }
+                    
 
-                                $.ajax({
-                                    url: '/SWP391/product?service=addCartByAjax',
-                                    type: 'POST',
-                                    data: formData,
-                                    success: function (response) {
-                                        // Handle the response from the servlet
-                                        $('#exampleModal').click();
-//                    showAlert("Success");
-                                        $('#successMessage').show().delay(3000).fadeOut();
-                                        // Ensure the modal button is re-enabled
-//                    $('[data-target="#exampleModal"]').prop('disabled', false);
-                                    },
-                                    error: function (xhr, status, error) {
-                                        // Handle the error
-                                        console.error(error);
-                                    }
-                                });
-                            });
+                    //      document.getElementById('#div1').innerHTML=data;
+                });
+    });
 
 
 </script>

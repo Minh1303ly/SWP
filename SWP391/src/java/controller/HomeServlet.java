@@ -5,7 +5,6 @@
 package controller;
 
 import dao.*;
-import dto.*;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,10 +44,8 @@ public class HomeServlet extends HttpServlet {
                 switch (request.getParameter("service")) {
                     case "view" ->
                         view(request, response);
-                    case "setHeader" ->
-                        setHeader(request, response);
                     default ->
-                        view(request, response);
+                        response.sendRedirect("404.html");
                 }
             }
         }
@@ -66,27 +63,14 @@ public class HomeServlet extends HttpServlet {
         try {
             SlidersDAO daoSlider = new SlidersDAO();
             BlogDAO bDao = new BlogDAO();
-            DTOProducts dTOProducts = new DTOProducts();
+            ProductDAO productDAO = new ProductDAO();
             request.setAttribute("title", "Home");
             request.setAttribute("slider", daoSlider.getAll());
-            request.setAttribute("blog", bDao.getHotBlog());
-            request.setAttribute("topSelling",
-                    dTOProducts.getProductLatest("hot", 12));
+            request.setAttribute("latestBlog", bDao.getLatestBlog());
+            request.setAttribute("hotBlog", bDao.getHotBlog());
             request.setAttribute("featured",
-                    dTOProducts.getProductByRating(3, 7));
+                    productDAO.getProductByRating(3, 7));
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
-            dispatch.forward(request, response);
-        } catch (ServletException | IOException ex) {
-            Logger.getLogger(HomeServlet.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void setHeader(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            CategoryDAO cDAO = new CategoryDAO();
-            request.setAttribute("categories", cDAO.getAllByStatus());
-            RequestDispatcher dispatch = request.getRequestDispatcher("header.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
             Logger.getLogger(HomeServlet.class.getName())

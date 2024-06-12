@@ -315,12 +315,22 @@
                 function (data, status) {
                     //      alert("Data: " + data + "\nStatus: " + status);
                     $('#exampleModal').click();
-                    if(data!=="hello"){
-                        alert("Data: " + data);
+                    if(data==="hello"){
+                        Swal.fire({
+                            title: 'Add success!',
+                            text: 'Click \'continue\' to explore',
+                            icon: 'success',
+                            confirmButtonText: 'Continue'
+                        });
                     }
-                    
-
-                    //      document.getElementById('#div1').innerHTML=data;
+                    else{
+                        Swal.fire({
+                            title: 'Add fail!',
+                            text: 'Click \'continue\' to explore',
+                            icon: 'danger',
+                            confirmButtonText: 'Continue'
+                        });
+                    }
                 });
     });
 

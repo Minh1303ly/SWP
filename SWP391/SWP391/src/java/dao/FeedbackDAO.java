@@ -175,16 +175,26 @@ public class FeedbackDAO extends DBContext {
             updateStatement.setString(1, newStatus);
             updateStatement.setInt(2, ratingId);
             int rowsUpdated = updateStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Rating status updated successfully.");
+            } else {
+                System.out.println("No rating found with the given ID.");
+            }
         } catch (SQLException ex) {
         }
     }
 
     public void changeRatingStatusImage(int ratingId, String newStatus) throws SQLException {
-        String updateQuery = "UPDATE rating SET statusImage = ? WHERE id = ?";
+        String updateQuery = "UPDATE rating SET status_image = ? WHERE id = ?";
         try (PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
             updateStatement.setString(1, newStatus);
             updateStatement.setInt(2, ratingId);
             int rowsUpdated = updateStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Status Image updated successfully.");
+            } else {
+                System.out.println("Do not change status image.");
+            }
         } catch (SQLException ex) {
         }
     }
@@ -192,7 +202,7 @@ public class FeedbackDAO extends DBContext {
     public static void main(String[] args) {
         try {
             FeedbackDAO dao = new FeedbackDAO();
-            dao.changeRatingStatus(1, "pending");
+            dao.changeRatingStatusImage(2, "Hidden");
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

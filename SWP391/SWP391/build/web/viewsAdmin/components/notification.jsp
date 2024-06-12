@@ -12,7 +12,7 @@
                 position: fixed;
                 top: 10px;
                 right: 10px;
-                padding: 10px;
+                padding: 5px;
                 z-index: 9999;
                 border-radius: 5px;
                 box-shadow: 0 2px 4px rgba(0,0,0,.2);
@@ -23,10 +23,15 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                width: 200px;
             }
 
             .notification.error {
                 background-color: #dc3545; /* Red for error */
+            }
+            .notification h3 {
+                font-size: 15px; /* Giảm kích thước chữ của tiêu đề */
+                margin: 0; /* Loại bỏ khoảng cách trên dưới của tiêu đề */
             }
 
             .progress-bar {
@@ -64,7 +69,7 @@
                 setTimeout(function () {
                     notification.style.opacity = "0";
                     notification.style.top = "10px";
-                }, 5000); // 5 seconds
+                }, 1500); // 5 seconds
             }
 
             // Show notifications on page load

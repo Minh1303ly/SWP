@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -32,16 +33,22 @@ public class ChangeStatusController extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             String status = request.getParameter("status");
-            String statusImage = request.getParameter("statusImage");
             String mode = request.getParameter("mode");
             FeedbackDAO dao = new FeedbackDAO();
+            HttpSession session = request.getSession();
+            String messSuccess;
             switch (mode) {
                 case "status":
                     dao.changeRatingStatus(id, status);
+                    messSuccess = "Change feedback status successfully!";
+                    session.setAttribute("messSuccess", messSuccess);
                     response.sendRedirect("feedbackList");
+
                     break;
                 case "image":
-                    dao.changeRatingStatusImage(id, statusImage);
+                    dao.changeRatingStatusImage(id, status);
+                    messSuccess = "Change image status successfully!";
+                    session.setAttribute("messSuccess", messSuccess);
                     response.sendRedirect("feedbackDetail?id=" + id);
                     break;
             }

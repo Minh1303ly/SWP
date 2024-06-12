@@ -18,8 +18,8 @@
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
         <script>
-            function submitForm() {
-                document.getElementById("statusChangeForm").submit();
+            function submitForm(id) {
+                document.getElementById("statusChangeForm-" + id).submit();
             }
         </script>
     </head>
@@ -29,6 +29,8 @@
         <jsp:include page="components/leftBar.jsp" />
 
         <jsp:include page="components/topBar.jsp" />
+        
+        <jsp:include page="components/notification.jsp" />
 
 
         <div class="ltr:flex flex-1 rtl:flex-row-reverse">
@@ -168,10 +170,10 @@
                                                                             </c:forEach>
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <form method="POST" action="feedbackStatus" id="statusChangeForm">
+                                                                            <form method="POST" action="feedbackStatus" id="statusChangeForm-${f.id}">
                                                                                 <input type="text" name="id" value="${f.id}" hidden="">
                                                                                 <input type="text" name="mode" value="status" hidden="">
-                                                                                <select name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="submitForm()">
+                                                                                <select name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="submitForm(${f.id})">
                                                                                     <option class="bg-yellow-600/5 text-yellow-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"  value="pending" <c:if test="${f.status == 'pending'}">selected</c:if>>Pending</option>
                                                                                     <option class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="approved" <c:if test="${f.status == 'approved'}">selected</c:if>>Approve</option>
                                                                                     <option class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="rejected" <c:if test="${f.status == 'rejected'}">selected</c:if>>Rejected</option>

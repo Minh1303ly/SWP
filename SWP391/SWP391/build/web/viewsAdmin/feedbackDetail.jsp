@@ -17,7 +17,11 @@
         <link rel="stylesheet" href="viewsAdmin/assets/libs/icofont/icofont.min.css">
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
-
+        <script>
+            function submitForm(feedbackId) {
+                document.getElementById("statusChangeForm_" + feedbackId).submit();
+            }
+        </script>
     </head>
 
     <body data-layout-mode="light"  data-sidebar-size="default" data-theme-layout="vertical" class="bg-[#EEF0FC] dark:bg-gray-900">
@@ -25,7 +29,8 @@
         <jsp:include page="components/leftBar.jsp" />
 
         <jsp:include page="components/topBar.jsp" />
-
+        
+        <jsp:include page="components/notification.jsp" />
 
         <div class="ltr:flex flex-1 rtl:flex-row-reverse">
             <div class="page-wrapper relative ltr:ms-auto rtl:me-auto rtl:ms-0 w-[calc(100%-260px)] px-4 pt-[64px] duration-300">
@@ -100,67 +105,76 @@
                                         <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.product.color}</td>
                                         <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.comment}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <img  src="https://genk.mediacdn.vn/thumb_w/640/2015/2-1440133142840.gif" alt="Status Image" class="rounded">
+                                            <img  src= alt="Status Image" class="rounded">
                                         </td>
-                                        <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.status_image}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-
-                </div>
-
-                <div class="xl:w-full  min-h-[calc(100vh-138px)] relative pb-14"> 
-                    <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
-                        <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12">
-                            <div class="w-full relative mb-4">  
-                                <div class="flex-auto p-0 md:p-4">
-                                    <div class="flex flex-wrap gap-4 mb-3">
-                                    </div>
-                                    <div class="container mx-auto p-4">
-
-                                    </div>
-                                </div><!--end card-->                                  
-                            </div><!--end col-->  
-                        </div> <!--end grid-->                                        
-                        <!-- footer -->
-                        <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
-                            <div class="container">
-                                <!-- Footer Start -->
-                                <footer
-                                    class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
-                                    >
-                                    &copy;
-                                    <script>
-                                        var year = new Date();
-                                        document.write(year.getFullYear());
-                                    </script>
-                                    Robotech
-                                    <span class="float-right hidden text-slate-600 dark:text-slate-400 md:inline-block"
-                                          >Crafted with <i class="ti ti-heart text-red-500"></i> by
-                                        Mannatthemes</span
-                                    >
-                                </footer>
-                                <!-- end Footer -->
+                                        <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">
+                                            <form method="POST" action="feedbackStatus" id="statusChangeForm_${feedback.id}">
+                                                <input type="text" name="id" value="${feedback.id}" hidden="">
+                                                <input type="text" name="mode" value="image" hidden="">
+                                                <select name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" onchange="submitForm('${feedback.id}')">
+                                                    <option class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"  value="Hidden" <c:if test="${feedback.status_image == 'Hidden'}">selected</c:if>>Hidden</option>
+                                                    <option class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5"value="Visible" <c:if test="${feedback.status_image == 'Visible'}">selected</c:if>>Visible</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
+                        </section>
 
-                    </div><!--end container-->
-                </div><!--end page-wrapper-->
-            </div><!--end /div-->
-            <!-- JAVASCRIPTS -->
-            <!-- <div class="menu-overlay"></div> -->
-            <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>
-            <script src="viewsAdmin/assets/libs/simplebar/simplebar.min.js"></script>
-            <script src="viewsAdmin/assets/libs/flatpickr/flatpickr.min.js"></script>
-            <script src="viewsAdmin/assets/libs/@frostui/tailwindcss/frostui.js"></script>
+                    </div>
 
-            <script src="viewsAdmin/assets/libs/apexcharts/apexcharts.min.js"></script>
-            <script src="viewsAdmin/assets/js/pages/analytics-index.init.js"></script>
-            <script src="viewsAdmin/assets/js/app.js"></script>
-            <!-- JAVASCRIPTS -->
-            <script src="${pageContext.request.contextPath}/viewsAdmin/assets/js/dataTable.js"></script>
+                    <div class="xl:w-full  min-h-[calc(100vh-138px)] relative pb-14"> 
+                        <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
+                            <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-12 xl:col-span-12">
+                                <div class="w-full relative mb-4">  
+                                    <div class="flex-auto p-0 md:p-4">
+                                        <div class="flex flex-wrap gap-4 mb-3">
+                                        </div>
+                                        <div class="container mx-auto p-4">
+
+                                        </div>
+                                    </div><!--end card-->                                  
+                                </div><!--end col-->  
+                            </div> <!--end grid-->                                        
+                            <!-- footer -->
+                            <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
+                                <div class="container">
+                                    <!-- Footer Start -->
+                                    <footer
+                                        class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
+                                        >
+                                        &copy;
+                                        <script>
+                                                    var year = new Date();
+                                                    document.write(year.getFullYear());
+                                        </script>
+                                        Robotech
+                                        <span class="float-right hidden text-slate-600 dark:text-slate-400 md:inline-block"
+                                              >Crafted with <i class="ti ti-heart text-red-500"></i> by
+                                            Mannatthemes</span
+                                        >
+                                    </footer>
+                                    <!-- end Footer -->
+                                </div>
+                            </div>
+
+                        </div><!--end container-->
+                    </div><!--end page-wrapper-->
+                </div><!--end /div-->
+                <!-- JAVASCRIPTS -->
+                <!-- <div class="menu-overlay"></div> -->
+                <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>
+                <script src="viewsAdmin/assets/libs/simplebar/simplebar.min.js"></script>
+                <script src="viewsAdmin/assets/libs/flatpickr/flatpickr.min.js"></script>
+                <script src="viewsAdmin/assets/libs/@frostui/tailwindcss/frostui.js"></script>
+
+                <script src="viewsAdmin/assets/libs/apexcharts/apexcharts.min.js"></script>
+                <script src="viewsAdmin/assets/js/pages/analytics-index.init.js"></script>
+                <script src="viewsAdmin/assets/js/app.js"></script>
+                <!-- JAVASCRIPTS -->
+                <script src="${pageContext.request.contextPath}/viewsAdmin/assets/js/dataTable.js"></script>
 
 
     </body>

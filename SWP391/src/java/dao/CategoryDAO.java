@@ -11,11 +11,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
+import util.CategoryAggregation;
 
 public class CategoryDAO extends DBContext {
 
@@ -322,6 +327,74 @@ public class CategoryDAO extends DBContext {
         }
         return list;
     }
+    
+    /**
+     * Use to get hierarchy category
+     *
+     * @return map hierarchy category
+     */
+    public Map<Category, CategoryAggregation> getHierarchyCategory() {
+        Map<Category, CategoryAggregation> listMap = new HashMap<>();
+        String sql = """
+                     select categories.name, subcategories.name
+                     from categories full outer join subcategories
+                     on categories.id = subcategories.category_id""";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                Category key = new Category(rs.getString(1));
+                CategoryAggregation categoryAggregation
+                        = listMap.computeIfAbsent(key, k -> new CategoryAggregation());
+                categoryAggregation.nameSubCategories.add(rs.getString(2));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return listMap;
+    }
+
+    /**
+     * Use to get category of given name
+     * 
+     * @param name name of product
+     * @return list string name category
+     */
+    public List<String> getCategoryByNameProduct(String name) {
+        Set<String> set = new HashSet<>();
+        List<String> categorys = new LinkedList<>();
+        List<String> categorieses = new LinkedList<>();
+        String sql = """
+                     select categories.name, subcategories.name
+                     from categories full outer join subcategories
+                     on categories.id = subcategories.category_id
+                     full outer join product_subcate
+                     on product_subcate.subcategory_id = subcategories.id
+                     full outer join products
+                     on products.id = product_subcate.product_id
+                     where products.name like ?""";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setString(1, name);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                categorys.add(rs.getString(1));
+                categorieses.add(rs.getString(2));
+            }
+            set.addAll(categorys);
+            set.addAll(categorieses);
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return new LinkedList<>(set);
+    }
+
 
     public static void main(String[] args) {
         CategoryDAO cDAO = new CategoryDAO();

@@ -33,6 +33,7 @@ public class Discount {
         this.active = active;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+    }
 
     public Discount(int discountPercent, boolean active) {
         this.discountPercent = discountPercent;

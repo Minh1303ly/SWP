@@ -60,8 +60,7 @@ public class DashboardDAO extends DBContext {
                        SELECT SUM(od.price * od.quantity) AS total_revenue
                        FROM shop_orders so
                        JOIN order_details od ON so.id = od.shop_order_id
-                       JOIN order_status os ON so.status_id = os.id
-                       WHERE os.id = 2  """);
+                       JOIN order_status os ON so.status_id = os.id """);
 
             if (startDate != null && !startDate.isEmpty() && endDate != null && !endDate.isEmpty()) {
                 query.append(" AND so.created_at BETWEEN ? AND ? ");

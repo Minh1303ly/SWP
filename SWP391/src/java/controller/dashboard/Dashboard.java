@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
 
@@ -27,16 +29,16 @@ public class Dashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String dateParam = request.getParameter("date");
-        String startDate = "2001-01-01";
-        String endDate = "2051-01-01";
-        if (null != dateParam && dateParam != "") {
-            String date = dateParam;
-            String dateRange[] = date.split(" to ");
-            startDate = dateRange[0];
-            endDate = dateRange[1];
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        if (startDate == null || startDate.isEmpty()) {
+            startDate = "2001-01-01";
         }
-
+        if (endDate == null || endDate.isEmpty()) {
+            endDate = LocalDate.now().format(DateTimeFormatter.ISO_DATE);
+        }
+        request.setAttribute("startDate", startDate);
+        request.setAttribute("endDate", endDate);
         DashboardDAO dao = new DashboardDAO();
 
         int orderSuccess = dao.countOrdersByStatusAndDate(2, startDate, endDate);
@@ -66,7 +68,7 @@ public class Dashboard extends HttpServlet {
         request.setAttribute("avgStar", avgStar);
         request.setAttribute("totalStar", totalStar);
         request.setAttribute("newUser", newUser);
-        
+
         request.getRequestDispatcher("viewsAdmin/Dashboard.jsp").forward(request, response);
     }
 

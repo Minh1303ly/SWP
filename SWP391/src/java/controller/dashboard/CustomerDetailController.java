@@ -27,11 +27,9 @@ public class CustomerDetailController extends HttpServlet {
             throws ServletException, IOException {
         UserDAO uDAO = new UserDAO();
 
-// Lấy tham số id từ request
-        String idRaw = request.getParameter("id");
-
         try {
-
+// Lấy tham số id từ request
+            String idRaw = request.getParameter("id");
             // Chuyển đổi tham số id từ chuỗi sang số nguyên
             int id = Integer.parseInt(idRaw);
 
@@ -43,10 +41,10 @@ public class CustomerDetailController extends HttpServlet {
             request.setAttribute("userHistories", new UserHistoryDAO().getAll(id, null, 1, 10));
             // Thiết lập thuộc tính người dùng cho request
             request.setAttribute("u", b);
+            request.getRequestDispatcher("viewsAdmin/customerDetail.jsp").forward(request, response);
         } catch (Exception e) {
-            response.sendRedirect("Error.jsp");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("viewsAdmin/customerDetail.jsp").forward(request, response);
     }
 
     @Override

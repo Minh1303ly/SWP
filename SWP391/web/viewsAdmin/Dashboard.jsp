@@ -56,6 +56,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <form action="dashboard" method="get" class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+                                    <h2 class="text-xl font-semibold mb-4">Select Date Range</h2>
+                                    <div class="mb-4">
+                                        <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+                                        <input type="date" id="startDate" name="startDate" value="${startDate}" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+                                        <input type="date" id="endDate" name="endDate" value="${endDate}" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
+                                    <button type="submit" class="w-full bg-indigo-600 text-dark py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit</button>
+                                </form>
                                 <div class="mt-4">
                                     <h2 class="font-medium text-2xl block dark:text-slate-100">Statistics</h2>
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
@@ -68,9 +80,9 @@
                                         <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
                                             <h3 class="font-medium text-xl dark:text-slate-100">Revenues</h3>
                                             <p>Total: ${totalRevenue}</p>
-                                            <h3 class="font-medium text-xl dark:text-slate-100">By Category:  </h3>
                                             <c:forEach var="entry" items="${revenueByCategory}">
-                                                <span><strong>${entry.key}:</strong> <span class="revenue-value">${entry.value}</span></span><br>
+                                                <span><strong>${entry.key}:</strong> <span class="revenue-value">${entry.value}</span>
+                                                </span><br>
                                                 </c:forEach>
                                         </div>
                                         <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
@@ -81,10 +93,9 @@
                                         <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
                                             <h3 class="font-medium text-xl dark:text-slate-100">Feedbacks</h3>
                                             <p>Average Star: ${totalStar}</p>
-                                            <h3 class="font-medium text-xl dark:text-slate-100">By Category:  </h3>
                                             <c:forEach var="entry" items="${avgStar}">
                                                 <span><strong>${entry.key}:</strong> <span>${entry.value}</span></span><br>
-                                                </c:forEach>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                     <div class="mt-4">
@@ -103,6 +114,13 @@
         <script src="viewsAdmin/assets/libs/simplebar/simplebar.min.js"></script>
         <script src="viewsAdmin/assets/libs/flatpickr/flatpickr.min.js"></script>
         <script src="viewsAdmin/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script>
+                                                document.addEventListener('DOMContentLoaded', (event) => {
+                                                    const today = new Date().toISOString().split('T')[0];
+                                                    document.getElementById('startDate').setAttribute('max', today);
+                                                    document.getElementById('endDate').setAttribute('max', today);
+                                                });
+        </script>
         <script src="viewsAdmin/assets/js/app.js"></script>
         <script>
                                                 // Date range picker

@@ -39,6 +39,7 @@ public class FeedBackListController extends HttpServlet {
             String name = request.getParameter("name");
             String status = request.getParameter("status");
             String ratingString = request.getParameter("rating");
+            String productname = request.getParameter("productname");
 
             HttpSession session = request.getSession();
             Integer rating = null;
@@ -47,7 +48,7 @@ public class FeedBackListController extends HttpServlet {
             if (ratingString != null && !ratingString.isEmpty()) {
                 rating = Integer.parseInt(ratingString);
             }
-            List<Ratting> list = fDAO.getAllRatingFilter(status, rating, name, comment);
+            List<Ratting> list = fDAO.getAllRatingFilter(status, rating, name, comment, productname);
 
             // start pagging
             int limitPage = 10;
@@ -70,6 +71,7 @@ public class FeedBackListController extends HttpServlet {
             session.setAttribute("status", status);
             session.setAttribute("name", name);
             session.setAttribute("comment", comment);
+            session.setAttribute("productname", productname);
             // end pagging
             request.setAttribute("listFeedBack", list);
             request.getRequestDispatcher("viewsAdmin/viewFeedback.jsp").forward(request, response);

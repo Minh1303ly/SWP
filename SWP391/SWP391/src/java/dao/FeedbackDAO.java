@@ -25,7 +25,7 @@ import model.User;
  */
 public class FeedbackDAO extends DBContext {
 
-    public List<Ratting> getAllRatingFilter(String status, Integer rating, String userName, String comment) throws SQLException {
+    public List<Ratting> getAllRatingFilter(String status, Integer rating, String userName, String comment, String productname) throws SQLException {
         List<Ratting> ratings = new ArrayList<>();
         StringBuilder queryBuilder = new StringBuilder(
                 "SELECT r.id, r.product_id, r.user_id, r.rating, r.comment, r.created_at, r.modified_at, r.status,"
@@ -58,6 +58,9 @@ public class FeedbackDAO extends DBContext {
         if (comment != null && !comment.isEmpty()) {
             queryBuilder.append(" AND r.comment LIKE ?");
         }
+        if (productname != null && !productname.isEmpty()) {
+            queryBuilder.append(" AND p.name LIKE ?");
+        }
 
         String query = queryBuilder.toString();
 
@@ -87,6 +90,10 @@ public class FeedbackDAO extends DBContext {
 
             if (comment != null && !comment.isEmpty()) {
                 statement.setString(paramIndex++, "%" + comment + "%");
+            }
+
+            if (productname != null && !productname.isEmpty()) {
+                statement.setString(paramIndex++, "%" + productname + "%");
             }
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -202,7 +209,7 @@ public class FeedbackDAO extends DBContext {
     public static void main(String[] args) {
         try {
             FeedbackDAO dao = new FeedbackDAO();
-            dao.changeRatingStatusImage(2, "Hidden");
+            dao.getAllRatingFilter("", 3, null, null, "Running");
         } catch (SQLException ex) {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

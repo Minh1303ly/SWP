@@ -29,7 +29,7 @@
         <jsp:include page="components/leftBar.jsp" />
 
         <jsp:include page="components/topBar.jsp" />
-        
+
         <jsp:include page="components/notification.jsp" />
 
 
@@ -86,7 +86,7 @@
                                             </div>
 
                                             <!-- Rating Filter -->
-                                            <div class="md:col-span-3">
+                                            <div class="md:col-span-2">
                                                 <label for="rating" class="block text-sm font-medium text-gray-700">Rating</label>
                                                 <select name="rating" id="rating" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                     <option value="">Select Rating</option>
@@ -97,12 +97,18 @@
                                                 <option value="5" <c:if test="${rating == 5}">selected</c:if>>⭐⭐⭐⭐⭐</option>
                                                 </select>
                                             </div>
-
+                                                
+                                            <!-- Comment Keyword Filter -->
+                                            <div class="md:col-span-2">
+                                                <label for="productname" class="block text-sm font-medium text-gray-700">Product Name</label>
+                                                <input type="text" name="productname" id="productname" value="${productname}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                            </div>
+                                            
                                             <!-- User Name Filter -->
-                                            <div class="md:col-span-3">
-                                                <label for="name" class="block text-sm font-medium text-gray-700">User Name</label>
-                                                <input type="text" name="name" id="name" value="${name}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        </div>
+                                            <div class="md:col-span-2">
+                                            <label for="name" class="block text-sm font-medium text-gray-700">User Name</label>
+                                            <input type="text" name="name" id="name" value="${name}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                            </div>
 
                                         <!-- Comment Keyword Filter -->
                                         <div class="md:col-span-3">

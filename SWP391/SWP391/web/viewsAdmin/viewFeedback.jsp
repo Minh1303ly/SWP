@@ -78,9 +78,9 @@
                                             <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                                             <select name="status" id="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                 <option value="">Select Status</option>
-                                                <option value="pending" <c:if test="${paramStatus == 'pending'}">selected</c:if>>Pending</option>
-                                                <option value="approved"<c:if test="${paramStatus == 'approved'}">selected</c:if>>Approved</option>
-                                                <option value="rejected"<c:if test="${paramStatus == 'rejected'}">selected</c:if>>Rejected</option>
+                                                <option value="pending" <c:if test="${status == 'pending'}">selected</c:if>>Pending</option>
+                                                <option value="approved"<c:if test="${status == 'approved'}">selected</c:if>>Approved</option>
+                                                <option value="rejected"<c:if test="${status == 'rejected'}">selected</c:if>>Rejected</option>
                                                     <!-- Add more status options as needed -->
                                                 </select>
                                             </div>
@@ -91,23 +91,23 @@
                                                 <select name="rating" id="rating" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                     <option value="">Select Rating</option>
                                                     <option value="1" <c:if test="${paramRating == 1}">selected</c:if>>⭐</option>
-                                                <option value="2" <c:if test="${paramRating == 2}">selected</c:if>>⭐⭐</option>
-                                                <option value="3" <c:if test="${paramRating == 3}">selected</c:if>>⭐⭐⭐</option>
-                                                <option value="4" <c:if test="${paramRating == 4}">selected</c:if>>⭐⭐⭐⭐</option>
-                                                <option value="5" <c:if test="${paramRating == 5}">selected</c:if>>⭐⭐⭐⭐⭐</option>
+                                                <option value="2" <c:if test="${rating == 2}">selected</c:if>>⭐⭐</option>
+                                                <option value="3" <c:if test="${rating == 3}">selected</c:if>>⭐⭐⭐</option>
+                                                <option value="4" <c:if test="${rating == 4}">selected</c:if>>⭐⭐⭐⭐</option>
+                                                <option value="5" <c:if test="${rating == 5}">selected</c:if>>⭐⭐⭐⭐⭐</option>
                                                 </select>
                                             </div>
 
                                             <!-- User Name Filter -->
                                             <div class="md:col-span-3">
                                                 <label for="name" class="block text-sm font-medium text-gray-700">User Name</label>
-                                                <input type="text" name="name" id="name" value="${paramName}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                <input type="text" name="name" id="name" value="${name}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                         </div>
 
                                         <!-- Comment Keyword Filter -->
                                         <div class="md:col-span-3">
                                             <label for="comment" class="block text-sm font-medium text-gray-700">Comment</label>
-                                            <input type="text" name="comment" id="comment" value="${paramComment}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                            <input type="text" name="comment" id="comment" value="${comment}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                         </div>
 
                                         <!-- Submit Button -->

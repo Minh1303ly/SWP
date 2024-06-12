@@ -1,2 +1,0 @@
-dto.DTOProducts
-dto.ProductAggregation

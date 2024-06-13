@@ -422,11 +422,9 @@ public class ProductsDAO extends DBContext {
                 + "           ,[size]\n"//6
                 + "           ,[color]\n"//7
                 + "           ,[description]\n"//8
-                + "           ,[img1]\n"//9
-                + "           ,[img2]\n"//10
-                + "           ,[created_at]\n"//11
-                + "           ,[modified_at])\n"//12
-                + "     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "           ,[created_at]\n"//9
+                + "           ,[modified_at])\n"//10
+                + "     VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
 
@@ -438,16 +436,14 @@ public class ProductsDAO extends DBContext {
             st.setString(6, p.getSize());
             st.setString(7, p.getColor());
             st.setString(8, p.getDescription());
-            st.setString(9, p.getImg1());
-            st.setString(10, p.getImg2());
             
             java.util.Date utilDate = p.getCreatedAt();
             java.sql.Date created_at = new java.sql.Date(utilDate.getTime());
-            st.setDate(11, created_at);
+            st.setDate(9, created_at);
             
             utilDate = p.getModifiedAt();
             java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
-            st.setDate(12, modified_at);
+            st.setDate(10, modified_at);
 
             st.executeUpdate();
         } catch (SQLException e) {

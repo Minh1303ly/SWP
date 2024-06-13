@@ -214,8 +214,6 @@ public class ProductListServlet extends HttpServlet {
         DiscountDAO ddb = new DiscountDAO();
         BrandDAO bdb = new BrandDAO();
 
-        String img1 = request.getParameter("img1");
-        String img2 = request.getParameter("img2");
         String name = request.getParameter("title");
         String description = request.getParameter("description");
         String price_raw = request.getParameter("price");
@@ -237,9 +235,7 @@ public class ProductListServlet extends HttpServlet {
             session.removeAttribute("messSuccess");
             session.setAttribute("messError", "Product Existed!");
             
-        } else if (img1 == null || img1.equals("")
-                || img2 == null || img2.equals("")
-                || name == null || name.equals("")
+        } else if (name == null || name.equals("")
                 || description == null || description.equals("")
                 || price_raw == null || price_raw.equals("")
                 || discount_raw == null || discount_raw.equals("")
@@ -259,7 +255,7 @@ public class ProductListServlet extends HttpServlet {
 
                 for (String c : colors) {
                     for (String s : listSize) {
-                        ProductDTO p = new ProductDTO(discount, status, brand, name, price, s, c, description, img1, img2, new Date(), new Date());
+                        ProductDTO p = new ProductDTO(discount, status, brand, name, price, s, c, description, new Date(), new Date());
 
                         pdb.insertProduct(p);
                     }

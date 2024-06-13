@@ -338,12 +338,10 @@
                         <form action="productList" method="post">
                             <div class="modal-body">
                                 <div class="form-group input-group">
-                                    <label for="img1">Image 1:</label>
-                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="text" id="img1" name="img1" required>
+                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="hidden" id="img1" name="img1" value="">
                                 </div>
                                 <div class="form-group">
-                                    <label for="img2">Image 2:</label>
-                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="text" id="img2" name="img2" required>
+                                    <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" class="input-group" type="hidden" id="img2" name="img2" value="">
                                 </div>
                                 <div class="form-group input-group">
                                     <label for="title">Title:</label>

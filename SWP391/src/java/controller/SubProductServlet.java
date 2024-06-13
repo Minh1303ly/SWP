@@ -73,7 +73,7 @@ public class SubProductServlet extends HttpServlet {
     public void getAllColorByName(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             ProductDAO productDAO = new ProductDAO();
-            String name = request.getParameter("name").replace("_", " ");
+            String name = request.getParameter("name").replaceAll("_", " ");
             List<String> ls = productDAO.getAllColorByName(name);
             ls.forEach(a -> {
                 out.print("<option value=\"" + a + "\">" + a + "</option>");
@@ -92,7 +92,7 @@ public class SubProductServlet extends HttpServlet {
     public void getAllSizeByName(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             ProductDAO productDAO = new ProductDAO();
-            String name = request.getParameter("name").replace("_", " ");
+            String name = request.getParameter("name").replaceAll("_", " ");
             List<Integer> ls = productDAO.getAllSizeByName(name);
             ls.forEach(a -> {
                 out.print("<option value=\"" + a + "\">" + a + "</option>");
@@ -279,7 +279,7 @@ public class SubProductServlet extends HttpServlet {
             }
             filter.setService("viewByFilter");
             filter.setColor(request.getParameterValues("color"));
-            filter.setBrand(request.getParameterValues("size"));
+            filter.setBrand(request.getParameterValues("brand"));
             filter.setPrice(request.getParameterValues("price"));
             session.setAttribute("filter", filter);       
             RequestDispatcher dispatch = request.getRequestDispatcher("product_list.jsp");

@@ -51,7 +51,10 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+         <!-- Include SweetAlert CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
         <style>
             .items {
                 display: flex;
@@ -105,7 +108,7 @@
                                 <div class="container">
                                     <ul class="clearfix">
                                         <li>
-                                            <div class="sort_select">
+<!--                                            <div class="sort_select">
                                                 <select name="sort" id="sort">
                                                     <option value="popularity" selected="selected">Sort by popularity</option>
                                                     <option value="rating">Sort by average rating</option>
@@ -113,16 +116,16 @@
                                                     <option value="price">Sort by price: low to high</option>
                                                     <option value="price-desc">Sort by price: high to
                                                 </select>
-                                            </div>
+                                            </div>-->
                                         </li>
                                         <li>
                                             <a href="#0"><i class="ti-view-grid"></i></a>
                                             <a href="listing-row-1-sidebar-left.html"><i class="ti-view-list"></i></a>
                                         </li>
                                         <li>
-                                            <a href="#0" class="open_filters">
+<!--                                            <a href="#0" class="open_filters">
                                                 <i class="ti-filter"></i><span>Filters</span>
-                                            </a>
+                                            </a>-->
                                         </li>
                                     </ul>
                                 </div>
@@ -222,83 +225,9 @@
         <script src="js/specific_listing.js"></script>
         <script src="js/jquery.cookiebar.js"></script>
         <script src="js/validate.js"></script>   
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const ITEMS_PER_PAGE = 5;
-                const TOTAL_PAGINATION_BUTTONS = ${TOTAL_PAGINATION};
-                const MAX_VISIBLE_PAGINATION_BUTTONS = 5;
-                const itemsContainer = document.getElementById('containerProduct');
-                const paginationContainer = document.getElementById('pagination');
-                let currentPage = 0;
 
-                function getItemsForPage(pageNumber) {
-                    const start = pageNumber * ITEMS_PER_PAGE;
-                    const end = Math.min(start + ITEMS_PER_PAGE, TOTAL_PAGINATION_BUTTONS);
-                }
+        <script src="js/minh.js"></script>   
 
-                function updateItems() {
-                    $.get("/SWP391/pagination",
-                            {
-                                pagination: currentPage + 1
-
-                            },
-                            function (data, status) {
-//                                alert(currentPage + 1);
-                                $('#containerProduct').html(data);
-                                $('#toTop').click();
-
-                                //      document.getElementById('#div1').innerHTML=data;
-                            });
-                }
-
-                function updatePagination() {
-                    paginationContainer.innerHTML = '';
-                    const totalPages = Math.ceil(TOTAL_PAGINATION_BUTTONS / ITEMS_PER_PAGE);
-                    const startPage = Math.max(0, Math.min(currentPage - Math.floor(MAX_VISIBLE_PAGINATION_BUTTONS / 2), totalPages - MAX_VISIBLE_PAGINATION_BUTTONS));
-                    const endPage = Math.min(totalPages, startPage + MAX_VISIBLE_PAGINATION_BUTTONS);
-
-                    if (currentPage > 0) {
-                        paginationContainer.appendChild(createButton('<<', 0));
-                        paginationContainer.appendChild(createButton('<', currentPage - 1));
-                    }
-
-                    for (let i = startPage; i < endPage; i++) {
-                        paginationContainer.appendChild(createButton(i + 1, i));
-                    }
-
-                    if (currentPage < totalPages - 1) {
-                        paginationContainer.appendChild(createButton('>', currentPage + 1));
-                        paginationContainer.appendChild(createButton('>>', totalPages - 1));
-                    }
-                }
-
-                function createButton(text, pageIndex) {
-                    const li = document.createElement('li');
-                    const button = document.createElement('a');
-                    button.textContent = text;
-//			button.disabled = pageIndex === currentPage;
-                    if (pageIndex === currentPage) {
-                        button.classList.add('active');
-                        button.classList.add('btn_1');
-//                           button.style.color='white';
-                        button.style.backgroundColor = "#FFC107";
-                    }
-                    let index = parseInt(pageIndex)+ 1;
-                    button.href = "#" + index;
-                    button.addEventListener('click', function () {
-                        currentPage = pageIndex;
-                        updateItems();
-                        updatePagination();
-                    });
-                    li.appendChild(button);
-                    return li;
-                }
-
-                // Initialize the pagination
-                updateItems();
-                updatePagination();
-            });
-        </script>
 
     </body>
 </html>

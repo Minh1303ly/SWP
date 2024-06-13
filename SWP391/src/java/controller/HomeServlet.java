@@ -82,6 +82,7 @@ public class HomeServlet extends HttpServlet {
         CategoryDAO cDAO = new CategoryDAO();
         List<Category> ls = cDAO.getAllByStatus();
         System.out.println(ls.get(0).toString());
+        System.out.println("");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

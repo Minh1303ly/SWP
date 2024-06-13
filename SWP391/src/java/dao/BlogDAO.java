@@ -233,7 +233,7 @@ public class BlogDAO extends DBContext {
     public List<Blog> getHotBlog(){
         List<Blog> list = new LinkedList<>();
         try {
-            String sql = "select top (4) * from blogs order by created_at desc";
+            String sql = "select top (2) * from blogs order by created_at desc";
             PreparedStatement pre = connection.prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);

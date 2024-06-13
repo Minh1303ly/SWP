@@ -753,13 +753,13 @@ public class ProductDAO extends DBContext {
         ProductDAO productDAO = new ProductDAO();
         String[] arr = {"1", "2"};
         String[] color = {"Pink", "Grey"};
-        String[] brand = {"Nike"};
+        String[] brand = {"Other"};
         Filter filter = new Filter("viewByFilter",
-                null, null, null, color, brand,
-                arr);
+                null, null, null, null, brand,
+                null);
         List<Product> ls = productDAO.getProductByFilter(filter, 0, 50);
         ls.forEach(a -> {
-            System.out.println(a.getName() +"  "+a.getPrice());
+            System.out.println(a.getName());
         });
         System.out.println(productDAO.getTotalProduct());
 

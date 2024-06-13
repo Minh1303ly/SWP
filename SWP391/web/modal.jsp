@@ -409,4 +409,4 @@
 <!-- COMMON SCRIPTS -->
 <script src="js/common_scripts.min.js"></script>
 <script src="js/main.js"></script>
-<script src="js/validate.js"></script>
+<script src="js/vaidate.js"></script>

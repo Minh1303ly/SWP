@@ -50,6 +50,7 @@ public class Dashboard extends HttpServlet {
         String formattedRevenue = currencyFormat.format(totalRevenue);
 
         // Replace the currency symbol with "VNĐ"
+        //1.000VND
         formattedRevenue = formattedRevenue.replace("₫", "VNĐ");
 
         Map<String, Double> revenueByCategory = dao.getRevenueByCategory(startDate, endDate);

@@ -320,7 +320,7 @@
                 function (data, status) {
                     //      alert("Data: " + data + "\nStatus: " + status);
                     $('#exampleModal').click();
-                    if(data==="hello"){
+                    if(data==="true"){
                         Swal.fire({
                             title: 'Add success!',
                             text: 'Click \'continue\' to explore',
@@ -331,7 +331,7 @@
                     else{
                         Swal.fire({
                             title: 'Add fail!',
-                            text: 'Click \'continue\' to explore',
+                            text: 'Please must fill all types',
                             icon: 'error',
                             confirmButtonText: 'Continue'
                         });

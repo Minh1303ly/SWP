@@ -62,7 +62,7 @@
                                 <!-- /row -->
                             </div>
                             <!-- /container -->
-                            <form action="cart" method="post">
+                            <form id="detailFormAddToCart">
                                 <div class="bg_white">
                                     <div class="container margin_60_35">
                                         <div class="row justify-content-between">
@@ -115,10 +115,10 @@
                                                         <label class="col-xl-7 col-lg-5 col-md-6 col-6"><strong>color</strong> </label>
                                                         <div class="col-xl-5 col-lg-5 col-md-6 col-6">
                                                             <div class="custom-select-form">
-                                                                <select class="wide">
-                                                                    <option value="" selected="">Color</option>
+                                                                <select class="wide" name="color">
+                                                                    <option  selected="">Color</option>
                                                                     <c:forEach var="element" items="${product.color}">
-                                                                        <option name="color" value="${element}">${element}</option>
+                                                                        <option  value="${element}">${element}</option>
                                                                     </c:forEach> 
                                                                 </select>
                                                             </div>
@@ -128,10 +128,10 @@
                                                         <label class="col-xl-7 col-lg-5 col-md-6 col-6"><strong>Size</strong> - Size Guide <a href="#0" data-bs-toggle="modal" data-bs-target="#size-modal"><i class="ti-help-alt"></i></a></label>
                                                         <div class="col-xl-5 col-lg-5 col-md-6 col-6">
                                                             <div class="custom-select-form">
-                                                                <select class="wide">
-                                                                    <option value="" selected="">Size</option>
+                                                                <select class="wide" name="size">
+                                                                    <option  selected="">Size</option>
                                                                     <c:forEach var="element" items="${product.size}">
-                                                                        <option name="size" value="${element}">${element}</option>
+                                                                        <option  value="${element}">${element}</option>
                                                                     </c:forEach> 
                                                                 </select>
                                                             </div>
@@ -165,7 +165,9 @@
                                                         <div class="col-lg-5 col-md-6">
                                                             <input type="hidden" name="name" value="${product.name}">
                                                             <input type="hidden" name="service" value="addCart">
-                                                            <div class="btn_add_to_cart"><input type="submit" value="Add to cart"class="btn_1"></input></div>
+                                                            <div class="btn_add_to_cart">
+                                                                <input type="button" value="Add to cart"class="btn_1" id="addFromDetail">                        
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -187,6 +189,7 @@
         <!-- COMMON SCRIPTS -->
         <jsp:include page="modal.jsp"/>
         <!-- SPECIFIC SCRIPTS -->
+        <script src="js/product_detail.js"></script>
         <script src="js/sticky_sidebar.min.js"></script>
         <script src="js/specific_listing.js"></script>
     </body>

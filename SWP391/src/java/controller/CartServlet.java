@@ -85,7 +85,20 @@ public class CartServlet extends HttpServlet {
             String name = request.getParameter("name");
             String color = request.getParameter("color");
             String size = request.getParameter("size");
-            out.print("hello" + name + color + size);
+            String quantity = request.getParameter("quantity");
+            quantity = quantity==null?"1":quantity;
+            if(color.equalsIgnoreCase("color")){
+                color=null;
+            }
+            if(size.equalsIgnoreCase("size")){
+                size=null;
+            }
+            if(color==null||size==null||name==null){
+                out.print("false");
+            }
+            else{
+                out.print("true");
+            }
 
         } catch (IOException ex) {
             Logger.getLogger(SubProductServlet.class

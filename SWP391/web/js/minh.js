@@ -1,3 +1,5 @@
+
+//Pagination of product list
 document.addEventListener('DOMContentLoaded', function () {
                 const ITEMS_PER_PAGE = 5;
                 const TOTAL_PAGINATION_BUTTONS = 50;
@@ -73,4 +75,4 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateItems();
                 updatePagination();
             });
-        
+            

@@ -81,7 +81,6 @@
                                                 <option value="pending" <c:if test="${status == 'pending'}">selected</c:if>>Pending</option>
                                                 <option value="approved"<c:if test="${status == 'approved'}">selected</c:if>>Approved</option>
                                                 <option value="rejected"<c:if test="${status == 'rejected'}">selected</c:if>>Rejected</option>
-                                                    <!-- Add more status options as needed -->
                                                 </select>
                                             </div>
 
@@ -97,18 +96,18 @@
                                                 <option value="5" <c:if test="${rating == 5}">selected</c:if>>⭐⭐⭐⭐⭐</option>
                                                 </select>
                                             </div>
-                                                
+
                                             <!-- Comment Keyword Filter -->
                                             <div class="md:col-span-2">
                                                 <label for="productname" class="block text-sm font-medium text-gray-700">Product Name</label>
                                                 <input type="text" name="productname" id="productname" value="${productname}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                            </div>
-                                            
-                                            <!-- User Name Filter -->
-                                            <div class="md:col-span-2">
+                                        </div>
+
+                                        <!-- User Name Filter -->
+                                        <div class="md:col-span-2">
                                             <label for="name" class="block text-sm font-medium text-gray-700">User Name</label>
                                             <input type="text" name="name" id="name" value="${name}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                            </div>
+                                        </div>
 
                                         <!-- Comment Keyword Filter -->
                                         <div class="md:col-span-3">
@@ -140,7 +139,7 @@
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Product Name
                                                                     </th>
-                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="rating" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Rate
                                                                     </th>
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
@@ -156,9 +155,11 @@
                                                                     <!-- 1 -->
                                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                                         <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
+                                                                            <input type="text" class="sortValue" value="${f.comment}" hidden=""/>
                                                                             ${f.comment}
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                            <input type="text" class="sortValue" value="${f.user.first_name} ${f.user.last_name}" hidden=""/>
                                                                             <a>
                                                                                 <div class="flex items-center">
                                                                                     <div class="self-center">                                                                        
@@ -168,14 +169,17 @@
                                                                             </a>
                                                                         </td>
                                                                         <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
+                                                                            <input type="text" class="sortValue" value="${f.product.name}" hidden=""/>
                                                                             ${f.product.name}
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                            <input type="text" class="sortValue" value="${f.ratting}" hidden=""/>
                                                                             <c:forEach var="star" begin="1" end="${f.ratting}">
                                                                                 ⭐
                                                                             </c:forEach>
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                            <input type="text" class="sortValue" value="${f.status}" hidden=""/>
                                                                             <form method="POST" action="feedbackStatus" id="statusChangeForm-${f.id}">
                                                                                 <input type="text" name="id" value="${f.id}" hidden="">
                                                                                 <input type="text" name="mode" value="status" hidden="">

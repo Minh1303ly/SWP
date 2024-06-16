@@ -21,22 +21,65 @@ document.addEventListener("DOMContentLoaded", function () {
 function sortTable(table, columnIndex, dataType, ascending) {
     let rows = Array.from(table.getElementsByTagName("tr"));
     let isNumber = dataType === "number";
-    rows.shift(); // Loại bỏ hàng tiêu đề
+    rows.shift(); // Remove the header row
 
     rows.sort(function (rowA, rowB) {
-        let cellA = rowA.getElementsByTagName("td")[columnIndex].innerText;
-        let cellB = rowB.getElementsByTagName("td")[columnIndex].innerText;
-        if (isNumber) {
-            return (parseInt(cellA) - parseInt(cellB)) * (ascending ? 1 : -1);
-        } else {
-            return cellA.localeCompare(cellB) * (ascending ? 1 : -1);
+        let inputA = rowA.getElementsByTagName("td")[columnIndex].querySelector(".sortValue").value;
+        let inputB = rowB.getElementsByTagName("td")[columnIndex].querySelector(".sortValue").value;
+        let cellA = isNumber ? parseInt(inputA) : inputA.toLowerCase();
+        let cellB = isNumber ? parseInt(inputB) : inputB.toLowerCase();
+
+        if (cellA < cellB) {
+            return ascending ? -1 : 1;
         }
+        if (cellA > cellB) {
+            return ascending ? 1 : -1;
+        }
+        return 0;
     });
+
     let tbody = table.querySelector("tbody");
     rows.forEach(function (row) {
         tbody.appendChild(row);
     });
 }
+
+
+//function sortTable(table, columnIndex, dataType, ascending) {
+//    let rows = Array.from(table.getElementsByTagName("tr"));
+//    let isNumber = dataType === "number";
+//    rows.shift(); // Loại bỏ hàng tiêu đề
+//    
+//    rows.sort(function (rowA, rowB) {
+//        let cellA = rowA.getElementsByTagName("td")[columnIndex].innerText;
+//        let cellB = rowB.getElementsByTagName("td")[columnIndex].innerText;
+//
+//        if (dataType === "number") {
+//            return (parseInt(cellA) - parseInt(cellB)) * (ascending ? 1 : -1);
+//        } else if (dataType === "rating") {
+//            return compareRatings(cellA, cellB) * (ascending ? 1 : -1);
+//        } else if (dataType === "status") {
+//            return compareStatus(cellA, cellB) * (ascending ? 1 : -1);
+//        } else {
+//            return cellA.localeCompare(cellB) * (ascending ? 1 : -1);
+//        }
+//    });
+//    let tbody = table.querySelector("tbody");
+//    rows.forEach(function (row) {
+//        tbody.appendChild(row);
+//    });
+//}
+//
+//function compareRatings(a, b) {
+//    let ratingA = a.split('⭐').length - 1;
+//    let ratingB = b.split('⭐').length - 1;
+//    return ratingA - ratingB;
+//}
+//
+//function compareStatus(a, b) {
+//    let statuses = ["Pending", "Approved", "Rejected"];
+//    return statuses.indexOf(a) - statuses.indexOf(b);
+//}
 
 function updateSortIndicator(th) {
     let indicator = th.querySelector(".sort-indicator");

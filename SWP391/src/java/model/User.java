@@ -218,5 +218,7 @@ public class User {
         this.first_name = first_name;
         this.last_name = last_name;
     }
-
+    public String getFullname(){
+        return first_name + " " + last_name;
+    }
 }

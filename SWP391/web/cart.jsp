@@ -55,6 +55,7 @@
         <!-- Include SweetAlert CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="css/minh.css">
     </head>
 
     <body>
@@ -136,14 +137,11 @@
                                             <td>Data 5</td>
                                             <td class="wider-col">
                                                 <form action="cart" method="get">
-                                                    <div class="numbers-row">
-                                                        <input type="number" value="1" id="quantity_2" class="qty2" name="quantity_2">
-                                                        <div class="inc button_inc" onclick="hello()">+</div>
-                                                        <div class="dec button_inc">-</div>
-
-                                                    </div>                      
-                                                    <input type="hidden" name="service" value="update">
-                                                    <input type="submit" name="submit">
+                                                    <div class="qty-input">
+                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit">-</button>
+                                                        <input class="product-qty" type="number" name="product-qty" min="1" value="1">
+                                                        <button class="qty-count qty-count_add" data-action="add" type="submit">+</button>
+                                                    </div>
                                                 </form>
 
                                             </td>
@@ -202,6 +200,71 @@
             function hello() {
                 alert('hello');
             }
+
+            var QtyInput = (function () {
+                var $qtyInputs = $(".qty-input");
+
+                if (!$qtyInputs.length) {
+                    return;
+                }
+
+                var $inputs = $qtyInputs.find(".product-qty");
+                var $countBtn = $qtyInputs.find(".qty-count");
+                var qtyMin = parseInt($inputs.attr("min"));
+                var qtyMax = parseInt($inputs.attr("max"));
+
+                $inputs.change(function () {
+                    var $this = $(this);
+                    var $minusBtn = $this.siblings(".qty-count_minus");
+                    var $addBtn = $this.siblings(".qty-count_add");
+                    var qty = parseInt($this.val());
+
+                    if (isNaN(qty) || qty <= qtyMin) {
+                        $this.val(qtyMin);
+                        $minusBtn.attr("disabled", true);
+                    } else {
+                        $minusBtn.attr("disabled", false);
+
+                        if (qty >= qtyMax) {
+                            $this.val(qtyMax);
+                            $addBtn.attr('disabled', true);
+                        } else {
+                            $this.val(qty);
+                            $addBtn.attr('disabled', false);
+                        }
+                    }
+                });
+
+                $countBtn.click(function () {
+                    var operator = this.dataset.action;
+                    var $this = $(this);
+                    var $input = $this.siblings(".product-qty");
+                    var qty = parseInt($input.val());
+
+                    if (operator == "add") {
+                        qty += 1;
+                        if (qty >= qtyMin + 1) {
+                            $this.siblings(".qty-count_minus").attr("disabled", false);
+                        }
+
+                        if (qty >= qtyMax) {
+                            $this.attr("disabled", true);
+                        }
+                    } else {
+                        qty = qty <= qtyMin ? qtyMin : (qty -= 1);
+
+                        if (qty == qtyMin) {
+                            $this.attr("disabled", true);
+                        }
+
+                        if (qty < qtyMax) {
+                            $this.siblings(".qty-count_add").attr("disabled", false);
+                        }
+                    }
+
+                    $input.val(qty);
+                });
+            })();
 
         </script>
     </body>

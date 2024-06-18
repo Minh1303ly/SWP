@@ -24,7 +24,7 @@
 	}
 
 	.product-qty {
-		width: 20px;
+		width: 2rem;
 		min-width: 0;
 		display: inline-block;
 		text-align: center;
@@ -40,7 +40,7 @@
 	.qty-count {
 		padding: 0;
 		cursor: pointer;
-		width: 2rem;
+		width: 1rem;
 		font-size: 1em;
 		text-indent: -100px;
 		overflow: hidden;
@@ -50,7 +50,7 @@
 		&:after {
 			content: "";
 			height: 2px;
-			width: 10px;
+			width: 6px;
 			position: absolute;
 			display: block;
 			background: #000;
@@ -89,7 +89,7 @@
 	border-radius: 4px;
 	box-shadow: 0 1em 2em -0.9em rgba(#000, 0.7);
 	transform: scale(1.5);
-        width: 50px;
+        width: 60px;
         
 }
 

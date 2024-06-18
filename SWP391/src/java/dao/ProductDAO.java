@@ -267,7 +267,7 @@ public class ProductDAO extends DBContext {
     /**
      * Use to get all distinct color in product
      *
-     * @return list distinct color in product
+     * @return string list distinct color in product
      */
     public List<String> getAllColor() {
         List<String> list = new LinkedList<>();

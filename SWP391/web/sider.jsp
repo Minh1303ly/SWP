@@ -123,7 +123,8 @@
             <button type="submit" class="btn_1 border border-secondary px-3 py-2 rounded-pill">
                 Filter
             </button>
-            <input type="hidden"  name="service" value="viewByFilter">          
+            <input type="hidden"  name="service" value="viewByFilter">
+            <a href="product" class="btn_1 gray border border-secondary px-3 py-2 rounded-pill">Reset</a>
         </div>
     </form>
 </div>

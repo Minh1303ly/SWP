@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,7 +108,38 @@ public class CartServlet extends HttpServlet {
     }
 
     public void view(HttpServletRequest request, HttpServletResponse response) {
-
+        try (PrintWriter out = response.getWriter()) {
+            ProductDAO productDAO = new ProductDAO();           
+            List<String> ls = productDAO.getAllColor();
+            int i = 1;
+            for(String a : ls){         
+                out.print("<tr>");
+                out.print("<th scope=\"row\">"+i+"</th>");
+                out.print("<td class=\"wider-col\">Data "+i+"</td>");
+                out.print("<td>Data "+i+"</td>");
+                out.print("<td>Data "+i+"</td>");
+                out.print("<td>Data "+i+"</td>");
+                //update
+                out.print("<td class=\"wider-col\">");
+                out.print("<div class=\"qty-input\">");
+                out.print("<button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"submit\" onclick=\"update('minus','#'+'quantity_"+i+"')\">-</button>");
+                out.print("<input class=\"product-qty\" type=\"number\" id=\"quantity_"+i+"\" min=\"1\" value=\"1\" onchange=\"update('','#quantity_"+i+"')\">");
+                out.print("<button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"submit\" onclick=\"update('add','#quantity_"+i+"')\">+</button>");
+                out.print("</div>");
+                out.print("</td>");
+                
+                out.print("<td>Data "+i+"</td>");
+                out.print("<td>");
+                out.print("<i class=\"ti-trash\" onclick=\"remove("+i+")\"></i>");
+                out.print("</td>");
+                
+                out.print("</tr>");
+                i++;
+          }
+        } catch (IOException ex) {
+            Logger.getLogger(SubProductServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

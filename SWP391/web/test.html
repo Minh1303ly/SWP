@@ -62,13 +62,11 @@
 
         <div id="page" class="theia-exception">
 
-            <jsp:include page="header.jsp"/>
 
             <main>
                 <div class="container margin_30">
                     <div class="row">
                         <aside class="col-lg-3" id="sidebar_fixed">
-                            <jsp:include page="sider.jsp"/>
                         </aside>
                         <!-- /col -->
                         <div class="col-lg-9">                         
@@ -77,7 +75,6 @@
                                     <div class="container pl-lg-5">
                                         <h1>
                                             <a href="${slider.backLink}" style="color:#ffffff;">
-                                                ${slider.title}
                                             </a>
                                         </h1>
                                     </div>
@@ -128,7 +125,7 @@
                                             <th scope="col">Remove</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="container_cart">
+                                    <tbody>
                                         <tr>
                                             <th scope="row">1</th>
                                             <td class="wider-col">Data 2</td>
@@ -136,11 +133,50 @@
                                             <td>Data 4</td>
                                             <td>Data 5</td>
                                             <td class="wider-col">
-                                                <div class="qty-input">
-                                                    <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
-                                                    <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
-                                                    <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
-                                                </div>
+                                                    <div class="qty-input">
+                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_2')">-</button>
+                                                        <input class="product-qty" type="number" id="quantity_2" min="1" value="1" onchange="update('','#quantity_2')">
+                                                        <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_2')">+</button>
+                                                    </div>
+
+                                            </td>
+                                            <td>Data 7</td>
+                                            <td>
+                                                <i class="ti-trash" onclick="remove(1)"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td class="wider-col">Data 2</td>
+                                            <td>Data 3</td>
+                                            <td>Data 4</td>
+                                            <td>Data 5</td>
+                                            <td class="wider-col">
+                                                    <div class="qty-input">
+                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_2')">-</button>
+                                                        <input class="product-qty" type="number" id="quantity_2" min="1" value="1" onchange="update('','#quantity_2')">
+                                                        <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_2')">+</button>
+                                                    </div>
+
+                                            </td>
+                                            <td>Data 7</td>
+                                            <td>
+                                                <i class="ti-trash" onclick="remove(1)"></i>
+                                            </td>
+                                        </tr>
+                                        <!-- Add more rows as needed -->
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td class="wider-col">Data 2</td>
+                                            <td>Data 3</td>
+                                            <td>Data 4</td>
+                                            <td>Data 5</td>
+                                            <td class="wider-col">
+                                                    <div class="qty-input">
+                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
+                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
+                                                        <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
+                                                    </div>
 
                                             </td>
                                             <td>Data 7</td>
@@ -154,7 +190,7 @@
 
                                 <div class="row add_top_30 flex-sm-row-reverse cart_actions">
                                     <div class="col-sm-4 text-end">
-                                        <button type="button" class="btn_1 gray" onclick="call()">Buy More</button>
+                                        <button type="button" class="btn_1 gray">Buy More</button>
                                     </div>
                                 </div>
                             </div> 
@@ -188,31 +224,11 @@
             </main>
             <!-- /main -->
 
-            <jsp:include page="footer.jsp"/>
+
         </div>
         <!-- page -->
 
         <div id="toTop"></div><!-- Back to top button -->
-        <jsp:include page="modal.jsp"/>
-        <script>
-            function call(){ 
-                
-                $.get("/SWP391/cart",
-                            {
-                                pagination: 1
-
-                            },
-                            function (data, status) {
-//                                alert(currentPage + 1);
-                                
-                                   $('#container_cart').html(data); 
-                              
-//                                $('#toTop').click();
-
-                                //      document.getElementById('#div1').innerHTML=data;
-                            });
-            }
-        </script>
         <script>
             function update(action, idQuantity) {
                 let update = document.querySelector(idQuantity);
@@ -228,9 +244,7 @@
             
             function remove(id){
                 alert(id);
-            }   
-
-
+            }
         </script>
         <script src="js/minh_js.js"></script>   
     </body>

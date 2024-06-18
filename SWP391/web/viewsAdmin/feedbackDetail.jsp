@@ -65,7 +65,7 @@
                     <!-- Sidebar -->
                     <aside class="w-1/4 bg-gray-300 p-4 rounded-lg">
                         <div class="text-center">
-                            <img src="https://via.placeholder.com/150" alt="User Avatar" class="rounded-full mx-auto mb-4">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShoh_lhHFVPAR0baTXzWD-qwULfzz69pJpLg&s" alt="User Avatar" class="rounded-full mx-auto mb-4">
                             <h2 class="text-lg font-bold">${feedback.user.first_name} ${feedback.user.last_name}</h2>
                             <p class="text-gray-700">CustomerID: ${feedback.user.id}</p>
                         </div>

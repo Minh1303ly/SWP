@@ -6,7 +6,7 @@
 $('#addFromDetail').on('click', function () {
         var form = document.getElementById('detailFormAddToCart');
         var formData = new FormData(form);
-        $.post("/SWP391/cart?service=addCartByAjax",
+        $.post("/SWP391/cart?service=addCart",
                 {
                     name: formData.get("name"),
                     color: formData.get("color"),

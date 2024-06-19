@@ -4,7 +4,9 @@ package controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+import dao.CartItemDAO;
 import dao.ProductDAO;
+import dao.ShoppingSessionDAO;
 import dao.SlidersDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -14,9 +16,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Product;
+import model.User;
 
 /**
  *
@@ -44,8 +49,6 @@ public class CartServlet extends HttpServlet {
             switch (request.getParameter("service")) {
                 case "view" ->
                     view(request, response);
-                case "addCartByAjax" ->
-                    addCartByAjax(request, response);
                 case "addCart" ->
                     addCart(request, response);
                 default ->
@@ -60,34 +63,11 @@ public class CartServlet extends HttpServlet {
      * @param response
      */
     public void addCart(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            ProductDAO productDAO = new ProductDAO();
-            SlidersDAO daoSlider = new SlidersDAO();
-            SubProductServlet productServlet = new SubProductServlet();
-            productServlet.dataForSider(request, response);
-            request.setAttribute("product",
-                    productDAO.searchUniqueName(
-                            request.getParameter("name")).get(0));
-            request.setAttribute("slider", daoSlider.getRadom());
-            RequestDispatcher dispatch = request.getRequestDispatcher("product?service=detail&name=" + request.getParameter("name"));
-            dispatch.forward(request, response);
-        } catch (ServletException | IOException ex) {
-            Logger.getLogger(SubProductServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     *
-     * @param request
-     * @param response
-     */
-    public void addCartByAjax(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             String name = request.getParameter("name");
             String color = request.getParameter("color");
             String size = request.getParameter("size");
-            String quantity = request.getParameter("quantity");
-            quantity = quantity==null?"1":quantity;
+            String quantity = request.getParameter("quantity"); 
             if(color.equalsIgnoreCase("color")){
                 color=null;
             }
@@ -95,11 +75,23 @@ public class CartServlet extends HttpServlet {
                 size=null;
             }
             if(color==null||size==null||name==null){
-                out.print("false");
+                out.print("falseyes");
                 return;
             }
-            
-                out.print("true");
+            HttpSession session = request.getSession(true);
+            quantity = quantity==null?"1":quantity;
+            ShoppingSessionDAO shoppingSessionDAO = new ShoppingSessionDAO();
+            CartItemDAO cartItemDAO = new CartItemDAO();
+            ProductDAO productDAO = new ProductDAO();
+            out.print(cartItemDAO.add(
+                    shoppingSessionDAO
+                            .getIdShoppingSessionByUser(
+                            (User)session.getAttribute("account"))
+                    , productDAO.getProductDetailForCart(
+                            name
+                            , color
+                            , Integer.parseInt(size))
+                    , Integer.parseInt(quantity)));
             
 
         } catch (IOException ex) {

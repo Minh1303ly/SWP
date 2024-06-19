@@ -310,7 +310,7 @@
     $('#AddToCart').on('click', function () {
         var form = document.getElementById('modalFormAddToCart');
         var formData = new FormData(form);
-        $.post("/SWP391/cart?service=addCartByAjax",
+        $.post("/SWP391/cart?service=addCart",
                 {
                     name: formData.get("name"),
                     color: formData.get("color"),
@@ -331,7 +331,7 @@
                     else{
                         Swal.fire({
                             title: 'Add fail!',
-                            text: 'Please must fill all types',
+                            text: data,
                             icon: 'error',
                             confirmButtonText: 'Continue'
                         });

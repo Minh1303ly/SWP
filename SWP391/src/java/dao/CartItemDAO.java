@@ -20,21 +20,44 @@ import util.Filter;
  */
 public class CartItemDAO extends DBContext{
     
-    public boolean add(int idShoppingSession, String name, String color, 
-            int size, int quantity){
-        ProductDAO productDAO = new ProductDAO();
-        Filter filter = new Filter(name, new String[]{color}, size);
-        Product product = productDAO.get(filter);
-         try {
-             String sql = "";
+    public boolean add(int idShoppingSession, Product product, int quantity){
+        if(quantity > product.getQuantity()){
+            return false;
+        }
+        try {
+             String sql = """
+                          INSERT INTO [dbo].[cart_item]
+                                     ([session_id]
+                                     ,[product_id]
+                                     ,[quantity]
+                                     ,[created_at]
+                                     ,[modified_at])
+                               VALUES
+                                     (?
+                                     ,?
+                                     ,?
+                                     ,GETDATE()
+                                     ,GETDATE())""";
             PreparedStatement pre = connection.prepareStatement(
                     sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
+            pre.setInt(1,idShoppingSession);
+            pre.setInt(2,product.getId());
+            pre.setInt(3,quantity);
+            return pre.executeUpdate()==1;
             
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName())
                     .log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public static void main(String[] args) {
+        CartItemDAO  cartItemDAO = new CartItemDAO();
+        Product product = new Product();
+        product.setId(1);
+        product.setQuantity(10);
+        System.out.println(cartItemDAO.add(1, product, 5));
     }
 }

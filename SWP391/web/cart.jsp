@@ -148,6 +148,25 @@
                                                 <i class="ti-trash" onclick="remove(3)"></i>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td class="wider-col">Data 2</td>
+                                            <td>Data 3</td>
+                                            <td>Data 4</td>
+                                            <td>Data 5</td>
+                                            <td class="wider-col">
+                                                <div class="qty-input">
+                                                    <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
+                                                    <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
+                                                    <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
+                                                </div>
+
+                                            </td>
+                                            <td>Data 7</td>
+                                            <td>
+                                                <i class="ti-trash" onclick="remove(3)"></i>
+                                            </td>
+                                        </tr>
                                         <!-- Add more rows as needed -->
                                     </tbody>
                                 </table>
@@ -228,9 +247,7 @@
             
             function remove(id){
                 alert(id);
-            }   
-
-
+            }
         </script>
         <script src="js/minh_js.js"></script>   
     </body>

@@ -30,6 +30,18 @@ public class CartItem {
         this.shopingSession = shopingSession;
         this.product = product;
     }
+
+    public CartItem(int id, int productId, int quantity, Product product) {
+        this.id = id;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.product = product;
+    }
+
+    public CartItem() {
+    }
+    
+    
     
     
 }

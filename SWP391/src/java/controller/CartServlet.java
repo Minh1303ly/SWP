@@ -96,10 +96,11 @@ public class CartServlet extends HttpServlet {
             }
             if(color==null||size==null||name==null){
                 out.print("false");
+                return;
             }
-            else{
+            
                 out.print("true");
-            }
+            
 
         } catch (IOException ex) {
             Logger.getLogger(SubProductServlet.class

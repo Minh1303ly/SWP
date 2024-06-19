@@ -17,5 +17,19 @@ public class CartItem {
     private Date createAt;
     private Date modifiedAt;
 
-    private ShopingSession shopingSession;
+    private ShoppingSession shopingSession;
+    private Product product;
+
+    public CartItem(int id, int sessionId, int productId, int quantity, Date createAt, Date modifiedAt, ShoppingSession shopingSession, Product product) {
+        this.id = id;
+        this.sessionId = sessionId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.createAt = createAt;
+        this.modifiedAt = modifiedAt;
+        this.shopingSession = shopingSession;
+        this.product = product;
+    }
+    
+    
 }

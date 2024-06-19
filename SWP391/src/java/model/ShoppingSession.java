@@ -11,7 +11,7 @@ import lombok.Data;
 import java.sql.Date;
 
 @Data
-public class ShopingSession {
+public class ShoppingSession {
     private int id;
     private int userId;
     private int total;

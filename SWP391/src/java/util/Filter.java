@@ -16,6 +16,13 @@ public class Filter {
     private String[] color;
     private String[] brand;
     private String[] price;
+    private int size;
+
+    public Filter(String nameSearch, String[] color, int size) {
+        this.nameSearch = nameSearch;
+        this.color = color;
+        this.size = size;
+    }
 
     public Filter() {
     }

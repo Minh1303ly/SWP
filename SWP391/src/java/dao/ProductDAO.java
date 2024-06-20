@@ -205,9 +205,7 @@ public class ProductDAO extends DBContext {
 
         try {
             // SQL query to select a product by its ID
-            String query = "SELECT id, category_id, discount_id, status_id, brand_id, "
-                    + "name, quantity, price, size, color, description, img1, img2, created_at, modified_at "
-                    + "FROM products WHERE id = ?";
+            String query = "SELECT * FROM [dbo].[products] WHERE id = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -216,7 +214,6 @@ public class ProductDAO extends DBContext {
             if (resultSet.next()) {
                 product = new Product();
                 product.setId(resultSet.getInt("id"));
-                product.setCategoryId(resultSet.getInt("category_id"));
                 product.setDiscountId(resultSet.getInt("discount_id"));
                 product.setStatusId(resultSet.getInt("status_id"));
                 product.setBrandId(resultSet.getInt("brand_id"));

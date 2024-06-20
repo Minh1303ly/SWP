@@ -158,26 +158,28 @@ public class CartServlet extends HttpServlet {
             List<String> ls = productDAO.getAllColor();
             int i = 1;
             for (String a : ls) {
-                out.print("<tr>\n"
-                        + "                                            <th scope=\"row\">1</th>\n"
-                        + "                                            <td class=\"wider-col\">Data 2</td>\n"
-                        + "                                            <td>Data 3</td>\n"
-                        + "                                            <td>Data 4</td>\n"
-                        + "                                            <td>Data 5</td>\n"
-                        + "                                            <td class=\"wider-col\">\n"
-                        + "                                                <div class=\"qty-input\">\n"
-                        + "                                                    <button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"submit\" onclick=\"update('minus','#'+'quantity_3')\">-</button>\n"
-                        + "                                                    <input class=\"product-qty\" type=\"number\" id=\"quantity_3\" min=\"1\" value=\"1\" onchange=\"update('','#quantity_3')\">\n"
-                        + "                                                    <button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"submit\" onclick=\"update('add','#quantity_3')\">+</button>\n"
-                        + "                                                </div>\n"
-                        + "\n"
-                        + "                                            </td>\n"
-                        + "                                            <td>Data 7</td>\n"
-                        + "                                            <td>\n"
-                        + "                                                <i class=\"ti-trash\" onclick=\"remove(3)\"></i>\n"
-                        + "                                            </td>\n"
-                        + "                                        </tr>");
-
+                out.print("<tr>\n" +
+"                                            <th><input type=\"checkbox\" name=\"product\" value=\"1\"></th>\n" +
+"                                            <th scope=\"row\">"+i+"</th>\n" +
+"                                            <td class=\"wider-col\">Data "+i+"</td>\n" +
+"                                            <td>Data "+i+"</td>\n" +
+"                                            <td>Data "+i+"</td>\n" +
+"                                            <td>Data "+i+"</td>\n" +
+"                                            <td class=\"wider-col\">\n" +
+"                                                    <div class=\"qty-input\">\n" +
+"                                                        <button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"submit\" onclick=\"update('minus','#quantity_"+i+"')\">-</button>\n" +
+"                                                        <input class=\"product-qty\" type=\"number\" id=\"quantity_"+i+"\" min=\"1\" value=\"1\" onchange=\"update('','#quantity_"+i+"')\">\n" +
+"                                                        <button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"submit\" onclick=\"update('add','#quantity_"+i+"')\">+</button>\n" +
+"                                                    </div>\n" +
+"\n" +
+"                                            </td>\n" +
+"                                            <td>Data 7</td>\n" +
+"                                            <td>\n" +
+"                                                <i class=\"ti-trash\" onclick=\"remove("+i+")\"></i>\n" +
+"                                            </td>\n" +
+"                                        </tr>");
+                          
+                i++;
             }
         } catch (IOException ex) {
             Logger.getLogger(SubProductServlet.class

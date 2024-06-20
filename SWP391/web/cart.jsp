@@ -118,6 +118,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th scope="col">Buy</th>
                                             <th scope="col">ID</th>
                                             <th scope="col" class="wider-col">Title</th>
                                             <th scope="col">Color</th>
@@ -130,17 +131,18 @@
                                     </thead>
                                     <tbody id="container_cart">
                                         <tr>
-                                            <th scope="row">1</th>
+                                            <th><input type="checkbox" name="product" value="1"></th>
+                                            <th scope="row">2</th>
                                             <td class="wider-col">Data 2</td>
                                             <td>Data 3</td>
                                             <td>Data 4</td>
                                             <td>Data 5</td>
                                             <td class="wider-col">
-                                                <div class="qty-input">
-                                                    <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
-                                                    <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
-                                                    <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
-                                                </div>
+                                                    <div class="qty-input">
+                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
+                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
+                                                        <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
+                                                    </div>
 
                                             </td>
                                             <td>Data 7</td>
@@ -149,17 +151,18 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">1</th>
+                                            <th><input type="checkbox" name="product" value="1"></th>
+                                            <th scope="row">2</th>
                                             <td class="wider-col">Data 2</td>
                                             <td>Data 3</td>
                                             <td>Data 4</td>
                                             <td>Data 5</td>
                                             <td class="wider-col">
-                                                <div class="qty-input">
-                                                    <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
-                                                    <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
-                                                    <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
-                                                </div>
+                                                    <div class="qty-input">
+                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
+                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
+                                                        <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
+                                                    </div>
 
                                             </td>
                                             <td>Data 7</td>
@@ -250,5 +253,4 @@
             }
         </script>
         <script src="js/minh_js.js"></script>   
-    </body>
 </html>

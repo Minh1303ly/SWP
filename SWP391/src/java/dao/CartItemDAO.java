@@ -57,30 +57,104 @@ public class CartItemDAO extends DBContext{
     
     public CartItem checkExistInSession(int idShoppingSession, int idProduct){
         // TO DO check product exist
-        return new CartItem();
+        String sql = """
+                     SELECT 
+                     id, [quantity]
+                       FROM [dbo].[cart_item]
+                       where session_id = ?
+                       and product_id = ?""";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setInt(1,idShoppingSession);
+            pre.setInt(2,idProduct);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+                return new CartItem(rs.getInt(1), 0
+                        , rs.getInt(2), null);
+            }           
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
-    public boolean update(int idShoppingSession,int idProduct, int quantity){
-        // TO DO update new quantity
-        return true;
+    public boolean update(int idCartItem, int quantity){
+        String sql = """
+                     UPDATE [dbo].[cart_item]
+                     SET 
+                     [quantity] = ?
+                     ,[modified_at] = getdate()
+                     WHERE cart_item.id = ?""";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setInt(1,quantity);
+            pre.setInt(2,idCartItem);
+            return pre.executeUpdate()==1;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
-    public boolean remove(int idShoppingSession,int idProduct){
-        //TO DO delete product in cart
-        return true;
+    public boolean remove(int idCartItem){
+        String sql = """
+                     DELETE FROM [dbo].[cart_item]
+                           WHERE cart_item.id = ?""";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setInt(1,idCartItem);
+            return pre.executeUpdate()==1;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
     
     public List<CartItem> getAllBySession(int idShoppingSession){
         List<CartItem> ls = new LinkedList<>();
-        //TO DO get All
-        return ls;
+        ProductDAO productDAO = new ProductDAO();
+        String sql = """
+                     SELECT *
+                     FROM [dbo].[cart_item]
+                     where session_id = ?""";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pre.setInt(1,idShoppingSession);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+                ls.add(new CartItem(
+                        rs.getInt(1), 
+                        rs.getInt(3),
+                        rs.getInt(4), 
+                        productDAO.getProductById(rs.getInt(3))));
+            }
+            return ls.isEmpty()?null:ls;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     public static void main(String[] args) {
         CartItemDAO  cartItemDAO = new CartItemDAO();
         Product product = new Product();
         product.setId(1);
         product.setQuantity(10);
-        System.out.println(cartItemDAO.add(1, product, 5));
+        List<CartItem> ls = cartItemDAO.getAllBySession(5);
+        ls.forEach( a -> {
+            System.out.println(a);
+        });
     }
 }

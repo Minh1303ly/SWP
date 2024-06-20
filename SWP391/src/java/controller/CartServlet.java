@@ -144,8 +144,7 @@ public class CartServlet extends HttpServlet {
                 idSession
                 ,product.getId());
         if(cartItem!=null){
-            return cartItemDAO.update(idSession
-                    , product.getId()
+            return cartItemDAO.update(cartItem.getId()
                     , quantity + cartItem.getQuantity() );
         }
         return cartItemDAO.add(idSession,
@@ -155,6 +154,7 @@ public class CartServlet extends HttpServlet {
     public void view(HttpServletRequest request, HttpServletResponse response) {
         try (PrintWriter out = response.getWriter()) {
             ProductDAO productDAO = new ProductDAO();
+            HttpSession session = request.getSession(true);
             List<String> ls = productDAO.getAllColor();
             int i = 1;
             for (String a : ls) {

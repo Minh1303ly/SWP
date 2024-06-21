@@ -197,7 +197,7 @@ public class ProductDAO extends DBContext {
         return products;
     }
 
-    // Method to retrieve a Product by its ID
+// Method to retrieve a Product by its ID
     public Product getProductById(int id) throws SQLException {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -205,7 +205,9 @@ public class ProductDAO extends DBContext {
 
         try {
             // SQL query to select a product by its ID
-            String query = "SELECT * FROM [dbo].[products] WHERE id = ?";
+            String query = "SELECT id, category_id, discount_id, status_id, brand_id, "
+                    + "name, quantity, price, size, color, description, img1, img2, created_at, modified_at "
+                    + "FROM products WHERE id = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -214,6 +216,7 @@ public class ProductDAO extends DBContext {
             if (resultSet.next()) {
                 product = new Product();
                 product.setId(resultSet.getInt("id"));
+                product.setCategoryId(resultSet.getInt("category_id"));
                 product.setDiscountId(resultSet.getInt("discount_id"));
                 product.setStatusId(resultSet.getInt("status_id"));
                 product.setBrandId(resultSet.getInt("brand_id"));
@@ -270,7 +273,8 @@ public class ProductDAO extends DBContext {
         List<String> list = new LinkedList<>();
         String sql = "SELECT distinct color FROM Products";
         try (PreparedStatement pre = connection.prepareStatement(sql,
-                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = pre.executeQuery()) {
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+                ResultSet rs = pre.executeQuery()) {
             while (rs.next()) {
                 list.add(rs.getString(1));
             }
@@ -773,6 +777,44 @@ public class ProductDAO extends DBContext {
             pre.setString(1, name);
             pre.setString(2,  color);
             pre.setInt(3, size);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+                return new Product(rs.getInt(1), rs.getString(2), 
+                        rs.getInt(6), rs.getFloat(5),
+                        rs.getString(4), rs.getString(3), 
+                        new Discount(rs.getInt(7), rs.getBoolean(8)),
+                        new ProductStatus(rs.getString(9)));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+     // Priduct with status not off
+    public Product getInforProductById(int id){
+        String sql = """
+        SELECT products.id
+                       ,products.name
+                       ,products.color
+                       ,products.size
+                       ,products.price
+                       ,products.quantity
+                       ,discount_percent
+                       ,discounts.active
+                       ,product_status.name
+                       FROM [dbo].[products]
+                       FULL OUTER JOIN product_status on products.status_id = product_status.id
+                       FULL OUTER JOIN discounts on discounts.id = products.discount_id 
+                       where products.id = ?
+                         """;
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);  
+            pre.setInt(1, id);
             ResultSet rs = pre.executeQuery();
             while(rs.next()){
                 return new Product(rs.getInt(1), rs.getString(2), 

@@ -138,7 +138,7 @@ public class CartItemDAO extends DBContext{
                         rs.getInt(1), 
                         rs.getInt(3),
                         rs.getInt(4), 
-                        productDAO.getProductById(rs.getInt(3))));
+                        productDAO.getInforProductById(rs.getInt(3))));
             }
             return ls.isEmpty()?null:ls;
         } catch (SQLException ex) {
@@ -152,7 +152,7 @@ public class CartItemDAO extends DBContext{
         Product product = new Product();
         product.setId(1);
         product.setQuantity(10);
-        List<CartItem> ls = cartItemDAO.getAllBySession(5);
+        List<CartItem> ls = cartItemDAO.getAllBySession(32);
         ls.forEach( a -> {
             System.out.println(a);
         });

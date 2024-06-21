@@ -83,19 +83,8 @@
                 <div class="col-xl-3 col-lg-2 col-md-3">
                     <ul class="top_tools">
                         <li>
-                            <div class="dropdown dropdown-cart"href="cart.html" >
-                            <a href="cart.html" class="cart_bt"><strong>2</strong></a>
-                                <div class="dropdown-menu">
-
-                                    <div class="total_drop">
-                                        <a href="cart?service=view" class="btn_1 outline">View Cart</a>
-                                        <a href="checkout.html" class="btn_1">Checkout</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /dropdown-cart-->
+                            <a href="cart" class="cart_bt" onclick="reDirectCart()"></a>
                         </li>
-
                         <li>
                             <div class="dropdown dropdown-access">
                                 <a href="#" class="access_link"><span>Account</span></a>
@@ -239,5 +228,10 @@
     </div>
     <!-- /main_nav -->
     <script src="js/validate.js"></script>
+    <script>
+        function reDirectCart(){
+             window.location.href = 'cart';
+        }
+    </script>
 </header>
 

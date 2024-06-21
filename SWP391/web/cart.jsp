@@ -95,8 +95,8 @@
                                         <li>
                                         </li>
                                         <li>
-                                            <a href="#0"><i class="ti-view-grid"></i></a>
-                                            <a href="listing-row-1-sidebar-left.html"><i class="ti-view-list"></i></a>
+                                            <!--                                            <a href="#0"><i class="ti-view-grid"></i></a>
+                                                                                        <a href="listing-row-1-sidebar-left.html"><i class="ti-view-list"></i></a>-->
                                         </li>
                                         <li>
                                         </li>
@@ -106,11 +106,11 @@
                             <div class="container margin_30">
                                 <div class="page_header">
                                     <div class="breadcrumbs">
-                                        <ul>
-                                            <li><a href="#">Home</a></li>
-                                            <li><a href="#">Category</a></li>
-                                            <li>Page active</li>
-                                        </ul>
+                                        <!--                                        <ul>
+                                                                                    <li><a href="#">Home</a></li>
+                                                                                    <li><a href="#">Category</a></li>
+                                                                                    <li>Page active</li>
+                                                                                </ul>-->
                                     </div>
                                     <h1>Cart page</h1>
                                 </div>
@@ -129,7 +129,7 @@
                                             <th scope="col">Remove</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="container_cart">
+                                    <tbody id="container_cart">                     
                                         <tr>
                                             <th><input type="checkbox" name="product" value="1"></th>
                                             <th scope="row">2</th>
@@ -138,11 +138,11 @@
                                             <td>Data 4</td>
                                             <td>Data 5</td>
                                             <td class="wider-col">
-                                                    <div class="qty-input">
-                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit">-</button>
-                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1">
-                                                        <button class="qty-count qty-count_add" data-action="add" type="submit">+</button>
-                                                    </div>
+                                                <div class="qty-input">
+                                                    <button class="qty-count qty-count_minus" data-action="minus" type="button" onclick="update('minus', '#quantity_1')">-</button>
+                                                    <input class="product-qty" type="number" id="quantity_1" min="1" value="1" onchange="update('minus', '#quantity_1')">
+                                                    <button class="qty-count qty-count_add" data-action="add" type="button" onclick="update('add', '#quantity_1')">+</button>
+                                                </div>
                                             </td>
                                             <td>Data 7</td>
                                             <td>
@@ -157,25 +157,25 @@
                                             <td>Data 4</td>
                                             <td>Data 5</td>
                                             <td class="wider-col">
-                                                    <div class="qty-input">
-                                                        <button class="qty-count qty-count_minus" data-action="minus" type="button">-</button>
-                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1">
-                                                        <button class="qty-count qty-count_add" data-action="add" type="button">+</button>
-                                                    </div>
+                                                <div class="qty-input">
+                                                    <button class="qty-count qty-count_minus" data-action="minus" type="button" onclick="update('minus', '#quantity_2')">-</button>
+                                                    <input class="product-qty" type="number" id="quantity_2" min="1" value="1" onchange="update('minus', '#quantity_2')">
+                                                    <button class="qty-count qty-count_add" data-action="add" type="button" onclick="update('add', '#quantity_2')">+</button>
+                                                </div>
                                             </td>
                                             <td>Data 7</td>
                                             <td>
                                                 <i class="ti-trash" onclick="remove(3)"></i>
                                             </td>
                                         </tr>
-                                        
+
                                         <!-- Add more rows as needed -->
                                     </tbody>
                                 </table>
 
                                 <div class="row add_top_30 flex-sm-row-reverse cart_actions">
                                     <div class="col-sm-4 text-end">
-                                        <button type="button" class="btn_1 gray" onclick="call()">Buy More</button>
+                                        <button type="button" class="btn_1 gray" onclick="loadCart()">Buy More</button>
                                     </div>
                                 </div>
                             </div> 
@@ -216,40 +216,68 @@
         <div id="toTop"></div><!-- Back to top button -->
         <jsp:include page="modal.jsp"/>
         <script>
-            function call(){ 
-                
-                $.get("/SWP391/cart",
-                            {
-                                pagination: 1
+            loadCart();
+            function loadCart() {
 
-                            },
-                            function (data, status) {
+                $.get("/SWP391/cart?service=loadCart",
+                        {
+                            pagination: 1
+
+                        },
+                        function (data, status) {
 //                                alert(currentPage + 1);
-                                
-                                   $('#container_cart').html(data); 
-                                    attachQtyInputHandlers();
+
+                            $('#container_cart').html(data);
+                            attachQtyInputHandlers();
 //                                $('#toTop').click();
 
-                                //      document.getElementById('#div1').innerHTML=data;
-                            });
-                
+                            //      document.getElementById('#div1').innerHTML=data;
+                        });
+
             }
         </script>
         <script>
             function update(action, idQuantity) {
                 let update = document.querySelector(idQuantity);
                 var quantity = parseInt(update.value);
-                if(action==='add'){
-                   quantity++;
-               }
-                if(action==="minus"){
-                    quantity = quantity>1?quantity-1:1;
+                if (action === 'add') {
+                    quantity++;
+                }
+                if (action === "minus") {
+                    quantity = quantity > 1 ? quantity - 1 : 1;
                 }
                 alert(quantity);
+                 $.get("/SWP391/cart?service=update",
+                        {
+                            id: id
+
+                        },
+                        function (data, status) {
+                            if (data === "true") {
+                                alert('true');
+                                loadCart();
+                            } else {
+                                alert('false');
+                            }
+                            
+                        });
             }
-            
-            function remove(id){
-                alert(id);
+
+            function remove(id) {
+                $.get("/SWP391/cart?service=remove",
+                        {
+                            id: id
+
+                        },
+                        function (data, status) {
+                            if (data === "true") {
+                                alert('true');
+                                loadCart();
+                            } else {
+                                alert('false');
+                            }
+                            
+                        });
             }
         </script>
         <script src="js/minh_js.js"></script>   

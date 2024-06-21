@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,13 +47,22 @@ public class CartServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         if (request.getParameter("service") == null) {
-            view(request, response);
+            SubProductServlet productServlet = new SubProductServlet();
+            SlidersDAO daoSlider = new SlidersDAO();
+            productServlet.dataForSider(request, response);
+            request.setAttribute("slider", daoSlider.getRadom());
+            RequestDispatcher dispatch = request.getRequestDispatcher("cart.jsp");
+            dispatch.forward(request, response);
         } else {
             switch (request.getParameter("service")) {
-                case "view" ->
-                    view(request, response);
+                case "loadCart" ->
+                    loadCart(request, response);
                 case "addCart" ->
                     addCart(request, response);
+                case "remove" ->
+                    remove(request, response);
+                case "update" ->
+                    update(request, response);
                 default ->
                     response.sendRedirect("404.html");
             }
@@ -83,12 +93,12 @@ public class CartServlet extends HttpServlet {
             quantity = quantity == null ? "1" : quantity;
             if (session.getAttribute("account") == null) {
                 out.print(addCartForGuest(request, name, color,
-                         Integer.parseInt(size),
-                         Integer.parseInt(quantity)));
+                        Integer.parseInt(size),
+                        Integer.parseInt(quantity)));
             } else {
                 out.print(addCartForUser(request, name, color,
-                         Integer.parseInt(size),
-                         Integer.parseInt(quantity)));
+                        Integer.parseInt(size),
+                        Integer.parseInt(quantity)));
             }
 
         } catch (IOException ex) {
@@ -97,93 +107,228 @@ public class CartServlet extends HttpServlet {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param name
+     * @param color
+     * @param size
+     * @param quantity
+     * @return
+     */
     public boolean addCartForGuest(HttpServletRequest request,
-             String name, String color,
-             int size, int quantity) {
+            String name, String color,
+            int size, int quantity) {
         HttpSession session = request.getSession(true);
         ProductDAO productDAO = new ProductDAO();
-        List<CartItem> ls = (List<CartItem>)session.getAttribute("cart");
-        ls = ls==null?new LinkedList<>():ls;
+        List<CartItem> ls = (List<CartItem>) session.getAttribute("cart");
+        ls = ls == null ? new LinkedList<>() : ls;
         Product product = productDAO.getProductDetailForCart(
                 name, color, size);
-        if(product==null){
+        if (product == null) {
             return false;
         }
         if (quantity > product.getQuantity()) {
             return false;
         }
-        for(CartItem a : ls){
-            if(a.getProductId()==product.getId()){
-                a.setQuantity(a.getQuantity()+quantity);
+        for (CartItem a : ls) {
+            if (a.getProductId() == product.getId()) {
+                a.setQuantity(a.getQuantity() + quantity);
                 session.setAttribute("cart", ls);
                 return true;
             }
         }
         ls.add(new CartItem(
                 ls.size() + 1,
-                 product.getId(),
-                 quantity,
-                 product));
+                product.getId(),
+                quantity,
+                product));
         session.setAttribute("cart", ls);
         return true;
     }
 
+    /**
+     *
+     * @param request
+     * @param name
+     * @param color
+     * @param size
+     * @param quantity
+     * @return
+     */
     public boolean addCartForUser(HttpServletRequest request,
-             String name, String color,
-             int size, int quantity) {
+            String name, String color,
+            int size, int quantity) {
         HttpSession session = request.getSession(true);
         ShoppingSessionDAO shoppingSessionDAO = new ShoppingSessionDAO();
         CartItemDAO cartItemDAO = new CartItemDAO();
         ProductDAO productDAO = new ProductDAO();
         Product product = productDAO.getProductDetailForCart(
-                        name,color,size);
+                name, color, size);
         int idSession = shoppingSessionDAO
-                        .getIdShoppingSessionByUser(
-                                (User) session.getAttribute("account"));
+                .getIdShoppingSessionByUser(
+                        (User) session.getAttribute("account"));
         CartItem cartItem = cartItemDAO.checkExistInSession(
-                idSession
-                ,product.getId());
-        if(cartItem!=null){
-            return cartItemDAO.update(cartItem.getId()
-                    , quantity + cartItem.getQuantity() );
+                idSession,
+                 product.getId());
+        if (cartItem != null) {
+            return cartItemDAO.update(cartItem.getId(),
+                     quantity + cartItem.getQuantity());
         }
         return cartItemDAO.add(idSession,
-                 product, quantity);
+                product, quantity);
     }
 
-    public void view(HttpServletRequest request, HttpServletResponse response) {
-        try (PrintWriter out = response.getWriter()) {
-            ProductDAO productDAO = new ProductDAO();
-            HttpSession session = request.getSession(true);
-            List<String> ls = productDAO.getAllColor();
-            int i = 1;
-            for (String a : ls) {
-                out.print("<tr>\n" +
-"                                            <th><input type=\"checkbox\" name=\"product\" value=\"1\"></th>\n" +
-"                                            <th scope=\"row\">2</th>\n" +
-"                                            <td class=\"wider-col\">Data 2</td>\n" +
-"                                            <td>Data 3</td>\n" +
-"                                            <td>Data 4</td>\n" +
-"                                            <td>Data 5</td>\n" +
-"                                            <td class=\"wider-col\">\n" +
-"                                                    <div class=\"qty-input\">\n" +
-"                                                        <button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"button\">-</button>\n" +
-"                                                        <input class=\"product-qty\" type=\"number\" id=\"quantity_3\" min=\"1\" value=\"1\">\n" +
-"                                                        <button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"button\">+</button>\n" +
-"                                                    </div>\n" +
-"                                            </td>\n" +
-"                                            <td>Data 7</td>\n" +
-"                                            <td>\n" +
-"                                                <i class=\"ti-trash\" onclick=\"remove(3)\"></i>\n" +
-"                                            </td>\n" +
-"                                        </tr>");
-                          
-                i++;
-                
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    public void remove(HttpServletRequest request,
+             HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+        User user = (User) session.getAttribute("account");
+        int id = Integer.parseInt(request.getParameter("id"));
+        boolean flag = false;
+        if (user != null) {
+            CartItemDAO cartItemDAO = new CartItemDAO();
+            flag = cartItemDAO.remove(id);
+        } else {
+            List<CartItem> ls = (List<CartItem>) session.getAttribute("cart");
+            flag = ls.remove(id-1)!=null;
+            int index = 1;
+            for(CartItem a : ls){
+                a.setId(index);
+                index++;
             }
+            session.setAttribute("cart", ls);
+        }
+        try (PrintWriter out = response.getWriter()) {
+            out.print(flag);
+        } catch (IOException ex) {
+            Logger.getLogger(CartServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    public boolean update(HttpServletRequest request,
+             HttpServletResponse response) {
+
+        return false;
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @param user
+     * @return
+     */
+    public List<CartItem> loadByCustomer(HttpServletRequest request,
+             HttpServletResponse response, User user) {
+        ShoppingSessionDAO shoppingSessionDAO = new ShoppingSessionDAO();
+        CartItemDAO cartItemDAO = new CartItemDAO();
+        int idSession = shoppingSessionDAO.getIdShoppingSessionByUser(user);
+        return cartItemDAO.getAllBySession(idSession);
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     */
+    public void loadCart(HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession session = request.getSession(true);
+        List<CartItem> ls = new LinkedList<>();
+        User user = (User) session.getAttribute("account");
+        if (user != null) {
+            ls = loadByCustomer(request, response, user);
+        } else {
+            ls = (List<CartItem>) session.getAttribute("cart");
+        }
+        try (PrintWriter out = response.getWriter()) {
+            if (ls == null || ls.isEmpty()) {
+                out.println("<p>Dont have any product</p>");
+                return;
+            }
+            getFormCart(response, ls, out);
         } catch (IOException ex) {
             Logger.getLogger(SubProductServlet.class
                     .getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     *
+     * @param response
+     * @param ls
+     * @param out
+     */
+    public void getFormCart(HttpServletResponse response, List<CartItem> ls,
+             PrintWriter out) {
+        ProductDAO productDAO = new ProductDAO();
+        boolean outStock = true;
+        boolean stopBuy = true;
+        float price = 0;
+        int index = 1;
+        for (CartItem a : ls) {
+            Product product = productDAO.getInforProductById(a.getProductId());
+            if (product == null) {
+                continue;
+            }
+            outStock = a.getQuantity() > product.getQuantity() ? true : false;
+            stopBuy = product.getProductStatus().getName()
+                    .equalsIgnoreCase("off") ? true : false;
+            out.println("<tr>");
+            // checkbox
+            if (!outStock && !stopBuy) {
+                out.println("<th><input type=\"checkbox\" name=\"product\" value=\"" + a.getId() + "\"></th>");
+            } else {
+                out.println("<th><i class=\"ti-alert\" style=\"color: red;font-weight: bold;\"></i></th>");
+            }
+            //ID
+            out.println("<th scope=\"row\">" + index + "</th>");
+            //Name
+            out.println("<td class=\"wider-col\">" + product.getName() + "</td>");
+            // Color
+            out.println(" <td>" + product.getColor() + "</td>");
+            //Size
+            out.println(" <td>" + product.getSize() + "</td>");
+            //Price
+            price = product.getDiscount().isActive() ? product.getPrice() * (100 - product.getDiscount().getDiscountPercent()) / 100 : product.getPrice();
+            out.println(" <td>" + String.format("%.2f", price) + "</td>");
+            //Quantity
+            out.println("<td class=\"wider-col\">");
+            out.println("<div class=\"qty-input\">");
+            out.println("<button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"button\" onclick=\"update('minus','#quantity_" + index + "')\">-</button>");
+            out.println("<input class=\"product-qty\" type=\"number\" id=\"quantity_" + index + "\" min=\"1\" value=\"" + a.getQuantity() + "\" onchange=\"update('','#quantity_" + index + "')\">");
+            out.println("<button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"button\" onclick=\"update('add','#quantity_" + index + "')\">+</button>");
+            out.println("</div>");
+            out.println("</td>");
+            //Subtotal or message
+            if (stopBuy) {
+                out.println("<td style=\"color: red;font-weight: bold;\">Product stop buy</td>");
+            } else if (outStock) {
+                out.println("<td style=\"color: red;font-weight: bold;\">Out stock</td>");
+            } else {
+                out.println("<td>" + String.format("%.2f", price * a.getQuantity()) + "</td>");
+            }
+            //Remove
+            out.println("<td>");
+            out.println("<i class=\"ti-trash\" onclick=\"remove(" + a.getId() + ")\"></i>");
+            out.println("</td>");
+            //end
+            out.println("</tr>");
+
+            index++;
         }
     }
 

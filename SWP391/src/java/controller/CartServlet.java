@@ -160,26 +160,26 @@ public class CartServlet extends HttpServlet {
             for (String a : ls) {
                 out.print("<tr>\n" +
 "                                            <th><input type=\"checkbox\" name=\"product\" value=\"1\"></th>\n" +
-"                                            <th scope=\"row\">"+i+"</th>\n" +
-"                                            <td class=\"wider-col\">Data "+i+"</td>\n" +
-"                                            <td>Data "+i+"</td>\n" +
-"                                            <td>Data "+i+"</td>\n" +
-"                                            <td>Data "+i+"</td>\n" +
+"                                            <th scope=\"row\">2</th>\n" +
+"                                            <td class=\"wider-col\">Data 2</td>\n" +
+"                                            <td>Data 3</td>\n" +
+"                                            <td>Data 4</td>\n" +
+"                                            <td>Data 5</td>\n" +
 "                                            <td class=\"wider-col\">\n" +
 "                                                    <div class=\"qty-input\">\n" +
-"                                                        <button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"submit\" onclick=\"update('minus','#quantity_"+i+"')\">-</button>\n" +
-"                                                        <input class=\"product-qty\" type=\"number\" id=\"quantity_"+i+"\" min=\"1\" value=\"1\" onchange=\"update('','#quantity_"+i+"')\">\n" +
-"                                                        <button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"submit\" onclick=\"update('add','#quantity_"+i+"')\">+</button>\n" +
+"                                                        <button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"button\">-</button>\n" +
+"                                                        <input class=\"product-qty\" type=\"number\" id=\"quantity_3\" min=\"1\" value=\"1\">\n" +
+"                                                        <button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"button\">+</button>\n" +
 "                                                    </div>\n" +
-"\n" +
 "                                            </td>\n" +
 "                                            <td>Data 7</td>\n" +
 "                                            <td>\n" +
-"                                                <i class=\"ti-trash\" onclick=\"remove("+i+")\"></i>\n" +
+"                                                <i class=\"ti-trash\" onclick=\"remove(3)\"></i>\n" +
 "                                            </td>\n" +
 "                                        </tr>");
                           
                 i++;
+                
             }
         } catch (IOException ex) {
             Logger.getLogger(SubProductServlet.class

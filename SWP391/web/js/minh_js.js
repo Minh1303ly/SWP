@@ -18,7 +18,7 @@ function load(selector, path) {
             });
 }
 
-var QtyInput = (function () {
+function attachQtyInputHandlers() {
     var $qtyInputs = $(".qty-input");
 
     if (!$qtyInputs.length) {
@@ -30,52 +30,52 @@ var QtyInput = (function () {
     var qtyMin = parseInt($inputs.attr("min"));
     var qtyMax = parseInt($inputs.attr("max"));
 
-    $inputs.change(function () {
-        var $this = $(this);
-        var $minusBtn = $this.siblings(".qty-count_minus");
-        var $addBtn = $this.siblings(".qty-count_add");
-        var qty = parseInt($this.val());
+    function updateQuantity($input, qty) {
+        var $minusBtn = $input.siblings(".qty-count_minus");
+        var $addBtn = $input.siblings(".qty-count_add");
 
         if (isNaN(qty) || qty <= qtyMin) {
-            $this.val(qtyMin);
-//            $minusBtn.attr("disabled", true);
-            qty =1;
+            $input.val(qtyMin);
+            qty = 1;
         } else {
             $minusBtn.attr("disabled", false);
 
             if (qty >= qtyMax) {
-                $this.val(qtyMax);
-//            $minusBtn.attr("disabled", true);
-            qty =1;
+                $input.val(qtyMax);
+                qty = 1;
             } else {
-                $this.val(qty);
+                $input.val(qty);
                 $addBtn.attr('disabled', false);
             }
         }
+    }
+
+    $inputs.off('change').on('change', function () {
+        var $this = $(this);
+        var qty = parseInt($this.val());
+        updateQuantity($this, qty);
     });
 
-    $countBtn.click(function () {
+    $countBtn.off('click').on('click', function () {
         var operator = this.dataset.action;
         var $this = $(this);
         var $input = $this.siblings(".product-qty");
         var qty = parseInt($input.val());
 
-        if (operator == "add") {
+        if (operator === "add") {
             qty += 1;
             if (qty >= qtyMin + 1) {
                 $this.siblings(".qty-count_minus").attr("disabled", false);
             }
 
             if (qty >= qtyMax) {
-//            $minusBtn.attr("disabled", true);
-            qty =1;
+                qty = 1;
             }
         } else {
             qty = qty <= qtyMin ? qtyMin : (qty -= 1);
 
-            if (qty == qtyMin) {
-//            $minusBtn.attr("disabled", true);
-            qty =1;
+            if (qty === qtyMin) {
+                qty = 1;
             }
 
             if (qty < qtyMax) {
@@ -83,6 +83,9 @@ var QtyInput = (function () {
             }
         }
 
-        $input.val(qty);
+        updateQuantity($input, qty);
     });
-})();
+}
+
+// Initially attach handlers
+attachQtyInputHandlers();

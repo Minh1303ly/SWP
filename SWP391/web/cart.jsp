@@ -139,11 +139,10 @@
                                             <td>Data 5</td>
                                             <td class="wider-col">
                                                     <div class="qty-input">
-                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
-                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
-                                                        <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
+                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit">-</button>
+                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1">
+                                                        <button class="qty-count qty-count_add" data-action="add" type="submit">+</button>
                                                     </div>
-
                                             </td>
                                             <td>Data 7</td>
                                             <td>
@@ -159,17 +158,17 @@
                                             <td>Data 5</td>
                                             <td class="wider-col">
                                                     <div class="qty-input">
-                                                        <button class="qty-count qty-count_minus" data-action="minus" type="submit" onclick="update('minus','#'+'quantity_3')">-</button>
-                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1" onchange="update('','#quantity_3')">
-                                                        <button class="qty-count qty-count_add" data-action="add" type="submit" onclick="update('add','#quantity_3')">+</button>
+                                                        <button class="qty-count qty-count_minus" data-action="minus" type="button">-</button>
+                                                        <input class="product-qty" type="number" id="quantity_3" min="1" value="1">
+                                                        <button class="qty-count qty-count_add" data-action="add" type="button">+</button>
                                                     </div>
-
                                             </td>
                                             <td>Data 7</td>
                                             <td>
                                                 <i class="ti-trash" onclick="remove(3)"></i>
                                             </td>
                                         </tr>
+                                        
                                         <!-- Add more rows as needed -->
                                     </tbody>
                                 </table>
@@ -228,11 +227,12 @@
 //                                alert(currentPage + 1);
                                 
                                    $('#container_cart').html(data); 
-                              
+                                    attachQtyInputHandlers();
 //                                $('#toTop').click();
 
                                 //      document.getElementById('#div1').innerHTML=data;
                             });
+                
             }
         </script>
         <script>

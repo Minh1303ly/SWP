@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -170,10 +169,10 @@ public class CartServlet extends HttpServlet {
                         (User) session.getAttribute("account"));
         CartItem cartItem = cartItemDAO.checkExistInSession(
                 idSession,
-                 product.getId());
+                product.getId());
         if (cartItem != null) {
             return cartItemDAO.update(cartItem.getId(),
-                     quantity + cartItem.getQuantity());
+                    quantity + cartItem.getQuantity());
         }
         return cartItemDAO.add(idSession,
                 product, quantity);
@@ -183,10 +182,9 @@ public class CartServlet extends HttpServlet {
      *
      * @param request
      * @param response
-     * @return
      */
     public void remove(HttpServletRequest request,
-             HttpServletResponse response) {
+            HttpServletResponse response) {
         HttpSession session = request.getSession(true);
         User user = (User) session.getAttribute("account");
         int id = Integer.parseInt(request.getParameter("id"));
@@ -196,9 +194,9 @@ public class CartServlet extends HttpServlet {
             flag = cartItemDAO.remove(id);
         } else {
             List<CartItem> ls = (List<CartItem>) session.getAttribute("cart");
-            flag = ls.remove(id-1)!=null;
+            flag = ls.remove(id - 1) != null;
             int index = 1;
-            for(CartItem a : ls){
+            for (CartItem a : ls) {
                 a.setId(index);
                 index++;
             }
@@ -216,12 +214,29 @@ public class CartServlet extends HttpServlet {
      *
      * @param request
      * @param response
-     * @return
      */
-    public boolean update(HttpServletRequest request,
-             HttpServletResponse response) {
-
-        return false;
+    public void update(HttpServletRequest request,
+            HttpServletResponse response) {
+        HttpSession session = request.getSession(true);
+        User user = (User) session.getAttribute("account");
+        int id = Integer.parseInt(request.getParameter("id"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        boolean flag = false;
+        if (user != null) {
+            CartItemDAO cartItemDAO = new CartItemDAO();
+            flag = cartItemDAO.update(id,quantity);
+        } else {
+            List<CartItem> ls = (List<CartItem>) session.getAttribute("cart");
+            ls.get(id-1).setQuantity(quantity);
+            flag = quantity == ls.get(id-1).getQuantity();
+            session.setAttribute("cart", ls);
+        }
+        try (PrintWriter out = response.getWriter()) {
+            out.print(flag);
+        } catch (IOException ex) {
+            Logger.getLogger(CartServlet.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -232,7 +247,7 @@ public class CartServlet extends HttpServlet {
      * @return
      */
     public List<CartItem> loadByCustomer(HttpServletRequest request,
-             HttpServletResponse response, User user) {
+            HttpServletResponse response, User user) {
         ShoppingSessionDAO shoppingSessionDAO = new ShoppingSessionDAO();
         CartItemDAO cartItemDAO = new CartItemDAO();
         int idSession = shoppingSessionDAO.getIdShoppingSessionByUser(user);
@@ -256,7 +271,7 @@ public class CartServlet extends HttpServlet {
         }
         try (PrintWriter out = response.getWriter()) {
             if (ls == null || ls.isEmpty()) {
-                out.println("<p>Dont have any product</p>");
+                out.println("<p class=\"d-flex justify-content-center my-4 text-danger\">Dont have any product</p>");
                 return;
             }
             getFormCart(response, ls, out);
@@ -273,7 +288,7 @@ public class CartServlet extends HttpServlet {
      * @param out
      */
     public void getFormCart(HttpServletResponse response, List<CartItem> ls,
-             PrintWriter out) {
+            PrintWriter out) {
         ProductDAO productDAO = new ProductDAO();
         boolean outStock = true;
         boolean stopBuy = true;
@@ -288,9 +303,9 @@ public class CartServlet extends HttpServlet {
             stopBuy = product.getProductStatus().getName()
                     .equalsIgnoreCase("off") ? true : false;
             out.println("<tr>");
-            // checkbox
+            // checkbox                   
             if (!outStock && !stopBuy) {
-                out.println("<th><input type=\"checkbox\" name=\"product\" value=\"" + a.getId() + "\"></th>");
+                out.println("<th><input type=\"checkbox\" class=\"product form-check-input\" style=\"margin-left:0px;\" onchange=\"getToTal()\" value=\"" + a.getId() + "\"></th>");
             } else {
                 out.println("<th><i class=\"ti-alert\" style=\"color: red;font-weight: bold;\"></i></th>");
             }
@@ -308,18 +323,18 @@ public class CartServlet extends HttpServlet {
             //Quantity
             out.println("<td class=\"wider-col\">");
             out.println("<div class=\"qty-input\">");
-            out.println("<button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"button\" onclick=\"update('minus','#quantity_" + index + "')\">-</button>");
-            out.println("<input class=\"product-qty\" type=\"number\" id=\"quantity_" + index + "\" min=\"1\" value=\"" + a.getQuantity() + "\" onchange=\"update('','#quantity_" + index + "')\">");
-            out.println("<button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"button\" onclick=\"update('add','#quantity_" + index + "')\">+</button>");
+            out.println("<button class=\"qty-count qty-count_minus\" data-action=\"minus\" type=\"button\" onclick=\"update('minus','" + a.getId() + "')\">-</button>");
+            out.println("<input class=\"product-qty\" type=\"number\" id=\"quantity_" + a.getId() + "\" min=\"1\" value=\"" + a.getQuantity() + "\" onchange=\"update('','" + a.getId() + "')\">");
+            out.println("<button class=\"qty-count qty-count_add\" data-action=\"add\" type=\"button\" onclick=\"update('add','" + a.getId() + "')\">+</button>");
             out.println("</div>");
             out.println("</td>");
             //Subtotal or message
             if (stopBuy) {
                 out.println("<td style=\"color: red;font-weight: bold;\">Product stop buy</td>");
             } else if (outStock) {
-                out.println("<td style=\"color: red;font-weight: bold;\">Out stock</td>");
+                out.println("<td style=\"color: red;font-weight: bold;\">Out stock "+product.getQuantity()+"</td>");
             } else {
-                out.println("<td>" + String.format("%.2f", price * a.getQuantity()) + "</td>");
+                out.println("<td id=\"subtotal_product_"+a.getId()+"\">" + String.format("%.2f", price * a.getQuantity()) + "</td>");
             }
             //Remove
             out.println("<td>");

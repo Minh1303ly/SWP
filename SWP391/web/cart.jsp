@@ -139,8 +139,8 @@
                                             <td>Data 5</td>
                                             <td class="wider-col">
                                                 <div class="qty-input">
-                                                    <button class="qty-count qty-count_minus" data-action="minus" type="button" onclick="update('minus', '#quantity_1')">-</button>
-                                                    <input class="product-qty" type="number" id="quantity_1" min="1" value="1" onchange="update('minus', '#quantity_1')">
+                                                    <button class="qty-count qty-count_minus" data-action="minus" type="button" onclick="update('minus', '1')">-</button>
+                                                    <input class="product-qty" type="number" id="quantity_1" min="1" value="1" onchange="update('minus', '1')">
                                                     <button class="qty-count qty-count_add" data-action="add" type="button" onclick="update('add', '#quantity_1')">+</button>
                                                 </div>
                                             </td>
@@ -148,34 +148,14 @@
                                             <td>
                                                 <i class="ti-trash" onclick="remove(3)"></i>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <th><input type="checkbox" name="product" value="1"></th>
-                                            <th scope="row">2</th>
-                                            <td class="wider-col">Data 2</td>
-                                            <td>Data 3</td>
-                                            <td>Data 4</td>
-                                            <td>Data 5</td>
-                                            <td class="wider-col">
-                                                <div class="qty-input">
-                                                    <button class="qty-count qty-count_minus" data-action="minus" type="button" onclick="update('minus', '#quantity_2')">-</button>
-                                                    <input class="product-qty" type="number" id="quantity_2" min="1" value="1" onchange="update('minus', '#quantity_2')">
-                                                    <button class="qty-count qty-count_add" data-action="add" type="button" onclick="update('add', '#quantity_2')">+</button>
-                                                </div>
-                                            </td>
-                                            <td>Data 7</td>
-                                            <td>
-                                                <i class="ti-trash" onclick="remove(3)"></i>
-                                            </td>
-                                        </tr>
-
+                                        </tr>                        
                                         <!-- Add more rows as needed -->
                                     </tbody>
                                 </table>
 
                                 <div class="row add_top_30 flex-sm-row-reverse cart_actions">
                                     <div class="col-sm-4 text-end">
-                                        <button type="button" class="btn_1 gray" onclick="loadCart()">Buy More</button>
+                                        <button type="button" class="btn_1 gray" onclick="reDirect('product')">Buy More</button>
                                     </div>
                                 </div>
                             </div> 
@@ -185,16 +165,16 @@
                                         <div class="col-xl-4 col-lg-4 col-md-6">
                                             <ul>
                                                 <li>
-                                                    <span>Subtotal</span> $240.00
+                                                    <span>Subtotal</span> <p id="total_product1">$0.00</p>
                                                 </li>
                                                 <li>
-                                                    <span>Shipping</span> $7.00
+                                                    <span>Shipping</span> $0.00
                                                 </li>
                                                 <li>
-                                                    <span>Total</span> $247.00
+                                                    <span>Total</span> <p id="total_product2">$0.00</p>
                                                 </li>
                                             </ul>
-                                            <a href="cart-2.html" class="btn_1 full-width cart">Checkout</a>
+                                            <button onclick="checkout()" class="btn_1 full-width cart">Checkout</button>
                                         </div>
                                     </div>
                                 </div>
@@ -215,70 +195,5 @@
 
         <div id="toTop"></div><!-- Back to top button -->
         <jsp:include page="modal.jsp"/>
-        <script>
-            loadCart();
-            function loadCart() {
-
-                $.get("/SWP391/cart?service=loadCart",
-                        {
-                            pagination: 1
-
-                        },
-                        function (data, status) {
-//                                alert(currentPage + 1);
-
-                            $('#container_cart').html(data);
-                            attachQtyInputHandlers();
-//                                $('#toTop').click();
-
-                            //      document.getElementById('#div1').innerHTML=data;
-                        });
-
-            }
-        </script>
-        <script>
-            function update(action, idQuantity) {
-                let update = document.querySelector(idQuantity);
-                var quantity = parseInt(update.value);
-                if (action === 'add') {
-                    quantity++;
-                }
-                if (action === "minus") {
-                    quantity = quantity > 1 ? quantity - 1 : 1;
-                }
-                alert(quantity);
-                 $.get("/SWP391/cart?service=update",
-                        {
-                            id: id
-
-                        },
-                        function (data, status) {
-                            if (data === "true") {
-                                alert('true');
-                                loadCart();
-                            } else {
-                                alert('false');
-                            }
-                            
-                        });
-            }
-
-            function remove(id) {
-                $.get("/SWP391/cart?service=remove",
-                        {
-                            id: id
-
-                        },
-                        function (data, status) {
-                            if (data === "true") {
-                                alert('true');
-                                loadCart();
-                            } else {
-                                alert('false');
-                            }
-                            
-                        });
-            }
-        </script>
         <script src="js/minh_js.js"></script>   
 </html>

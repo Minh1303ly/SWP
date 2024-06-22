@@ -87,5 +87,150 @@ function attachQtyInputHandlers() {
     });
 }
 
-// Initially attach handlers
-attachQtyInputHandlers();
+
+function update(action, idProduct) {
+    let update = document.querySelector('#quantity_' + idProduct);
+    var quantity = parseInt(update.value);
+    if (action === 'add') {
+        quantity++;
+    }
+    if (action === "minus") {
+        quantity = quantity > 1 ? quantity - 1 : 1;
+    }
+    if (quantity <= 0 || isNaN(quantity)) {
+        messege('warning', 'Must is positive number!');
+        loadCart();
+        return;
+    }
+    if (quantity > 1000) {
+        messege('info', 'Must contact me with large product');
+        loadCart();
+        return;
+    }
+    $.get("/SWP391/cart?service=update",
+            {
+                id: idProduct,
+                quantity: quantity
+
+            },
+            function (data, status) {
+                if (data === "true") {
+                    messege('success', 'Update success!');
+                    loadCart();
+                } else {
+                    messege('error', 'Fail to update!');
+                }
+
+            });
+}
+
+function remove(id) {
+    $.get("/SWP391/cart?service=remove",
+            {
+                id: id
+
+            },
+            function (data, status) {
+                if (data === "true") {
+                    messege('success', 'Remove success!');
+                    loadCart();
+                } else {
+                    messege('error', 'Fail to remove!');
+                }
+
+            });
+}
+
+function messege(action, message) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.style.marginTop = '100px';
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+    Toast.fire({
+        icon: action,
+        title: message
+    });
+}
+
+function getToTal() {
+    // Select all elements with the class name 'value'
+    const elements = getProduct();
+    var total = 0;
+    // Loop through the elements and add their values to the total
+    elements.forEach(element => {
+//                    alert(element);
+        let subTotal = document.getElementById('subtotal_product_' + element);
+        var value = parseFloat(subTotal.textContent); // Parse the text content as a float
+//                    alert(value);
+        if (!isNaN(value)) { // Check if the value is a valid number
+            total += value; // Double the value and add to the total
+        }
+    });
+//                alert(total);
+    // Display the total in the element with id 'total'
+    document.getElementById('total_product1').textContent = "$" + total.toFixed(2);
+    document.getElementById('total_product2').textContent = "$" + total.toFixed(2);
+}
+
+function checkout() {
+    const elements = getProduct();
+    if (elements.length === 0) {
+        Swal.fire({
+            title: 'Empty!',
+            text: 'Please buy more or click product to check out',
+            icon: 'info',
+            confirmButtonText: 'Continue'
+        });
+    } else {
+        sessionStorage.setItem('checkout', elements);
+        window.location.href = 'contact';
+    }
+}
+
+const getProduct = () => {
+    // Select all checkboxes with the class name 'product'
+    const checkboxes = document.querySelectorAll('.product');
+    const checkedValues = [];
+
+    // Loop through the checkboxes and add the value of checked ones to the array
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            checkedValues.push(checkbox.value);
+        }
+    });
+
+    // Return the array of checked values
+    return checkedValues;
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+    loadCart();
+    getToTal();
+    // Initially attach handlers
+    attachQtyInputHandlers();
+});
+
+function loadCart() {
+
+    $.get("/SWP391/cart?service=loadCart",
+            {
+                pagination: 1
+
+            },
+            function (data, status) {
+//                                alert(currentPage + 1);
+
+                $('#container_cart').html(data);
+                attachQtyInputHandlers();
+                getToTal();
+                //      document.getElementById('#div1').innerHTML=data;
+            });
+}

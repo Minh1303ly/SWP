@@ -61,13 +61,7 @@
         <div class="container">
             <div class="row small-gutters">
                 <!-- categories -->
-                <div class="col-xl-3 col-lg-3 col-md-3">
-                    <div id="successMessage" class="alert alert-success" role="alert" style="display:none;">
-                        Your product add successfully!
-                    </div>
-                    <div id="failMessage" class="alert alert-danger" role="alert" style="display:none;">
-                        Fail to add product!
-                    </div>
+                <div class="col-xl-3 col-lg-3 col-md-3">                    
                 </div>
 
                 <!--Search block-->
@@ -83,7 +77,7 @@
                 <div class="col-xl-3 col-lg-2 col-md-3">
                     <ul class="top_tools">
                         <li>
-                            <a href="cart" class="cart_bt" onclick="reDirectCart()"></a>
+                            <a href="cart" class="cart_bt" onclick="reDirect('cart')"></a>
                         </li>
                         <li>
                             <div class="dropdown dropdown-access">
@@ -229,8 +223,8 @@
     <!-- /main_nav -->
     <script src="js/validate.js"></script>
     <script>
-        function reDirectCart(){
-             window.location.href = 'cart';
+        function reDirect(link){
+             window.location.href = link;
         }
     </script>
 </header>

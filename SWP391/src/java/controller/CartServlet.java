@@ -63,7 +63,7 @@ public class CartServlet extends HttpServlet {
                 case "update" ->
                     update(request, response);
                 default ->
-                    response.sendRedirect("404.html");
+                    response.sendRedirect("404.jsp");
             }
         }
     }

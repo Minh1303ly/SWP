@@ -60,7 +60,7 @@ public class SubProductServlet extends HttpServlet {
                 case "viewByFilter" ->
                     viewByFilter(request, response);
                 default ->
-                    response.sendRedirect("404.html");
+                    response.sendRedirect("404.jsp");
             }
         }
     }

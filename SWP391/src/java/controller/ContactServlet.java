@@ -4,6 +4,9 @@
  */
 package controller;
 
+import dao.CartItemDAO;
+import dao.ShoppingSessionDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +14,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import model.CartItem;
+import model.User;
 
 /**
  *
@@ -32,10 +42,54 @@ public class ContactServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+            if (request.getParameter("service") == null) {
+                view(request, response);
+            } else {
+                switch (request.getParameter("service")) {
+                    case "loadCart" ->
+                        pay(request, response);
+                    default ->
+                        response.sendRedirect("404.jsp");
+                }
+            }
         }
     }
-
+    
+    
+    public void view(HttpServletRequest request, HttpServletResponse response){
+        try {
+            HttpSession session = request.getSession(true);
+            CartItemDAO cartItemDAO = new CartItemDAO();
+            ShoppingSessionDAO shoppingSessionDAO = new ShoppingSessionDAO();
+            List<CartItem> list;
+            //Get user
+            User user = (User)session.getAttribute("account");
+            //Get list
+            list = user==null?(List<CartItem>)session.getAttribute("cart")
+                    :cartItemDAO.getAllBySession(
+                            shoppingSessionDAO
+                                    .getIdShoppingSessionByUser(user));
+            // check null
+            if(list==null){
+                response.sendRedirect("404.jsp");
+                return;
+            }
+            //Get chosen list
+            int[] chosen = (int[])session.getAttribute("checkout");
+            request.setAttribute("cartContact",
+                    list.stream().filter(
+                            item -> item.checkExist(chosen))
+                            .collect(Collectors.toList()));
+            RequestDispatcher dispatch = request.getRequestDispatcher("contact.jsp");
+            dispatch.forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(ContactServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void pay(HttpServletRequest request, HttpServletResponse response) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -74,5 +128,7 @@ public class ContactServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 
 }

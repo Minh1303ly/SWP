@@ -97,29 +97,20 @@
                                             <th scope="col">Subtotal</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="container_cart">
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td class="wider-col">Data 2</td>
-                                            <td>Data 3</td>
-                                            <td>Data 4</td>
-                                            <td>Data 5</td>
-                                            <td class="wider-col">
-                                                <div class="qty-input">
-                                                    <button class="qty-count qty-count_minus"
-                                                            data-action="minus" type="button"
-                                                            onclick="update('minus', '1')">-</button>
-                                                    <input class="product-qty" type="number"
-                                                           id="quantity_1" min="1" value="1"
-                                                           onchange="update('minus', '1')">
-                                                    <button class="qty-count qty-count_add"
-                                                            data-action="add" type="button"
-                                                            onclick="update('add', '#quantity_1')">+</button>
-                                                </div>
-                                            </td>
-                                            <td>Data 7</td>
+                                    <tbody>
+                                        <c:if test="${cartContact!=null}">
+                                        <c:forEach var="element" items="${cartContact}">
+                                            <tr>
+                                            <td>${element.id}</td>
+                                            <td class="wider-col">${element.product.name}</td>
+                                            <td>${element.product.color}</td>
+                                            <td>${element.product.size}</td>
+                                            <td>${element.product.price}</td>
+                                            <td>${element.quantity}</td>
+                                            <td>${String.format("%.2f",element.product.price*element.quantity)}</td>
                                         </tr>
-                                        <!-- Add more rows as needed -->
+                                        </c:forEach>
+                                        </c:if>
                                     </tbody>
                                 </table>
 
@@ -264,5 +255,4 @@
         });
      });	    
         </script>
-        <script src="js/minh_js.js"></script>   
 </html>

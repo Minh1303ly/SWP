@@ -180,20 +180,6 @@ function getToTal() {
     document.getElementById('total_product2').textContent = "$" + total.toFixed(2);
 }
 
-function checkout() {
-    const elements = getProduct();
-    if (elements.length === 0) {
-        Swal.fire({
-            title: 'Empty!',
-            text: 'Please buy more or click product to check out',
-            icon: 'info',
-            confirmButtonText: 'Continue'
-        });
-    } else {
-        sessionStorage.setItem('checkout', elements);
-        window.location.href = 'contact';
-    }
-}
 
 const getProduct = () => {
     // Select all checkboxes with the class name 'product'

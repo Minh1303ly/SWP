@@ -41,6 +41,15 @@ public class CartItem {
     public CartItem() {
     }
     
+    public boolean checkExist(int[] arr){
+        for(int a : arr){
+            if(a == id){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     
     
     

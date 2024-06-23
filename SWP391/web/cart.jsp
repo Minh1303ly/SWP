@@ -196,5 +196,24 @@
 
         <div id="toTop"></div><!-- Back to top button -->
         <jsp:include page="modal.jsp"/>
-        <script src="js/minh_js.js"></script>   
+        <script src="js/minh_js.js"></script>
+        <script>
+            function checkout() {
+    const elements = getProduct();
+    if (elements.length === 0) {
+        Swal.fire({
+            title: 'Empty!',
+            text: 'Please buy more or click product to check out',
+            icon: 'info',
+            confirmButtonText: 'Continue'
+        });
+    } else {
+        alert(elements);       
+            <%
+                session.setAttribute("checkout", elements);
+            %>
+        window.location.href = 'contact';
+    }
+}
+        </script>
 </html>

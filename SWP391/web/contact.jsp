@@ -72,33 +72,10 @@
                         </aside>
                         <!-- /col -->
                         <div class="col-lg-9">                         
-                            <div class="top_banner">                              
-                                <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.3)">
-                                    <div class="container pl-lg-5">
-                                        <h1>
-                                            <a href="${slider.backLink}" style="color:#ffffff;">
-                                                ${slider.title}
-                                            </a>
-                                        </h1>
-                                    </div>
-                                </div>
-                                <a href="${slider.backLink}">
-                                    <img src="${slider.image}" class="img-fluid" alt="">
-                                </a>
-
-                            </div>
                             <!-- /top_banner -->
                             <div id="stick_here"></div>
                             <div class="toolbox elemento_stick add_bottom_30">
                                 <div class="container">
-                                    <ul class="clearfix">
-                                        <li>
-                                        </li>
-                                        <li>
-                                        </li>
-                                        <li>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                             <div class="container margin_30">
@@ -120,7 +97,7 @@
                                             <th scope="col">Subtotal</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="container_cart">                     
+                                    <tbody id="container_cart">
                                         <tr>
                                             <th scope="row">2</th>
                                             <td class="wider-col">Data 2</td>
@@ -129,44 +106,110 @@
                                             <td>Data 5</td>
                                             <td class="wider-col">
                                                 <div class="qty-input">
-                                                    <button class="qty-count qty-count_minus" data-action="minus" type="button" onclick="update('minus', '1')">-</button>
-                                                    <input class="product-qty" type="number" id="quantity_1" min="1" value="1" onchange="update('minus', '1')">
-                                                    <button class="qty-count qty-count_add" data-action="add" type="button" onclick="update('add', '#quantity_1')">+</button>
+                                                    <button class="qty-count qty-count_minus"
+                                                            data-action="minus" type="button"
+                                                            onclick="update('minus', '1')">-</button>
+                                                    <input class="product-qty" type="number"
+                                                           id="quantity_1" min="1" value="1"
+                                                           onchange="update('minus', '1')">
+                                                    <button class="qty-count qty-count_add"
+                                                            data-action="add" type="button"
+                                                            onclick="update('add', '#quantity_1')">+</button>
                                                 </div>
                                             </td>
                                             <td>Data 7</td>
-                                        </tr>                        
+                                        </tr>
                                         <!-- Add more rows as needed -->
                                     </tbody>
                                 </table>
 
                                 <div class="row add_top_30 flex-sm-row-reverse cart_actions">
                                     <div class="col-sm-4 text-end">
-                                        <button type="button" class="btn_1 gray" onclick="reDirect('product')">Buy More</button>
-                                    </div>
-                                </div>
-                            </div> 
-                            <div class="box_cart">
-                                <div class="container">
-                                    <div class="row justify-content-end">
-                                        <div class="col-xl-4 col-lg-4 col-md-6">
-                                            <ul>
-                                                <li>
-                                                    <span>Subtotal</span> <p id="total_product1">$0.00</p>
-                                                </li>
-                                                <li>
-                                                    <span>Shipping</span> $0.00
-                                                </li>
-                                                <li>
-                                                    <span>Total</span> <p id="total_product2">$0.00</p>
-                                                </li>
-                                            </ul>
-                                            <button onclick="checkout()" class="btn_1 full-width cart">Checkout</button>
-                                        </div>
+                                        <button type="button" class="btn_1 border border-secondary px-4 py-2 rounded-pill"
+                                                onclick="reDirect('cart')">Change product</button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- /box_cart -->
+
+                            <div class="container mt-5">
+                                <form action="contact" method="post">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="fullname">Fullname:</label>
+                                            <input type="text" class="form-control" name="fullname" id="fullname"
+                                                   pattern="[A-Za-z ]{3,}" title="Name just include A-Z, a-z and size greater 3!" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="email">Email:</label>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                   placeholder="Email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address!" required >
+                                        </div>
+                                    </div>
+                                    <fieldset class="form-group">
+                                        <div class="row">
+                                            <label class="col-form-label col-sm-2 pt-0">Gender:</label>
+                                            
+                                                <div class="form-check col-2">
+                                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male" checked>
+                                                    <label class="form-check-label" for="male">Male</label>
+                                                </div>
+                                                <div class="form-check col-2">
+                                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                                    <label class="form-check-label" for="female">Female</label>
+                                                </div>
+                                                <div class="form-check col-2">
+                                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+                                                    <label class="form-check-label" for="other">Other</label>
+                                                </div>
+                                            
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="phone">Phone:</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone"
+                                                   placeholder="Phone" pattern="[0]{1}[0-9]{9,10}" title="Please enter a valid phone number!" required>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="addressDetail">Address detail(Optional):</label>
+                                            <input type="text" class="form-control" id="addressDetail" name="addressDetail"
+                                                   placeholder="Apartment, studio, or floor">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="province">Province:</label>
+                                            <select class="form-control" id="province" name="province">
+                                            <option>Select province</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="district">District:</label>
+                                            <select class="form-control" id="district" name="district">
+                                            <option>Select district</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="commune">Commune</label>
+                                            <select class="form-control" id="commune" name="commune">
+                                            <option>Select commune</option>
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="note1">Note:</label>
+                                        <textarea class="form-control" id="note1" name="note" rows="3"></textarea>
+                                    </div>
+                                    <div class="row add_top_30 flex-sm-row-reverse cart_actions">
+                                    <div class="col-sm-4 text-end">
+                                        <button type="submit" class="btn_1 border border-secondary px-4 py-3 rounded-pill"
+                                                >Direct to pay</button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div> 
+                            
                         </div>
                         <!-- /col -->
                     </div>
@@ -182,5 +225,44 @@
 
         <div id="toTop"></div><!-- Back to top button -->
         <jsp:include page="modal.jsp"/>
+        <script>
+            $(document).ready(function() {
+        //Take province
+        $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm',function(data_tinh){	       
+            if(data_tinh.error==0){
+               $.each(data_tinh.data, function (key_tinh,val_tinh) {
+                  $("#province").append('<option value="'+val_tinh.id+'">'+val_tinh.full_name+'</option>');
+               });
+               $("#province").change(function(e){
+                    var idtinh=$(this).val();
+                    //Take district
+                    $.getJSON('https://esgoo.net/api-tinhthanh/2/'+idtinh+'.htm',function(data_quan){	       
+                        if(data_quan.error===0){
+                           $("#district").html('<option value="0">District</option>');  
+                           $("#commune").html('<option value="0">Commune</option>');   
+                           $.each(data_quan.data, function (key_quan,val_quan) {
+                              $("#district").append('<option value="'+val_quan.id+'">'+val_quan.full_name+'</option>');
+                           });
+                           //Take commune 
+                           $("#district").change(function(e){
+                                var idquan=$(this).val();
+                                $.getJSON('https://esgoo.net/api-tinhthanh/3/'+idquan+'.htm',function(data_phuong){	       
+                                    if(data_phuong.error===0){
+                                       $("#commune").html('<option value="0">Commune</option>');   
+                                       $.each(data_phuong.data, function (key_phuong,val_phuong) {
+                                          $("#commune").append('<option value="'+val_phuong.id+'">'+val_phuong.full_name+'</option>');
+                                       });
+                                    }
+                                });
+                           });
+                            
+                        }
+                    });
+               });   
+                
+            }
+        });
+     });	    
+        </script>
         <script src="js/minh_js.js"></script>   
 </html>

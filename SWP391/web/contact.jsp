@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Ansonika">
-        <title>Allaia | Bootstrap eCommerce Template - ThemeForest</title>
+        <title>Contact</title>
 
         <!-- Favicons-->
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -99,17 +99,20 @@
                                     </thead>
                                     <tbody>
                                         <c:if test="${cartContact!=null}">
-                                        <c:forEach var="element" items="${cartContact}">
+                                            <c:set var="index" value="0"/>
+                                            <c:forEach var="element" items="${cartContact}">
+                                            <c:set var="index" value="${index+1}"/>
                                             <tr>
-                                            <td>${element.id}</td>
-                                            <td class="wider-col">${element.product.name}</td>
-                                            <td>${element.product.color}</td>
-                                            <td>${element.product.size}</td>
-                                            <td>${element.product.price}</td>
-                                            <td>${element.quantity}</td>
-                                            <td>${String.format("%.2f",element.product.price*element.quantity)}</td>
-                                        </tr>
-                                        </c:forEach>
+                                                <td><c:out value="${index}"/></td>
+                                                <td class="wider-col">${element.product.name}</td>
+                                                <td>${element.product.color}</td>
+                                                <td>${element.product.size}</td>
+                                                <td>${element.product.price}</td>
+                                                <td>${element.quantity}</td>
+                                                <td>${String.format("%.2f",element.product.price*element.quantity)}</td>
+                                            </tr>
+                                            
+                                            </c:forEach>
                                         </c:if>
                                     </tbody>
                                 </table>
@@ -220,7 +223,7 @@
             $(document).ready(function() {
         //Take province
         $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm',function(data_tinh){	       
-            if(data_tinh.error==0){
+            if(data_tinh.error===0){
                $.each(data_tinh.data, function (key_tinh,val_tinh) {
                   $("#province").append('<option value="'+val_tinh.id+'">'+val_tinh.full_name+'</option>');
                });

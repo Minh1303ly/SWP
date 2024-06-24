@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Ansonika">
-        <title>Allaia | Bootstrap eCommerce Template - ThemeForest</title>
+        <title>Cart</title>
 
         <!-- Favicons-->
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -181,8 +181,12 @@
                                 </div>
                             </div>
                             <!-- /box_cart -->
+                            <form action="contact" method="get" style="display: none;">
+                                <input type="hidden" id="checkout" name="checkout" value="2">
+                                <button type="hidden" id="checkoutSubmit"></button>
+                            </form>
                         </div>
-                        <!-- /col -->
+                        <!-- /col --> 
                     </div>
                     <!-- /row -->
                 </div>
@@ -197,23 +201,4 @@
         <div id="toTop"></div><!-- Back to top button -->
         <jsp:include page="modal.jsp"/>
         <script src="js/minh_js.js"></script>
-        <script>
-            function checkout() {
-    const elements = getProduct();
-    if (elements.length === 0) {
-        Swal.fire({
-            title: 'Empty!',
-            text: 'Please buy more or click product to check out',
-            icon: 'info',
-            confirmButtonText: 'Continue'
-        });
-    } else {
-        alert(elements);       
-            <%
-                session.setAttribute("checkout", elements);
-            %>
-        window.location.href = 'contact';
-    }
-}
-        </script>
 </html>

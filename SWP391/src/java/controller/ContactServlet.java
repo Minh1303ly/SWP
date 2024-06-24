@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +29,8 @@ import model.User;
  */
 @WebServlet(name = "ContactServlet", urlPatterns = {"/contact"})
 public class ContactServlet extends HttpServlet {
-
+    
+    private static String productContact;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,8 +48,8 @@ public class ContactServlet extends HttpServlet {
                 view(request, response);
             } else {
                 switch (request.getParameter("service")) {
-                    case "loadCart" ->
-                        pay(request, response);
+                    case "checkoutProduct" ->
+                        getProduct(request, response);
                     default ->
                         response.sendRedirect("404.jsp");
                 }
@@ -55,9 +57,17 @@ public class ContactServlet extends HttpServlet {
         }
     }
     
+    public int[] getProduct(HttpServletRequest request, HttpServletResponse response){
+        productContact = request.getParameter("checkout");
+        return Arrays.stream(productContact.split(","))
+                    .mapToInt(Integer::parseInt)
+                        .toArray();
+    }
+        
     
     public void view(HttpServletRequest request, HttpServletResponse response){
         try {
+            getProduct(request, response);
             HttpSession session = request.getSession(true);
             CartItemDAO cartItemDAO = new CartItemDAO();
             ShoppingSessionDAO shoppingSessionDAO = new ShoppingSessionDAO();
@@ -75,15 +85,22 @@ public class ContactServlet extends HttpServlet {
                 return;
             }
             //Get chosen list
-            int[] chosen = (int[])session.getAttribute("checkout");
             request.setAttribute("cartContact",
                     list.stream().filter(
-                            item -> item.checkExist(chosen))
+                            item -> item.checkExist(
+                                    getProduct(request, response)))
                             .collect(Collectors.toList()));
             RequestDispatcher dispatch = request.getRequestDispatcher("contact.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
             Logger.getLogger(ContactServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void main(String[] args) {
+        productContact="15,21";
+        
+        for(String a : productContact.split(",")){
+            System.out.println(a);
         }
     }
     

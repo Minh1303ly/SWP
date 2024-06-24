@@ -125,7 +125,17 @@ function update(action, idProduct) {
 }
 
 function remove(id) {
-    $.get("/SWP391/cart?service=remove",
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You want remove this product!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.get("/SWP391/cart?service=remove",
             {
                 id: id
 
@@ -139,6 +149,9 @@ function remove(id) {
                 }
 
             });
+        }
+      });
+    
 }
 
 function messege(action, message) {
@@ -219,4 +232,19 @@ function loadCart() {
                 getToTal();
                 //      document.getElementById('#div1').innerHTML=data;
             });
+}
+
+function checkout() {
+    const elements = getProduct();
+    if (elements.length === 0) {
+        Swal.fire({
+            title: 'Empty!',
+            text: 'Please buy more or click product to check out',
+            icon: 'info',
+            confirmButtonText: 'Continue'
+        });
+    } else {
+        document.getElementById('checkout').value = elements;
+        $('#checkoutSubmit').click();
+    }
 }

@@ -133,25 +133,25 @@ function remove(id) {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
-          $.get("/SWP391/cart?service=remove",
-            {
-                id: id
+            $.get("/SWP391/cart?service=remove",
+                    {
+                        id: id
 
-            },
-            function (data, status) {
-                if (data === "true") {
-                    messege('success', 'Remove success!');
-                    loadCart();
-                } else {
-                    messege('error', 'Fail to remove!');
-                }
+                    },
+                    function (data, status) {
+                        if (data === "true") {
+                            messege('success', 'Remove success!');
+                            loadCart();
+                        } else {
+                            messege('error', 'Fail to remove!');
+                        }
 
-            });
+                    });
         }
-      });
-    
+    });
+
 }
 
 function messege(action, message) {
@@ -247,4 +247,16 @@ function checkout() {
         document.getElementById('checkout').value = elements;
         $('#checkoutSubmit').click();
     }
+}
+
+function getAllProduct() {
+    const checkboxes = document.querySelectorAll('.product');
+
+    // Loop through the checkboxes and add the value of checked ones to the array
+    checkboxes.forEach(checkbox => {
+        if (checkbox.type === 'checkbox') {
+            checkbox.checked = true;
+        }
+    });
+    getToTal();
 }

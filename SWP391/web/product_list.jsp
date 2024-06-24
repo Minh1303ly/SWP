@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="Ansonika">
-        <title>Allaia | Bootstrap eCommerce Template - ThemeForest</title>
+        <title>Dream</title>
 
         <!-- Favicons-->
         <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -54,23 +54,6 @@
          <!-- Include SweetAlert CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
-        <style>
-            .items {
-                display: flex;
-                flex-wrap: wrap;
-                margin-bottom: 20px;
-            }
-            .item {
-                width: 100px;
-                margin: 10px;
-                padding: 20px;
-                background-color: #f0f0f0;
-                text-align: center;
-            }
-        </style>
-
-
     </head>
 
     <body>

@@ -101,24 +101,33 @@
                                         <c:if test="${cartContact!=null}">
                                             <c:set var="index" value="0"/>
                                             <c:forEach var="element" items="${cartContact}">
-                                            <c:set var="index" value="${index+1}"/>
-                                            <tr>
-                                                <td><c:out value="${index}"/></td>
-                                                <td class="wider-col">${element.product.name}</td>
-                                                <td>${element.product.color}</td>
-                                                <td>${element.product.size}</td>
-                                                <td>${element.product.price}</td>
-                                                <td>${element.quantity}</td>
-                                                <td>${String.format("%.2f",element.product.price*element.quantity)}</td>
-                                            </tr>
-                                            
+                                                <c:set var="index" value="${index+1}"/>
+                                                <tr>
+                                                    <td><c:out value="${index}"/></td>
+                                                    <td class="wider-col">${element.product.name}</td>
+                                                    <td>${element.product.color}</td>
+                                                    <td>${element.product.size}</td>
+                                                    <c:set var="price" value="${element.product.discount.active ? element.product.price * (100 - element.product.discount.discountPercent) / 100 : element.product.price}"/>
+                                                    <td>$${String.format("%.2f",price)}</td>
+                                                    <td>${element.quantity}</td>
+                                                    <td class="subtotal">${String.format("%.2f",price*element.quantity)}</td>
+                                                </tr>                                           
                                             </c:forEach>
+                                            <tr>
+                                                <td></td>
+                                                <td class="wider-col"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>Total</td>
+                                                <td id="total">$34534</td>
+                                            </tr>
                                         </c:if>
+
                                     </tbody>
                                 </table>
-
                                 <div class="row add_top_30 flex-sm-row-reverse cart_actions">
-                                    <div class="col-sm-4 text-end">
+                                    <div class="col-sm-4 text-end">                  
                                         <button type="button" class="btn_1 border border-secondary px-4 py-2 rounded-pill"
                                                 onclick="reDirect('cart')">Change product</button>
                                     </div>
@@ -126,84 +135,81 @@
                             </div>
 
                             <div class="container mt-5">
-                                <form action="contact" method="post">
+                                <form action="contact" method="get">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="fullname">Fullname:</label>
                                             <input type="text" class="form-control" name="fullname" id="fullname"
-                                                   pattern="[A-Za-z ]{3,}" title="Name just include A-Z, a-z and size greater 3!" required>
+                                                   placeholder="Fullname" pattern="[A-Za-z ]{3,}" 
+                                                   title="Name just include A-Z, a-z and size greater 3!" 
+                                                   value="${contact==null?"":contact.first_name} ${contact==null?"":contact.last_name}"
+                                                   required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="email">Email:</label>
                                             <input type="email" class="form-control" id="email" name="email"
-                                                   placeholder="Email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address!" required >
+                                                   placeholder="Email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" 
+                                                   title="Please enter a valid email address!" 
+                                                   value="${contact==null?"":contact.email}" required >
                                         </div>
                                     </div>
                                     <fieldset class="form-group">
                                         <div class="row">
                                             <label class="col-form-label col-sm-2 pt-0">Gender:</label>
-                                            
-                                                <div class="form-check col-2">
-                                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male" checked>
-                                                    <label class="form-check-label" for="male">Male</label>
+
+                                            <div class="form-check col-2">
+                                                <input class="form-check-input" type="radio" name="gender" id="male" value="1" 
+                                                       <c:if test="${contact==null?true:contact.gender?true:false}">checked</c:if>>
+                                                       <label class="form-check-label" for="male">Male</label>
                                                 </div>
                                                 <div class="form-check col-2">
-                                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                                    <input class="form-check-input" type="radio" name="gender" id="female" value="0" 
+                                                    <c:if test="${contact==null?false:contact.gender?false:true}">checked</c:if>>
                                                     <label class="form-check-label" for="female">Female</label>
                                                 </div>
-                                                <div class="form-check col-2">
-                                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other">
-                                                    <label class="form-check-label" for="other">Other</label>
-                                                </div>
-                                            
-                                        </div>
-                                    </fieldset>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="phone">Phone:</label>
-                                            <input type="tel" class="form-control" id="phone" name="phone"
-                                                   placeholder="Phone" pattern="[0]{1}[0-9]{9,10}" title="Please enter a valid phone number!" required>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="addressDetail">Address detail(Optional):</label>
-                                            <input type="text" class="form-control" id="addressDetail" name="addressDetail"
-                                                   placeholder="Apartment, studio, or floor">
+                                            </div>
+                                        </fieldset>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="phone">Phone:</label>
+                                                <input type="tel" class="form-control" id="phone" name="phone"
+                                                       placeholder="Phone" pattern="[0]{1}[0-9]{9,10}" 
+                                                       title="Please enter a valid phone number!" 
+                                                       value="${contact==null?"":contact.telephone}"required>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
                                             <label for="province">Province:</label>
-                                            <select class="form-control" id="province" name="province">
-                                            <option>Select province</option>
+                                            <select class="form-control" id="province" name="province" required>
+                                                <option value="" disabled selected>Select Province</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="district">District:</label>
-                                            <select class="form-control" id="district" name="district">
-                                            <option>Select district</option>
+                                            <select class="form-control" id="district" name="district" required>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="commune">Commune</label>
-                                            <select class="form-control" id="commune" name="commune">
-                                            <option>Select commune</option>
+                                            <select class="form-control" id="commune" name="commune">                        
                                             </select>
                                         </div>
-                                        
+
                                     </div>
                                     <div class="form-group">
                                         <label for="note1">Note:</label>
                                         <textarea class="form-control" id="note1" name="note" rows="3"></textarea>
                                     </div>
                                     <div class="row add_top_30 flex-sm-row-reverse cart_actions">
-                                    <div class="col-sm-4 text-end">
-                                        <button type="submit" class="btn_1 border border-secondary px-4 py-3 rounded-pill"
-                                                >Direct to pay</button>
+                                        <div class="col-sm-4 text-end">
+                                            <button type="submit" class="btn_1 border border-secondary px-4 py-3 rounded-pill"
+                                                    >Direct to pay</button>
+                                        </div>
                                     </div>
-                                </div>
                                 </form>
                             </div> 
-                            
+
                         </div>
                         <!-- /col -->
                     </div>
@@ -220,42 +226,84 @@
         <div id="toTop"></div><!-- Back to top button -->
         <jsp:include page="modal.jsp"/>
         <script>
-            $(document).ready(function() {
-        //Take province
-        $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm',function(data_tinh){	       
-            if(data_tinh.error===0){
-               $.each(data_tinh.data, function (key_tinh,val_tinh) {
-                  $("#province").append('<option value="'+val_tinh.id+'">'+val_tinh.full_name+'</option>');
-               });
-               $("#province").change(function(e){
-                    var idtinh=$(this).val();
-                    //Take district
-                    $.getJSON('https://esgoo.net/api-tinhthanh/2/'+idtinh+'.htm',function(data_quan){	       
-                        if(data_quan.error===0){
-                           $("#district").html('<option value="0">District</option>');  
-                           $("#commune").html('<option value="0">Commune</option>');   
-                           $.each(data_quan.data, function (key_quan,val_quan) {
-                              $("#district").append('<option value="'+val_quan.id+'">'+val_quan.full_name+'</option>');
-                           });
-                           //Take commune 
-                           $("#district").change(function(e){
-                                var idquan=$(this).val();
-                                $.getJSON('https://esgoo.net/api-tinhthanh/3/'+idquan+'.htm',function(data_phuong){	       
-                                    if(data_phuong.error===0){
-                                       $("#commune").html('<option value="0">Commune</option>');   
-                                       $.each(data_phuong.data, function (key_phuong,val_phuong) {
-                                          $("#commune").append('<option value="'+val_phuong.id+'">'+val_phuong.full_name+'</option>');
-                                       });
-                                    }
-                                });
-                           });
-                            
-                        }
-                    });
-               });   
-                
+            getTotalContact();
+            function getAddress() {
+                if (${address.province!=null}) {
+                    document.getElementById('province').value = "${address.province}";
+                    $("#province").change();
+                }
+                if (${address.district!=null}) {
+                    setTimeout(function () {
+                        //your code to be executed after 1 second
+                        document.getElementById('district').value = "${address.district}";
+                        $("#district").change();
+                    }, 500);
+                }
+
+                if (${address.commune!=null}) {
+                    setTimeout(function () {
+                        //your code to be executed after 1 second
+                        document.getElementById('commune').value = "${address.commune}";
+                    }, 1000);
+                }
             }
-        });
-     });	    
+
+            function getTotalContact() {
+                // Select all elements with the class name 'value'
+                const elements = document.getElementsByClassName('subtotal');
+                var total = 0;
+                // Loop through the elements and add their values to the total
+                Array.from(elements).forEach(element => {
+                    var value = parseFloat(element.textContent); // Parse the text content as a float
+                    // alert(value);
+                    if (!isNaN(value)) { // Check if the value is a valid number
+                        total += value; // Double the value and add to the total
+                    }
+                });
+                //  lert(total);
+                // Display the total in the element with id 'total'
+                document.getElementById('total').textContent = "$" + total.toFixed(2);
+            }
+            
+            $(document).ready(function () {
+                //Take province
+                $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
+                    if (data_tinh.error === 0) {
+                        $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                            $("#province").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name_en + '</option>');
+                        });
+                        $("#province").change(function (e) {
+                            var idtinh = $(this).val();
+                            //Take district
+                            $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
+                                if (data_quan.error === 0) {
+                                    $("#district").html('<option value="" disabled selected>Select District</option>');
+                                    $("#commune").html('<option value="" disabled selected>Select Commune</option>');
+                                    $.each(data_quan.data, function (key_quan, val_quan) {
+                                        $("#district").append('<option value="' + val_quan.id + '">' + val_quan.full_name_en + '</option>');
+                                    });
+                                    //Take commune 
+                                    $("#district").change(function (e) {
+                                        var idquan = $(this).val();
+                                        $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
+                                            if (data_phuong.error === 0) {
+                                                $("#commune").html('<option value="" disabled selected>Select Commune</option>');
+                                                $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                                                    $("#commune").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name_en + '</option>');
+                                                });
+                                            }
+                                        });
+                                    });
+
+                                }
+                            });
+                        });
+
+                    }
+                });
+                setTimeout(function () {
+                    getAddress();
+                    }, 1000);
+            });
         </script>
 </html>

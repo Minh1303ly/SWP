@@ -6,6 +6,7 @@ package controller;
 
 import dao.CartItemDAO;
 import dao.ShoppingSessionDAO;
+import dao.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import model.CartItem;
 import model.User;
+import util.Address;
 
 /**
  *
@@ -48,8 +50,8 @@ public class ContactServlet extends HttpServlet {
                 view(request, response);
             } else {
                 switch (request.getParameter("service")) {
-                    case "checkoutProduct" ->
-                        getProduct(request, response);
+                    case "payment" ->
+                        payment(request, response);
                     default ->
                         response.sendRedirect("404.jsp");
                 }
@@ -57,20 +59,27 @@ public class ContactServlet extends HttpServlet {
         }
     }
     
-    public int[] getProduct(HttpServletRequest request, HttpServletResponse response){
+    public int[] getChosenProduct(HttpServletRequest request, HttpServletResponse response){
         productContact = request.getParameter("checkout");
         return Arrays.stream(productContact.split(","))
                     .mapToInt(Integer::parseInt)
                         .toArray();
     }
-        
+    
+    private void payment(HttpServletRequest request, HttpServletResponse response) {
+        //TO DO make shop_order with ramdon sales and status submit
+        // TO DO all product with attribte(productContact) into shop setail
+        // with id_shop_order
+        // Shop_detail add by list<CartIteam> 
+    }    
     
     public void view(HttpServletRequest request, HttpServletResponse response){
-        try {
-            getProduct(request, response);
+        try {      
+            UserDAO userDAO = new UserDAO();
             HttpSession session = request.getSession(true);
             CartItemDAO cartItemDAO = new CartItemDAO();
             ShoppingSessionDAO shoppingSessionDAO = new ShoppingSessionDAO();
+            SubProductServlet.dataForSider(request, response);
             List<CartItem> list;
             //Get user
             User user = (User)session.getAttribute("account");
@@ -84,18 +93,29 @@ public class ContactServlet extends HttpServlet {
                 response.sendRedirect("404.jsp");
                 return;
             }
+            
             //Get chosen list
             request.setAttribute("cartContact",
-                    list.stream().filter(
-                            item -> item.checkExist(
-                                    getProduct(request, response)))
+                    list.stream().filter(item -> 
+                            item.checkExist(getChosenProduct(request, response)))
                             .collect(Collectors.toList()));
+            
+            //Get information recieve
+            if(user!=null){               
+                request.setAttribute("contact",user);
+                request.setAttribute("address",
+                        new Address(
+                                userDAO.getUserById(user.getId())
+                                        .getUserAddress().getAddressLine()));           
+            }          
             RequestDispatcher dispatch = request.getRequestDispatcher("contact.jsp");
             dispatch.forward(request, response);
         } catch (ServletException | IOException ex) {
             Logger.getLogger(ContactServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
     public static void main(String[] args) {
         productContact="15,21";
         
@@ -104,9 +124,7 @@ public class ContactServlet extends HttpServlet {
         }
     }
     
-    private void pay(HttpServletRequest request, HttpServletResponse response) {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

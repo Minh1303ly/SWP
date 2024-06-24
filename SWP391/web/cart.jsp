@@ -156,6 +156,8 @@
                                 <div class="row add_top_30 flex-sm-row-reverse cart_actions">
                                     <div class="col-sm-4 text-end">
                                         <button type="button" class="btn_1 border border-secondary px-4 py-2 rounded-pill" 
+                                                onclick="getAllProduct()">Select All</button>
+                                        <button type="button" class="btn_1 border border-secondary px-4 py-2 rounded-pill" 
                                                 onclick="reDirect('product')">Buy More</button>
                                     </div>
                                 </div>

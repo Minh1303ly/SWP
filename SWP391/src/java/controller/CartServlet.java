@@ -46,9 +46,8 @@ public class CartServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         if (request.getParameter("service") == null) {
-            SubProductServlet productServlet = new SubProductServlet();
             SlidersDAO daoSlider = new SlidersDAO();
-            productServlet.dataForSider(request, response);
+            SubProductServlet.dataForSider(request, response);
             request.setAttribute("slider", daoSlider.getRadom());
             RequestDispatcher dispatch = request.getRequestDispatcher("cart.jsp");
             dispatch.forward(request, response);
@@ -319,7 +318,7 @@ public class CartServlet extends HttpServlet {
             out.println(" <td>" + product.getSize() + "</td>");
             //Price
             price = product.getDiscount().isActive() ? product.getPrice() * (100 - product.getDiscount().getDiscountPercent()) / 100 : product.getPrice();
-            out.println(" <td>" + String.format("%.2f", price) + "</td>");
+            out.println(" <td>$" + String.format("%.2f", price) + "</td>");
             //Quantity
             out.println("<td class=\"wider-col\">");
             out.println("<div class=\"qty-input\">");

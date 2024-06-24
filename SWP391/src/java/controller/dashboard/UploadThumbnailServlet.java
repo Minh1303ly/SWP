@@ -152,19 +152,36 @@ public class UploadThumbnailServlet extends HttpServlet {
             session.setAttribute("messSuccess", "Update successfuly!");
 
             request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
-        }
+        } else {
+            String newFileName = nameFileString + fileExtension;
 
-        String newFileName = nameFileString + fileExtension;
+            // Đường dẫn lưu file
+            String filePath = uploadFilePath + File.separator + newFileName;
+            filePart.write(filePath);
 
-        // Đường dẫn lưu file
-        String filePath = uploadFilePath + File.separator + newFileName;
-        filePart.write(filePath);
+            try {
+                pdb.updateProductThumbnail("img/products/" + newFileName, productName);
+            } catch (NullPointerException e) {
+                session.removeAttribute("messSuccess");
+                session.setAttribute("messError", "Update Failed!");
 
-        try {
-            pdb.updateProductThumbnail("img/products/" + newFileName, productName);
-        } catch (NullPointerException e) {
-            session.removeAttribute("messSuccess");
-            session.setAttribute("messError", "Update Failed!");
+                request.setAttribute("product", product);
+
+                session.setAttribute("categories", categories);
+                session.setAttribute("subCategories", subCategories);
+                session.setAttribute("listProductStatus", listProductStatus);
+                session.setAttribute("listDiscount", listDiscount);
+                session.setAttribute("listSize", listSize);
+                session.setAttribute("listColor", listColor);
+                session.setAttribute("listOneProduct", listOneProduct);
+                session.setAttribute("listBrand", listBrand);
+                session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
+                session.setAttribute("messSuccess", "Update successfuly!");
+
+                request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
+            }
+
+            product = pdb.getProductByName(productName);
 
             request.setAttribute("product", product);
 
@@ -181,23 +198,6 @@ public class UploadThumbnailServlet extends HttpServlet {
 
             request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
         }
-
-        product = pdb.getProductByName(productName);
-
-        request.setAttribute("product", product);
-
-        session.setAttribute("categories", categories);
-        session.setAttribute("subCategories", subCategories);
-        session.setAttribute("listProductStatus", listProductStatus);
-        session.setAttribute("listDiscount", listDiscount);
-        session.setAttribute("listSize", listSize);
-        session.setAttribute("listColor", listColor);
-        session.setAttribute("listOneProduct", listOneProduct);
-        session.setAttribute("listBrand", listBrand);
-        session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
-        session.setAttribute("messSuccess", "Update successfuly!");
-
-        request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
     }
 
 }

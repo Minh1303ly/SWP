@@ -105,7 +105,7 @@
                                         <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.product.color}</td>
                                         <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">${feedback.comment}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            <img  src= alt="Status Image" class="rounded">
+                                            <img  src="https://media.istockphoto.com/id/171224469/photo/canvas-shoes.jpg?b=1&s=612x612&w=0&k=20&c=U9NLTutbuQ_L3HABoaa9Bsb_U3iJYw1QmKCBe0H3KWM=" alt="Status Image" class="rounded">
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-900 break-words whitespace-normal">
                                             <form method="POST" action="feedbackStatus" id="statusChangeForm_${feedback.id}">

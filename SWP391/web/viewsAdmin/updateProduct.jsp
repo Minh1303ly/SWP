@@ -148,7 +148,7 @@
 
                                         <div class="mb-2">
                                             <label for="price" class="font-medium text-sm text-slate-600 dark:text-slate-400">Price</label>
-                                            <input type="number" id="price" name="price" value="${p.price}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
+                                            <input type="number" step="0.01" id="price" name="price" value="${p.price}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
                                         </div>
 
                                         <div class="mb-2">

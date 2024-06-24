@@ -67,17 +67,17 @@
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
-                                    <a href="admin-orders.html"
+                                    <a href="user-list"
                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                        Orders
+                                        Users List
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">
-                                    <a href="admin-order-details.html"
+                                    <a href="dashboard"
                                        class="nav-link  hover:text-primary-500  rounded-md dark:hover:text-primary-500 relative   flex items-center decoration-0 px-3 py-3 group-data-[sidebar=brand]:hover:text-slate-200">
                                         <i class="icofont-dotted-right me-2 text-slate-600 text-[8px] group-data-[sidebar=brand]:text-slate-400"></i>
-                                        Order Details
+                                        Admin Dashboard
                                     </a>
                                 </li>
                                 <li class="nav-item relative block">

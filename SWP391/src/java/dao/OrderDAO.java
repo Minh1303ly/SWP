@@ -118,7 +118,7 @@ public class OrderDAO extends DBContext {
 
     // Phương thức thêm Order
     public void addOrder(Order order) throws SQLException {
-        String query = "INSERT INTO shop_orders (user_id, status_id, email, address, order_total, recipient, recipient_phone, created_at, modified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO shop_orders (user_id, status_id, email, address, order_total, recipient, recipient_phone, created_at, modified_at, sale_id, notes) VALUES (?, ?, ?, ?, ?, ?, ?, getdate(), getdate(), ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, order.getUserId());
             statement.setInt(2, order.getStatusId());
@@ -127,8 +127,10 @@ public class OrderDAO extends DBContext {
             statement.setDouble(5, order.getOrderTotal());
             statement.setString(6, order.getRecipient());
             statement.setString(7, order.getRecipientPhone());
-            statement.setDate(8, new java.sql.Date(order.getCreatedAt().getTime())); // Thiết lập thời gian hiện tại cho created_at
-            statement.setDate(9, new java.sql.Date(order.getModifiedAt().getTime())); // Thiết lập thời gian hiện tại cho modified_at
+            // statement.setDate(8, new java.sql.Date(order.getCreatedAt().getTime())); // Thiết lập thời gian hiện tại cho created_at
+            // statement.setDate(9, new java.sql.Date(order.getModifiedAt().getTime())); // Thiết lập thời gian hiện tại cho modified_at
+            statement.setInt(8, order.getSaleId()>0?order.getSaleId():0);
+            statement.setString(9, order.getNotes()==null?null:order.getNotes());
             statement.executeUpdate();
         }
     }
@@ -281,14 +283,33 @@ public class OrderDAO extends DBContext {
 
         return status;
     }
+    
+    public int getLatestIdShopOrder(){
+        String sql="select max(id) from shop_orders";
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+               return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 
     public static void main(String[] args) {
-        OrderDAO oDAO = new OrderDAO();
         try {
-            System.out.println(oDAO.getOrderDetailsByOrderId(3).get(0).getProduct());
+            OrderDAO oDAO = new OrderDAO();
+            OrderDetail detail = new OrderDetail(5, 10, 5, 45, null, null);
+            oDAO.addOrderDetail(detail);
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
 }

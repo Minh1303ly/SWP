@@ -27,6 +27,20 @@ public class OrderDetail {
     private Product product;
     private User user;
 
+    public OrderDetail() {
+    }
+
+    
+    public OrderDetail(int productId, int shopOrderId, int quantity, double price, Date createdAt, Date modifiedAt) {
+        this.productId = productId;
+        this.shopOrderId = shopOrderId;
+        this.quantity = quantity;
+        this.price = price;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
+    
     public String getImgView() {
         return product.getImg1();
     }

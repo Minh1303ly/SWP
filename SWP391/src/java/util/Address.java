@@ -16,8 +16,8 @@ public class Address {
 
     public Address(String address) {
         String[] location = address.split(",");
-        this.province = location[0];
-        this.district = location[1];
+        this.province = location.length==1?location[0]:null;
+        this.district = location.length==2?location[1]:null;
         this.commune = location.length==3?location[2]:null;
     }
 

@@ -19,7 +19,31 @@ public class Order {
     private String recipientPhone;
     private Date createdAt;
     private Date modifiedAt;
-
+    private int saleId;
+    private String notes;
+    
     private User user;
     private OrderStatus orderStatus;
+
+    public Order() {
+    }
+
+    
+    
+    public Order(int id, int userId, int statusId, String email, String address, double orderTotal, String recipient, String recipientPhone, Date createdAt, Date modifiedAt, User user, OrderStatus orderStatus) {
+        this.id = id;
+        this.userId = userId;
+        this.statusId = statusId;
+        this.email = email;
+        this.address = address;
+        this.orderTotal = orderTotal;
+        this.recipient = recipient;
+        this.recipientPhone = recipientPhone;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.user = user;
+        this.orderStatus = orderStatus;
+    }
+    
+    
 }

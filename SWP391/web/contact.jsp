@@ -182,7 +182,7 @@
                                         <div class="form-group col-md-4">
                                             <label for="province">Province:</label>
                                             <select class="form-control" id="province" name="province" required>
-                                                <option value="" disabled selected>Select Province</option>
+                                                <option value="0" disabled selected>Select Province</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
@@ -202,6 +202,8 @@
                                         <textarea class="form-control" id="note1" name="note" rows="3"></textarea>
                                     </div>
                                     <div class="row add_top_30 flex-sm-row-reverse cart_actions">
+                                        <input type="hidden" id="total_form" name="total" value="">
+                                        <input type="hidden" name="service" value="payment">
                                         <div class="col-sm-4 text-end">
                                             <button type="submit" class="btn_1 border border-secondary px-4 py-3 rounded-pill"
                                                     >Direct to pay</button>
@@ -263,6 +265,7 @@
                 //  lert(total);
                 // Display the total in the element with id 'total'
                 document.getElementById('total').textContent = "$" + total.toFixed(2);
+                document.getElementById('total_form').value = total.toFixed(2);
             }
             
             $(document).ready(function () {
@@ -277,8 +280,8 @@
                             //Take district
                             $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
                                 if (data_quan.error === 0) {
-                                    $("#district").html('<option value="" disabled selected>Select District</option>');
-                                    $("#commune").html('<option value="" disabled selected>Select Commune</option>');
+                                    $("#district").html('<option value="0" disabled selected>Select District</option>');
+                                    $("#commune").html('<option value="0" disabled selected>Select Commune</option>');
                                     $.each(data_quan.data, function (key_quan, val_quan) {
                                         $("#district").append('<option value="' + val_quan.id + '">' + val_quan.full_name_en + '</option>');
                                     });
@@ -287,7 +290,7 @@
                                         var idquan = $(this).val();
                                         $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
                                             if (data_phuong.error === 0) {
-                                                $("#commune").html('<option value="" disabled selected>Select Commune</option>');
+                                                $("#commune").html('<option value="0" disabled selected>Select Commune</option>');
                                                 $.each(data_phuong.data, function (key_phuong, val_phuong) {
                                                     $("#commune").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name_en + '</option>');
                                                 });

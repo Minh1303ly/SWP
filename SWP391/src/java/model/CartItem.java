@@ -42,6 +42,9 @@ public class CartItem {
     }
     
     public boolean checkExist(int[] arr){
+        if(arr==null||arr.length ==0){
+            return false;
+        }             
         for(int a : arr){
             if(a == id){
                 return true;

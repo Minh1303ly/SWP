@@ -16,8 +16,8 @@ public class Address {
 
     public Address(String address) {
         String[] location = address.split(",");
-        this.province = location.length==1?location[0]:null;
-        this.district = location.length==2?location[1]:null;
+        this.province = location.length>=1?location[0]:null;
+        this.district = location.length>=2?location[1]:null;
         this.commune = location.length==3?location[2]:null;
     }
 
@@ -62,9 +62,10 @@ public class Address {
     }
     
     public static void main(String[] args) {
-        String a ="1,2";
+        String a ="36,45,44";
         Address address = new Address(a);
-        System.out.println(address);
-        System.out.println(address.commune==null?"y":"m");
+        System.out.println(address.getProvince());
+        System.out.println(address.getDistrict());
+        System.out.println(address.getCommune());
     }
 }

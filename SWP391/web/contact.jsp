@@ -119,10 +119,10 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td>Total</td>
-                                                <td id="total">$34534</td>
+                                                <td class="text-danger font-weight-bold">Total</td>
+                                                <td id="total" class="text-danger font-weight-bold">$0</td>
                                             </tr>
-                                        </c:if>
+                                        </c:if> 
 
                                     </tbody>
                                 </table>
@@ -142,7 +142,7 @@
                                             <input type="text" class="form-control" name="fullname" id="fullname"
                                                    placeholder="Fullname" pattern="[A-Za-z ]{3,}" 
                                                    title="Name just include A-Z, a-z and size greater 3!" 
-                                                   value="${contact==null?"":contact.first_name} ${contact==null?"":contact.last_name}"
+                                                   value="${contact==null?"":contact.first_name}${contact==null?"":" "}${contact==null?"":contact.last_name}"
                                                    required>
                                         </div>
                                         <div class="form-group col-md-6">
@@ -188,18 +188,21 @@
                                         <div class="form-group col-md-4">
                                             <label for="district">District:</label>
                                             <select class="form-control" id="district" name="district" required>
+                                                <option value="0" disabled selected>Select District</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="commune">Commune</label>
-                                            <select class="form-control" id="commune" name="commune">                        
+                                            <select class="form-control" id="commune" name="commune">
+                                                <option value="0" disabled selected>Select Commune</option>
                                             </select>
                                         </div>
 
                                     </div>
                                     <div class="form-group">
                                         <label for="note1">Note:</label>
-                                        <textarea class="form-control" id="note1" name="note" rows="3"></textarea>
+                                        <textarea class="form-control" id="note1" name="note" 
+                                                  placeholder="Describe notes here..." rows="3"></textarea>
                                     </div>
                                     <div class="row add_top_30 flex-sm-row-reverse cart_actions">
                                         <input type="hidden" id="total_form" name="total" value="">
@@ -227,86 +230,28 @@
 
         <div id="toTop"></div><!-- Back to top button -->
         <jsp:include page="modal.jsp"/>
+        <script src="js/contact.js"></script>
         <script>
-            getTotalContact();
-            function getAddress() {
-                if (${address.province!=null}) {
-                    document.getElementById('province').value = "${address.province}";
-                    $("#province").change();
-                }
-                if (${address.district!=null}) {
-                    setTimeout(function () {
-                        //your code to be executed after 1 second
-                        document.getElementById('district').value = "${address.district}";
-                        $("#district").change();
-                    }, 500);
-                }
-
-                if (${address.commune!=null}) {
-                    setTimeout(function () {
-                        //your code to be executed after 1 second
-                        document.getElementById('commune').value = "${address.commune}";
-                    }, 1000);
-                }
+        getTotalContact();
+        function getAddress() {
+            if (${address.province != null} && !Number.isNaN(${address.province})) {               
+                document.getElementById('province').value = "${address.province}";
+                $("#province").change();
             }
-
-            function getTotalContact() {
-                // Select all elements with the class name 'value'
-                const elements = document.getElementsByClassName('subtotal');
-                var total = 0;
-                // Loop through the elements and add their values to the total
-                Array.from(elements).forEach(element => {
-                    var value = parseFloat(element.textContent); // Parse the text content as a float
-                    // alert(value);
-                    if (!isNaN(value)) { // Check if the value is a valid number
-                        total += value; // Double the value and add to the total
-                    }
-                });
-                //  lert(total);
-                // Display the total in the element with id 'total'
-                document.getElementById('total').textContent = "$" + total.toFixed(2);
-                document.getElementById('total_form').value = total.toFixed(2);
-            }
-            
-            $(document).ready(function () {
-                //Take province
-                $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
-                    if (data_tinh.error === 0) {
-                        $.each(data_tinh.data, function (key_tinh, val_tinh) {
-                            $("#province").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name_en + '</option>');
-                        });
-                        $("#province").change(function (e) {
-                            var idtinh = $(this).val();
-                            //Take district
-                            $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
-                                if (data_quan.error === 0) {
-                                    $("#district").html('<option value="0" disabled selected>Select District</option>');
-                                    $("#commune").html('<option value="0" disabled selected>Select Commune</option>');
-                                    $.each(data_quan.data, function (key_quan, val_quan) {
-                                        $("#district").append('<option value="' + val_quan.id + '">' + val_quan.full_name_en + '</option>');
-                                    });
-                                    //Take commune 
-                                    $("#district").change(function (e) {
-                                        var idquan = $(this).val();
-                                        $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
-                                            if (data_phuong.error === 0) {
-                                                $("#commune").html('<option value="0" disabled selected>Select Commune</option>');
-                                                $.each(data_phuong.data, function (key_phuong, val_phuong) {
-                                                    $("#commune").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name_en + '</option>');
-                                                });
-                                            }
-                                        });
-                                    });
-
-                                }
-                            });
-                        });
-
-                    }
-                });
+            if (${address.district != null} && !Number.isNaN(${address.district})) {
                 setTimeout(function () {
-                    getAddress();
-                    }, 1000);
-            });
+                //your code to be executed after 1 second
+                    document.getElementById('district').value = "${address.district}";
+                            $("#district").change();
+                }, 500);
+            }
+
+            if (${address.commune != null} && !Number.isNaN(${address.commune})) {
+                setTimeout(function () {
+                //your code to be executed after 1 second
+                    document.getElementById('commune').value = "${address.commune}";
+                }, 1000);
+            }
+        }
         </script>
 </html>

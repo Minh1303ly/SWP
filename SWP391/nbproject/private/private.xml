@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/SE1811_SWP391/Project/SWP391/src/java/controller/CartServlet.java</file>
-            <file>file:/D:/Documents/SE1811_SWP391/Project/SWP391/web/cart.jsp</file>
-            <file>file:/D:/Documents/SE1811_SWP391/Project/SWP391/src/java/model/OrderDetail.java</file>
-            <file>file:/D:/Documents/SE1811_SWP391/Project/SWP391/src/java/controller/SubProductServlet.java</file>
-            <file>file:/D:/Documents/SE1811_SWP391/Project/SWP391/src/java/controller/ContactServlet.java</file>
-            <file>file:/D:/Documents/SE1811_SWP391/Project/SWP391/src/java/dao/OrderDAO.java</file>
+            <file>file:/D:/Documents/Semester%205/SWP391/SE1811_SWP391/Project/SWP391/web/contact.jsp</file>
+            <file>file:/D:/Documents/Semester%205/SWP391/SE1811_SWP391/Project/SWP391/src/java/controller/ContactServlet.java</file>
+            <file>file:/D:/Documents/Semester%205/SWP391/SE1811_SWP391/Project/SWP391/web/js/contact.js</file>
         </group>
     </open-files>
 </project-private>

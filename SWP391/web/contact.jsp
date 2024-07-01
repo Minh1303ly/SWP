@@ -135,7 +135,7 @@
                             </div>
 
                             <div class="container mt-5">
-                                <form action="contact" method="get">
+                                <form action="contact" method="get" id="form_contact">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="fullname">Fullname:</label>
@@ -182,19 +182,19 @@
                                         <div class="form-group col-md-4">
                                             <label for="province">Province:</label>
                                             <select class="form-control" id="province" name="province" required>
-                                                <option value="0" disabled selected>Select Province</option>
+                                                <option value="" disabled selected>Select Province</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="district">District:</label>
                                             <select class="form-control" id="district" name="district" required>
-                                                <option value="0" disabled selected>Select District</option>
+                                                
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="commune">Commune</label>
-                                            <select class="form-control" id="commune" name="commune">
-                                                <option value="0" disabled selected>Select Commune</option>
+                                            <select class="form-control" id="commune" name="commune" required>
+                                               
                                             </select>
                                         </div>
 
@@ -206,6 +206,7 @@
                                     </div>
                                     <div class="row add_top_30 flex-sm-row-reverse cart_actions">
                                         <input type="hidden" id="total_form" name="total" value="">
+                                        <input type="hidden" id="address" name="address" value="">
                                         <input type="hidden" name="service" value="payment">
                                         <div class="col-sm-4 text-end">
                                             <button type="submit" class="btn_1 border border-secondary px-4 py-3 rounded-pill"
@@ -252,6 +253,7 @@
                     document.getElementById('commune').value = "${address.commune}";
                 }, 1000);
             }
+            setAddress();
         }
         </script>
 </html>

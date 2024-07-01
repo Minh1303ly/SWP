@@ -85,11 +85,7 @@ public class ContactServlet extends HttpServlet {
             order.setUserId(user == null ? 1 : user.getId());
             order.setStatusId(1);
             order.setEmail(request.getParameter("email"));
-            order.setAddress(
-                    new Address(
-                            request.getParameter("province"),
-                            request.getParameter("district"),
-                            request.getParameter("commune")).toString());
+            order.setAddress( request.getParameter("address"));       
             order.setOrderTotal(Double.parseDouble(
                     request.getParameter("total")));
             order.setRecipient(request.getParameter("fullname"));
@@ -104,7 +100,7 @@ public class ContactServlet extends HttpServlet {
         }
         return null;
     }
-
+    
     public void setShopDetail(HttpServletRequest request,
              HttpServletResponse response, 
              Order order, List<CartItem> list) {

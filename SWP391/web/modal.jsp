@@ -138,7 +138,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="changepassword" method="post">
+            <form action="changepassword2" method="post">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>

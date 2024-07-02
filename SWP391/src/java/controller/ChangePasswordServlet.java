@@ -22,7 +22,7 @@ import util.Encrypt;
  *
  * @author Admin
  */
-@WebServlet(name = "ChangePasswordServlet", urlPatterns = {"/changepassword"})
+@WebServlet(name = "ChangePasswordServlet", urlPatterns = {"/changepassword2"})
 public class ChangePasswordServlet extends HttpServlet {
 
     /**

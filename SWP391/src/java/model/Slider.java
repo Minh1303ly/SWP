@@ -4,10 +4,8 @@
  */
 package model;
 
-/**
- *
- * @author Nhat Anh
- */
+import lombok.Data;
+
 public class Slider {
     private int id;
     private int user_id;
@@ -16,7 +14,17 @@ public class Slider {
     private String image;
     private String backLink;
     private String status;
+    
+    private User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
     public Slider(int id, int user_id, String title, String content, String image, String backLink, String status) {
         this.id = id;
         this.user_id = user_id;
@@ -85,7 +93,6 @@ public class Slider {
     public void setStatus(String status) {
         this.status = status;
     }
-
     @Override
     public String toString() {
         return "Slider{" + "id=" + id + ", user_id=" + user_id + ", title=" + title + ", content=" + content + ", image=" + image + ", backLink=" + backLink + ", status=" + status + '}';

@@ -120,10 +120,12 @@
                                 <!--marketing-->
                                 <c:if test="${sessionScope.account.getRole_id() == 2}">
                                     <div class="dropdown-menu">
-                                        <a href="changepassword" class="btn_1">Change Password</a>
+                                        <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#changePassword" >
+                                            Change Password
+                                        </button>
                                         <ul>
                                             <li>
-                                                <a href="#"><i class="ti-package"></i>MKT Dashboard</a>
+                                                <a href="sliderList"><i class="ti-package"></i>MKT Dashboard</a>
                                             </li>
                                             <li>
                                                 <a href="myProfile"><i class="ti-user"></i>My Profile</a>
@@ -138,7 +140,9 @@
                                 <!--Sale-->
                                 <c:if test="${sessionScope.account.getRole_id() == 3}">
                                     <div class="dropdown-menu">
-                                        <a href="changepassword" class="btn_1">Change Password</a>
+                                        <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#changePassword" >
+                                            Change Password
+                                        </button>
                                         <ul>
                                             <li>
                                                 <a href="#"><i class="ti-package"></i>Sale Dashboard</a>
@@ -156,7 +160,9 @@
                                 <!--Sale manager-->
                                 <c:if test="${sessionScope.account.getRole_id() == 4}">
                                     <div class="dropdown-menu">
-                                        <a href="changepassword" class="btn_1">Change Password</a>
+                                        <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#changePassword" >
+                                            Change Password
+                                        </button>
                                         <ul>
                                             <li>
                                                 <a href="#"><i class="ti-package"></i>Sale Manager Dashboard</a>
@@ -174,7 +180,9 @@
                                 <!--Admin-->
                                 <c:if test="${sessionScope.account.getRole_id() == 5}">
                                     <div class="dropdown-menu">
-                                        <a href="changepassword" class="btn_1">Change Password</a>
+                                        <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#changePassword" >
+                                            Change Password
+                                        </button>
                                         <ul>
                                             <li>
                                                 <a href="#"><i class="ti-package"></i>Admin Dashboard</a>
@@ -189,7 +197,26 @@
                                     </div>
                                 </c:if>
                                 <!--end admin-->
-
+                                <!--Admin-->
+                                <c:if test="${sessionScope.account.getRole_id() == 6}">
+                                    <div class="dropdown-menu">
+                                        <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#changePassword" >
+                                            Change Password
+                                        </button>
+                                        <ul>
+                                            <li>
+                                                <a href="permissions"><i class="ti-package"></i>Permission</a>
+                                            </li>
+                                            <li>
+                                                <a href="myProfile"><i class="ti-user"></i>My Profile</a>
+                                            </li>   
+                                            <li>
+                                                <a href="logout"><i class="ti-help-alt"></i>Log Out</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </c:if>
+                                <!--end admin-->
                             </div>
                             <!-- /dropdown-access-->
                         </li>

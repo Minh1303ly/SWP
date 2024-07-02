@@ -210,7 +210,6 @@
                                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
                                                                         <!--ID-->
                                                                         <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                            <input type="text" class="sortValue" value="${id}" hidden=""/>
                                                                             ${id}
                                                                         </td>
                                                                         <!--Thumbnail-->
@@ -219,12 +218,10 @@
                                                                         </td>
                                                                         <!--Title-->
                                                                         <td class="p-3 text-sm font-medium whitespace-nowrap dark:text-white">
-                                                                            <input type="text" class="sortValue" value="${p.name}" hidden=""/>
                                                                             ${p.name}
                                                                         </td>
                                                                         <!--Category-->
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <input type="text" class="sortValue" value="${p.categoryId}" hidden=""/>
                                                                             <c:forEach var="c" items="${categories}">
                                                                                 <c:if test="${c.id == p.categoryId}">
                                                                                     <a href="#" class="text-brand-500 underline">${c.name}</a>: 
@@ -240,7 +237,6 @@
                                                                         </td>
 
                                                                         <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
-                                                                            <input type="text" class="sortValue" value="${p.price}" hidden=""/>
                                                                             <c:forEach var="d" items="${listDiscount}">
                                                                                 <c:if test="${d.id == p.discountId}">
                                                                                     <span><fmt:formatNumber value="${p.price * (1-d.discountPercent/100)}" maxIntegerDigits="3" maxFractionDigits="2"/> &nbsp;<del class="text-slate-500 font-normal">${p.price}</del></span>
@@ -251,14 +247,12 @@
                                                                         <!--Feature-->
 
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <input type="text" class="sortValue" value="${p.description}" hidden=""/>
                                                                             ${p.description}
                                                                         </td>
 
                                                                         <!--Brand-->
 
                                                                         <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
-                                                                            <input type="text" class="sortValue" value="${p.brandId}" hidden=""/>
                                                                             <c:forEach var="b" items="${listBrand}">
                                                                                 <c:if test="${b.id == p.brandId}">
                                                                                     <span>${b.name}</span>
@@ -267,7 +261,6 @@
                                                                         </td>
                                                                         <!--Status-->
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <input type="text" class="sortValue" value="${p.statusId}" hidden=""/>
                                                                             <c:forEach var="ps" items="${listProductStatus}">
                                                                                 <c:if test="${ps.id == p.statusId}">
                                                                                     <button type="button"  data-fc-autoclose="both" data-fc-type="dropdown" class="px-2 py-1 lg:px-4 bg-transparent  text-primary text-sm  rounded transition hover:bg-primary-500 hover:text-white border border-primary font-medium mb-2">${ps.name} <i class="fas fa-chevron-down ms-1 text-xs self-center"></i></button>

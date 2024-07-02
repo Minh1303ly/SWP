@@ -46,24 +46,9 @@
         <!-- YOUR CUSTOM CSS -->
         <link href="css/custom.css" rel="stylesheet">
 
-        <style>
-            .modal-header {
-                background-color: #007bff;
-            }
-            .modal-footer {
-                background-color: #007bff;
-            }
-            .input-group.invalid input {
-                border-color: #dc3545;
-            }
-            .invalid-feedback {
-                display: none;
-                color: #dc3545;
-            }
-            .input-group.is-invalid .invalid-feedback {
-                display: block;
-            }
-        </style>
+        <script type="text/javascript">
+
+        </script>
 
     </head>
 
@@ -148,7 +133,7 @@
 
                                         <div class="mb-2">
                                             <label for="price" class="font-medium text-sm text-slate-600 dark:text-slate-400">Price</label>
-                                            <input type="number" step="0.01" id="price" name="price" value="${p.price}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
+                                            <input type="number" id="price" name="price" value="${p.price}" class="form-input w-full rounded-md mt-1 border border-slate-300/60 dark:border-slate-700 dark:text-slate-300 bg-transparent px-3 py-2 focus:outline-none focus:ring-0 placeholder:text-slate-400/70 placeholder:font-normal placeholder:text-sm hover:border-slate-400 focus:border-brand-500 dark:focus:border-brand-500  dark:hover:border-slate-700" placeholder="Title" required>
                                         </div>
 
                                         <div class="mb-2">
@@ -313,59 +298,53 @@
             </div><!--end page-wrapper-->
         </div><!--end /div-->
 
-        <!-- Add Thumbnail Modal -->
+        <!--Add Thumbnail-->
         <div class="modal fade" id="addThumbnail" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
+                    <!--Modal Header--> 
+                    <div class="modal-header" style="background-color: #007bff">
                         <h5 class="modal-title" id="editProductModalLabel">Add Thumbnail</h5>
                     </div>
-                    <!-- Modal Body -->
-                    <form id="thumbnailForm" action="uploadThumbnail" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                    <!--Modal Body--> 
+                    <form action="uploadThumbnail" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                         <input type="hidden" name="title" value="${p.name}">
-                        <div class="w-full h-56 mx-auto mb-4 modal-body">
-                            <div class="input-group">
-                                <input style="border: 1px solid #ced4da; width: 418px; margin-bottom: 5px" type="file" id="thumbnailFile" class="filepond h-56" name="file" accept="image/png, image/jpeg, image/gif" required>
-                                <div class="invalid-feedback">
-                                    Please select a file to upload.
-                                </div>
+                        
+                        <div class="w-full h-56 mx-auto  mb-4 modal-body">
+                            <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" type="file" id="file" class="filepond h-56 input-group" name="file" accept="image/png, image/jpeg, image/gif" required>
+                        </div>
+                        <!--Modal Footer--> 
+                            <div class="modal-footer" style="background-color: #007bff">
+                                <button type="submit" class="btn btn-primary" >Upload</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeAddModal()"">Cancel</button>
                             </div>
-                        </div>
-                        <!-- Modal Footer -->
-                        <div style="padding-top: 15px" class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Upload</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeAddModal()">Cancel</button>
-                        </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        <!-- Add Image Modal -->
+                        
+        <!--Add Image-->
         <div class="modal fade" id="addImage" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editProductModalLabel">Add Image</h5>
+                    <!--Modal Header--> 
+                    <div class="modal-header" style="background-color: #007bff">
+                        <h5 class="modal-title" id="editProductModalLabel">Add Thumbnail</h5>
                     </div>
-                    <!-- Modal Body -->
-                    <form id="imageForm" action="uploadImage" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                    <!--Modal Body--> 
+                    <form action="uploadImage" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
                         <input type="hidden" name="title" value="${p.name}">
-                        <div class="w-full h-56 mx-auto mb-4 modal-body">
-                            <div class="input-group">
-                                <input style="border: 1px solid #ced4da; width: 418px; margin-bottom: 5px" type="file" id="imageFile" class="filepond h-56" name="file" accept="image/png, image/jpeg, image/gif" required>
-                                <div class="invalid-feedback">
-                                    Please select a file to upload.
-                                </div>
+                        
+                        <div class="w-full h-56 mx-auto  mb-4 modal-body">
+                            <input style="border: 1px solid #ced4da; height: 38px; border-radius: 5px" type="file" id="file" class="filepond h-56 input-group" name="file" accept="image/png, image/jpeg, image/gif" required>
+                        </div>
+                        <!--Modal Footer--> 
+                            <div class="modal-footer" style="background-color: #007bff">
+                                <button type="submit" class="btn btn-primary" >Upload</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeAddModal()"">Cancel</button>
                             </div>
-                        </div>
-                        <!-- Modal Footer -->
-                        <div style="padding-top: 15px" class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Upload</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeAddModal()">Cancel</button>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -404,38 +383,41 @@
         <script src="${pageContext.request.contextPath}/viewsAdmin/assets/js/app.js"></script>
         <!-- JAVASCRIPTS -->
         <script>
-                                document.getElementById('thumbnailForm').addEventListener('submit', function (event) {
-                                    const fileInput = document.getElementById('thumbnailFile');
-                                    if (!fileInput.files.length) {
-                                        event.preventDefault();
-                                        fileInput.classList.add('is-invalid');
-                                        fileInput.parentElement.classList.add('is-invalid');
-                                    } else {
-                                        fileInput.classList.remove('is-invalid');
-                                        fileInput.parentElement.classList.remove('is-invalid');
-                                    }
-                                });
+                            FilePond.registerPlugin(FilePondPluginImagePreview);
+                            // Get a reference to the file input element
+                            const inputElement = document.querySelectorAll('input[type="file"]');
 
-                                document.getElementById('imageForm').addEventListener('submit', function (event) {
-                                    const fileInput = document.getElementById('imageFile');
-                                    if (!fileInput.files.length) {
-                                        event.preventDefault();
-                                        fileInput.classList.add('is-invalid');
-                                        fileInput.parentElement.classList.add('is-invalid');
-                                    } else {
-                                        fileInput.classList.remove('is-invalid');
-                                        fileInput.parentElement.classList.remove('is-invalid');
-                                    }
-                                });
+                            // Create a FilePond instance
+                            inputElement.forEach(element => {
+                                const pond = FilePond.create(element);
+                            });
 
-                                function closeAddModal() {
-                                    const thumbnailFileInput = document.getElementById('thumbnailFile');
-                                    const imageFileInput = document.getElementById('imageFile');
-                                    thumbnailFileInput.classList.remove('is-invalid');
-                                    thumbnailFileInput.parentElement.classList.remove('is-invalid');
-                                    imageFileInput.classList.remove('is-invalid');
-                                    imageFileInput.parentElement.classList.remove('is-invalid');
-                                }
+
+                            var elem = document.querySelector('input[name="foo"]');
+                            new Datepicker(elem, {
+                                // ...options
+                            });
+                            new Selectr('#sizing', {
+                                taggable: true,
+                                tagSeperators: [",", "|"]
+                            });
+
+                            // Example starter JavaScript for disabling form submissions if there are invalid fields
+                            (function () {
+                                'use strict';
+                                window.addEventListener('load', function () {
+                                    var forms = document.getElementsByClassName('needs-validation');
+                                    var validation = Array.prototype.filter.call(forms, function (form) {
+                                        form.addEventListener('submit', function (event) {
+                                            if (form.checkValidity() === false) {
+                                                event.preventDefault();
+                                                event.stopPropagation();
+                                            }
+                                            form.classList.add('was-validated');
+                                        }, false);
+                                    });
+                                }, false);
+                            })();
         </script>
     </body>
 </html>

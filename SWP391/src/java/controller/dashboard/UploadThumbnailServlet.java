@@ -127,14 +127,19 @@ public class UploadThumbnailServlet extends HttpServlet {
 
         // Nhận file từ form
         Part filePart = request.getPart("file");
-
+        
         String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         String fileExtension = originalFileName.substring(originalFileName.lastIndexOf('.')).toLowerCase();
+        
+        String newFileName = nameFileString + fileExtension;
 
-        // Kiểm tra loại tệp tin 
-        if (!fileExtension.equals(".png")
-                && !fileExtension.equals(".jpg")
-                && !fileExtension.equals("gif")) {
+        // Đường dẫn lưu file
+        String filePath = uploadFilePath + File.separator + newFileName;
+        filePart.write(filePath);
+
+        try {
+            pdb.updateProductThumbnail("img/products/" + newFileName, productName);
+        } catch (NullPointerException e) {
             session.removeAttribute("messSuccess");
             session.setAttribute("messError", "Update Failed!");
 
@@ -152,52 +157,24 @@ public class UploadThumbnailServlet extends HttpServlet {
             session.setAttribute("messSuccess", "Update successfuly!");
 
             request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
-        } else {
-            String newFileName = nameFileString + fileExtension;
-
-            // Đường dẫn lưu file
-            String filePath = uploadFilePath + File.separator + newFileName;
-            filePart.write(filePath);
-
-            try {
-                pdb.updateProductThumbnail("img/products/" + newFileName, productName);
-            } catch (NullPointerException e) {
-                session.removeAttribute("messSuccess");
-                session.setAttribute("messError", "Update Failed!");
-
-                request.setAttribute("product", product);
-
-                session.setAttribute("categories", categories);
-                session.setAttribute("subCategories", subCategories);
-                session.setAttribute("listProductStatus", listProductStatus);
-                session.setAttribute("listDiscount", listDiscount);
-                session.setAttribute("listSize", listSize);
-                session.setAttribute("listColor", listColor);
-                session.setAttribute("listOneProduct", listOneProduct);
-                session.setAttribute("listBrand", listBrand);
-                session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
-                session.setAttribute("messSuccess", "Update successfuly!");
-
-                request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
-            }
-
-            product = pdb.getProductByName(productName);
-
-            request.setAttribute("product", product);
-
-            session.setAttribute("categories", categories);
-            session.setAttribute("subCategories", subCategories);
-            session.setAttribute("listProductStatus", listProductStatus);
-            session.setAttribute("listDiscount", listDiscount);
-            session.setAttribute("listSize", listSize);
-            session.setAttribute("listColor", listColor);
-            session.setAttribute("listOneProduct", listOneProduct);
-            session.setAttribute("listBrand", listBrand);
-            session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
-            session.setAttribute("messSuccess", "Update successfuly!");
-
-            request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
         }
+
+        product = pdb.getProductByName(productName);
+        
+        request.setAttribute("product", product);
+
+        session.setAttribute("categories", categories);
+        session.setAttribute("subCategories", subCategories);
+        session.setAttribute("listProductStatus", listProductStatus);
+        session.setAttribute("listDiscount", listDiscount);
+        session.setAttribute("listSize", listSize);
+        session.setAttribute("listColor", listColor);
+        session.setAttribute("listOneProduct", listOneProduct);
+        session.setAttribute("listBrand", listBrand);
+        session.setAttribute("listSubCategoryOfProduct", listSubCategoryOfProduct);
+        session.setAttribute("messSuccess", "Update successfuly!");
+
+        request.getRequestDispatcher("viewsAdmin/updateProduct.jsp").forward(request, response);
     }
 
 }

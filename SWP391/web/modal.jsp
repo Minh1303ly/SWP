@@ -138,7 +138,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="changepassword2" method="post">
+            <form action="changepassword" method="post">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
@@ -409,4 +409,4 @@
 <!-- COMMON SCRIPTS -->
 <script src="js/common_scripts.min.js"></script>
 <script src="js/main.js"></script>
-<script src="js/vaidate.js"></script>
+<script src="js/validate.js"></script>

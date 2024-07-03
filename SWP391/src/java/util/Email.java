@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package util;
 
 import java.util.Date;
@@ -164,7 +167,7 @@ public class Email {
             msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
 
             // Người gửi
-            msg.setFrom();
+//            msg.setFrom(from);
 
             // Người nhận
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));

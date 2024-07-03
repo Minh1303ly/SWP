@@ -81,6 +81,7 @@
                                                 <option value="pending" <c:if test="${status == 'pending'}">selected</c:if>>Pending</option>
                                                 <option value="approved"<c:if test="${status == 'approved'}">selected</c:if>>Approved</option>
                                                 <option value="rejected"<c:if test="${status == 'rejected'}">selected</c:if>>Rejected</option>
+                                                    <!-- Add more status options as needed -->
                                                 </select>
                                             </div>
 
@@ -139,7 +140,7 @@
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Product Name
                                                                     </th>
-                                                                    <th scope="col" data-sort="rating" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                    <th scope="col" data-sort="number" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                         Rate
                                                                     </th>
                                                                     <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">

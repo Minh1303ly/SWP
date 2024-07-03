@@ -26,6 +26,8 @@ public class Product {
     private String img2;
     private Date createdAt;
     private Date modifiedAt;
+    
+    private Ratting ratting;
 
     private Brand brand;
     private Discount discount;
@@ -34,6 +36,22 @@ public class Product {
 
     public Product() {
     }
+
+    public Product(String name, float price, String img1, String img2, Ratting rating, Discount discount, ProductStatus productStatus) {
+        this.name = name;
+        this.price = price;
+        this.img1 = img1;
+        this.img2 = img2;
+        this.ratting = rating;
+        this.discount = discount;
+        this.productStatus = productStatus;
+    }
+    
+    
+    
+
+
+    
     
     
 

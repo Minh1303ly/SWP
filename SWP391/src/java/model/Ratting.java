@@ -22,4 +22,12 @@ public class Ratting {
 
     private User user;
     private Product product;
+
+    public Ratting() {
+    }
+    
+    public Ratting(int ratting) {
+        this.ratting = ratting;
+    }
+
 }

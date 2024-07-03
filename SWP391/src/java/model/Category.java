@@ -18,8 +18,14 @@ public class Category {
     private Date modifiedAt;
 
     private CategoryStatus categoryStatus;
+    private SubCategories subCategories;
 
     public Category() {
+    }
+
+    
+    public Category(String name) {
+        this.name = name;
     }
     
     

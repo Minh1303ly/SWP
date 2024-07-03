@@ -59,6 +59,37 @@ public class BlogDAO extends DBContext {
     }
 
 
+    public List<Blog> getBlogBetweenDay(String from, String to) {
+        List<Blog> list = new ArrayList<>();
+        String query = "SELECT id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at FROM blogs where created_at BETWEEN ? AND ? OR modified_at BETWEEN ? AND ?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setString(1, from);
+            st.setString(3, from);
+            st.setString(2, to);
+            st.setString(4, to);
+            try (ResultSet resultSet = st.executeQuery()) {
+                while (resultSet.next()) {
+                    Blog p = new Blog();
+                    p.setId(resultSet.getInt("id"));
+                    p.setUser_id(resultSet.getInt("user_id"));
+                    p.setBlog_cate_id(resultSet.getInt("blog_cate_id"));
+                    p.setTitle(resultSet.getString("title"));
+                    p.setContext(resultSet.getString("content"));
+                    p.setCover_img(resultSet.getString("cover_img"));
+                    p.setMain_img(resultSet.getString("main_img"));
+                    p.setDescription(resultSet.getString("description"));
+                    p.setCreated_at(resultSet.getDate("created_at"));
+                    p.setModified_at(resultSet.getDate("modified_at"));
+                    BlogCategories blogCategory = new BlogCategoriesDAO().getByID(resultSet.getInt("blog_cate_id"));
+                    p.setBlogCategory(blogCategory);
+                    list.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 //    public List<Blog> getAllBlog(int currentPage, int limitSize) {
 //        List<Blog> list = new ArrayList<>();
 //        // Edit query with other entity
@@ -233,7 +264,7 @@ public class BlogDAO extends DBContext {
     public List<Blog> getHotBlog(){
         List<Blog> list = new LinkedList<>();
         try {
-            String sql = "select top (4) * from blogs order by created_at desc";
+            String sql = "select top (2) * from blogs order by created_at desc";
             PreparedStatement pre = connection.prepareStatement(sql,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
@@ -251,6 +282,34 @@ public class BlogDAO extends DBContext {
         }       
         return list;
     }
+    
+    /**
+     * Use to get top 3 blog order by created_at descending
+     * 
+     * @return list blog order by created_at descending
+     */
+    public List<Blog> getLatestBlog(){
+        List<Blog> list = new LinkedList<>();
+        try {
+            String sql = "select top (3) * from blogs order by created_at desc";
+            PreparedStatement pre = connection.prepareStatement(sql,
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {                
+                list.add(new Blog(rs.getInt(1), rs.getInt(2),
+                        rs.getInt(3), rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6), rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9), rs.getDate(10)));
+            }          
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+        return list;
+    }
+
 
     public static void main(String[] args) {
         BlogDAO bDAO = new BlogDAO();

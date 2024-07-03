@@ -44,22 +44,16 @@ function sortTable(table, columnIndex, dataType, ascending) {
     });
 }
 
-
 //function sortTable(table, columnIndex, dataType, ascending) {
 //    let rows = Array.from(table.getElementsByTagName("tr"));
 //    let isNumber = dataType === "number";
 //    rows.shift(); // Loại bỏ hàng tiêu đề
-//    
+//
 //    rows.sort(function (rowA, rowB) {
 //        let cellA = rowA.getElementsByTagName("td")[columnIndex].innerText;
 //        let cellB = rowB.getElementsByTagName("td")[columnIndex].innerText;
-//
-//        if (dataType === "number") {
+//        if (isNumber) {
 //            return (parseInt(cellA) - parseInt(cellB)) * (ascending ? 1 : -1);
-//        } else if (dataType === "rating") {
-//            return compareRatings(cellA, cellB) * (ascending ? 1 : -1);
-//        } else if (dataType === "status") {
-//            return compareStatus(cellA, cellB) * (ascending ? 1 : -1);
 //        } else {
 //            return cellA.localeCompare(cellB) * (ascending ? 1 : -1);
 //        }
@@ -68,17 +62,6 @@ function sortTable(table, columnIndex, dataType, ascending) {
 //    rows.forEach(function (row) {
 //        tbody.appendChild(row);
 //    });
-//}
-//
-//function compareRatings(a, b) {
-//    let ratingA = a.split('⭐').length - 1;
-//    let ratingB = b.split('⭐').length - 1;
-//    return ratingA - ratingB;
-//}
-//
-//function compareStatus(a, b) {
-//    let statuses = ["Pending", "Approved", "Rejected"];
-//    return statuses.indexOf(a) - statuses.indexOf(b);
 //}
 
 function updateSortIndicator(th) {

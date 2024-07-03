@@ -252,10 +252,10 @@
 
 
 <!-- Add cart Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div style="margin-top: 100px" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="modalForm">
+            <form id="modalFormAddToCart">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -265,7 +265,9 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="colorSelect">Color</label>
-                        <select id="colorSelect" name="color" class="form-control"></select>
+                        <select id="colorSelect" name="color" class="form-control">
+
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="sizeSelect">Size</label>
@@ -277,13 +279,66 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveChanges">Add to cart</button>
+                    <button type="button" class="btn btn-primary" id="AddToCart">Add to cart</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!-- Add cart Modal -->
+
+
+
+
+<script>
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var name = button.data('name'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('.modal-title').text(name); // Set the title
+        modal.find('#productName').val(name); // Set the hidden input value
+        var search = name.replaceAll(" ","_");
+        $(document).ready(function () {
+            $("#colorSelect").load("product?service=getAllColorByName&name="+search);
+            $("#sizeSelect").load("product?service=getAllSizeByName&name="+search);
+
+        });
+
+    });
+
+
+    $('#AddToCart').on('click', function () {
+        var form = document.getElementById('modalFormAddToCart');
+        var formData = new FormData(form);
+        $.post("/SWP391/cart?service=addCartByAjax",
+                {
+                    name: formData.get("name"),
+                    color: formData.get("color"),
+                    size: formData.get("size")
+
+                },
+                function (data, status) {
+                    //      alert("Data: " + data + "\nStatus: " + status);
+                    $('#exampleModal').click();
+                    if(data==="hello"){
+                        Swal.fire({
+                            title: 'Add success!',
+                            text: 'Click \'continue\' to explore',
+                            icon: 'success',
+                            confirmButtonText: 'Continue'
+                        });
+                    }
+                    else{
+                        Swal.fire({
+                            title: 'Add fail!',
+                            text: 'Click \'continue\' to explore',
+                            icon: 'error',
+                            confirmButtonText: 'Continue'
+                        });
+                    }
+                });
+    });
+    </script>
 <!-- My Profile -->
 
 <div class="modal fade" id="myProfile" tabindex="-1" role="dialog" aria-labelledby="myProfileModalLabel" aria-hidden="true">
@@ -314,7 +369,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email" class="form-label">Email:</label>
-                            <input type="email" id="email" readonly="" disabled="" name="email" class="form-control" value="${profile.email}" required>
+                            <input type="email" id="email" readonly="" disabled="" name="email" class="form-control" value="${profile.email}" required/>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -351,60 +406,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script>
-                            $('#exampleModal').on('show.bs.modal', function (event) {
-                                var button = $(event.relatedTarget); // Button that triggered the modal
-                                var name = button.data('name'); // Extract info from data-* attributes
-                                var colors = button.data('colors');
-                                var sizes = button.data('sizes');
-
-                                //            colors = JSON.parse(colors);
-                                //            sizes = JSON.parse(sizes);
-
-                                var modal = $(this);
-                                modal.find('.modal-title').text(name); // Set the title
-                                modal.find('#productName').val(name); // Set the hidden input value
-
-                                // Populate the color dropdown
-                                var colorSelect = modal.find('#colorSelect');
-                                colorSelect.empty();
-                                colors.forEach(function (color) {
-                                    colorSelect.append('<option value="' + color + '">' + color + '</option>');
-                                });
-
-                                // Populate the size dropdown
-                                var sizeSelect = modal.find('#sizeSelect');
-                                sizeSelect.empty();
-                                sizes.forEach(function (size) {
-                                    sizeSelect.append('<option value="' + size + '">' + size + '</option>');
-                                });
-                            });
-
-                            $('#saveChanges').on('click', function () {
-                                var formData = $('#modalForm').serialize();
-
-                                $.ajax({
-                                    url: '/SWP391/product?service=addCartByAjax',
-                                    type: 'POST',
-                                    data: formData,
-                                    success: function (response) {
-                                        // Handle the response from the servlet
-                                        $('#exampleModal').click();
-                                        //                    showAlert("Success");
-                                        $('#successMessage').show().delay(3000).fadeOut();
-                                        // Ensure the modal button is re-enabled
-                                        //                    $('[data-target="#exampleModal"]').prop('disabled', false);
-                                    },
-                                    error: function (xhr, status, error) {
-                                        // Handle the error
-                                        console.error(error);
-                                    }
-                                });
-                            });
-
-
-</script>
-
 <!-- COMMON SCRIPTS -->
 <script src="js/common_scripts.min.js"></script>
 <script src="js/main.js"></script>
+<script src="js/vaidate.js"></script>

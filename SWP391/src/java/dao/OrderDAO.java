@@ -40,6 +40,7 @@ public class OrderDAO extends DBContext {
                     order = new Order();
                     order.setId(resultSet.getInt("id"));
                     order.setUserId(resultSet.getInt("user_id"));
+                    order.setSaleId(resultSet.getInt("sale_id"));
                     order.setStatusId(resultSet.getInt("status_id"));
                     order.setEmail(resultSet.getString("email"));
                     order.setAddress(resultSet.getString("address"));
@@ -48,9 +49,10 @@ public class OrderDAO extends DBContext {
                     order.setRecipientPhone(resultSet.getString("recipient_phone"));
                     order.setCreatedAt(resultSet.getTimestamp("created_at"));
                     order.setModifiedAt(resultSet.getTimestamp("modified_at"));
-
+                    order.setNote(resultSet.getNString("notes"));
                     order.setOrderStatus(getStatusById(order.getStatusId()));
                     order.setUser(new UserDAO().getUserById(order.getUserId()));
+                    order.setSale(new UserDAO().getUserById(order.getSaleId()));
                 }
             }
         }
@@ -62,6 +64,17 @@ public class OrderDAO extends DBContext {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, newStatusId);
             statement.setInt(2, orderId);
+            statement.executeUpdate();
+        }
+    }
+    
+     public void updateOrder(int orderId, int newStatusId, int saleId, String note) throws SQLException {
+        String query = "UPDATE shop_orders SET status_id = ?, notes = ?, sale_id = ?, modified_at = CURRENT_TIMESTAMP WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, newStatusId);
+            statement.setNString(2, note);
+            statement.setInt(3, saleId);
+            statement.setInt(4, orderId);
             statement.executeUpdate();
         }
     }
@@ -180,7 +193,6 @@ public class OrderDAO extends DBContext {
                     orderDetail.setPrice(resultSet.getDouble("price"));
                     orderDetail.setCreatedAt(resultSet.getTimestamp("created_at"));
                     orderDetail.setModifiedAt(resultSet.getTimestamp("modified_at"));
-
                     orderDetail.setProduct(new ProductDAO().getProductById(orderDetail.getProductId()));
                     orderDetails.add(orderDetail);
                 }

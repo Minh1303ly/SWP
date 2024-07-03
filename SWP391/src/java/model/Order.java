@@ -12,14 +12,17 @@ public class Order {
     private int id;
     private int userId;
     private int statusId;
+    private int saleId;
     private String email;
     private String address;
     private double orderTotal;
     private String recipient;
     private String recipientPhone;
+    private String note;
     private Date createdAt;
     private Date modifiedAt;
 
     private User user;
+    private User sale;
     private OrderStatus orderStatus;
 }

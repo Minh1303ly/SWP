@@ -1,50 +1,76 @@
-$('#exampleModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var name = button.data('name'); // Extract info from data-* attributes
-            var colors = button.data('colors');
-            var sizes = button.data('sizes');
-            
-//            colors = JSON.parse(colors);
-//            sizes = JSON.parse(sizes);
-            
-            var modal = $(this);
-            modal.find('.modal-title').text(name); // Set the title
-            modal.find('#productName').val(name); // Set the hidden input value
+document.addEventListener('DOMContentLoaded', function () {
+                const ITEMS_PER_PAGE = 5;
+                const TOTAL_PAGINATION_BUTTONS = 50;
+                const MAX_VISIBLE_PAGINATION_BUTTONS = 5;
+                const itemsContainer = document.getElementById('containerProduct');
+                const paginationContainer = document.getElementById('pagination');
+                let currentPage = 0;
 
-            // Populate the color dropdown
-            var colorSelect = modal.find('#colorSelect');
-            colorSelect.empty();
-            colors.forEach(function(color) {
-                colorSelect.append('<option value="' + color + '">' + color + '</option>');
-            });
-
-            // Populate the size dropdown
-            var sizeSelect = modal.find('#sizeSelect');
-            sizeSelect.empty();
-            sizes.forEach(function(size) {
-                sizeSelect.append('<option value="' + size + '">' + size + '</option>');
-            });
-        });
-
-        $('#saveChanges').on('click', function() {
-            var formData = $('#modalForm').serialize();
-
-            $.ajax({
-                url: '/SWP391/product?service=addCart',
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    // Handle the response from the servlet
-                    $('#exampleModal').click();
-//                    showAlert("Success");
-                    $('#successMessage').show().delay(3000).fadeOut();
-                    // Ensure the modal button is re-enabled
-//                    $('[data-target="#exampleModal"]').prop('disabled', false);
-                },
-                error: function(xhr, status, error) {
-                    // Handle the error
-                    console.error(error);
+                function getItemsForPage(pageNumber) {
+                    const start = pageNumber * ITEMS_PER_PAGE;
+                    const end = Math.min(start + ITEMS_PER_PAGE, TOTAL_PAGINATION_BUTTONS);
                 }
+
+                function updateItems() {
+                    $.get("/SWP391/pagination",
+                            {
+                                pagination: currentPage + 1
+
+                            },
+                            function (data, status) {
+//                                alert(currentPage + 1);
+                                $('#containerProduct').html(data);
+                                $('#toTop').click();
+
+                                //      document.getElementById('#div1').innerHTML=data;
+                            });
+                }
+
+                function updatePagination() {
+                    paginationContainer.innerHTML = '';
+                    const totalPages = Math.ceil(TOTAL_PAGINATION_BUTTONS / ITEMS_PER_PAGE);
+                    const startPage = Math.max(0, Math.min(currentPage - Math.floor(MAX_VISIBLE_PAGINATION_BUTTONS / 2), totalPages - MAX_VISIBLE_PAGINATION_BUTTONS));
+                    const endPage = Math.min(totalPages, startPage + MAX_VISIBLE_PAGINATION_BUTTONS);
+
+                    if (currentPage > 0) {
+                        paginationContainer.appendChild(createButton('<<', 0));
+                        paginationContainer.appendChild(createButton('<', currentPage - 1));
+                    }
+
+                    for (let i = startPage; i < endPage; i++) {
+                        paginationContainer.appendChild(createButton(i + 1, i));
+                    }
+
+                    if (currentPage < totalPages - 1) {
+                        paginationContainer.appendChild(createButton('>', currentPage + 1));
+                        paginationContainer.appendChild(createButton('>>', totalPages - 1));
+                    }
+                }
+
+                function createButton(text, pageIndex) {
+                    const li = document.createElement('li');
+                    const button = document.createElement('a');
+                    button.textContent = text;
+//			button.disabled = pageIndex === currentPage;
+                    if (pageIndex === currentPage) {
+                        button.classList.add('active');
+                        button.classList.add('btn_1');
+//                           button.style.color='white';
+                        button.style.backgroundColor = "#FFC107";
+                    }
+                    let index = parseInt(pageIndex)+ 1;
+                    button.href = "#" + index;
+                    button.addEventListener('click', function () {
+                        currentPage = pageIndex;
+                        updateItems();
+                        updatePagination();
+                    });
+                    li.appendChild(button);
+                    return li;
+                }
+
+                // Initialize the pagination
+                updateItems();
+                updatePagination();
             });
-        });
         

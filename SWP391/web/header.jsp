@@ -140,7 +140,7 @@
                                         <a href="changepassword" class="btn_1">Change Password</a>
                                         <ul>
                                             <li>
-                                                <a href="#"><i class="ti-package"></i>MKT Dashboard</a>
+                                                <a href="sliderList"><i class="ti-package"></i>MKT Dashboard</a>
                                             </li>
                                             <li>
                                                 <a href="myProfile"><i class="ti-user"></i>My Profile</a>

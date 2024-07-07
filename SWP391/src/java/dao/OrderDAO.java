@@ -394,6 +394,7 @@ public class OrderDAO extends DBContext {
             }
 
             try (ResultSet resultSet = statement.executeQuery()) {
+                System.out.println(query);
                 while (resultSet.next()) {
                     Order order = new Order();
                     order.setId(resultSet.getInt("id"));
@@ -418,7 +419,7 @@ public class OrderDAO extends DBContext {
     public static void main(String[] args) {
         OrderDAO oDAO = new OrderDAO();
         try {
-            System.out.println(oDAO.getOrdersSale(2, null, null));
+            System.out.println(oDAO.getOrdersSale(12, "2000-05-01", "2030-05-01"));
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

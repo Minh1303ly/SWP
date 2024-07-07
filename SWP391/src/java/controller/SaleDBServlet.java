@@ -29,6 +29,7 @@ public class SaleDBServlet extends HttpServlet {
         request.setAttribute("listSale", udao.getAllUserWithParam(0, null, null, 3));
 
         int saleId = request.getParameter("saleId") != null ? Integer.parseInt(request.getParameter("saleId")) : 0;
+        request.setAttribute("saleId", saleId);
         String fromDate = request.getParameter("fromDate");
         String toDate = request.getParameter("toDate");
 
@@ -48,8 +49,8 @@ public class SaleDBServlet extends HttpServlet {
             request.setAttribute("totalOrders", orders.size());
             request.setAttribute("orders", orders);
             request.setAttribute("successRate", rates.get("successRate"));
-            request.setAttribute("success", (int) (orders.size() * (double) rates.get("successRate") / 100));
-            request.setAttribute("failed", (int) (orders.size() - orders.size() * (double) rates.get("successRate") / 100));
+            request.setAttribute("successCount", rates.get("sucess"));
+            request.setAttribute("failedCount", rates.get("failed"));
             request.setAttribute("failureRate", rates.get("failureRate"));
             request.setAttribute("totalRevenue", rates.get("totalRevenue"));
         } catch (Exception ex) {
@@ -66,19 +67,34 @@ public class SaleDBServlet extends HttpServlet {
         double totalRevenue = 0.0;
 
         for (Order order : orders) {
-            if (order.getStatusId() == 1) { // Assuming status_id 1 means successful
+            if (order.getStatusId() == 2) { // Assuming status_id 2 means successful
                 successfulOrders++;
-                totalRevenue += order.getOrderTotal(); // Assuming getPrice() returns the price of the order
+                totalRevenue += order.getOrderTotal(); // Assuming getOrderTotal() returns the total of the order
             } else {
                 failedOrders++;
             }
         }
 
         Map<String, Object> rates = new HashMap<>();
-        rates.put("successRate", totalOrders > 0 ? (double) successfulOrders / totalOrders * 100 : 0);
-        rates.put("failureRate", totalOrders > 0 ? (double) failedOrders / totalOrders * 100 : 0);
+
+        // Correct calculation and formatting of rates
+        String failedRate = totalOrders > 0 
+            ? String.format("%.2f", (double) failedOrders / totalOrders * 100) 
+            : "0.00";
+
+        String successRate = totalOrders > 0 
+            ? String.format("%.2f", (double) successfulOrders / totalOrders * 100) 
+            : "0.00";
+
+        rates.put("successRate", successRate);
+        rates.put("failureRate", failedRate);
         rates.put("totalRevenue", totalRevenue);
+        rates.put("successfulOrders", successfulOrders);
+        rates.put("failedOrders", failedOrders);
+        rates.put("sucess", successfulOrders);
+        rates.put("failed", failedOrders);
 
         return rates;
     }
+
 }

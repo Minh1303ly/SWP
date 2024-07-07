@@ -112,23 +112,23 @@
                                                         Order Date                           
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-8 xl:col-span-8 text-end self-center text-white">
-                                                        ${order.createdAt}
+                                                        ${order.createdAt.toString()}
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 text-white py-3">
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-4 text-white">
-                                                        ${order.orderTotal}                   
+                                                       Total               
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-8 xl:col-span-8 text-end self-center text-white">
-                                                        $626.00
+                                                        ${order.orderTotal}         
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 text-white py-3">
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-4 text-white">
-                                                        Sale Name                           
+                                                        Sale Name                  
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-8 xl:col-span-8 text-end self-center text-white">
-                                                        $626.00
+                                                        ${order.getSale().first_name} ${order.getSale().last_name}
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 text-white py-3">
@@ -155,7 +155,7 @@
                                                         Full Name                             
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-4 text-end self-center">
-                                                        ${order.getUser().first_name} ${order.getUser().last_name}
+                                                        ${order.getRecipient()}
                                                     </div>
                                                 </div>
 
@@ -172,7 +172,7 @@
                                                         Email                             
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-4 text-end self-center overflow-hidden">
-                                                        ${order.getUser().email}
+                                                        ${order.getEmail()}
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 text-white py-3">
@@ -180,7 +180,7 @@
                                                         Phone Number                              
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-8 xl:col-span-8 text-end self-center text-white">
-                                                        ${order.getUser().telephone}
+                                                        ${order.getRecipientPhone()}
                                                     </div>
                                                 </div>
                                                 <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 text-white py-3">
@@ -188,7 +188,7 @@
                                                         Address                    
                                                     </div>
                                                     <div class="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-8 xl:col-span-8 text-end self-center text-white">
-                                                        ${order.getUser().getUserAddress().addressLine},${order.getUser().getUserAddress().city}, ${order.getUser().getUserAddress().country}
+                                                        ${order.getAddress()}
                                                     </div>
                                                 </div>
 
@@ -255,7 +255,7 @@
                                                                     <strong>${o.price}</strong>
                                                                 </td>
                                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                    <strong>${o.modifiedAt}</strong>
+                                                                    <strong>${o.modifiedAt.toString()}</strong>
                                                                 </td>
                                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                     <c:if test="${order.getOrderStatus().name ==  'Success'}">
@@ -313,7 +313,9 @@
                                         <select name="sale" id="sale" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                             <option value="">Select Saler</option>
                                         <c:forEach items="${users}" var="u">
-                                            <option value="${u.id}" <c:if test="${order.saleId == u.id}">selected</c:if>>${u.last_name}</option>
+                                            <c:if test="${u.role_id == 3}">
+                                                <option value="${u.id}" <c:if test="${order.saleId == u.id}">selected</c:if>>${u.last_name}</option>
+                                            </c:if>
                                         </c:forEach>
 
                                         <!-- Add more status options as needed -->

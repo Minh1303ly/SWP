@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth group" data-sidebar="brand" dir="ltr">
@@ -17,6 +18,10 @@
         <link rel="stylesheet" href="viewsAdmin/assets/libs/icofont/icofont.min.css">
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
         <script>
             function submitForm(id) {
                 document.getElementById("statusChangeForm-" + id).submit();
@@ -64,7 +69,28 @@
                 </div><!--end container-->
 
                 <div class="xl:w-full  min-h-[calc(100vh-138px)] relative pb-14"> 
-                    
+                    <form action="saleDB">
+                        <label for="urls" class="block mb-2">Select URLs:</label>
+                        <select name="saleId" id="urls" class="border p-2 w-full mb-4" multiple="multiple">
+                            <c:forEach var="url" items="${listSale}">
+                                <option value="${url.id}" ${saleId  == url.id ? 'Selected' : ''}>${url.getFullname()}</option>
+                            </c:forEach>
+                        </select>
+                        <!-- From Date Filter -->
+                        <div class="md:col-span-2">
+                            <label for="productname" class="block text-sm font-medium text-gray-700">Form</label>
+                            <input type="date" name="fromDate" value="${fromDate}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+
+                        <!-- To Date Filter -->
+                        <div class="md:col-span-2">
+                            <label for="name" class="block text-sm font-medium text-gray-700">To</label>
+                            <input type="date" name="toDate" value="${toDate}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-6 xl:col-span-8 text-end self-center">
+                            <button class="px-4 py-1 font-medium text-white-50 bg-blue  transition">Filter</button>
+                        </div>
+                    </form>
                     <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">  
                         <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-3 xl:col-span-3">
                             <div class="bg-white shadow-sm dark:shadow-slate-700/10 dark:bg-gray-900  rounded-md w-full relative mb-4">
@@ -72,7 +98,7 @@
                                     <div class="flex justify-between xl:gap-x-2 items-cente">
                                         <div class="self-center"> 
                                             <p class="text-gray-800 font-semibold dark:text-slate-400 text-lg uppercase">Total orders</p>                           
-                                            <h3 class="my-4 font-semibold text-[30px] dark:text-slate-200">14253</h3>                                                
+                                            <h3 class="my-4 font-semibold text-[30px] dark:text-slate-200">${totalOrders}</h3>                                                
                                         </div>                                       
                                         <div class="self-center">                                                
                                             <i data-lucide="shopping-cart" class=" h-16 w-16 stroke-primary-500/30"></i>
@@ -96,14 +122,14 @@
                                 <div class="flex-auto p-4">
                                     <div class="flex justify-between xl:gap-x-2 items-cente">
                                         <div class="self-center"> 
-                                            <p class="text-gray-800 font-semibold dark:text-slate-400 uppercase">New customers</p>                           
-                                            <h3 class="my-4 font-semibold text-[30px] dark:text-slate-200">532</h3>                                              
+                                            <p class="text-gray-800 font-semibold dark:text-slate-400 uppercase">Failed</p>                           
+                                            <h3 class="my-4 font-semibold text-[30px] dark:text-slate-200">${failedCount}</h3>                                              
                                         </div>                                       
                                         <div class="self-center">                                                
                                             <i data-lucide="users" class=" h-16 w-16 stroke-green/30"></i>
                                         </div>                                            
                                     </div>
-                                    <p class="truncate text-slate-400"><span class="text-red-500"><i class="mdi mdi-trending-down"></i>0.6%</span> Bounce Rate Weekly</p>
+                                    <p class="truncate text-slate-400"><span class="text-red-500"><i class="mdi mdi-trending-down"></i>${failureRate}%</span> Rate Failed</p>
                                 </div><!--end card-body-->   
                                 <div class="flex-auto p-0 overflow-hidden"> 
                                     <div class="flex mb-0 h-full">
@@ -121,14 +147,14 @@
                                 <div class="flex-auto p-4">
                                     <div class="flex justify-between xl:gap-x-2 items-cente">
                                         <div class="self-center"> 
-                                            <p class="text-gray-800 font-semibold dark:text-slate-400 uppercase">Top coupons</p>                           
-                                            <h3 class="my-4 font-semibold text-[30px] dark:text-slate-200">78%</h3>                                                
+                                            <p class="text-gray-800 font-semibold dark:text-slate-400 uppercase">Success</p>                           
+                                            <h3 class="my-4 font-semibold text-[30px] dark:text-slate-200">${successCount}</h3>                                                
                                         </div>                                       
                                         <div class="self-center">                                                
                                             <i data-lucide="gem" class=" h-16 w-16 stroke-yellow-500/30"></i>
                                         </div>                                            
                                     </div>
-                                    <p class="truncate text-slate-400"><span class="text-green-500"><i class="mdi mdi-trending-up"></i>1.5%</span> Weekly Avg.Sessions</p>        
+                                    <p class="truncate text-slate-400"><span class="text-green-500"><i class="mdi mdi-trending-up"></i>${successRate}%</span> AVG Success</p>        
                                 </div><!--end card-body-->  
                                 <div class="flex-auto p-0 overflow-hidden"> 
                                     <div class="grid grid-cols-12">
@@ -152,7 +178,7 @@
                                     <div class="flex justify-between xl:gap-x-2 items-cente">
                                         <div class="self-center"> 
                                             <p class="text-gray-300 font-semibold dark:text-slate-400 uppercase">Total Revenue</p>                           
-                                            <h3 class="my-4 font-semibold text-[30px] text-slate-200">$85000</h3>                                                
+                                            <h3 class="my-4 font-semibold text-[30px] text-slate-200">$${totalRevenue}</h3>                                                
                                         </div>                                       
                                         <div class="self-center">                                                
                                             <i data-lucide="dollar-sign" class=" h-16 w-16 stroke-[#2ecee1]/30"></i>
@@ -162,7 +188,7 @@
                                 </div><!--end card-body-->
                                 <div class="flex-auto p-4 pt-0 -mt-1">
                                     <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4">
-                                        
+
                                         <div class="col-span-12 sm:col-span-6 md:col-span-6 lg:col-span-6 xl:col-span-3">
                                             <img src="assets/images/widgets/wallet.png" alt="" class="w-full h-auto">                                    
                                         </div>
@@ -188,7 +214,7 @@
                                             <h4 class="font-medium flex-1 self-center mb-2 md:mb-0 dark:text-slate-400 text-xl">A Guide to Analyze and Optimize Your Online Business</h4>
                                         </div><!--end col--> 
                                     </div><!--end grid-->
-                                    
+
                                     <div class="border-b border-dashed border-slate-300 dark:border-slate-700/40 my-3"></div>
                                     <div class="grid grid-cols-12 gap-4 mb-8">
                                         <div class="col-span-12 sm:col-span-6">
@@ -223,18 +249,18 @@
                                             <!-- Dropdown menu -->
                                             <div class="right-auto md:right-0 hidden z-10 w-28 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                                                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-                                                <li>
-                                                    <a href="#" class="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Last Week</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Last Month</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">This Year</a>  
-                                                </li>
+                                                    <li>
+                                                        <a href="#" class="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Today</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Last Week</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">Last Month</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-white">This Year</a>  
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -245,8 +271,8 @@
                                 </div><!--end card-body-->                          
                             </div> <!--end inner-grid-->                                                                                                  
                         </div><!--end col-->
-                        
-                        
+
+
                     </div> <!--end grid-->
                     <div class="grid grid-cols-12 sm:grid-cols-12 md:grid-cols-12 lg:grid-cols-12 xl:grid-cols-12 gap-4 mb-4">                         
                         <div class="col-span-12 sm:col-span-12  md:col-span-12 lg:col-span-6 xl:col-span-6 ">
@@ -285,7 +311,7 @@
                                                             50
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                           <span class="text-red-500">$70</span>
+                                                            <span class="text-red-500">$70</span>
                                                         </td>
                                                         <td class="p-3 text-base text-gray-700 whitespace-nowrap dark:text-gray-400">
                                                             <span class="font-semibold">$15,000</span>
@@ -300,7 +326,7 @@
                                                             25
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                           <span class="text-slate-100">-</span>
+                                                            <span class="text-slate-100">-</span>
                                                         </td>
                                                         <td class="p-3 text-base text-gray-700 whitespace-nowrap dark:text-gray-400">
                                                             <span class="font-semibold">$15,000</span>
@@ -315,7 +341,7 @@
                                                             65
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                           <span class="text-red-500">$115</span>
+                                                            <span class="text-red-500">$115</span>
                                                         </td>
                                                         <td class="p-3 text-base text-gray-700 whitespace-nowrap dark:text-gray-400">
                                                             <span class="font-semibold">$35,000</span>
@@ -330,7 +356,7 @@
                                                             20
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                           <span class="text-slate-500">-</span>
+                                                            <span class="text-slate-500">-</span>
                                                         </td>
                                                         <td class="p-3 text-base text-gray-700 whitespace-nowrap dark:text-gray-400">
                                                             <span class="font-semibold">$8,500</span>
@@ -345,7 +371,7 @@
                                                             20
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                           <span class="text-slate-500">-</span>
+                                                            <span class="text-slate-500">-</span>
                                                         </td>
                                                         <td class="p-3 text-base text-gray-700 whitespace-nowrap dark:text-gray-400">
                                                             <span class="font-semibold">$8,500</span>
@@ -360,7 +386,7 @@
                                                             40
                                                         </td>
                                                         <td class="p-3 text-base text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                           <span class="text-red-500">$60</span>
+                                                            <span class="text-red-500">$60</span>
                                                         </td>
                                                         <td class="p-3 text-base text-gray-700 whitespace-nowrap dark:text-gray-400">
                                                             <span class="font-semibold">$12,000</span>
@@ -509,37 +535,46 @@
                     <!-- footer -->
                     <div class="absolute bottom-0 -left-4 -right-4 block print:hidden border-t p-4 h-[52px] dark:border-slate-700/40">
                         <div class="container">
-                          <!-- Footer Start -->
-                          <footer
-                            class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
-                          >
-                            &copy;
-                            <script>
-                              var year = new Date();document.write(year.getFullYear());
-                            </script>
-                            Robotech
-                            <span class="float-right hidden text-slate-600 dark:text-slate-400 md:inline-block"
-                              >Crafted with <i class="ti ti-heart text-red-500"></i> by
-                              Mannatthemes</span
-                            >
-                          </footer>
-                          <!-- end Footer -->
+                            <!-- Footer Start -->
+                            <footer
+                                class="footer bg-transparent  text-center  font-medium text-slate-600 dark:text-slate-400 md:text-left "
+                                >
+                                &copy;
+                                <script>
+                                    var year = new Date();
+                                    document.write(year.getFullYear());
+                                </script>
+                                Robotech
+                                <span class="float-right hidden text-slate-600 dark:text-slate-400 md:inline-block"
+                                      >Crafted with <i class="ti ti-heart text-red-500"></i> by
+                                    Mannatthemes</span
+                                >
+                            </footer>
+                            <!-- end Footer -->
                         </div>
-                      </div>
-  
-  
+                    </div>
+
+
                 </div><!--end container-->
             </div><!--end /div-->
         </div>
-            <!-- JAVASCRIPTS -->
-            <!-- <div class="menu-overlay"></div> -->
-            <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>
-            <script src="viewsAdmin/assets/libs/simplebar/simplebar.min.js"></script>
-            <script src="viewsAdmin/assets/libs/flatpickr/flatpickr.min.js"></script>
-            <script src="viewsAdmin/assets/libs/@frostui/tailwindcss/frostui.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#urls').select2({
+                    placeholder: "Select Sale",
+                    allowClear: true,
+                    width: '100%' // Ensures the select2 dropdown width matches the original select element
+                });
+            });
+        </script>
+        <!-- JAVASCRIPTS -->
+        <!-- <div class="menu-overlay"></div> -->
+        <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>
+        <script src="viewsAdmin/assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="viewsAdmin/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="viewsAdmin/assets/libs/@frostui/tailwindcss/frostui.js"></script>
 
-            <script src="viewsAdmin/assets/libs/apexcharts/apexcharts.min.js"></script>
-            <script src="viewsAdmin/assets/js/pages/analytics-index.init.js"></script>
-            <script src="viewsAdmin/assets/js/app.js"></script>
-            <!-- JAVASCRIPTS -->
- 
+        <script src="viewsAdmin/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="viewsAdmin/assets/js/pages/analytics-index.init.js"></script>
+        <script src="viewsAdmin/assets/js/app.js"></script>
+        <!-- JAVASCRIPTS -->

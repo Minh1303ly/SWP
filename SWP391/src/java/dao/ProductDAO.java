@@ -273,7 +273,8 @@ public class ProductDAO extends DBContext {
         List<String> list = new LinkedList<>();
         String sql = "SELECT distinct color FROM Products";
         try (PreparedStatement pre = connection.prepareStatement(sql,
-                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = pre.executeQuery()) {
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
+                ResultSet rs = pre.executeQuery()) {
             while (rs.next()) {
                 list.add(rs.getString(1));
             }
@@ -748,6 +749,87 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
+    
+    // Priduct with status not off
+    public Product getProductDetailForCart(String name, String color, int size){
+        String sql = """
+        SELECT products.id
+                       ,products.name
+                       ,products.color
+                       ,products.size
+                       ,products.price
+                       ,products.quantity
+                       ,discount_percent
+                       ,discounts.active
+                       ,product_status.name
+                       FROM [dbo].[products]
+                       FULL OUTER JOIN product_status on products.status_id = product_status.id
+                       FULL OUTER JOIN discounts on discounts.id = products.discount_id 
+                       where lower(product_status.name) not like 'off'
+                       and products.name like ?
+                       and products.color like ?
+                       and products.size = ?
+                         """;
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);  
+            pre.setString(1, name);
+            pre.setString(2,  color);
+            pre.setInt(3, size);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+                return new Product(rs.getInt(1), rs.getString(2), 
+                        rs.getInt(6), rs.getFloat(5),
+                        rs.getString(4), rs.getString(3), 
+                        new Discount(rs.getInt(7), rs.getBoolean(8)),
+                        new ProductStatus(rs.getString(9)));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+     // Priduct with status not off
+    public Product getInforProductById(int id){
+        String sql = """
+        SELECT products.id
+                       ,products.name
+                       ,products.color
+                       ,products.size
+                       ,products.price
+                       ,products.quantity
+                       ,discount_percent
+                       ,discounts.active
+                       ,product_status.name
+                       FROM [dbo].[products]
+                       FULL OUTER JOIN product_status on products.status_id = product_status.id
+                       FULL OUTER JOIN discounts on discounts.id = products.discount_id 
+                       where products.id = ?
+                         """;
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);  
+            pre.setInt(1, id);
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()){
+                return new Product(rs.getInt(1), rs.getString(2), 
+                        rs.getInt(6), rs.getFloat(5),
+                        rs.getString(4), rs.getString(3), 
+                        new Discount(rs.getInt(7), rs.getBoolean(8)),
+                        new ProductStatus(rs.getString(9)));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         ProductDAO productDAO = new ProductDAO();
@@ -757,11 +839,12 @@ public class ProductDAO extends DBContext {
         Filter filter = new Filter("viewByFilter",
                 null, null, null, null, brand,
                 null);
-        List<Product> ls = productDAO.getProductByFilter(filter, 0, 50);
-        ls.forEach(a -> {
-            System.out.println(a.getName());
-        });
-        System.out.println(productDAO.getTotalProduct());
+//        List<Product> ls = productDAO.getProductByFilter(filter, 0, 50);
+//        ls.forEach(a -> {
+//            System.out.println(a.getName());
+//        });
+        Product po = productDAO.getProductDetailForCart("Boat Shoes", "White", 39);
+        System.out.println(po.toString());
 
     }
 

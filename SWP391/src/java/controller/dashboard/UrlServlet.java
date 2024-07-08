@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Url;
 
@@ -101,12 +102,19 @@ public class UrlServlet extends HttpServlet {
 
     private void insertUrl(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String urlPath = request.getParameter("url");
         boolean access = Boolean.parseBoolean(request.getParameter("access"));
         Url newUrl = new Url();
         newUrl.setUrl(urlPath);
         newUrl.setAccess(access);
-        urlDAO.createUrl(newUrl);
+        if(urlDAO.countUrls(urlPath) >0){
+            session.setAttribute("messError", "Add Failed");
+            response.sendRedirect("url");
+        }else{
+            urlDAO.createUrl(newUrl);
+        }
+        session.setAttribute("messSuccess", "Add successfuly!");
         response.sendRedirect("url");
     }
 
@@ -121,6 +129,7 @@ public class UrlServlet extends HttpServlet {
 
     private void updateUrl(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         int id = Integer.parseInt(request.getParameter("id"));
         String urlPath = request.getParameter("url");
         boolean access = Boolean.parseBoolean(request.getParameter("access"));
@@ -128,7 +137,14 @@ public class UrlServlet extends HttpServlet {
         url.setId(id);
         url.setUrl(urlPath);
         url.setAccess(access);
-        urlDAO.updateUrl(url);
+        if(urlDAO.countUrls(urlPath) >0 && !urlDAO.getUrlById(id).getUrl().equalsIgnoreCase(urlPath)){
+            session.setAttribute("messError", "Update Failed");
+            response.sendRedirect("url");
+        }else{
+            urlDAO.updateUrl(url);
+        }
+        session.setAttribute("messSuccess", "Update successfuly!");
+        
         response.sendRedirect("url");
     }
 
@@ -136,6 +152,10 @@ public class UrlServlet extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         urlDAO.deleteUrl(id);
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("messSuccess", "Delete successfuly!");
+        
         response.sendRedirect("url");
     }
 }

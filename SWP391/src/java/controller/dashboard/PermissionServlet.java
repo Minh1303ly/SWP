@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Roles;
 import model.Url;
@@ -38,6 +39,7 @@ public class PermissionServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String action = request.getParameter("action");
         if (action == null) {
             action = "view";
@@ -48,6 +50,7 @@ public class PermissionServlet extends HttpServlet {
                 break;
             case "delete":
                 delete(request, response);
+                session.setAttribute("messSuccess", "Delete successfuly!");
                 break;
             default:
                 viewPermissions(request, response);
@@ -57,6 +60,7 @@ public class PermissionServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String action = request.getParameter("action");
         if (action == null) {
             action = "view";
@@ -106,6 +110,7 @@ public class PermissionServlet extends HttpServlet {
             int roleId = Integer.parseInt(request.getParameter("roleId"));
             int urlId = Integer.parseInt(request.getParameter("urlId"));
             permissionDAO.delete(roleId, urlId);
+            
             response.sendRedirect("permissions");
 
         } catch (Exception e) {
@@ -115,13 +120,21 @@ public class PermissionServlet extends HttpServlet {
     }
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
         try {
             int roleId = Integer.parseInt(request.getParameter("roleId"));
             String[] urlId_raw = request.getParameterValues("urlId");
+            
             if (urlId_raw != null) {
                 for (String url : urlId_raw) {
                     int urlId = Integer.parseInt(url);
-                    permissionDAO.insertPermission(roleId, urlId, "Add Role: " + roleId);
+                    
+                    if(permissionDAO.getById(roleId, urlId) == null){
+                        permissionDAO.insertPermission(roleId, urlId, "Add Role: " + roleId);
+                    }else{
+                        session.setAttribute("messError", "Add Failed!");
+                        response.sendRedirect("permissions");
+                    }
                 }
             }
             response.sendRedirect("permissions");

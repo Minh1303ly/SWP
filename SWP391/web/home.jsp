@@ -220,15 +220,21 @@
                                     <a href="product?service=detail&name=${element.name}">
                                         <h3>${element.name}</h3>
                                     </a>
-                                    <div class="price_box">
-                                        <c:if test="${element.discount.active}">                                              
-                                            <span class="new_price">$${String.format("%.2f", element.price*(100-element.discount.discountPercent)/100)}</span>
-                                            <span class="old_price">$${element.price}</span>
+                                        <c:if test="${element.productStatus.name ne 'off'}">
+                                            <div class="price_box">
+                                                <c:if test="${element.discount.active}">                                              
+                                                    <span class="new_price">$${String.format("%.2f", element.price*(100-element.discount.discountPercent)/100)}</span>
+                                                    <span class="old_price">$${element.price}</span>
+                                                </c:if>
+                                                <c:if test="${!element.discount.active}">                                              
+                                                    <span class="new_price">$${element.price}</span>                                                
+                                                </c:if>     
+                                            </div>
                                         </c:if>
-                                        <c:if test="${!element.discount.active}">                                              
-                                            <span class="new_price">$${element.price}</span>                                                
-                                        </c:if>     
-                                    </div>
+                                        <c:if test="${element.productStatus.name eq 'off'}">
+                                            <p>Cant buy this product </p>
+                                        </c:if>
+                                    
                                     <ul>
                                         <li>                               
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 

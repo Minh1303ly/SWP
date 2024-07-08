@@ -26,6 +26,11 @@
             function submitForm(id) {
                 document.getElementById("statusChangeForm-" + id).submit();
             }
+            function doDelete(urlId, roleId) {
+                if (confirm("Are You Sure To Permission With ID = " + urlId)) {
+                    window.location = "permissions?action=delete&urlId=" + urlId + "&roleId=" + roleId;
+                }
+            }
         </script>
     </head>
 
@@ -158,7 +163,7 @@
 
                                                     <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                         <a href="url?action=edit&id=${url.id}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                        <a href="permissions?action=delete&urlId=${url.id}&roleId=${selectedRoleId}"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
+                                                        <a href="#" onclick="doDelete('${url.id}', '${selectedRoleId}')"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

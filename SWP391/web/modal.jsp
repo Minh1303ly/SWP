@@ -19,12 +19,12 @@
             <div class="form-group">
                 <label>Email</label>
                 <input type="email" class="form-control" name="email" id="email">
-                <i class="ti-email"></i>
+                <i class="ti-email" style="margin-top: 10px"></i>
             </div>
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password" id="password" value="">
-                <i class="ti-lock"></i>
+                <i class="ti-lock" style="margin-top: 10px"></i>
             </div>
             <div class="clearfix add_bottom_15">
                 <div class="checkboxes float-start">
@@ -310,7 +310,7 @@
     $('#AddToCart').on('click', function () {
         var form = document.getElementById('modalFormAddToCart');
         var formData = new FormData(form);
-        $.post("/SWP391/cart?service=addCartByAjax",
+        $.post("/SWP391/cart?service=addCart",
                 {
                     name: formData.get("name"),
                     color: formData.get("color"),
@@ -320,7 +320,7 @@
                 function (data, status) {
                     //      alert("Data: " + data + "\nStatus: " + status);
                     $('#exampleModal').click();
-                    if(data==="hello"){
+                    if(data==="true"){
                         Swal.fire({
                             title: 'Add success!',
                             text: 'Click \'continue\' to explore',
@@ -331,7 +331,7 @@
                     else{
                         Swal.fire({
                             title: 'Add fail!',
-                            text: 'Click \'continue\' to explore',
+                            text: data,
                             icon: 'error',
                             confirmButtonText: 'Continue'
                         });
@@ -409,4 +409,4 @@
 <!-- COMMON SCRIPTS -->
 <script src="js/common_scripts.min.js"></script>
 <script src="js/main.js"></script>
-<script src="js/vaidate.js"></script>
+<script src="js/validate.js"></script>

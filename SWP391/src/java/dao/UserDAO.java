@@ -7,13 +7,15 @@ package dao;
 import context.DBContext;
 
 import context.DBContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import model.*;
@@ -488,6 +490,30 @@ public class UserDAO extends DBContext {
             // Handle the exception
         }
         return userStatus;
+    }
+    
+    public int getRamdomIdSales(){
+        String sql="""
+                    select users.id
+                     from users
+                     full outer join roles
+                     on users.role_id = roles.id
+                     where roles.name like 'Sale' """;
+        List<Integer> ls = new LinkedList<>();
+        try {
+            PreparedStatement pre = connection.prepareStatement(
+                    sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                ls.add(rs.getInt(1));
+            }
+            return ls.get((int)(Math.random() * (ls.size()-1) + 1));
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
     public static void main(String[] args) {

@@ -25,6 +25,11 @@
             function submitForm(id) {
                 document.getElementById("statusChangeForm-" + id).submit();
             }
+            function doDelete(urlId) {
+                if (confirm("Are You Sure To URL With ID = " + urlId)) {
+                    window.location = "url?action=delete&id=" + urlId;
+                }
+            }
         </script>
     </head>
 
@@ -133,7 +138,7 @@
 
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                             <a href="url?action=edit&id=${url.id}"><i class="icofont-ui-edit text-lg text-gray-500 dark:text-gray-400"></i></a>
-                                                                            <a href="url?action=delete&id=${url.id}"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
+                                                                            <a href="#" onclick="doDelete('${url.id}')"><i class="icofont-ui-delete text-lg text-red-500 dark:text-red-400"></i></a>
                                                                         </td>
                                                                     </tr>
                                                                 </c:forEach>

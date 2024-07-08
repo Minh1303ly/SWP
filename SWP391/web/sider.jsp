@@ -124,7 +124,7 @@
                 Filter
             </button>
             <input type="hidden"  name="service" value="viewByFilter">
-            <a style="margin-left: 10px" href="product" class="btn_1 gray border border-secondary px-3 py-2 rounded-pill">Reset</a>
+            <a href="product" class="btn_1 gray border border-secondary px-3 py-2 rounded-pill">Reset</a>
         </div>
     </form>
 </div>

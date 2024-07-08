@@ -110,12 +110,18 @@ public class PaginationProductList extends HttpServlet {
                 //End Name, description
 
                 //Price
-                if (a.getDiscount().isActive()) {
-                    out.println("<span class=\"new_price\">$" + String.format("%.2f", a.getPrice() * (100 - a.getDiscount().getDiscountPercent()) / 100) + "</span>");
-                    out.println("<span class=\"old_price\">$" + a.getPrice() + "</span>");
-                } else {
-                    out.println("<span class=\"new_price\">$" + a.getPrice() + "</span>");
+                if(!a.getProductStatus().getName().equalsIgnoreCase("off")){
+                    if (a.getDiscount().isActive()) {
+                        out.println("<span class=\"new_price\">$" + String.format("%.2f", a.getPrice() * (100 - a.getDiscount().getDiscountPercent()) / 100) + "</span>");
+                        out.println("<span class=\"old_price\">$" + a.getPrice() + "</span>");
+                    } else {
+                        out.println("<span class=\"new_price\">$" + a.getPrice() + "</span>");
+                    }
                 }
+                else{
+                     out.println("<p>Cant buy this product </p>");
+                }
+                
                 //End Price
 
                 //Add to cart

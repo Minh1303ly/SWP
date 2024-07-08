@@ -60,7 +60,7 @@ public class SubProductServlet extends HttpServlet {
                 case "viewByFilter" ->
                     viewByFilter(request, response);
                 default ->
-                    response.sendRedirect("404.html");
+                    response.sendRedirect("404.jsp");
             }
         }
     }
@@ -187,7 +187,7 @@ public class SubProductServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      */
-    public void dataForSider(HttpServletRequest request, HttpServletResponse response) {
+    public static void dataForSider(HttpServletRequest request, HttpServletResponse response) {
         ProductDAO productDAO = new ProductDAO();
         BrandDAO dAOBrands = new BrandDAO();
         CategoryDAO dAOCategories = new CategoryDAO();

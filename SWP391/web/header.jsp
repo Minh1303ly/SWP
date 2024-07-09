@@ -125,7 +125,7 @@
                                         </button>
                                         <ul>
                                             <li>
-                                                <a href="sliderList"><i class="ti-package"></i>MKT Dashboard</a>
+                                                <a href="MKTDB"><i class="ti-package"></i>MKT Dashboard</a>
                                             </li>
                                             <li>
                                                 <a href="myProfile"><i class="ti-user"></i>My Profile</a>
@@ -145,7 +145,7 @@
                                         </button>
                                         <ul>
                                             <li>
-                                                <a href="#"><i class="ti-package"></i>Sale Dashboard</a>
+                                                <a href="saleDB"><i class="ti-package"></i>Sale Dashboard</a>
                                             </li>
                                             <li>
                                                 <a href="myProfile"><i class="ti-user"></i>My Profile</a>
@@ -165,7 +165,7 @@
                                         </button>
                                         <ul>
                                             <li>
-                                                <a href="#"><i class="ti-package"></i>Sale Manager Dashboard</a>
+                                                <a href="saleDB"><i class="ti-package"></i>Sale Manager Dashboard</a>
                                             </li>
                                             <li>
                                                 <a href="myProfile"><i class="ti-user"></i>My Profile</a>
@@ -185,7 +185,7 @@
                                         </button>
                                         <ul>
                                             <li>
-                                                <a href="#"><i class="ti-package"></i>Admin Dashboard</a>
+                                                <a href="dashboard"><i class="ti-package"></i>Admin Dashboard</a>
                                             </li>
                                             <li>
                                                 <a href="myProfile"><i class="ti-user"></i>My Profile</a>

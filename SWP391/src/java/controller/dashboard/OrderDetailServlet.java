@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.dashboard;
 
+import controller.OrderDetailController;
 import dao.OrderDAO;
 import dao.UserDAO;
 import java.io.IOException;

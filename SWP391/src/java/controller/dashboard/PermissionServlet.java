@@ -131,6 +131,7 @@ public class PermissionServlet extends HttpServlet {
                     
                     if(permissionDAO.getById(roleId, urlId) == null){
                         permissionDAO.insertPermission(roleId, urlId, "Add Role: " + roleId);
+                        session.setAttribute("messSuccess", "Add Succesfully!");
                     }else{
                         session.setAttribute("messError", "Add Failed!");
                         response.sendRedirect("permissions");

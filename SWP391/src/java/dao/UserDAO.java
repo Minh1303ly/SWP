@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,41 @@ public class UserDAO extends DBContext {
         List<User> users = new ArrayList<>();
         String sql = "SELECT id, email, password, role_id, status_id, first_name, last_name, telephone, created_at, modified_at, gender FROM users";
         try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setRole_id(resultSet.getInt("role_id"));
+                user.setStatus_id(resultSet.getInt("status_id"));
+                user.setFirst_name(resultSet.getString("first_name"));
+                user.setLast_name(resultSet.getString("last_name"));
+                user.setTelephone(resultSet.getString("telephone"));
+                user.setCreated_at(resultSet.getDate("created_at"));
+                user.setGender(resultSet.getBoolean("gender"));
+                user.setModified_at(resultSet.getDate("modified_at"));
+
+                user.setRole(getRoleById(user.getRole_id()));
+                user.setUsersStatus(getUserStatusById(user.getStatus_id()));
+                user.setUserAddress(uaDAO.getUserAddressById(user.getId()));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Xử lý ngoại lệ, có thể throw hoặc log
+        }
+        return users;
+    }
+
+    public List<User> getUsersBetweenDay(String from, String to) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT id, email, password, role_id, status_id, first_name, last_name, telephone, created_at, modified_at, gender FROM users where created_at BETWEEN ? AND ? OR modified_at BETWEEN ? AND ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setString(1, from);
+            statement.setString(3, from);
+            statement.setString(2, to);
+            statement.setString(4, to);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getInt("id"));

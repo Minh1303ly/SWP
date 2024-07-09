@@ -22,7 +22,9 @@ public class Blog {
     private String description;
     private Date created_at;
     private Date modified_at;
+    private String status;
 
+    private User user;
     private BlogCategories blogCategory;
     private BlogTag blogTag;
 
@@ -41,6 +43,23 @@ public class Blog {
         this.description = description;
         this.created_at = created_at;
         this.modified_at = modified_at;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    
+    
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public BlogCategories getBlogCategory() {

@@ -22,6 +22,80 @@ import model.Tag;
  */
 public class BlogDAO extends DBContext {
 
+    private static final String FILTER_BLOGS = "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY %s) AS rownum, id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at, status FROM blogs WHERE 1=1";
+    private static final String INSERT_BLOG_SQL = "INSERT INTO blogs (user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, GETDATE(), GETDATE(), ?)";
+    private static final String UPDATE_BLOG_SQL = "UPDATE blogs SET user_id = ?, blog_cate_id = ?, title = ?, content = ?, cover_img = ?, main_img = ?, description = ?, modified_at = GETDATE(), status = ? WHERE id = ?";
+    private UserDAO uDAO;
+    private BlogCategoriesDAO bDAO;
+
+    public BlogDAO() {
+        uDAO = new UserDAO();
+        bDAO = new BlogCategoriesDAO();
+    }
+
+    public List<Blog> getAllBlogs(Integer author, Integer category, String status, String title, String sortBy, int start, int total) {
+        List<Blog> blogs = new ArrayList<>();
+        String orderByClause = sortBy != null && !sortBy.isEmpty() ? sortBy : "id";
+        String query = String.format(FILTER_BLOGS, orderByClause);
+
+        if (author != null) {
+            query += " AND user_id = ?";
+        }
+        if (category != null) {
+            query += " AND blog_cate_id = ?";
+        }
+        if (status != null && !status.isEmpty()) {
+            query += " AND status = ?";
+        }
+        if (title != null && !title.isEmpty()) {
+            query += " AND title LIKE ?";
+        }
+
+        query += ") AS temp WHERE rownum BETWEEN ? AND ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            int parameterIndex = 1;
+            if (author != null) {
+                preparedStatement.setInt(parameterIndex++, author);
+            }
+            if (category != null) {
+                preparedStatement.setInt(parameterIndex++, category);
+            }
+            if (status != null && !status.isEmpty()) {
+                preparedStatement.setString(parameterIndex++, status);
+            }
+            if (title != null && !title.isEmpty()) {
+                preparedStatement.setString(parameterIndex++, "%" + title + "%");
+            }
+
+            preparedStatement.setInt(parameterIndex++, start + 1);
+            preparedStatement.setInt(parameterIndex++, start + total);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println(query);
+
+            while (resultSet.next()) {
+                Blog p = new Blog();
+                p.setId(resultSet.getInt("id"));
+                p.setUser_id(resultSet.getInt("user_id"));
+                p.setBlog_cate_id(resultSet.getInt("blog_cate_id"));
+                p.setTitle(resultSet.getString("title"));
+                p.setContext(resultSet.getString("content"));
+                p.setCover_img(resultSet.getString("cover_img"));
+                p.setMain_img(resultSet.getString("main_img"));
+                p.setDescription(resultSet.getString("description"));
+                p.setCreated_at(resultSet.getTimestamp("created_at"));
+                p.setModified_at(resultSet.getTimestamp("modified_at"));
+                p.setStatus(resultSet.getString("status"));
+                p.setBlogCategory(bDAO.getByID(p.getBlog_cate_id()));
+                p.setUser(uDAO.getUserById(p.getUser_id()));
+                blogs.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return blogs;
+    }
+
     public List<Blog> getAllBlog(Integer quantity) {
         List<Blog> list = new ArrayList<>();
         String query;
@@ -59,6 +133,37 @@ public class BlogDAO extends DBContext {
     }
 
 
+    public List<Blog> getBlogBetweenDay(String from, String to) {
+        List<Blog> list = new ArrayList<>();
+        String query = "SELECT id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at FROM blogs where created_at BETWEEN ? AND ? OR modified_at BETWEEN ? AND ?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setString(1, from);
+            st.setString(3, from);
+            st.setString(2, to);
+            st.setString(4, to);
+            try (ResultSet resultSet = st.executeQuery()) {
+                while (resultSet.next()) {
+                    Blog p = new Blog();
+                    p.setId(resultSet.getInt("id"));
+                    p.setUser_id(resultSet.getInt("user_id"));
+                    p.setBlog_cate_id(resultSet.getInt("blog_cate_id"));
+                    p.setTitle(resultSet.getString("title"));
+                    p.setContext(resultSet.getString("content"));
+                    p.setCover_img(resultSet.getString("cover_img"));
+                    p.setMain_img(resultSet.getString("main_img"));
+                    p.setDescription(resultSet.getString("description"));
+                    p.setCreated_at(resultSet.getDate("created_at"));
+                    p.setModified_at(resultSet.getDate("modified_at"));
+                    BlogCategories blogCategory = new BlogCategoriesDAO().getByID(resultSet.getInt("blog_cate_id"));
+                    p.setBlogCategory(blogCategory);
+                    list.add(p);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 //    public List<Blog> getAllBlog(int currentPage, int limitSize) {
 //        List<Blog> list = new ArrayList<>();
 //        // Edit query with other entity
@@ -112,6 +217,8 @@ public class BlogDAO extends DBContext {
                     blog.setDescription(resultSet.getString("description"));
                     blog.setCreated_at(resultSet.getDate("created_at"));
                     blog.setModified_at(resultSet.getDate("modified_at"));
+                    blog.setStatus(resultSet.getString("status"));
+                    blog.setUser(new UserDAO().getUserById(blog.getUser_id()));
                     BlogCategories blogCategory = new BlogCategoriesDAO().getByID(resultSet.getInt("blog_cate_id"));
                     blog.setBlogCategory(blogCategory);
                 }
@@ -279,6 +386,38 @@ public class BlogDAO extends DBContext {
         return list;
     }
 
+    public void insertBlog(Blog blog) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BLOG_SQL)) {
+            preparedStatement.setInt(1, blog.getUser_id());
+            preparedStatement.setInt(2, blog.getBlog_cate_id());
+            preparedStatement.setString(3, blog.getTitle());
+            preparedStatement.setString(4, blog.getContext());
+            preparedStatement.setString(5, blog.getCover_img());
+            preparedStatement.setString(6, blog.getMain_img());
+            preparedStatement.setString(7, blog.getDescription());
+            preparedStatement.setString(8, blog.getStatus());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateBlog(Blog blog) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_BLOG_SQL)) {
+            preparedStatement.setInt(1, blog.getUser_id());
+            preparedStatement.setInt(2, blog.getBlog_cate_id());
+            preparedStatement.setString(3, blog.getTitle());
+            preparedStatement.setString(4, blog.getContext());
+            preparedStatement.setString(5, blog.getCover_img());
+            preparedStatement.setString(6, blog.getMain_img());
+            preparedStatement.setString(7, blog.getDescription());
+            preparedStatement.setString(8, blog.getStatus());
+            preparedStatement.setInt(9, blog.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         BlogDAO bDAO = new BlogDAO();

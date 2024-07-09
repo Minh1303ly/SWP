@@ -89,6 +89,56 @@ public class ProductDAO extends DBContext {
         return products;
     }
 
+    public List<Product> getProductBetweenDay(String from, String to) throws SQLException {
+        List<Product> products = new ArrayList<>();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            StringBuilder queryBuilder = new StringBuilder("SELECT id, discount_id, status_id, brand_id, ");
+            queryBuilder.append("name, quantity, price, size, color, description, img1, img2, created_at, modified_at ");
+            queryBuilder.append("FROM products where created_at BETWEEN ? AND ? OR modified_at BETWEEN ? AND ? ");
+
+            preparedStatement = connection.prepareStatement(queryBuilder.toString());
+
+            preparedStatement.setString(1, from);
+            preparedStatement.setString(3, from);
+            preparedStatement.setString(2, to);
+            preparedStatement.setString(4, to);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Product product = new Product();
+                product.setId(resultSet.getInt("id"));
+                product.setDiscountId(resultSet.getInt("discount_id"));
+                product.setStatusId(resultSet.getInt("status_id"));
+                product.setBrandId(resultSet.getInt("brand_id"));
+                product.setName(resultSet.getString("name"));
+                product.setQuantity(resultSet.getInt("quantity"));
+                product.setPrice((float) resultSet.getDouble("price"));
+                product.setSize(resultSet.getString("size"));
+                product.setColor(resultSet.getString("color"));
+                product.setDescription(resultSet.getString("description"));
+                product.setImg1(resultSet.getString("img1"));
+                product.setImg2(resultSet.getString("img2"));
+                product.setCreatedAt(resultSet.getDate("created_at"));
+                product.setModifiedAt(resultSet.getDate("modified_at"));
+                products.add(product);
+            }
+        } finally {
+            // Close resources
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+        }
+
+        return products;
+    }
+
     // Method to retrieve products with optional filters
     public List<Product> getFilteredProducts(Double minPrice, Double maxPrice,
             String searchKeyword, Integer categoryId, String size, String color,
@@ -205,7 +255,7 @@ public class ProductDAO extends DBContext {
 
         try {
             // SQL query to select a product by its ID
-            String query = "SELECT id, category_id, discount_id, status_id, brand_id, "
+            String query = "SELECT id, discount_id, status_id, brand_id, "
                     + "name, quantity, price, size, color, description, img1, img2, created_at, modified_at "
                     + "FROM products WHERE id = ?";
             preparedStatement = connection.prepareStatement(query);
@@ -216,7 +266,6 @@ public class ProductDAO extends DBContext {
             if (resultSet.next()) {
                 product = new Product();
                 product.setId(resultSet.getInt("id"));
-                product.setCategoryId(resultSet.getInt("category_id"));
                 product.setDiscountId(resultSet.getInt("discount_id"));
                 product.setStatusId(resultSet.getInt("status_id"));
                 product.setBrandId(resultSet.getInt("brand_id"));
@@ -252,9 +301,8 @@ public class ProductDAO extends DBContext {
     public int getTotalProduct(){
         String sql = "SELECT COUNT(distinct name) FROM Products";
         try (PreparedStatement pre = connection.prepareStatement(sql,
-                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-                ResultSet rs = pre.executeQuery()) {
-            while(rs.next()){
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = pre.executeQuery()) {
+            while (rs.next()) {
                 return rs.getInt(1);
             }       
         } catch (SQLException ex) {
@@ -273,8 +321,7 @@ public class ProductDAO extends DBContext {
         List<String> list = new LinkedList<>();
         String sql = "SELECT distinct color FROM Products";
         try (PreparedStatement pre = connection.prepareStatement(sql,
-                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); 
-                ResultSet rs = pre.executeQuery()) {
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); ResultSet rs = pre.executeQuery()) {
             while (rs.next()) {
                 list.add(rs.getString(1));
             }

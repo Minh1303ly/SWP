@@ -5,6 +5,7 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
 
 @Data
@@ -23,7 +24,9 @@ public class Order {
     private String notes;
     
     private User user;
+    private User sale;
     private OrderStatus orderStatus;
+    private List<OrderDetail> orderDetails;
 
     public Order() {
     }

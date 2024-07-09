@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/ContactServlet.java</file>
-            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/SubProductServlet.java</file>
-            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/web/header.jsp</file>
-            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/controller/CartServlet.java</file>
-            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/dao/ProductDAO.java</file>
-            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/src/java/dao/CartItemDAO.java</file>
+            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/customerDetail.jsp</file>
+            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/Dashboard.jsp</file>
+            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/feedbackDetail.jsp</file>
+            <file>file:/D:/SWP391/summer2024-swp391.se1811-g3/SWP391/web/viewsAdmin/components/leftBar.jsp</file>
         </group>
     </open-files>
 </project-private>

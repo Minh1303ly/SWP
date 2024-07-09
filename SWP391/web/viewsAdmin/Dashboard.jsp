@@ -5,21 +5,19 @@
     <head>
         <meta charset="utf-8" />
         <title>Robotech - Admin & Dashboard Template</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <meta content="Tailwind Multipurpose Admin & Dashboard Template" name="description"/>
+        <meta  name="viewport"  content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta  content="Tailwind Multipurpose Admin & Dashboard Template"  name="description"/>
         <meta content="" name="Mannatthemes" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="viewsAdmin/assets/images/favicon.ico" />
+
         <!-- Css -->
         <!-- Main Css -->
         <link rel="stylesheet" href="viewsAdmin/assets/libs/icofont/icofont.min.css">
         <link href="viewsAdmin/assets/libs/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="viewsAdmin/assets/css/tailwind.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
         <style>
             .error {
                 color: red;
@@ -27,10 +25,13 @@
                 margin-top: 5px;
             }
         </style>
+
     </head>
-    <body data-layout-mode="light" data-sidebar-size="default" data-theme-layout="vertical" class="bg-[#EEF0FC] dark:bg-gray-900">
+
+    <body data-layout-mode="light"  data-sidebar-size="default" data-theme-layout="vertical" class="bg-[#EEF0FC] dark:bg-gray-900">
         <jsp:include page="components/leftBar.jsp" />
         <jsp:include page="components/topBar.jsp" />
+
         <div class="ltr:flex flex-1 rtl:flex-row-reverse">
             <div class="page-wrapper relative ltr:ms-auto rtl:me-auto rtl:ms-0 w-[calc(100%-260px)] px-4 pt-[64px] duration-300">
                 <div class="xl:w-full">
@@ -87,7 +88,7 @@
                                             <c:forEach var="entry" items="${revenueByCategory}">
                                                 <span><strong>${entry.key}:</strong> <span class="revenue-value">${entry.value}</span>
                                                 </span><br>
-                                                </c:forEach>
+                                            </c:forEach>
                                         </div>
                                         <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
                                             <h3 class="font-medium text-xl dark:text-slate-100">Customers</h3>
@@ -113,11 +114,20 @@
                 </div><!--end container-->
             </div><!--end /div-->
         </div>
+
+
         <!-- JAVASCRIPTS -->
+        <!-- <div class="menu-overlay"></div> -->
         <script src="viewsAdmin/assets/libs/lucide/umd/lucide.min.js"></script>
         <script src="viewsAdmin/assets/libs/simplebar/simplebar.min.js"></script>
         <script src="viewsAdmin/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <script src="viewsAdmin/assets/libs/@frostui/tailwindcss/frostui.js"></script>
+
         <script src="viewsAdmin/assets/libs/apexcharts/apexcharts.min.js"></script>
+        <script src="viewsAdmin/assets/js/pages/analytics-index.init.js"></script>
+        <script src="viewsAdmin/assets/js/app.js"></script>
+        <!-- JAVASCRIPTS -->
+        <script src="${pageContext.request.contextPath}/viewsAdmin/assets/js/dataTable.js"></script>
         <script>
                                                 document.addEventListener('DOMContentLoaded', (event) => {
                                                     const today = new Date().toISOString().split('T')[0];
@@ -125,87 +135,88 @@
                                                     document.getElementById('endDate').setAttribute('max', today);
                                                 });
         </script>
-        <script src="viewsAdmin/assets/js/app.js"></script>
         <script>
-                                                // Date range picker
-                                                flatpickr("#dateRange", {
-                                                    mode: "range",
-                                                    dateFormat: "Y-m-d",
-                                                    onClose: function (selectedDates, dateStr, instance) {
-                                                        // Fetch and update the data based on the selected date range
-                                                    }
-                                                });
+            // Date range picker
+            flatpickr("#dateRange", {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                onClose: function (selectedDates, dateStr, instance) {
+                    // Fetch and update the data based on the selected date range
+                }
+            });
 
-                                                // Sample data for chart
-                                                var orderCountsData = {
-                                                    series: [{
-                                                            name: 'Success',
-                                                            data: [10, 41, 35, 51, 49, 62, 69]
-                                                        }, {
-                                                            name: 'All',
-                                                            data: [23, 42, 35, 27, 43, 22, 17]
-                                                        }],
-                                                    chart: {
-                                                        height: 350,
-                                                        type: 'line',
-                                                        zoom: {
-                                                            enabled: false
-                                                        }
-                                                    },
-                                                    dataLabels: {
-                                                        enabled: false
-                                                    },
-                                                    stroke: {
-                                                        curve: 'straight'
-                                                    },
-                                                    title: {
-                                                        text: 'Order Counts Trend',
-                                                        align: 'left'
-                                                    },
-                                                    grid: {
-                                                        row: {
-                                                            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                                                            opacity: 0.5
-                                                        },
-                                                    },
-                                                    xaxis: {
-                                                        categories: ['2021-11-01', '2021-11-02', '2021-11-03', '2021-11-04', '2021-11-05', '2021-11-06', '2021-11-07'],
-                                                    }
-                                                };
+            // Sample data for chart
+            var orderCountsData = {
+                series: [{
+                        name: 'Success',
+                        data: [10, 41, 35, 51, 49, 62, 69]
+                    }, {
+                        name: 'All',
+                        data: [23, 42, 35, 27, 43, 22, 17]
+                    }],
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight'
+                },
+                title: {
+                    text: 'Order Counts Trend',
+                    align: 'left'
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    categories: ['2021-11-01', '2021-11-02', '2021-11-03', '2021-11-04', '2021-11-05', '2021-11-06', '2021-11-07'],
+                }
+            };
 
-                                                var chart = new ApexCharts(document.querySelector("#orderCountsTrend"), orderCountsData);
-                                                chart.render();
+            var chart = new ApexCharts(document.querySelector("#orderCountsTrend"), orderCountsData);
+            chart.render();
 
-                                                // Function to format number as currency
-                                                function formatCurrency(num) {
-                                                    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VNĐ";
-                                                }
+            // Function to format number as currency
+            function formatCurrency(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VNĐ";
+            }
 
-                                                // Function to format all revenue values on the page
-                                                function formatAllRevenues() {
-                                                    const elements = document.querySelectorAll('.revenue-value');
-                                                    elements.forEach(element => {
-                                                        const value = parseFloat(element.textContent);
-                                                        element.textContent = formatCurrency(value);
-                                                    });
-                                                }
+            // Function to format all revenue values on the page
+            function formatAllRevenues() {
+                const elements = document.querySelectorAll('.revenue-value');
+                elements.forEach(element => {
+                    const value = parseFloat(element.textContent);
+                    element.textContent = formatCurrency(value);
+                });
+            }
 
-                                                // Call formatAllRevenues on page load
-                                                window.onload = formatAllRevenues;
+            // Call formatAllRevenues on page load
+            window.onload = formatAllRevenues;
 
-                                                // Validate select date not null
-                                                function validateForm() {
-                                                    const dateInput = document.getElementById('dateRange');
-                                                    const errorMessage = document.getElementById('errorMessage');
+            // Validate select date not null
+            function validateForm() {
+                const dateInput = document.getElementById('dateRange');
+                const errorMessage = document.getElementById('errorMessage');
 
-                                                    if (!dateInput.value) {
-                                                        errorMessage.textContent = "Please select a date range.";
-                                                        return false; // Prevent form submission
-                                                    }
+                if (!dateInput.value) {
+                    errorMessage.textContent = "Please select a date range.";
+                    return false; // Prevent form submission
+                }
 
-                                                    errorMessage.textContent = ""; // Clear any previous error messages
-                                                    return true; // Allow form submission
-                                                }
+                errorMessage.textContent = ""; // Clear any previous error messages
+                return true; // Allow form submission
+            }
         </script>
+
+
     </body>
 </html>

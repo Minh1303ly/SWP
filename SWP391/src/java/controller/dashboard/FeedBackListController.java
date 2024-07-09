@@ -45,7 +45,7 @@ public class FeedBackListController extends HttpServlet {
             Integer rating = null;
 
             // Convert ratingString to Integer if it's not null or empty
-            if (ratingString != null && !ratingString.isEmpty()) {
+                if (ratingString != null && !ratingString.isEmpty()) {
                 rating = Integer.parseInt(ratingString);
             }
             List<Ratting> list = fDAO.getAllRatingFilter(status, rating, name, comment, productname);

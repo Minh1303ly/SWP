@@ -200,6 +200,121 @@ public class OrderDAO extends DBContext {
         return filterList;
     }
 
+    public List<Order> getAllOrdersFilter(Integer id, Integer status, String from, String to, Integer sname, String customerName) throws SQLException {
+        List<Order> orders = new ArrayList<>();
+        StringBuilder queryBuilder = new StringBuilder(
+                "SELECT so.id, user_id, sale_id, so.status_id, so.email, address, order_total, "
+                + "recipient, recipient_phone, so.created_at, "
+                + "u.first_name AS user_first_name, u.last_name AS user_last_name, "
+                + "us.first_name AS sale_first_name, us.last_name AS sale_last_name "
+                + "FROM shop_orders so "
+                + "JOIN users u ON so.user_id = u.id "
+                + "JOIN users us ON so.sale_id = us.id "
+                + "JOIN order_status os ON so.status_id = os.id "
+                + "WHERE 1=1"
+        );
+
+        if (id != null) {
+            queryBuilder.append(" AND so.id = ?");
+        }
+
+        if (status != null) {
+            queryBuilder.append(" AND so.status_id = ?");
+        }
+
+        if (from != null && !from.isEmpty() && to != null && !to.isEmpty()) {
+            queryBuilder.append(" AND so.created_at BETWEEN ? AND ?");
+        }
+
+        if (customerName != null && !customerName.isEmpty()) {
+            String[] nameParts = customerName.split(" ");
+            if (nameParts.length >= 2) {
+                queryBuilder.append(" AND (u.first_name LIKE ? AND u.last_name LIKE ?)");
+            } else {
+                queryBuilder.append(" AND (u.first_name LIKE ? OR u.last_name LIKE ?)");
+            }
+        }
+        
+        if (sname != null) {
+            queryBuilder.append(" AND sale_id = ?");
+        }
+        String query = queryBuilder.toString();
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            int paramIndex = 1;
+
+            if (id != null) {
+                statement.setInt(paramIndex++, id);
+            }
+
+            if (status != null) {
+                statement.setInt(paramIndex++, status);
+            }
+
+            if (from != null && !from.isEmpty() && to != null && !to.isEmpty()) {
+                statement.setString(paramIndex++, from);
+                statement.setString(paramIndex++, to);
+            }
+
+            if (customerName != null && !customerName.isEmpty()) {
+                String[] nameParts = customerName.split("");
+                if (nameParts.length >= 2) {
+                    String firstName = nameParts[0];
+                    String lastName = nameParts[1];
+                    statement.setString(paramIndex++, "%" + firstName + "%");
+                    statement.setString(paramIndex++, "%" + lastName + "%");
+                } else {
+                    statement.setString(paramIndex++, "%" + customerName + "%");
+                    statement.setString(paramIndex++, "%" + customerName + "%");
+                }
+            }
+
+            if (sname != null) {
+                statement.setInt(paramIndex++, sname);
+            }
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Order order = new Order();
+                    order.setId(resultSet.getInt("id"));
+                    order.setUserId(resultSet.getInt("user_id"));
+                    order.setSaleId(resultSet.getInt("sale_id"));
+                    order.setStatusId(resultSet.getInt("status_id"));
+                    order.setEmail(resultSet.getString("email"));
+                    order.setAddress(resultSet.getString("address"));
+                    order.setOrderTotal(resultSet.getDouble("order_total"));
+                    order.setRecipient(resultSet.getString("recipient"));
+                    order.setRecipientPhone(resultSet.getString("recipient_phone"));
+                    order.setCreatedAt(resultSet.getDate("created_at"));
+
+                    User user = new User();
+                    user.setId(resultSet.getInt("user_id"));
+                    user.setFirst_name(resultSet.getString("user_first_name"));
+                    user.setLast_name(resultSet.getString("user_last_name"));
+                    order.setUser(user);
+
+                    User sale = new User();
+                    sale.setId(resultSet.getInt("sale_id"));
+                    sale.setFirst_name(resultSet.getString("sale_first_name"));
+                    sale.setLast_name(resultSet.getString("sale_last_name"));
+                    order.setSale(sale);
+
+                    // Lấy chi tiết đơn hàng
+                    List<OrderDetail> orderDetails = getOrderDetailsByOrderId(order.getId());
+                    order.setOrderDetails(orderDetails);
+
+                    orders.add(order);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return orders;
+    }
+
+
+
     // Phương thức thêm Order
     public void addOrder(Order order) throws SQLException {
         String query = "INSERT INTO shop_orders (user_id, status_id, email, address, order_total, recipient, recipient_phone, created_at, modified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

@@ -224,7 +224,7 @@
                                                                 TOTAL
                                                             </th>
                                                             <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                MODIFIED AT
+                                                                Size
                                                             </th>
                                                             <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
                                                                 STATUS
@@ -255,7 +255,8 @@
                                                                     <strong>${o.price}</strong>
                                                                 </td>
                                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                    <strong>${o.modifiedAt.toString()}</strong>
+                                                                    <strong>${o.product.size}</strong>
+                                                                    <strong>${o.product.color}</strong>
                                                                 </td>
                                                                 <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                                     <c:if test="${order.getOrderStatus().name ==  'Success'}">

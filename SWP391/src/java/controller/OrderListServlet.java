@@ -5,6 +5,7 @@
 package controller;
 
 import dao.OrderDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,89 +20,79 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Order;
 import model.Pagination;
+import model.User;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "OrderListServlet", urlPatterns = {"/OrderList"})
+@WebServlet(name = "OrderListServlet", urlPatterns = {"/orderList"})
 public class OrderListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.setAttribute("pagging", "OrderList");
-        
-        int status = 0;
-        String from = "";
-        String to = "";
-        String id = "";
-        String name = "";
-        String sname = "";
-        if (request.getParameter("status") != null) {
-            session.setAttribute("olstatus", request.getParameter("status"));
-        }
-
-        if (request.getParameter("from") != null) {
-            session.setAttribute("olfrom", request.getParameter("from"));
-        }
-
-        if (request.getParameter("to") != null) {
-            session.setAttribute("olto", request.getParameter("to"));
-        }
-
-        if (request.getParameter("id") != null) {
-            session.setAttribute("olid", request.getParameter("id"));
-        }
-
-        if (request.getParameter("name") != null) {
-            session.setAttribute("olname", request.getParameter("name"));
-        }
-        
-        if (request.getParameter("sname") != null) {
-            session.setAttribute("olsname", request.getParameter("sname"));
-        }
-
-        if (session.getAttribute("olstatus") != null) {
-            status = Integer.parseInt((String) session.getAttribute("olstatus"));
-        }
-        if (session.getAttribute("olfrom") != null) {
-            from = (String) session.getAttribute("olfrom");
-        }
-
-        if (session.getAttribute("olto") != null) {
-            to = (String) session.getAttribute("olto");
-        }
-
-        if (session.getAttribute("olid") != null) {
-            id = (String) session.getAttribute("olid");
-        }
-
-        if (session.getAttribute("olname") != null) {
-            name = (String) session.getAttribute("olname");
-        }
-        
-        if (session.getAttribute("olsname") != null) {
-            sname = (String) session.getAttribute("olsname");
-        }
         try {
-            OrderDAO odao = new OrderDAO();
-            List<Order> olist = odao.getOrders(status, from, to, sname);
-            olist = odao.filterOrders(id, name, olist);
-            int cp = 1;
-            int perpage = 1;
-            if(request.getParameter("cp")!=null) cp = Integer.parseInt(request.getParameter("cp"));
-            if(request.getParameter("perpage")!=null) perpage = Integer.parseInt(request.getParameter("perpage"));
-            session.setAttribute("page", new Pagination<Order>(olist, perpage, cp));
-            request.setAttribute("cp", cp);
-            request.setAttribute("perpage", perpage);
-            request.setAttribute("olist", olist);
+      
+            OrderDAO oDAO = new OrderDAO();
+            // Get the parameters from the request
+            String from = request.getParameter("from");
+            String to = request.getParameter("to");
+            String statusString = request.getParameter("status");
+            String idString = request.getParameter("id");
+            String name = request.getParameter("name");
+            String snameString = request.getParameter("sname");
+
+            HttpSession session = request.getSession();
+            Integer status = null;
+            Integer id = null;            
+            Integer sname = null;
+
+            // Convert ratingString to Integer if it's not null or empty
+            if (statusString != null && !statusString.isEmpty()) {
+                status = Integer.parseInt(statusString);
+            }
+            if (idString != null && !idString.isEmpty()) {
+                id = Integer.parseInt(idString);
+            }
+            if (snameString != null && !snameString.isEmpty()) {
+                sname = Integer.parseInt(snameString);
+            }
+            List<Order> list = oDAO.getAllOrdersFilter(id, status, from, to, sname, name);
+            List<User> users = new UserDAO().getAllUsers();
+            request.setAttribute("users", users);
+            // start pagging
+            int limitPage = 10;
+            if (request.getParameter("cp") == null) {
+                Pagination Page = new Pagination(list, limitPage, 1);
+                Pagination<Order> pagination = new Pagination<>(list, limitPage, 1);
+                list = pagination.getItemsOnPage();
+                session.setAttribute("page", Page);
+                request.setAttribute("list", pagination.getItemsOnPage());
+            } else if (request.getParameter("cp") != null) {
+                int cp = Integer.parseInt(request.getParameter("cp"));
+                Pagination Page = new Pagination(list, limitPage, cp);
+                Pagination<Order> pagination = new Pagination<>(list, limitPage, cp);
+                list = pagination.getItemsOnPage();
+                session.setAttribute("page", Page);
+            }
+            // set URL
+            request.setAttribute("pagging", "orderList");
+            session.setAttribute("from", from);
+            session.setAttribute("to", to);
+            session.setAttribute("status", statusString);
+            session.setAttribute("id", idString);
+            session.setAttribute("name", name);
+            session.setAttribute("sname", sname);
+            // end pagging
+            request.setAttribute("listOrder", list);
+            request.getRequestDispatcher("viewsAdmin/orderList.jsp").forward(request, response);
+
         } catch (SQLException ex) {
             Logger.getLogger(OrderListServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.getRequestDispatcher("viewsAdmin/orderList.jsp").forward(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

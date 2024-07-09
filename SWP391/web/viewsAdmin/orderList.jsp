@@ -72,120 +72,93 @@
                                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" aria-label="Tabs">
                                         </ul>
                                     </div>
-                                    <form action="OrderList" method="get" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-12">
+                                    <form action="orderList" method="get" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-12">
                                         <!-- Status Filter -->
                                         <div class="md:col-span-2">
-                                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                                            <label for="status" class="block text-sm font-medium text-gray-700">Status Order</label>
                                             <select name="status" id="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                                <option value="0">Select Status</option>
-                                                <option value="1" <c:if test="${olstatus == '1'}">selected</c:if>>Pending</option>
-                                                <option value="2"<c:if test="${olstatus == '2'}">selected</c:if>>Success</option>
-
-                                                    <!-- Add more status options as needed -->
+                                                <option value="">Select Status</option>
+                                                <option value="1" <c:if test="${status == '1'}">selected</c:if>>Pending</option>
+                                                <option value="2"<c:if test="${status == '2'}">selected</c:if>>Success</option>
+                                                <option value="3"<c:if test="${status == '3'}">selected</c:if>>Failed</option>
                                                 </select>
                                             </div>
 
-                                            <div class="md:col-span-2">
-                                                <label for="id" class="block text-sm font-medium text-gray-700">Sale Name</label>
-                                                <input type="text" name="sname" value="${olsname}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                            <!--                                        <div class="md:col-span-2">
+                                                                                            <label for="id" class="block text-sm font-medium text-gray-700">Sale Name</label>
+                                                                                            <input type="text" name="sname" value="${sname}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                                                    </div>-->
+                                        <div class="md:col-span-3">
+                                            <label for="id" class="block text-sm font-medium text-gray-700">Sale Name</label>
+                                            <select name="sname" id="sale" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                                <option value="">Select Saler</option>
+                                                <c:forEach items="${users}" var="u">
+                                                    <c:if test="${u.role_id == 3}">
+                                                        <option value="${u.id}" <c:if test="${u.id == sname}">selected</c:if>>${u.first_name} ${u.last_name}</option>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </select>
                                         </div>
+                                    <!-- From Date Filter -->
+                                    <div class="md:col-span-3">
+                                        <label for="productname" class="block text-sm font-medium text-gray-700">Form</label>
+                                        <input type="date" name="from" value="${from}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>  
 
+                                    <!-- To Date Filter -->
+                                    <div class="md:col-span-3">
+                                        <label for="name" class="block text-sm font-medium text-gray-700">To</label>
+                                        <input type="date" name="to" value="${to}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
 
+                                    <div class="md:col-span-2">
+                                        <label for="id" class="block text-sm font-medium text-gray-700">Order ID</label>
+                                        <input type="text" name="id" value="${id}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
 
+                                    <div class="md:col-span-2">
+                                        <label for="id" class="block text-sm font-medium text-gray-700">Customer Name</label>
+                                        <input type="text" name="name" value="${name}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
 
-
-                                        <!-- From Date Filter -->
-                                        <div class="md:col-span-2">
-                                            <label for="productname" class="block text-sm font-medium text-gray-700">Form</label>
-                                            <input type="date" name="from" value="${olfrom}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        </div>
-
-                                        <!-- To Date Filter -->
-                                        <div class="md:col-span-2">
-                                            <label for="name" class="block text-sm font-medium text-gray-700">To</label>
-                                            <input type="date" name="to" value="${olto}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        </div>
-
-
-
-                                        <!-- Submit Button -->
-                                        <div class="md:col-span-1 flex justify-end items-end">
-                                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-dark bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                                Apply Filters
-                                            </button>
-                                        </div>
+                                    <!-- Submit Button -->
+                                    <div class="md:col-span-1 flex justify-end items-end">
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-dark bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Search
+                                        </button>
+                                    </div>
                                     </form>
 
-                                    <form action="OrderList" method="get" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-12">
-
-
-                                        <div class="md:col-span-2">
-                                            <label for="id" class="block text-sm font-medium text-gray-700">id</label>
-                                            <input type="text" name="id" value="${olid}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        </div>
-
-
-                                        <div class="md:col-span-2">
-                                            <label for="id" class="block text-sm font-medium text-gray-700">Customer Name</label>
-                                            <input type="text" name="name" value="${olname}" class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                        </div>
-
-                                        <!-- Submit Button -->
-                                        <div class="md:col-span-1 flex justify-end items-end">
-                                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-dark bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                                Search
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                        <form id="limitFrm" action="OrderList" method="get" class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-12">
-
-
-
-
-                                        <div class="md:col-span-2">
-                                            <label for="id" class="block text-sm font-medium text-gray-700">Limit</label>
-                                            <select onchange="document.getElementById('limitFrm').submit()" name="perpage" id="perpage" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-
-                                                <option value="1" <c:if test="${perpage == '1'}">selected</c:if>>1</option>
-                                                <option value="5"<c:if test="${perpage == '5'}">selected</c:if>>5</option>
-
-                                                    <!-- Add more status options as needed -->
-                                                </select>
-                                            </div>
-
-
-                                        </form>
-                                        <div id="myTabContent">
-                                            <div class="active  p-4 bg-gray-50 rounded-lg dark:bg-gray-800/40" id="all" role="tabpanel" aria-labelledby="all-tab">
-                                                <div class="grid grid-cols-1 p-0 md:p-4">
-                                                    <div class="sm:-mx-6 lg:-mx-8">
-                                                        <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
-                                                            <table id="userTable" class="w-full">
-                                                                <thead class="bg-gray-50 dark:bg-gray-700/20">
-                                                                    <tr>
-                                                                        <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                            ID
-                                                                        </th>
-                                                                        <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                            Created At
-                                                                        </th>
-                                                                        <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                            Username
-                                                                        </th>
-                                                                        <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                            Product
-                                                                        </th>
-                                                                        <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                            Total cost
-                                                                        </th>
-                                                                        <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
-                                                                            Status
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <c:forEach var="o" items="${olist}" begin="${(cp-1)*perpage}" end="${cp*perpage-1}">
+                                    <div id="myTabContent">
+                                        <div class="active  p-4 bg-gray-50 rounded-lg dark:bg-gray-800/40" id="all" role="tabpanel" aria-labelledby="all-tab">
+                                            <div class="grid grid-cols-1 p-0 md:p-4">
+                                                <div class="sm:-mx-6 lg:-mx-8">
+                                                    <div class="relative overflow-x-auto block w-full sm:px-6 lg:px-8">
+                                                        <table id="userTable" class="w-full">
+                                                            <thead class="bg-gray-50 dark:bg-gray-700/20">
+                                                                <tr>
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        ID
+                                                                    </th>
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        Created At
+                                                                    </th>
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        Fullname
+                                                                    </th>
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        Product
+                                                                    </th>
+                                                                    <th scope="col" data-sort="text" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        Total cost
+                                                                    </th>
+                                                                    <th scope="col" class="p-3 text-xs font-medium tracking-wider text-left text-gray-700 dark:text-gray-400 uppercase">
+                                                                        Status
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <c:forEach var="o" items="${listOrder}">
                                                                     <!-- 1 -->
                                                                     <tr class="bg-white border-b border-dashed dark:bg-gray-900 dark:border-gray-700/40">
 
@@ -193,23 +166,28 @@
                                                                             <a href="OrderDetailAdmin?id=${o.id}"><strong>${o.id}</strong></a>
                                                                         </td>
                                                                         <td class="p-3 font-semibold text-lg text-gray-800 whitespace-nowrap dark:text-gray-400">
-                                                                            <strong>${o.createdAt.toString()}</strong>
+                                                                            <strong>${o.createdAt}</strong>
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            ${o.getUser().first_name} ${o.getUser().last_name}
+                                                                            ${o.user.first_name} ${o.user.last_name}
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <strong><c:if test="${o.orderDetails.size()>0}">${o.orderDetails.get(0).product.getName()}</c:if> <c:if test="${o.orderDetails.size()>1}">(${o.orderDetails.size()-1} more)</c:if> </strong>
-                                                                            </td>
-                                                                            <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                                    <strong>${o.orderTotal}</strong>
+                                                                            <strong><c:if test="${o.orderDetails.size()>0}">${o.orderDetails.get(0).product.name}</c:if> 
+                                                                                    <c:if test="${o.orderDetails.size()>1}">(${o.orderDetails.size()-1} more)</c:if>
+                                                                            </strong>
                                                                         </td>
                                                                         <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                                            <c:if test="${o.getOrderStatus().name ==  'Success'}">
+                                                                            <strong>${o.orderTotal}</strong>
+                                                                        </td>
+                                                                        <td class="p-3 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                                            <c:if test="${o.statusId ==  '1'}">
+                                                                                <span class="bg-yellow-600/5 text-yellow-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Pending</span>Pending
+                                                                            </c:if>
+                                                                            <c:if test="${o.statusId ==  '2'}">
                                                                                 <span class="bg-green-600/5 text-green-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Success</span>
                                                                             </c:if>
-                                                                            <c:if test="${o.getOrderStatus().name ==  'Pending'}">
-                                                                                <span class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Pending</span>
+                                                                            <c:if test="${o.statusId ==  '3'}">
+                                                                                <span class="bg-red-600/5 text-red-600 text-[11px] font-medium px-2.5 py-0.5 rounded h-5">Failed</span>
                                                                             </c:if>
                                                                         </td>  
                                                                     </tr>
@@ -219,7 +197,9 @@
                                                     </div><!--end div
                                                 </div><!--end div-->
                                                 </div><!--end grid-->
-                                                <jsp:include page="components/paginationOrderList.jsp"/>
+                                                <div class="flex justify-between mt-4">
+                                                    <jsp:include page="components/pagination_order.jsp"/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div><!--end card-body--> 

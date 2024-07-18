@@ -33,7 +33,7 @@
                 height: 5px;
                 background-color: #fff;
                 width: 100%;
-                transition: width 5s linear;
+                transition: width 10s linear;
             }
         </style>
     </head>
@@ -53,7 +53,7 @@
             </div>
         </c:if>
 
-        <script>
+        <script type="text/javascript">
             // Function to show and hide notifications
             function showNotification(notificationId, progressBarId) {
                 var notification = document.getElementById(notificationId);

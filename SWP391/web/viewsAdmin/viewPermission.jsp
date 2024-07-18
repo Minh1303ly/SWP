@@ -27,7 +27,7 @@
                 document.getElementById("statusChangeForm-" + id).submit();
             }
             function doDelete(urlId, roleId) {
-                if (confirm("Are You Sure To Permission With ID = " + urlId)) {
+                if (confirm("Are You Sure To Delete Permission With ID = " + urlId)) {
                     window.location = "permissions?action=delete&urlId=" + urlId + "&roleId=" + roleId;
                 }
             }

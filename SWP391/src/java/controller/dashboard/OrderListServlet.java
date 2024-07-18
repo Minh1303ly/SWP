@@ -62,7 +62,7 @@ public class OrderListServlet extends HttpServlet {
             List<User> users = new UserDAO().getAllUsers();
             request.setAttribute("users", users);
             // start pagging
-            int limitPage = 10;
+            int limitPage = 5;
             if (request.getParameter("cp") == null) {
                 Pagination Page = new Pagination(list, limitPage, 1);
                 Pagination<Order> pagination = new Pagination<>(list, limitPage, 1);

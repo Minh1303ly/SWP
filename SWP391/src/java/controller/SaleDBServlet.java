@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import model.Order;
 
 /**
@@ -33,11 +34,10 @@ public class SaleDBServlet extends HttpServlet {
         String fromDate = request.getParameter("fromDate");
         String toDate = request.getParameter("toDate");
 
-        if (toDate != null && toDate.isEmpty()) {
-            toDate = null;
-        }
-        if (fromDate != null && fromDate.isEmpty()) {
-            fromDate = null;
+        if (fromDate == null || fromDate.isEmpty() || toDate == null || toDate.isEmpty()) {
+            LocalDate now = LocalDate.now();
+            fromDate = now.minusDays(7).toString();
+            toDate = now.toString();
         }
 
         request.setAttribute("toDate", toDate);

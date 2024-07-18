@@ -128,6 +128,7 @@ public class ChangePasswordServlet extends HttpServlet {
             u = (User) obj2;
         }
         if(obj2 == null){
+            session.setAttribute("messError", "Change Password Failed!");
             session.setAttribute("error", "Login Before Change Password");
             request.getRequestDispatcher("home").forward(request, response);
         }
@@ -136,29 +137,34 @@ public class ChangePasswordServlet extends HttpServlet {
         if(currentPassword == null || currentPassword.equals("")
                 || newPassword == null || newPassword.equals("")
                 || confirmNewPassword == null || confirmNewPassword.equals("")){
+            session.setAttribute("messError", "Change Password Failed!");
             session.setAttribute("error", "Not Empty");
-            request.getRequestDispatcher("home").forward(request, response);
+            response.sendRedirect("home");
             
             // Check new password and confirm new password
         }else if(!(newPassword.equals(confirmNewPassword))){
+            session.setAttribute("messError", "Change Password Failed!");
             session.setAttribute("error", "New Password and Comfirm Password don't match");
-            request.getRequestDispatcher("home").forward(request, response);
+            response.sendRedirect("home");
             
             // Check newpassword format and confirm new password format
         }else if(!isValidPassword(newPassword) || !isValidPassword(confirmNewPassword)){
+            session.setAttribute("messError", "Change Password Failed!");
             session.setAttribute("error", "Wrong Password Format");
-            request.getRequestDispatcher("home").forward(request, response);
+            response.sendRedirect("home");
             
             //Check current password
         }else if(!(u.getPassword().equals(Encrypt.toSHA1(currentPassword)))){
+            session.setAttribute("messError", "Change Password Failed!");
             session.setAttribute("error", "Wrong Current Password");
-            request.getRequestDispatcher("home").forward(request, response);
+            response.sendRedirect("home");
             
             // set new password
         }else{
             u.setPassword(Encrypt.toSHA1(newPassword));
             
             udb.updateUser(u);
+            session.setAttribute("messSuccess", "Change Password Successfully!");
             response.sendRedirect("logout");
         }
         

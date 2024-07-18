@@ -138,7 +138,7 @@
                                 <form action="contact" method="get" id="form_contact">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="fullname">Fullname:</label>
+                                            <label for="fullname">Fullname:<strong style="color: red">*</strong></label>
                                             <input type="text" class="form-control" name="fullname" id="fullname"
                                                    placeholder="Fullname" pattern="[A-Za-z ]{3,}" 
                                                    title="Name just include A-Z, a-z and size greater 3!" 
@@ -146,7 +146,7 @@
                                                    required>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="email">Email:</label>
+                                            <label for="email">Email:<strong style="color: red">*</strong></label>
                                             <input type="email" class="form-control" id="email" name="email"
                                                    placeholder="Email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" 
                                                    title="Please enter a valid email address!" 
@@ -155,7 +155,7 @@
                                     </div>
                                     <fieldset class="form-group">
                                         <div class="row">
-                                            <label class="col-form-label col-sm-2 pt-0">Gender:</label>
+                                            <label class="col-form-label col-sm-2 pt-0">Gender:<strong style="color: red">*</strong></label>
 
                                             <div class="form-check col-2">
                                                 <input class="form-check-input" type="radio" name="gender" id="male" value="1" 
@@ -171,7 +171,7 @@
                                         </fieldset>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="phone">Phone:</label>
+                                                <label for="phone">Phone:<strong style="color: red">*</strong></label>
                                                 <input type="tel" class="form-control" id="phone" name="phone"
                                                        placeholder="Phone" pattern="[0]{1}[0-9]{9,10}" 
                                                        title="Please enter a valid phone number!" 
@@ -180,19 +180,19 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
-                                            <label for="province">Province:</label>
+                                            <label for="province">Province:<strong style="color: red">*</strong></label>
                                             <select class="form-control" id="province" name="province" required>
                                                 <option value="" disabled selected>Select Province</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="district">District:</label>
+                                            <label for="district">District:<strong style="color: red">*</strong></label>
                                             <select class="form-control" id="district" name="district" required>
                                                 
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
-                                            <label for="commune">Commune</label>
+                                            <label for="commune">Commune<strong style="color: red">*</strong></label>
                                             <select class="form-control" id="commune" name="commune" required>
                                                
                                             </select>

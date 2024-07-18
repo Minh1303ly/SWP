@@ -69,7 +69,7 @@
                 setTimeout(function () {
                     notification.style.opacity = "0";
                     notification.style.top = "10px";
-                }, 1500); // 5 seconds
+                }, 5000); // 5 seconds
             }
 
             // Show notifications on page load

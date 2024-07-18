@@ -506,11 +506,6 @@ public class OrderDAO extends DBContext {
         StringBuilder query = new StringBuilder("SELECT * FROM shop_orders WHERE 1=1");
 
         // Default to the last 7 days if fromDate or toDate is null
-        if (fromDate == null || fromDate.isEmpty() || toDate == null || toDate.isEmpty()) {
-            LocalDate now = LocalDate.now();
-            fromDate = now.minusDays(7).toString();
-            toDate = now.toString();
-        }
 
         query.append(" AND created_at BETWEEN ? AND ?");
 

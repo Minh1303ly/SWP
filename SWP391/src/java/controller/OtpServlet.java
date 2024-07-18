@@ -226,6 +226,7 @@ public class OtpServlet extends HttpServlet {
 
                 request.getRequestDispatcher("otp.jsp").forward(request, response);
             } else {
+                session.setAttribute("messError", "Signup Failed!");
                 session.setAttribute("error", "Email Existed");
                 request.getRequestDispatcher("home").forward(request, response);
             }
@@ -249,8 +250,9 @@ public class OtpServlet extends HttpServlet {
             session.setAttribute("code", code);
 
             udb.insertUser(u);
-
-            request.getRequestDispatcher("otp.jsp").forward(request, response);
+            session.setAttribute("confirm", "True");
+            
+            response.sendRedirect("home");
         }
     }
 

@@ -18,11 +18,12 @@
             }
 
         </style>
-        
+
     </head>
     <body>
         <div id="page">
-            <jsp:include page="header.jsp"/>          
+            <jsp:include page="header.jsp"/>    
+            <jsp:include page="viewsAdmin/components/notification.jsp" />
             <main class="bg_gray">
                 <div id="carousel-home" class= h-111">
                     <div id="carouselExampleIndicators" class="carousel slide custom-carousel h-111" data-ride="carousel">
@@ -104,7 +105,7 @@
                                             <div class="post_info">
                                                 <small><fmt:formatDate value="${element.created_at}" pattern="dd.MM.yyyy"/></small>
                                                 <h2><a href="blogDetail?id=${element.id}">${element.title}</a></h2>
-                                                <p>${element.context.substring(0,70)}...</p>
+                                                <p>${element.context.substring(0,element.context.length()>70?70:element.context.length())}...</p>
                                             </div>
                                         </article>
                                         <!-- /article -->
@@ -134,7 +135,7 @@
                                             </div>
                                             <small><fmt:formatDate value="${element.created_at}" pattern="dd.MM.yyyy"/></small>      
                                             <h3><a href="blogDetail?id=${element.id}" title="">${element.title}</a></h3>
-                                            <small>${element.context.substring(0,50)}...</small>
+                                            <small>${element.context.substring(0,element.context.length()>50?50:element.context.length())}...</small>
                                         </li>
 
                                     </c:forEach>
@@ -156,22 +157,22 @@
                 <!--Slider-->
                 <a>
                     <div class="featured lazy" data-bg="url(${slider.get(6).image}">
-                    <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
-                        <div class="container margin_60">
-                            <div class="row justify-content-center justify-content-md-start">
-                                <div class="col-lg-6 wow" data-wow-offset="150">
-                                    <h3>${slider.get(6).title}</h3>
-                                    <p>${slider.get(6).content}</p>
-                                    <div class="feat_text_block">
-                                        <a class="btn_1" href="product" role="button">Shop Now</a>
+                        <div class="opacity-mask d-flex align-items-center" data-opacity-mask="rgba(0, 0, 0, 0.5)">
+                            <div class="container margin_60">
+                                <div class="row justify-content-center justify-content-md-start">
+                                    <div class="col-lg-6 wow" data-wow-offset="150">
+                                        <h3>${slider.get(6).title}</h3>
+                                        <p>${slider.get(6).content}</p>
+                                        <div class="feat_text_block">
+                                            <a class="btn_1" href="product" role="button">Shop Now</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    </div>
                 </a>
-                
+
                 <!-- /featured -->
 
                 <div class="container margin_60_35">
@@ -184,24 +185,24 @@
                         <c:forEach var="element" items="${featured}">
                             <div class="item">
                                 <div class="grid_item">
-                                    
-                                            <c:if test="${element.productStatus.name eq 'new'}">
-                                                <span class="ribbon new">${element.productStatus.name}</span>
-                                                
-                                            </c:if>
-                                            
-                                            <c:if test="${element.productStatus.name eq 'hot'}">
-                                               <span class="ribbon hot">${element.productStatus.name}</span>
-                                                
-                                            </c:if> 
-                                            
-                                            <c:if test="${element.productStatus.name eq 'common'}">
-                                                <c:if test="${element.discount.active}">
-                                                    <span class="ribbon off">-${element.discount.discountPercent}%</span>
-                                                    
-                                                </c:if> 
-                                            </c:if>
-                  
+
+                                    <c:if test="${element.productStatus.name eq 'new'}">
+                                        <span class="ribbon new">${element.productStatus.name}</span>
+
+                                    </c:if>
+
+                                    <c:if test="${element.productStatus.name eq 'hot'}">
+                                        <span class="ribbon hot">${element.productStatus.name}</span>
+
+                                    </c:if> 
+
+                                    <c:if test="${element.productStatus.name eq 'common'}">
+                                        <c:if test="${element.discount.active}">
+                                            <span class="ribbon off">-${element.discount.discountPercent}%</span>
+
+                                        </c:if> 
+                                    </c:if>
+
                                     <figure>
                                         <a href="product?service=detail&name=${element.name}">
                                             <img class="owl-lazy" src="${element.img1}" data-src="${element.img1}" alt="">
@@ -220,21 +221,21 @@
                                     <a href="product?service=detail&name=${element.name}">
                                         <h3>${element.name}</h3>
                                     </a>
-                                        <c:if test="${element.productStatus.name ne 'off'}">
-                                            <div class="price_box">
-                                                <c:if test="${element.discount.active}">                                              
-                                                    <span class="new_price">$${String.format("%.2f", element.price*(100-element.discount.discountPercent)/100)}</span>
-                                                    <span class="old_price">$${element.price}</span>
-                                                </c:if>
-                                                <c:if test="${!element.discount.active}">                                              
-                                                    <span class="new_price">$${element.price}</span>                                                
-                                                </c:if>     
-                                            </div>
-                                        </c:if>
-                                        <c:if test="${element.productStatus.name eq 'off'}">
-                                            <p>Cant buy this product </p>
-                                        </c:if>
-                                    
+                                    <c:if test="${element.productStatus.name ne 'off'}">
+                                        <div class="price_box">
+                                            <c:if test="${element.discount.active}">                                              
+                                                <span class="new_price">$${String.format("%.2f", element.price*(100-element.discount.discountPercent)/100)}</span>
+                                                <span class="old_price">$${element.price}</span>
+                                            </c:if>
+                                            <c:if test="${!element.discount.active}">                                              
+                                                <span class="new_price">$${element.price}</span>                                                
+                                            </c:if>     
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${element.productStatus.name eq 'off'}">
+                                        <p>Cant buy this product </p>
+                                    </c:if>
+
                                     <ul>
                                         <li>                               
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" 
@@ -310,5 +311,16 @@
             });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            var messSuccess = '<%= session.getAttribute("confirm") %>';
+            if (messSuccess === "True") {
+                Swal.fire({
+                    title: "You must go to your email to verify",
+                    icon: "success"
+                });
+            }
+            <% session.removeAttribute("confirm");%>
+        </script>
     </body>
 </html>

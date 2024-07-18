@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -200,6 +201,8 @@ public class BlogManagerController extends HttpServlet {
         newBlog.setMain_img(mainImgPath);
         newBlog.setDescription(description);
         newBlog.setStatus(status);
+        newBlog.setCreated_at(new Date());
+        newBlog.setModified_at(new Date());
 
         try {
             blogDAO.insertBlog(newBlog);

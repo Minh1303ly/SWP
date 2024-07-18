@@ -175,16 +175,19 @@ public class ResetPasswordServlet extends HttpServlet {
         //Check null parameter
         if (password == null || password.equals("")
                 || confirmPassword == null || confirmPassword.equals("")) {
+            session.setAttribute("messError", "Reset Password Failed!");
             request.setAttribute("error", "Password And Confirm Password Empty!");
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
             
             // Check new password and confirm new password
         }else if(!password.equals(confirmPassword)){
+            session.setAttribute("messError", "Reset Password Failed!");
             request.setAttribute("error", "Password And Confirm Password Don't Match!");
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
             
             // Check valid password form
         }else if(!isValidPassword(password)){
+            session.setAttribute("messError", "Reset Password Failed!");
             request.setAttribute("error", "Wrong Password Format");
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
             
@@ -192,7 +195,7 @@ public class ResetPasswordServlet extends HttpServlet {
         }else{
             u.setPassword(Encrypt.toSHA1(password));
             udb.updateUser(u);
-            
+            session.setAttribute("messSuccess", "Reset Password Successfully!");
             response.sendRedirect("home");
         }
     }

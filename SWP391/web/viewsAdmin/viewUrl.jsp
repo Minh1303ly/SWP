@@ -26,7 +26,7 @@
                 document.getElementById("statusChangeForm-" + id).submit();
             }
             function doDelete(urlId) {
-                if (confirm("Are You Sure To URL With ID = " + urlId)) {
+                if (confirm("Are You Sure To Delete URL With ID = " + urlId)) {
                     window.location = "url?action=delete&id=" + urlId;
                 }
             }

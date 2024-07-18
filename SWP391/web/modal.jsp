@@ -46,7 +46,7 @@
             <div id="forgot_pw">
                 <div class="form-group">
                     <label>Please confirm login email below</label>
-                    <input type="email" class="form-control" name="email_forgot" id="email_forgot">
+                    <input style="margin-top: -10px" type="email" class="form-control" name="email_forgot" id="email_forgot">
                     <i class="ti-email"></i>
                 </div>
                 <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
@@ -129,7 +129,7 @@
 
 <!-- Change Password Modal -->
 
-<div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+<div style="margin-top: 120px;" class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

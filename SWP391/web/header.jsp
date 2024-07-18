@@ -49,7 +49,7 @@
                     <!--/main-menu -->
                 </nav>
                 <div class="col-xl-4 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
-                    <a class="phone_top" href="tel://9438843343"><strong><span>Need Help?</span>+94 423-23-221</strong></a>
+                    <a class="phone_top" href="#"><strong><span>Need Help?</span>+94 423-23-221</strong></a>
                 </div>
             </div>
             <!-- /row -->
@@ -69,7 +69,7 @@
                     <form action="product" method="post"> 
                         <div class="custom-search-input">
                             <input type="text" name="name" placeholder="Search over 10.000 products">
-                            <input type="hidden" name="service" value="searchName">
+                            <input type="hidden" name="service" value="search">
                             <button type="submit"><i class="header-icon_search_custom"></i></button>
                         </div>
                     </form>
@@ -86,13 +86,13 @@
                                 <!--still not login-->
                                 <c:if test="${sessionScope.account==null}">
                                     <div class="dropdown-menu">
-                                        <a href="#sign-in-dialog" id="sign-in" class="btn_1">Sign In</a>
+                                        <a href="#sign-in-dialog" id="sign-in" class="btn_1" style="font-size: 16px">Sign In</a>
                                         <ul>
                                             <li></li>
                                         </ul>
                                         <!--<a onclick="openSecondPopup()" id="sign-up" class="btn_1">Sign Up</a>-->
-                                        <button style="width: 230px" type="button" class="btn btn_1" data-toggle="modal" data-target="#signUp" >
-                                            Sign Up
+                                        <button style="width: 230px; height: 45px" type="button" class="btn btn_1" data-toggle="modal" data-target="#signUp" >
+                                            <a style="color: white">Sign Up</a>
                                         </button>
                                     </div>
                                 </c:if>
@@ -250,7 +250,7 @@
         <!-- /search_mobile -->
     </div>
     <!-- /main_nav -->
-    <script src="js/validate.js"></script>
+    <script src="js/vaidate.js"></script>
     <script>
         function reDirect(link){
              window.location.href = link;

@@ -2,6 +2,7 @@ package dao;
 
 import controller.*;
 import context.DBContext;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ import model.Tag;
 public class BlogDAO extends DBContext {
 
     private static final String FILTER_BLOGS = "SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY %s) AS rownum, id, user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at, status FROM blogs WHERE 1=1";
-    private static final String INSERT_BLOG_SQL = "INSERT INTO blogs (user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, GETDATE(), GETDATE(), ?)";
+    private static final String INSERT_BLOG_SQL = "INSERT INTO blogs (user_id, blog_cate_id, title, content, cover_img, main_img, description, created_at, modified_at, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_BLOG_SQL = "UPDATE blogs SET user_id = ?, blog_cate_id = ?, title = ?, content = ?, cover_img = ?, main_img = ?, description = ?, modified_at = GETDATE(), status = ? WHERE id = ?";
     private UserDAO uDAO;
     private BlogCategoriesDAO bDAO;
@@ -395,7 +396,15 @@ public class BlogDAO extends DBContext {
             preparedStatement.setString(5, blog.getCover_img());
             preparedStatement.setString(6, blog.getMain_img());
             preparedStatement.setString(7, blog.getDescription());
-            preparedStatement.setString(8, blog.getStatus());
+            
+            java.util.Date utilDate = blog.getCreated_at();
+            java.sql.Date created_at = new java.sql.Date(utilDate.getTime());
+            preparedStatement.setDate(8, created_at);
+            
+            utilDate = blog.getModified_at();
+            java.sql.Date modified_at = new java.sql.Date(utilDate.getTime());
+            preparedStatement.setDate(9, modified_at);
+            preparedStatement.setString(10, blog.getStatus());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

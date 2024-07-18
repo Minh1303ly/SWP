@@ -73,12 +73,14 @@ public class ResendServlet extends HttpServlet {
 
         // Check null email forgot
         if (email_forgot.equals("")) {
+            session.setAttribute("messError", "Account Not Existed!");
             session.setAttribute("error", "Reset Password Failed!");
             request.getRequestDispatcher("home").forward(request, response);
         }
         
         // Check null email 
         if(udb.getUserByEmail(email_forgot) == null){
+            session.setAttribute("messError", "Account Not Existed!");
             session.setAttribute("error", "Account Not Existed!");
             request.getRequestDispatcher("home").forward(request, response);
         }

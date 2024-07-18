@@ -84,33 +84,41 @@ public class LoginServlet extends HttpServlet {
         UsersDAO udb = new UsersDAO();
         User u = udb.getUserByEmail(email);
         HttpSession session = request.getSession();
-        
+
         //Check null parameter
         if (email_forgot == null || email_forgot.equals("")) {
-            
+
+            if (u == null) {
+                session.setAttribute("messError", "Login Failed!");
+                request.getRequestDispatcher("home").forward(request, response);
+            }
+
             //If email forgot null send to home
             if (email == null || email.equals("")
                     || password == null || password.equals("")) {
                 session.setAttribute("error", "Username or Password Don't Allow Blank!");
                 request.getRequestDispatcher("home").forward(request, response);
-                
+
                 // Check password
             } else if (u.getPassword().equals(password)) {
-                
+
                 //Check active account
                 if (u.getStatus_id() == 1) {
+                    session.setAttribute("messSuccess", "Login Successful!");
                     session.setAttribute("account", u);
                     response.sendRedirect("home");
                 } else {
+                    session.setAttribute("messError", "Account is InActive!");
                     session.setAttribute("error", "Account is InActive!");
                     request.getRequestDispatcher("home").forward(request, response);
                 }
             } else {
+                session.setAttribute("messError", "Login Failed!");
                 session.setAttribute("error", "Username or Password Invalid!");
                 request.getRequestDispatcher("home").forward(request, response);
             }
-            
-        // if forgot email not null send to reset password
+
+            // if forgot email not null send to reset password
         } else {
             session.setAttribute("email_forgot", email_forgot);
             response.sendRedirect("resend");
